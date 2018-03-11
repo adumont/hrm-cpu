@@ -1,0 +1,34 @@
+[*]
+[*] GTKWave Analyzer v3.3.66 (w)1999-2015 BSI
+[*] Sun Mar 11 17:35:09 2018
+[*]
+[dumpfile] "/home/adumont/hrm-cpu/controlUnit_tb.vcd"
+[dumpfile_mtime] "Sun Mar 11 17:33:19 2018"
+[dumpfile_size] 1595
+[savefile] "/home/adumont/hrm-cpu/controlUnit_tb.gtkw"
+[timestart] 0
+[size] 1191 600
+[pos] 282 -24
+*-4.759334 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] controlUnit_tb.
+[sst_width] 197
+[signals_width] 150
+[sst_expanded] 1
+[sst_vpaned_height] 157
+@22
+controlUnit_tb.controlUnit0.instr[3:0]
+@200
+-Control signals
+@29
+controlUnit_tb.controlUnit0.muxR[1:0]
+@28
+controlUnit_tb.controlUnit0.wR
+controlUnit_tb.controlUnit0.muxM
+controlUnit_tb.controlUnit0.wM
+controlUnit_tb.controlUnit0.aluCtl[2:0]
+controlUnit_tb.controlUnit0.branch
+controlUnit_tb.controlUnit0.ijump
+controlUnit_tb.controlUnit0.rIn
+controlUnit_tb.controlUnit0.wO
+[pattern_trace] 1
+[pattern_trace] 0
