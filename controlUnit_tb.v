@@ -1,6 +1,6 @@
 module controlUnit_tb();
 
-	reg [3: 0] instr;
+	reg [3: 0] opcode;
 
 	wire [1:0] muxR;
 	wire wR;
@@ -13,7 +13,7 @@ module controlUnit_tb();
 	wire wO;
 
 	// Instanciate DUT
-	controlUnit controlUnit0 (instr, muxR, wR, muxM, wM, aluCtl, branch, ijump, rIn, wO);
+	controlUnit controlUnit0 (opcode, muxR, wR, muxM, wM, aluCtl, branch, ijump, rIn, wO);
 
 	// start simulation
 	initial begin
@@ -22,10 +22,10 @@ module controlUnit_tb();
 
 		#5
 
-        for (instr=0; instr<=14; instr=instr+1)
+        for (opcode=0; opcode<=14; opcode=opcode+1)
         begin
             #5
-            $display("instr: %b (%2d), %b", instr, instr, muxR);
+            $display("opcode: %b (%2d), %b", opcode, opcode, muxR);
         end
 
 		# 10

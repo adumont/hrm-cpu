@@ -1,6 +1,6 @@
 module controlUnit (
         // Input: Instruction
-        input  wire [3: 0] instr,
+        input  wire [3: 0] opcode,
         // Output: Control signals
         output wire [1:0] muxR,
         output wire wR,
@@ -14,7 +14,7 @@ module controlUnit (
     );
 
     // signals are coded into the microcode.rom file
-    parameter MICROCODE = "microcode.rom";
+    parameter MICROCODE = "controlUnit.rom";
 
     initial begin
         $readmemb(MICROCODE, rom);
@@ -25,8 +25,8 @@ module controlUnit (
 
     reg [11:0] signals;
 
-    always @(instr) begin
-        signals <= rom[instr];
+    always @(opcode) begin
+        signals <= rom[opcode];
     end
 
     assign muxR = signals[11:10];
