@@ -21,7 +21,7 @@ Here are all the elements of the analogy:
 
 # Instruction set
 
-For now, the latest version of the instruction set is described in this (Google Spreadsheet)[https://docs.google.com/spreadsheets/d/1WEB_RK878GqC6Xb1BZOdD-QtXDiJCOBEF22lt2ebCDg/edit?usp=sharing].
+For now, the latest version of the instruction set is described in this [Google Spreadsheet](https://docs.google.com/spreadsheets/d/1WEB_RK878GqC6Xb1BZOdD-QtXDiJCOBEF22lt2ebCDg/edit?usp=sharing).
 
 I have added a couple of instructions that were not in the HRM game: SET, and HALT. Not sure they will be needed.
 
@@ -32,6 +32,8 @@ I've coded the instruction with 4 bits. The operand is coded with 12 bits (to al
 The microarchitecture is loosely inspired from MIPS architecture. The CPU is single-cycle: each instruction is executed in one clock cycle.
 
 ![](assets/HRM-CPU-controlPath.png)
+
+Sections below detail each module individually.
 
 ## Control Unit
 
@@ -50,3 +52,13 @@ The control signals are encoded in a [16 x 12 bits rom](controlUnit.rom):
 I've done a simple [test bench](controlUnit_tb.v) to simulate the **Control Unit**. Here's the result:
 
 ![](assets/controlUnit_tb.png)
+
+## Inbox
+
+We load the Inbox with a [sample](inbox.rom) of 4 signed items (12 bit): 10, -20, 30, -5.
+
+Each rIn pulse, the inbox cursor is incremented by one, and the next value gets available on the output bus (data). Once we read the last value, the *empty* flag get's set to 1.
+
+Here's the simulation:
+
+![](assets/inbox_tb.png)

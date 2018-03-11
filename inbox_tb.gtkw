@@ -1,0 +1,34 @@
+[*]
+[*] GTKWave Analyzer v3.3.66 (w)1999-2015 BSI
+[*] Sun Mar 11 22:46:00 2018
+[*]
+[dumpfile] "/home/adumont/hrm-cpu/inbox_tb.vcd"
+[dumpfile_mtime] "Sun Mar 11 22:43:59 2018"
+[dumpfile_size] 1108
+[savefile] "/home/adumont/hrm-cpu/inbox_tb.gtkw"
+[timestart] 0
+[size] 1041 600
+[pos] 398 398
+*-3.677804 6 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] inbox_tb.
+[sst_width] 197
+[signals_width] 135
+[sst_expanded] 1
+[sst_vpaned_height] 157
+@200
+-Inputs
+@28
+inbox_tb.rIn
+inbox_tb.rstn
+@29
+inbox_tb.clk
+@200
+-Outputs
+@24
+inbox_tb.inbox0.p[1:0]
+@420
+inbox_tb.data[11:0]
+@28
+inbox_tb.empty
+[pattern_trace] 1
+[pattern_trace] 0
