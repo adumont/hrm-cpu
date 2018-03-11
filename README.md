@@ -62,3 +62,20 @@ Each rIn pulse, the inbox cursor is incremented by one, and the next value gets 
 Here's the simulation:
 
 ![](assets/inbox_tb.png)
+
+## Program
+
+We load the **Program** with a [sample program](program.rom) of 6 instrucions:
+
+    0000_000000000000 // INBOX
+    0011_000000000000 // COPYTO 0
+    0001_000000000000 // OUTBOX
+    0000_000000000000 // INBOX
+    0011_000000000001 // COPYTO 1
+    0001_000000000000 // OUTBOX
+
+Whenever PC changes, the corresponding Instruction gets available in the output, split into OP (opcode) and DATA.
+
+Here's the simulation:
+
+![](assets/program_tb.png)
