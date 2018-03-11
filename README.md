@@ -1,4 +1,11 @@
 # Human Resource Machine CPU (Verilog)
+- [Introduction](#introduction)
+- [CPU Elements](#cpu-elements)
+- [Instruction set](#instruction-set)
+- [Microarchitecture](#microarchitecture)
+    - [Control Unit](#control-unit)
+    - [Inbox](#inbox)
+    - [Program](#program)
 
 # Introduction
 
@@ -47,7 +54,7 @@ The control signals are encoded in a [16 x 12 bits rom](controlUnit.rom):
 
 ![](assets/controlUnit-rom.png)
 
-### Simulation of the Control Unit
+Here's the simulation of the **Control Unit**:
 
 I've done a simple [test bench](controlUnit_tb.v) to simulate the **Control Unit**. Here's the result:
 
@@ -59,7 +66,7 @@ We load the Inbox with a [sample](inbox.rom) of 4 signed items (12 bit): 10, -20
 
 Each rIn pulse, the inbox cursor is incremented by one, and the next value gets available on the output bus (data). Once we read the last value, the *empty* flag get's set to 1.
 
-Here's the simulation:
+Here's the simulation of the **Inbox**:
 
 ![](assets/inbox_tb.png)
 
@@ -76,6 +83,6 @@ We load the **Program** with a [sample program](program.rom) of 6 instrucions:
 
 Whenever PC changes, the corresponding Instruction gets available in the output, split into OP (opcode) and DATA.
 
-Here's the simulation:
+Here's the simulation of the **Program**:
 
 ![](assets/program_tb.png)
