@@ -1,0 +1,16 @@
+# clock
+set_io clk  21
+
+# leds
+set_io leds[0] 95
+set_io leds[1] 96
+set_io leds[2] 97
+set_io leds[3] 98
+set_io leds[4] 99
+set_io leds[5] 101
+set_io leds[6] 102
+set_io leds[7] 104
+
+# switches
+set_io sw1 10
+set_io sw2 11
