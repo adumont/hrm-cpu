@@ -3,7 +3,7 @@ module inbox_tb;
     reg clk  = 0;
     reg rstn = 1; // not active
     reg rIn  = 0;
-    wire[11:0] data;
+    wire[7:0] DIN;
     wire empty;
 
     // Instanciate DUT
@@ -11,7 +11,7 @@ module inbox_tb;
         .clk(clk),
         .rstn(rstn),
         .rIn(rIn),
-        .data(data),
+        .DIN(DIN),
         .empty(empty)
     );
 

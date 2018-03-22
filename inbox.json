@@ -1,0 +1,538 @@
+{
+  "creator": "Yosys 0.7+365 (git sha1 4f31cb6, clang 3.8.0-2ubuntu4 -fPIC -Os)",
+  "modules": {
+    "inbox": {
+      "attributes": {
+        "top": 1,
+        "src": "inbox.v:1"
+      },
+      "ports": {
+        "clk": {
+          "direction": "input",
+          "bits": [ 2 ]
+        },
+        "rstn": {
+          "direction": "input",
+          "bits": [ 3 ]
+        },
+        "rIn": {
+          "direction": "input",
+          "bits": [ 4 ]
+        },
+        "DIN": {
+          "direction": "output",
+          "bits": [ 5, 6, 7, 8, 9, 10, 11, 12 ]
+        },
+        "empty": {
+          "direction": "output",
+          "bits": [ 13 ]
+        }
+      },
+      "cells": {
+        "$add$inbox.v:36$7": {
+          "hide_name": 1,
+          "type": "$add",
+          "parameters": {
+            "A_SIGNED": 0,
+            "A_WIDTH": 2,
+            "B_SIGNED": 0,
+            "B_WIDTH": 1,
+            "Y_WIDTH": 2
+          },
+          "attributes": {
+            "src": "inbox.v:36"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 14, 15 ],
+            "B": [ "1" ],
+            "Y": [ 16, 17 ]
+          }
+        },
+        "$eq$inbox.v:33$6": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": 0,
+            "A_WIDTH": 2,
+            "B_SIGNED": 0,
+            "B_WIDTH": 2,
+            "Y_WIDTH": 1
+          },
+          "attributes": {
+            "src": "inbox.v:33"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 14, 15 ],
+            "B": [ "1", "1" ],
+            "Y": [ 18 ]
+          }
+        },
+        "$logic_and$inbox.v:31$4": {
+          "hide_name": 1,
+          "type": "$logic_and",
+          "parameters": {
+            "A_SIGNED": 0,
+            "A_WIDTH": 1,
+            "B_SIGNED": 0,
+            "B_WIDTH": 1,
+            "Y_WIDTH": 1
+          },
+          "attributes": {
+            "src": "inbox.v:31"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 4 ],
+            "B": [ 19 ],
+            "Y": [ 20 ]
+          }
+        },
+        "$logic_not$inbox.v:31$3": {
+          "hide_name": 1,
+          "type": "$logic_not",
+          "parameters": {
+            "A_SIGNED": 0,
+            "A_WIDTH": 1,
+            "Y_WIDTH": 1
+          },
+          "attributes": {
+            "src": "inbox.v:31"
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 13 ],
+            "Y": [ 19 ]
+          }
+        },
+        "$procdff$35": {
+          "hide_name": 1,
+          "type": "$dff",
+          "parameters": {
+            "CLK_POLARITY": 1,
+            "WIDTH": 8
+          },
+          "attributes": {
+            "src": "inbox.v:24"
+          },
+          "port_directions": {
+            "CLK": "input",
+            "D": "input",
+            "Q": "output"
+          },
+          "connections": {
+            "CLK": [ 2 ],
+            "D": [ 21, 22, 23, 24, 25, 26, 27, 28 ],
+            "Q": [ 5, 6, 7, 8, 9, 10, 11, 12 ]
+          }
+        },
+        "$procdff$36": {
+          "hide_name": 1,
+          "type": "$dff",
+          "parameters": {
+            "CLK_POLARITY": 1,
+            "WIDTH": 1
+          },
+          "attributes": {
+            "src": "inbox.v:24"
+          },
+          "port_directions": {
+            "CLK": "input",
+            "D": "input",
+            "Q": "output"
+          },
+          "connections": {
+            "CLK": [ 2 ],
+            "D": [ 29 ],
+            "Q": [ 13 ]
+          }
+        },
+        "$procdff$37": {
+          "hide_name": 1,
+          "type": "$dff",
+          "parameters": {
+            "CLK_POLARITY": 1,
+            "WIDTH": 2
+          },
+          "attributes": {
+            "src": "inbox.v:24"
+          },
+          "port_directions": {
+            "CLK": "input",
+            "D": "input",
+            "Q": "output"
+          },
+          "connections": {
+            "CLK": [ 2 ],
+            "D": [ 30, 31 ],
+            "Q": [ 14, 15 ]
+          }
+        },
+        "$procmux$13": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": 2
+          },
+          "attributes": {
+            "src": "inbox.v:33"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 16, 17 ],
+            "B": [ 14, 15 ],
+            "S": [ 18 ],
+            "Y": [ 32, 33 ]
+          }
+        },
+        "$procmux$15": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": 2
+          },
+          "attributes": {
+            "src": "inbox.v:31"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 14, 15 ],
+            "B": [ 32, 33 ],
+            "S": [ 20 ],
+            "Y": [ 34, 35 ]
+          }
+        },
+        "$procmux$18": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": 2
+          },
+          "attributes": {
+            "src": "inbox.v:27"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "0", "0" ],
+            "B": [ 34, 35 ],
+            "S": [ 3 ],
+            "Y": [ 30, 31 ]
+          }
+        },
+        "$procmux$22": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": 1
+          },
+          "attributes": {
+            "src": "inbox.v:33"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 13 ],
+            "B": [ "1" ],
+            "S": [ 18 ],
+            "Y": [ 36 ]
+          }
+        },
+        "$procmux$24": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": 1
+          },
+          "attributes": {
+            "src": "inbox.v:31"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 13 ],
+            "B": [ 36 ],
+            "S": [ 20 ],
+            "Y": [ 37 ]
+          }
+        },
+        "$procmux$27": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": 1
+          },
+          "attributes": {
+            "src": "inbox.v:27"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "0" ],
+            "B": [ 37 ],
+            "S": [ 3 ],
+            "Y": [ 29 ]
+          }
+        },
+        "$procmux$30": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": 8
+          },
+          "attributes": {
+            "src": "inbox.v:31"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 5, 6, 7, 8, 9, 10, 11, 12 ],
+            "B": [ 38, 39, 40, 41, 42, 43, 44, 45 ],
+            "S": [ 20 ],
+            "Y": [ 46, 47, 48, 49, 50, 51, 52, 53 ]
+          }
+        },
+        "$procmux$33": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": 8
+          },
+          "attributes": {
+            "src": "inbox.v:27"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 5, 6, 7, 8, 9, 10, 11, 12 ],
+            "B": [ 46, 47, 48, 49, 50, 51, 52, 53 ],
+            "S": [ 3 ],
+            "Y": [ 21, 22, 23, 24, 25, 26, 27, 28 ]
+          }
+        },
+        "inbox": {
+          "hide_name": 0,
+          "type": "$mem",
+          "parameters": {
+            "ABITS": 2,
+            "INIT": "x11111011000111101110110000001010",
+            "MEMID": "\\inbox",
+            "OFFSET": 0,
+            "RD_CLK_ENABLE": 1,
+            "RD_CLK_POLARITY": 1,
+            "RD_PORTS": 1,
+            "RD_TRANSPARENT": 1,
+            "SIZE": 4,
+            "WIDTH": 8,
+            "WR_CLK_ENABLE": 0,
+            "WR_CLK_POLARITY": 0,
+            "WR_PORTS": 0
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "RD_ADDR": "input",
+            "RD_CLK": "input",
+            "RD_DATA": "output",
+            "RD_EN": "input",
+            "WR_ADDR": "input",
+            "WR_CLK": "input",
+            "WR_DATA": "input",
+            "WR_EN": "input"
+          },
+          "connections": {
+            "RD_ADDR": [ 30, 31 ],
+            "RD_CLK": [ 2 ],
+            "RD_DATA": [ 38, 39, 40, 41, 42, 43, 44, 45 ],
+            "RD_EN": [ "1" ],
+            "WR_ADDR": [ ],
+            "WR_CLK": [ ],
+            "WR_DATA": [ ],
+            "WR_EN": [ ]
+          }
+        }
+      },
+      "netnames": {
+        "$0\\DIN[7:0]": {
+          "hide_name": 1,
+          "bits": [ 21, 22, 23, 24, 25, 26, 27, 28 ],
+          "attributes": {
+            "src": "inbox.v:24"
+          }
+        },
+        "$0\\empty[0:0]": {
+          "hide_name": 1,
+          "bits": [ 29 ],
+          "attributes": {
+            "src": "inbox.v:24"
+          }
+        },
+        "$0\\p[1:0]": {
+          "hide_name": 1,
+          "bits": [ 30, 31 ],
+          "attributes": {
+            "src": "inbox.v:24"
+          }
+        },
+        "$add$inbox.v:36$7_Y": {
+          "hide_name": 1,
+          "bits": [ 16, 17 ],
+          "attributes": {
+          }
+        },
+        "$eq$inbox.v:33$6_Y": {
+          "hide_name": 1,
+          "bits": [ 18 ],
+          "attributes": {
+            "src": "inbox.v:33"
+          }
+        },
+        "$logic_and$inbox.v:31$4_Y": {
+          "hide_name": 1,
+          "bits": [ 20 ],
+          "attributes": {
+            "src": "inbox.v:31"
+          }
+        },
+        "$logic_not$inbox.v:31$3_Y": {
+          "hide_name": 1,
+          "bits": [ 19 ],
+          "attributes": {
+            "src": "inbox.v:31"
+          }
+        },
+        "$memrd$\\inbox$inbox.v:32$5_DATA": {
+          "hide_name": 1,
+          "bits": [ 38, 39, 40, 41, 42, 43, 44, 45 ],
+          "attributes": {
+            "src": "inbox.v:32"
+          }
+        },
+        "$procmux$13_Y": {
+          "hide_name": 1,
+          "bits": [ 32, 33 ],
+          "attributes": {
+          }
+        },
+        "$procmux$15_Y": {
+          "hide_name": 1,
+          "bits": [ 34, 35 ],
+          "attributes": {
+          }
+        },
+        "$procmux$22_Y": {
+          "hide_name": 1,
+          "bits": [ 36 ],
+          "attributes": {
+          }
+        },
+        "$procmux$24_Y": {
+          "hide_name": 1,
+          "bits": [ 37 ],
+          "attributes": {
+          }
+        },
+        "$procmux$30_Y": {
+          "hide_name": 1,
+          "bits": [ 46, 47, 48, 49, 50, 51, 52, 53 ],
+          "attributes": {
+          }
+        },
+        "DIN": {
+          "hide_name": 0,
+          "bits": [ 5, 6, 7, 8, 9, 10, 11, 12 ],
+          "attributes": {
+            "src": "inbox.v:6"
+          }
+        },
+        "clk": {
+          "hide_name": 0,
+          "bits": [ 2 ],
+          "attributes": {
+            "src": "inbox.v:2"
+          }
+        },
+        "empty": {
+          "hide_name": 0,
+          "bits": [ 13 ],
+          "attributes": {
+            "init": 0,
+            "src": "inbox.v:7"
+          }
+        },
+        "p": {
+          "hide_name": 0,
+          "bits": [ 14, 15 ],
+          "attributes": {
+            "init": 0,
+            "src": "inbox.v:21"
+          }
+        },
+        "rIn": {
+          "hide_name": 0,
+          "bits": [ 4 ],
+          "attributes": {
+            "src": "inbox.v:4"
+          }
+        },
+        "rstn": {
+          "hide_name": 0,
+          "bits": [ 3 ],
+          "attributes": {
+            "src": "inbox.v:3"
+          }
+        }
+      }
+    }
+  }
+}
