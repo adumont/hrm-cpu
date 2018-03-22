@@ -1,0 +1,259 @@
+{
+  "creator": "Yosys 0.7+365 (git sha1 4f31cb6, clang 3.8.0-2ubuntu4 -fPIC -Os)",
+  "modules": {
+    "register": {
+      "attributes": {
+        "top": 1,
+        "src": "register.v:1"
+      },
+      "ports": {
+        "clk": {
+          "direction": "input",
+          "bits": [ 2 ]
+        },
+        "iInbox": {
+          "direction": "input",
+          "bits": [ 3, 4, 5, 6, 7, 8, 9, 10 ]
+        },
+        "iAlu": {
+          "direction": "input",
+          "bits": [ 11, 12, 13, 14, 15, 16, 17, 18 ]
+        },
+        "iMem": {
+          "direction": "input",
+          "bits": [ 19, 20, 21, 22, 23, 24, 25, 26 ]
+        },
+        "muxR": {
+          "direction": "input",
+          "bits": [ 27, 28 ]
+        },
+        "wR": {
+          "direction": "input",
+          "bits": [ 29 ]
+        },
+        "R": {
+          "direction": "output",
+          "bits": [ 30, 31, 32, 33, 34, 35, 36, 37 ]
+        }
+      },
+      "cells": {
+        "$procdff$10": {
+          "hide_name": 1,
+          "type": "$dff",
+          "parameters": {
+            "CLK_POLARITY": 1,
+            "WIDTH": 8
+          },
+          "attributes": {
+            "src": "register.v:13"
+          },
+          "port_directions": {
+            "CLK": "input",
+            "D": "input",
+            "Q": "output"
+          },
+          "connections": {
+            "CLK": [ 2 ],
+            "D": [ 38, 39, 40, 41, 42, 43, 44, 45 ],
+            "Q": [ 30, 31, 32, 33, 34, 35, 36, 37 ]
+          }
+        },
+        "$procmux$4": {
+          "hide_name": 1,
+          "type": "$pmux",
+          "parameters": {
+            "S_WIDTH": 3,
+            "WIDTH": 8
+          },
+          "attributes": {
+            "src": "register.v:15"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "x", "x", "x", "x", "x", "x", "x", "x" ],
+            "B": [ 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 3, 4, 5, 6, 7, 8, 9, 10 ],
+            "S": [ 46, 47, 48 ],
+            "Y": [ 49, 50, 51, 52, 53, 54, 55, 56 ]
+          }
+        },
+        "$procmux$5_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": 0,
+            "A_WIDTH": 2,
+            "B_SIGNED": 0,
+            "B_WIDTH": 2,
+            "Y_WIDTH": 1
+          },
+          "attributes": {
+            "src": "register.v:15"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 27, 28 ],
+            "B": [ "1", "1" ],
+            "Y": [ 46 ]
+          }
+        },
+        "$procmux$6_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": 0,
+            "A_WIDTH": 2,
+            "B_SIGNED": 0,
+            "B_WIDTH": 1,
+            "Y_WIDTH": 1
+          },
+          "attributes": {
+            "src": "register.v:15"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 27, 28 ],
+            "B": [ "1" ],
+            "Y": [ 47 ]
+          }
+        },
+        "$procmux$7_CMP0": {
+          "hide_name": 1,
+          "type": "$logic_not",
+          "parameters": {
+            "A_SIGNED": 0,
+            "A_WIDTH": 2,
+            "Y_WIDTH": 1
+          },
+          "attributes": {
+            "src": "register.v:15"
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 27, 28 ],
+            "Y": [ 48 ]
+          }
+        },
+        "$procmux$8": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": 8
+          },
+          "attributes": {
+            "src": "register.v:14"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 30, 31, 32, 33, 34, 35, 36, 37 ],
+            "B": [ 49, 50, 51, 52, 53, 54, 55, 56 ],
+            "S": [ 29 ],
+            "Y": [ 38, 39, 40, 41, 42, 43, 44, 45 ]
+          }
+        }
+      },
+      "netnames": {
+        "$0\\R[7:0]": {
+          "hide_name": 1,
+          "bits": [ 38, 39, 40, 41, 42, 43, 44, 45 ],
+          "attributes": {
+            "src": "register.v:13"
+          }
+        },
+        "$procmux$4_Y": {
+          "hide_name": 1,
+          "bits": [ 49, 50, 51, 52, 53, 54, 55, 56 ],
+          "attributes": {
+          }
+        },
+        "$procmux$5_CMP": {
+          "hide_name": 1,
+          "bits": [ 46 ],
+          "attributes": {
+          }
+        },
+        "$procmux$6_CMP": {
+          "hide_name": 1,
+          "bits": [ 47 ],
+          "attributes": {
+          }
+        },
+        "$procmux$7_CMP": {
+          "hide_name": 1,
+          "bits": [ 48 ],
+          "attributes": {
+          }
+        },
+        "R": {
+          "hide_name": 0,
+          "bits": [ 30, 31, 32, 33, 34, 35, 36, 37 ],
+          "attributes": {
+            "src": "register.v:10"
+          }
+        },
+        "clk": {
+          "hide_name": 0,
+          "bits": [ 2 ],
+          "attributes": {
+            "src": "register.v:2"
+          }
+        },
+        "iAlu": {
+          "hide_name": 0,
+          "bits": [ 11, 12, 13, 14, 15, 16, 17, 18 ],
+          "attributes": {
+            "src": "register.v:4"
+          }
+        },
+        "iInbox": {
+          "hide_name": 0,
+          "bits": [ 3, 4, 5, 6, 7, 8, 9, 10 ],
+          "attributes": {
+            "src": "register.v:3"
+          }
+        },
+        "iMem": {
+          "hide_name": 0,
+          "bits": [ 19, 20, 21, 22, 23, 24, 25, 26 ],
+          "attributes": {
+            "src": "register.v:5"
+          }
+        },
+        "muxR": {
+          "hide_name": 0,
+          "bits": [ 27, 28 ],
+          "attributes": {
+            "src": "register.v:7"
+          }
+        },
+        "wR": {
+          "hide_name": 0,
+          "bits": [ 29 ],
+          "attributes": {
+            "src": "register.v:8"
+          }
+        }
+      }
+    }
+  }
+}
