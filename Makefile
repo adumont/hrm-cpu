@@ -25,9 +25,9 @@ $(MODULE).bin: $(MODULE).pcf $(MODULE).v $(DEPS)
 	
 	yosys -p "synth_ice40 -blif $(MODULE).blif" $(MODULE).v $(DEPS)
 	
-	arachne-pnr -d $(MEMORY) -p $(MODULE).pcf $(MODULE).blif -o $(MODULE).txt
+	arachne-pnr -d $(MEMORY) -p $(MODULE).pcf $(MODULE).blif -o $(MODULE).pnr
 	
-	icepack $(MODULE).txt $(MODULE).bin
+	icepack $(MODULE).pnr $(MODULE).bin
 
 $(MODULE).json: $(MODULE).v $(DEPS)
 	yosys -p "prep -top $(MODULE); write_json $(MODULE).json" $(MODULE).v $(DEPS)
@@ -39,6 +39,6 @@ upload: $(MODULE).bin
 	iceprog $(MODULE).bin
 
 #clean:
-#	rm -f *.bin *.txt *.blif *.out *.vcd *~
+#	rm -f *.bin *.pnr *.blif *.out *.vcd *~
 
 .PHONY: all clean json svg sim
