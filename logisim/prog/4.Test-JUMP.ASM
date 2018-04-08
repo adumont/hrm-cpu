@@ -1,0 +1,3 @@
+20  INBOX       00
+21  OUTBOX      10
+22  JUMP 20     80 20
