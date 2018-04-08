@@ -1,4 +1,4 @@
-fsm ControlUnit @[ 34 , 30 , 1200 , 700 ]
+fsm ControlUnit @[ 34 , 30 , 1200 , 800 ]
 { in INSTR [ 8 ] @[ 34 , 100 , 71 , 15 ]
 ;
 in inEmpty [ 1 ] @[ 34 , 140 , 55 , 15 ]
@@ -33,7 +33,9 @@ out branch [ 1 ] @[ 1184 , 490 , 50 , 15 ]
 ;
 out rst [ 1 ] @[ 1211 , 523 , 23 , 15 ]
 ;
-codeWidth = 4 ; reset = RESET ; state RESET = "0000" @[ 164 , 91 , 30 , 30 ]
+out halt [ 1 ] @[ 1204 , 553 , 30 , 15 ]
+;
+codeWidth = 6 ; reset = RESET ; state RESET = "000000" @[ 164 , 91 , 30 , 30 ]
 {
 commands @[ 209 , 106 , 53 , 21 ]
 {
@@ -44,62 +46,195 @@ RESET -> FETCH1 when default @[ 293 , 74 , 50 , 21 ]
 ;
 }
 }
-state INCRPC = "0010" @[ 256 , 187 , 30 , 30 ]
+state INCRPC = "000010" @[ 172 , 171 , 30 , 30 ]
 {
-commands @[ 301 , 201 , 61 , 21 ]
+commands @[ 217 , 186 , 61 , 21 ]
 {
 wPC = "1" ;
 }
 transitions {
-INCRPC -> FETCH1 when default @[ 329 , 158 , 50 , 21 ]
+INCRPC -> FETCH1 when default @[ 255 , 144 , 50 , 21 ]
 ;
 }
 }
-state FETCH1 = "0100" @[ 420 , 123 , 30 , 30 ]
+state FETCH1 = "000100" @[ 361 , 79 , 30 , 30 ]
 {
-commands @[ 465 , 138 , 63 , 21 ]
+commands @[ 418 , 89 , 63 , 21 ]
 {
 srcA = "1" ;
 }
 transitions {
-FETCH1 -> FETCH2 when default @[ 496 , 92 , 50 , 21 ]
+FETCH1 -> FETCH2 when default @[ 324 , 154 , 50 , 21 ]
 ;
 }
 }
-state FETCH2 = "0110" @[ 668 , 68 , 30 , 30 ]
+state FETCH2 = "000110" @[ 296 , 193 , 30 , 30 ]
 {
-commands @[ 713 , 83 , 61 , 36 ]
+commands @[ 341 , 208 , 56 , 21 ]
 {
 wIR = "1" ;
-wPC = "1" ;
 }
 transitions {
-FETCH2 -> FETCH1 when default @[ 562 , 188 , 50 , 21 ]
-;
-FETCH2 -> INBOX1 when INSTR [ 7 : 4 ] == "0000" @[ 687 , 137 , 143 , 21 ]
+FETCH2 -> DECODE when default @[ 263 , 257 , 50 , 21 ]
 ;
 }
 }
-state INBOX1 = "1000" @[ 787 , 166 , 30 , 30 ]
+state INBOX1 = "001000" @[ 251 , 493 , 30 , 30 ]
 {
-commands @[ 832 , 181 , 52 , 21 ]
+commands @[ 297 , 508 , 52 , 21 ]
 {
 rIn = "1" ;
 }
 transitions {
-INBOX1 -> INBOX2 when default @[ 777 , 245 , 50 , 21 ]
+INBOX1 -> INBOX2 when default @[ 238 , 558 , 50 , 21 ]
 ;
 }
 }
-state INBOX2 = "1010" @[ 797 , 281 , 30 , 30 ]
+state INBOX2 = "001010" @[ 244 , 590 , 30 , 30 ]
 {
-commands @[ 842 , 296 , 77 , 36 ]
+commands @[ 290 , 605 , 77 , 36 ]
 {
 muxR = "00" ;
 wR = "1" ;
 }
 transitions {
-INBOX2 -> FETCH1 when default @[ 558 , 263 , 50 , 21 ]
+INBOX2 -> INCRPC when default @[ 37 , 448 , 50 , 21 ]
+;
+}
+}
+state OUTBOX = "001100" @[ 109 , 447 , 30 , 30 ]
+{
+commands @[ 154 , 462 , 54 , 21 ]
+{
+wO = "1" ;
+}
+transitions {
+OUTBOX -> INCRPC when default @[ 105 , 332 , 50 , 21 ]
+;
+}
+}
+state INCPC2 = "001110" @[ 643 , 360 , 30 , 30 ]
+{
+commands @[ 688 , 376 , 61 , 21 ]
+{
+wPC = "1" ;
+}
+transitions {
+INCPC2 -> FETCH3 when default @[ 658 , 412 , 50 , 21 ]
+;
+}
+}
+state FETCH3 = "010000" @[ 659 , 443 , 30 , 30 ]
+{
+commands @[ 704 , 459 , 63 , 21 ]
+{
+srcA = "1" ;
+}
+transitions {
+FETCH3 -> READMEM when default @[ 643 , 502 , 50 , 21 ]
+;
+FETCH3 -> JUMP when INSTR [ 7 : 4 ] == "1000" @[ 851 , 534 , 143 , 21 ]
+;
+}
+}
+state READMEM = "010010" @[ 645 , 527 , 30 , 30 ]
+{
+commands @[ 690 , 543 , 48 , 21 ]
+{
+fb = "1" ;
+}
+transitions {
+READMEM -> COPYTO when INSTR [ 7 : 4 ] == "0011" @[ 731 , 619 , 143 , 21 ]
+;
+READMEM -> WAIT1 when default @[ 625 , 581 , 50 , 21 ]
+;
+}
+}
+state COPYFROM = "010100" @[ 615 , 701 , 30 , 30 ]
+{
+commands @[ 660 , 717 , 77 , 36 ]
+{
+muxR = "01" ;
+wR = "1" ;
+}
+transitions {
+COPYFROM -> INCRPC when default @[ 85 , 624 , 50 , 21 ]
+;
+}
+}
+state DECODE = "010110" @[ 268 , 288 , 30 , 30 ]
+{
+commands @[ 313 , 303 , 30 , 20 ]
+{
+}
+transitions {
+DECODE -> OUTBOX when INSTR [ 7 : 4 ] == "0001" @[ 123 , 374 , 143 , 21 ]
+;
+DECODE -> INBOX1 when INSTR [ 7 : 4 ] == "0000" . inEmpty == "0" @[ 196 , 438 ,
+254 , 21 ]
+;
+DECODE -> HALT1 when INSTR [ 7 : 4 ] == "1111" @[ 323 , 414 , 143 , 21 ]
+;
+DECODE -> INCPC2 when default @[ 385 , 322 , 50 , 21 ]
+;
+DECODE -> HALT1 when INSTR [ 7 : 4 ] == "0000" . inEmpty == "1" @[ 316 , 386 ,
+254 , 21 ]
+;
+}
+}
+state HALT1 = "011000" @[ 448 , 532 , 30 , 30 ]
+{
+commands @[ 489 , 547 , 60 , 21 ]
+{
+halt = "1" ;
+}
+transitions {
+HALT1 -> HALT2 when default @[ 465 , 621 , 50 , 21 ]
+;
+}
+}
+state HALT2 = "011010" @[ 435 , 645 , 30 , 30 ]
+{
+commands @[ 476 , 660 , 60 , 21 ]
+{
+halt = "1" ;
+}
+transitions {
+HALT2 -> HALT1 when default @[ 405 , 623 , 50 , 21 ]
+;
+}
+}
+state WAIT1 = "011100" @[ 615 , 608 , 30 , 30 ]
+{
+commands @[ 660 , 624 , 30 , 20 ]
+{
+}
+transitions {
+WAIT1 -> COPYFROM when INSTR [ 7 : 4 ] == "0010" @[ 557 , 673 , 143 , 21 ]
+;
+}
+}
+state COPYTO = "011110" @[ 790 , 746 , 30 , 30 ]
+{
+commands @[ 835 , 761 , 55 , 21 ]
+{
+wM = "1" ;
+}
+transitions {
+COPYTO -> INCRPC when default @[ 69 , 696 , 50 , 21 ]
+;
+}
+}
+state JUMP = "100000" @[ 991 , 586 , 30 , 30 ]
+{
+commands @[ 1036 , 601 , 80 , 51 ]
+{
+branch = "1" ;
+ijump = "1" ;
+wPC = "1" ;
+}
+transitions {
+JUMP -> FETCH1 when default @[ 1000 , 209 , 50 , 21 ]
 ;
 }
 }
