@@ -15,8 +15,10 @@
     - [PC (Program Counter)](#pc-program-counter)
     - [IR (Instruction Register)](#ir-instruction-register)
     - [ALU](#alu)
-- [Simulation in Logisim](#simulation-in-logisim)
-- [Example 1](#example-1)
+- [Simulations in Logisim](#simulations-in-logisim)
+    - [Example of COPYTO/COPYFROM](#example-of-copytocopyfrom)
+    - [Example of JUMP](#example-of-jump)
+- [Tools used](#tools-used)
 
 # Introduction
 
@@ -51,7 +53,9 @@ For now, the latest version of the instruction set is described in this [Google 
 
 ![](assets/instruction-set.png)
 
-I have added a couple of instructions that were not in the HRM game: SET, and HALT. Not sure they will be needed.
+Current implementation status is represented by the color in the first column (Green: implemented, white: pending).
+
+I have added a couple of instructions that were not in the HRM game: SET, and HALT.
 
 I've coded the instruction with 8 bits. The optional operand is coded with another 8 bits.
 
@@ -79,6 +83,9 @@ Control Signals:
 Below is the corresponding FSM:
 
 ![](assets/control-unit-FSM.png)
+
+Note:
+- Logisim FSM addon tool doesn't seem to allow transition to the same state, so I have defined two HALT states in a loop. I'll remove it when I implement it in Verilog.
 
 ## Inbox
 
@@ -114,9 +121,9 @@ Below is the corresponding FSM:
 
 ![]()
 
-# Simulation in Logisim
+# Simulations in Logisim
 
-# Example 1
+## Example of COPYTO/COPYFROM
 
 Let's consider this simple program, which takes two items from Input, and outputs them in reverse order:
 
@@ -130,3 +137,24 @@ Let's consider this simple program, which takes two items from Input, and output
     28  HALT        F0
 ```
 
+TODO: add video, screenshots of Input/Ouput before/after
+
+## Example of JUMP
+
+```
+    20  INBOX       00
+    21  OUTBOX      10
+    22  JUMP 20     80 20
+```
+
+TODO: add video, screenshots of Input/Ouput before/after
+
+# Tools used
+
+Pending to add reference/links.
+
+- Logisim Evolution with FSM Addon
+- Visual Studio Code
+- Fizzim
+- Opensource FPGA toolchain
+- SchemeIt
