@@ -485,150 +485,150 @@ S3 -&gt; S2 when A == "000" @[ 388 , 313 , 68 , 21 ]
     </comp>
     <comp lib="10" loc="(1090,40)" name="FSM Entity">
       <a name="content">fsm ControlUnit @[ 34 , 30 , 1200 , 800 ]
-{ in INSTR [ 8 ] @[ 34 , 100 , 71 , 15 ]
+{ in INSTR [ 8 ] @[ 34 , 100 , 72 , 15 ]
 ;
-in inEmpty [ 1 ] @[ 34 , 140 , 55 , 15 ]
+in inEmpty [ 1 ] @[ 34 , 140 , 56 , 15 ]
 ;
-in outFull [ 1 ] @[ 34 , 178 , 48 , 15 ]
+in outFull [ 1 ] @[ 34 , 178 , 47 , 15 ]
 ;
-out wIR [ 1 ] @[ 1208 , 93 , 26 , 15 ]
+out wIR [ 1 ] @[ 1207 , 93 , 27 , 15 ]
 ;
 out muxR [ 2 ] @[ 1165 , 150 , 69 , 15 ]
 ;
-out wR [ 1 ] @[ 1211 , 177 , 23 , 15 ]
+out wR [ 1 ] @[ 1210 , 177 , 24 , 15 ]
 ;
-out muxM [ 1 ] @[ 1193 , 222 , 41 , 15 ]
+out muxM [ 1 ] @[ 1191 , 222 , 43 , 15 ]
 ;
-out srcA [ 1 ] @[ 1201 , 244 , 33 , 15 ]
+out srcA [ 1 ] @[ 1200 , 244 , 34 , 15 ]
 ;
-out wM [ 1 ] @[ 1209 , 268 , 25 , 15 ]
+out wM [ 1 ] @[ 1208 , 268 , 26 , 15 ]
 ;
 out fb [ 1 ] @[ 1216 , 303 , 18 , 15 ]
 ;
-out aluCtl [ 3 ] @[ 1163 , 333 , 71 , 15 ]
+out aluCtl [ 3 ] @[ 1164 , 333 , 70 , 15 ]
 ;
-out wPC [ 1 ] @[ 1203 , 366 , 31 , 15 ]
+out wPC [ 1 ] @[ 1201 , 366 , 33 , 15 ]
 ;
-out rIn [ 1 ] @[ 1212 , 390 , 22 , 15 ]
+out rIn [ 1 ] @[ 1211 , 390 , 23 , 15 ]
 ;
-out wO [ 1 ] @[ 1210 , 415 , 24 , 15 ]
+out wO [ 1 ] @[ 1208 , 415 , 26 , 15 ]
 ;
-out ijump [ 1 ] @[ 1195 , 467 , 39 , 15 ]
+out ijump [ 1 ] @[ 1194 , 467 , 40 , 15 ]
 ;
-out branch [ 1 ] @[ 1184 , 490 , 50 , 15 ]
+out branch [ 1 ] @[ 1185 , 490 , 49 , 15 ]
 ;
-out rst [ 1 ] @[ 1211 , 523 , 23 , 15 ]
+out rst [ 1 ] @[ 1210 , 523 , 24 , 15 ]
 ;
-out halt [ 1 ] @[ 1204 , 553 , 30 , 15 ]
+out halt [ 1 ] @[ 1205 , 553 , 29 , 15 ]
 ;
 codeWidth = 6 ; reset = RESET ; state RESET = "000000" @[ 164 , 91 , 30 , 30 ]
 {
-commands @[ 209 , 106 , 53 , 21 ]
+commands @[ 209 , 106 , 55 , 21 ]
 {
 rst = "1" ;
 }
 transitions {
-RESET -&gt; FETCH1 when default @[ 293 , 74 , 50 , 21 ]
+RESET -&gt; FETCH1 when default @[ 293 , 74 , 49 , 21 ]
 ;
 }
 }
 state INCRPC = "000010" @[ 172 , 171 , 30 , 30 ]
 {
-commands @[ 217 , 186 , 61 , 21 ]
+commands @[ 217 , 186 , 64 , 21 ]
 {
 wPC = "1" ;
 }
 transitions {
-INCRPC -&gt; FETCH1 when default @[ 255 , 144 , 50 , 21 ]
+INCRPC -&gt; FETCH1 when default @[ 255 , 144 , 49 , 21 ]
 ;
 }
 }
 state FETCH1 = "000100" @[ 361 , 79 , 30 , 30 ]
 {
-commands @[ 418 , 89 , 63 , 21 ]
+commands @[ 418 , 89 , 65 , 21 ]
 {
 srcA = "1" ;
 }
 transitions {
-FETCH1 -&gt; FETCH2 when default @[ 324 , 154 , 50 , 21 ]
+FETCH1 -&gt; FETCH2 when default @[ 324 , 154 , 49 , 21 ]
 ;
 }
 }
 state FETCH2 = "000110" @[ 296 , 193 , 30 , 30 ]
 {
-commands @[ 341 , 208 , 56 , 21 ]
+commands @[ 341 , 208 , 58 , 21 ]
 {
 wIR = "1" ;
 }
 transitions {
-FETCH2 -&gt; DECODE when default @[ 255 , 260 , 50 , 21 ]
+FETCH2 -&gt; DECODE when default @[ 255 , 260 , 49 , 21 ]
 ;
 }
 }
 state INBOX1 = "001000" @[ 166 , 430 , 30 , 30 ]
 {
-commands @[ 212 , 445 , 52 , 21 ]
+commands @[ 212 , 445 , 54 , 21 ]
 {
 rIn = "1" ;
 }
 transitions {
-INBOX1 -&gt; INBOX2 when default @[ 153 , 495 , 50 , 21 ]
+INBOX1 -&gt; INBOX2 when default @[ 153 , 495 , 49 , 21 ]
 ;
 }
 }
 state INBOX2 = "001010" @[ 159 , 527 , 30 , 30 ]
 {
-commands @[ 205 , 542 , 77 , 36 ]
+commands @[ 205 , 542 , 79 , 36 ]
 {
 muxR = "00" ;
 wR = "1" ;
 }
 transitions {
-INBOX2 -&gt; INCRPC when default @[ 37 , 448 , 50 , 21 ]
+INBOX2 -&gt; INCRPC when default @[ 37 , 448 , 49 , 21 ]
 ;
 }
 }
 state OUTBOX = "001100" @[ 282 , 436 , 30 , 30 ]
 {
-commands @[ 327 , 451 , 54 , 21 ]
+commands @[ 327 , 451 , 57 , 21 ]
 {
 wO = "1" ;
 }
 transitions {
-OUTBOX -&gt; INCRPC when default @[ 165 , 343 , 50 , 21 ]
+OUTBOX -&gt; INCRPC when default @[ 165 , 343 , 49 , 21 ]
 ;
 }
 }
 state INCPC2 = "001110" @[ 393 , 415 , 30 , 30 ]
 {
-commands @[ 439 , 430 , 61 , 21 ]
+commands @[ 439 , 430 , 64 , 21 ]
 {
 wPC = "1" ;
 }
 transitions {
-INCPC2 -&gt; FETCH3 when default @[ 408 , 467 , 50 , 21 ]
+INCPC2 -&gt; FETCH3 when default @[ 408 , 467 , 49 , 21 ]
 ;
 }
 }
 state FETCH3 = "010000" @[ 393 , 500 , 30 , 30 ]
 {
-commands @[ 450 , 513 , 63 , 21 ]
+commands @[ 450 , 513 , 65 , 21 ]
 {
 srcA = "1" ;
 }
 transitions {
-FETCH3 -&gt; READMEM when default @[ 405 , 554 , 50 , 21 ]
+FETCH3 -&gt; READMEM when default @[ 405 , 554 , 49 , 21 ]
 ;
 }
 }
 state READMEM = "010010" @[ 397 , 582 , 30 , 30 ]
 {
-commands @[ 457 , 597 , 48 , 21 ]
+commands @[ 457 , 597 , 49 , 21 ]
 {
 fb = "1" ;
 }
 transitions {
-READMEM -&gt; WAIT1 when default @[ 406 , 640 , 50 , 21 ]
+READMEM -&gt; WAIT1 when default @[ 406 , 640 , 49 , 21 ]
 ;
 READMEM -&gt; COPYTO when INSTR [ 7 : 4 ] == "0011" @[ 492 , 664 , 143 , 21 ]
 ;
@@ -636,13 +636,13 @@ READMEM -&gt; COPYTO when INSTR [ 7 : 4 ] == "0011" @[ 492 , 664 , 143 , 21 ]
 }
 state COPYFROM = "010100" @[ 398 , 723 , 30 , 30 ]
 {
-commands @[ 443 , 738 , 77 , 36 ]
+commands @[ 443 , 738 , 79 , 36 ]
 {
 muxR = "01" ;
 wR = "1" ;
 }
 transitions {
-COPYFROM -&gt; INCRPC when default @[ 85 , 624 , 50 , 21 ]
+COPYFROM -&gt; INCRPC when default @[ 85 , 624 , 49 , 21 ]
 ;
 }
 }
@@ -658,7 +658,7 @@ DECODE -&gt; OUTBOX when INSTR [ 7 : 4 ] == "0001" @[ 244 , 388 , 143 , 21 ]
 ;
 DECODE -&gt; INBOX1 when INSTR [ 7 : 4 ] == "0000" @[ 169 , 367 , 143 , 21 ]
 ;
-DECODE -&gt; INCRPC when default @[ 203 , 267 , 50 , 21 ]
+DECODE -&gt; INCRPC when default @[ 203 , 267 , 49 , 21 ]
 ;
 DECODE -&gt; HALT1 when INSTR [ 7 : 4 ] == "1111" @[ 303 , 411 , 143 , 21 ]
 ;
@@ -673,7 +673,7 @@ commands @[ 326 , 580 , 60 , 21 ]
 halt = "1" ;
 }
 transitions {
-HALT1 -&gt; HALT2 when default @[ 310 , 632 , 50 , 21 ]
+HALT1 -&gt; HALT2 when default @[ 310 , 632 , 49 , 21 ]
 ;
 }
 }
@@ -684,7 +684,7 @@ commands @[ 325 , 670 , 60 , 21 ]
 halt = "1" ;
 }
 transitions {
-HALT2 -&gt; HALT1 when default @[ 250 , 634 , 50 , 21 ]
+HALT2 -&gt; HALT1 when default @[ 250 , 634 , 49 , 21 ]
 ;
 }
 }
@@ -694,18 +694,18 @@ commands @[ 442 , 666 , 30 , 20 ]
 {
 }
 transitions {
-WAIT1 -&gt; COPYFROM when default @[ 406 , 712 , 50 , 21 ]
+WAIT1 -&gt; COPYFROM when default @[ 406 , 712 , 49 , 21 ]
 ;
 }
 }
 state COPYTO = "011110" @[ 527 , 767 , 30 , 30 ]
 {
-commands @[ 572 , 782 , 55 , 21 ]
+commands @[ 572 , 782 , 57 , 21 ]
 {
 wM = "1" ;
 }
 transitions {
-COPYTO -&gt; INCRPC when default @[ 65 , 679 , 50 , 21 ]
+COPYTO -&gt; INCRPC when default @[ 65 , 679 , 49 , 21 ]
 ;
 }
 }
@@ -866,72 +866,71 @@ COPYTO -&gt; INCRPC when default @[ 65 , 679 , 50 , 21 ]
     <a name="clabelfont" val="SansSerif bold 16"/>
     <a name="circuitnamedbox" val="true"/>
     <a name="circuitvhdlpath" val=""/>
+    <wire from="(700,440)" to="(700,450)"/>
     <wire from="(460,130)" to="(460,200)"/>
-    <wire from="(630,440)" to="(630,450)"/>
-    <wire from="(300,190)" to="(300,270)"/>
-    <wire from="(680,290)" to="(780,290)"/>
+    <wire from="(300,290)" to="(490,290)"/>
+    <wire from="(530,300)" to="(780,300)"/>
+    <wire from="(240,610)" to="(730,610)"/>
     <wire from="(210,230)" to="(210,250)"/>
-    <wire from="(240,610)" to="(660,610)"/>
     <wire from="(300,190)" to="(400,190)"/>
-    <wire from="(260,270)" to="(300,270)"/>
     <wire from="(140,610)" to="(240,610)"/>
-    <wire from="(610,470)" to="(630,470)"/>
+    <wire from="(450,310)" to="(490,310)"/>
+    <wire from="(300,190)" to="(300,290)"/>
+    <wire from="(300,290)" to="(300,390)"/>
     <wire from="(270,190)" to="(300,190)"/>
-    <wire from="(260,390)" to="(280,390)"/>
+    <wire from="(680,470)" to="(700,470)"/>
+    <wire from="(300,390)" to="(330,390)"/>
+    <wire from="(670,490)" to="(700,490)"/>
     <wire from="(380,210)" to="(400,210)"/>
+    <wire from="(330,390)" to="(350,390)"/>
     <wire from="(440,200)" to="(460,200)"/>
-    <wire from="(600,490)" to="(630,490)"/>
     <wire from="(240,250)" to="(240,610)"/>
-    <wire from="(660,510)" to="(660,610)"/>
     <wire from="(190,190)" to="(210,190)"/>
+    <wire from="(730,510)" to="(730,610)"/>
     <wire from="(190,130)" to="(460,130)"/>
-    <wire from="(560,440)" to="(630,440)"/>
+    <wire from="(630,440)" to="(700,440)"/>
     <wire from="(140,210)" to="(210,210)"/>
     <wire from="(140,250)" to="(210,250)"/>
-    <wire from="(690,450)" to="(770,450)"/>
-    <wire from="(260,270)" to="(260,390)"/>
+    <wire from="(760,450)" to="(840,450)"/>
+    <wire from="(700,490)" to="(710,490)"/>
     <wire from="(190,130)" to="(190,190)"/>
-    <wire from="(630,490)" to="(640,490)"/>
-    <comp lib="0" loc="(680,290)" name="Constant">
-      <a name="value" val="0x0"/>
-      <a name="radix" val="2"/>
-    </comp>
-    <comp lib="0" loc="(610,470)" name="Constant"/>
-    <comp lib="0" loc="(770,450)" name="Pin">
+    <comp lib="0" loc="(840,450)" name="Pin">
       <a name="facing" val="west"/>
       <a name="output" val="true"/>
       <a name="width" val="8"/>
       <a name="label" val="DIN"/>
       <a name="labelloc" val="east"/>
     </comp>
-    <comp lib="4" loc="(260,380)" name="ROM">
+    <comp lib="4" loc="(330,380)" name="ROM">
       <a name="contents">addr/data: 8 8
 f0 f1
 </a>
     </comp>
-    <comp lib="0" loc="(780,290)" name="Pin">
+    <comp lib="0" loc="(450,310)" name="Constant">
+      <a name="width" val="8"/>
+      <a name="value" val="0xf"/>
+    </comp>
+    <comp lib="4" loc="(700,420)" name="Register">
+      <a name="label" val="inboxData"/>
+      <a name="showInTab" val="true"/>
+    </comp>
+    <comp lib="0" loc="(140,250)" name="Clock"/>
+    <comp lib="3" loc="(440,200)" name="Adder"/>
+    <comp lib="0" loc="(380,210)" name="Constant">
+      <a name="width" val="8"/>
+    </comp>
+    <comp lib="3" loc="(530,300)" name="Comparator"/>
+    <comp lib="0" loc="(780,300)" name="Pin">
       <a name="facing" val="west"/>
       <a name="output" val="true"/>
       <a name="label" val="empty"/>
       <a name="labelloc" val="east"/>
     </comp>
-    <comp lib="0" loc="(140,250)" name="Clock"/>
-    <comp lib="3" loc="(440,200)" name="Adder"/>
-    <comp lib="0" loc="(600,490)" name="Clock"/>
-    <comp lib="0" loc="(380,210)" name="Constant">
-      <a name="width" val="8"/>
-    </comp>
-    <comp lib="4" loc="(630,420)" name="Register">
-      <a name="label" val="inboxData"/>
-      <a name="showInTab" val="true"/>
-    </comp>
-    <comp lib="0" loc="(200,390)" name="Constant">
-      <a name="width" val="8"/>
-      <a name="value" val="0x0"/>
-    </comp>
     <comp lib="0" loc="(140,210)" name="Pin">
       <a name="label" val="rIn"/>
     </comp>
+    <comp lib="0" loc="(680,470)" name="Power"/>
+    <comp lib="0" loc="(670,490)" name="Clock"/>
     <comp lib="0" loc="(140,610)" name="Pin">
       <a name="label" val="rst"/>
     </comp>
