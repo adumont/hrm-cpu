@@ -2,6 +2,7 @@
 
 - [Human Resource Machine CPU (Verilog)](#human-resource-machine-cpu-verilog)
 - [Introduction](#introduction)
+- [Disclaimer](#disclaimer)
 - [CPU Elements](#cpu-elements)
 - [Instruction set](#instruction-set)
 - [Microarchitecture](#microarchitecture)
@@ -23,11 +24,19 @@ This personal project aims at designing a soft core CPU in Verilog (synthetizabl
 
 The HRM game features a worker, an inbox queue, an outbox queue, and tiles on the floor. The worker executes a sequence of orders (developped by the player) using a very limited set of instructions and picks items from the inbox, can eventually deposit the items on a tile, do some arithmetical operations, and outputs items in the Outbox queue.
 
+# Disclaimer
+
+- I'm not an CS engineer, nor a hardware engineer. I'm a complete n00b in electronics, although I enjoy learning from books, youtube videos and tutorials online.
+- This is a personal project, with entertaining and educational objectives exlusively.
+- I'm happy if it gets to work somehow. It's not optimized in any way. Don't judge the quality.
+- It's a work in progress. It's highly incomplete (and may never be complete).
+- Documentation is also incomplete (and may never be complete).
+
 # CPU Elements
 
-We can see how the game actually represents a CPU and how it's working internally.
+We can see how the game actually represents a CPU and it's internals.
 
-Here are all the elements of the analogy:
+Here are some elements of the analogie:
 
 | HRM  element | CPU element  |
 | ------------ | ------------ |
@@ -48,7 +57,7 @@ I've coded the instruction with 8 bits. The optional operand is coded with anoth
 
 # Microarchitecture
 
-The microarchitecture is loosely inspired from MIPS architecture. The CPU is a multi-cycle CPU.
+The microarchitecture is very loosely inspired from MIPS architecture. The CPU is a multi-cycle CPU.
 
 ![](assets/HRM-CPU-3.png)
 
