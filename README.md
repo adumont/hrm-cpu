@@ -5,6 +5,7 @@
 - [CPU Elements](#cpu-elements)
 - [Instruction set](#instruction-set)
 - [Microarchitecture](#microarchitecture)
+    - [Top module](#top-module)
     - [Control Unit](#control-unit)
     - [Inbox](#inbox)
     - [Outbox](#outbox)
@@ -51,7 +52,11 @@ The microarchitecture is loosely inspired from MIPS architecture. The CPU is a m
 
 ![](assets/HRM-CPU-3.png)
 
-Sections below detail each module individually.
+Sections below detail each module individually:
+
+## Top module
+
+![](logisim/diagram/top.png)
 
 ## Control Unit
 
