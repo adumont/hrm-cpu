@@ -13,6 +13,7 @@
     - [Register](#register)
     - [Memory](#memory)
     - [PC (Program Counter)](#pc-program-counter)
+    - [PROG (Program ROM)](#prog-program-rom)
     - [IR (Instruction Register)](#ir-instruction-register)
     - [ALU](#alu)
 - [Simulations in Logisim](#simulations-in-logisim)
@@ -54,6 +55,7 @@ Here are some elements that make our analogy:
 |               | Program Counter      |
 |               | Instruction Register |
 
+![](assets/hrm_04.png)
 
 # Instruction Set Architecture
 
@@ -128,6 +130,10 @@ Note:
 - can be set to allow branching (JUMPs instructions)
 
 ![](logisim/diagram/pc.png)
+
+## PROG (Program ROM)
+
+TODO
 
 ## IR (Instruction Register)
 
