@@ -1,7 +1,7 @@
-20  INBOX       00
-21  COPYTO 0    30 00
-23  INBOX       00
-24  OUTBOX      10
-25  COPYFROM 0  20 00
-27  OUTBOX      10
-28  HALT        F0
+00  INBOX       00
+01  COPYTO 0    30 00
+03  INBOX       00
+04  OUTBOX      10
+05  COPYFROM 0  20 00
+07  OUTBOX      10
+08  HALT        F0

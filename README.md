@@ -75,19 +75,19 @@ Instruction are encoded with 1 word (8 bit). Some instructions have one  operand
 
 # Micro Architecture
 
-The microarchitecture is very loosely inspired from MIPS architecture. The CPU is a multi-cycle CPU.
+The microarchitecture is very loosely inspired from MIPS architecture. The CPU is a multi-cycle CPU with a Harvard design.
 
 The following block diagram shows the components, the data path and control path (in red dashed line).
 
-![](assets/HRM-CPU-3.png)
+![](assets/HRM-CPU-Harvard.png)
 
-Note: Although the game depicts a Harvard architecture, my design is closer to a von Neumann architecture, because I have choosen to put the instructions and data are stored in the same memory. My [first and original design](https://github.com/adumont/hrm-cpu/blob/bf1b2053c9e564ac6b65dabd28b91189cfb3d9ba/assets/HRM-CPU.svg) had separate Program and Data memory. I might go back to that design to stay closer to the original game.
-
-Sections below detail each module individually:
+Sections below detail each module individually.
 
 ## Top module
 
-![](logisim/diagram/top.png)
+The top module shows all the inner modules, the Data Path and Control Path:
+
+![](logisim/diagram/TOP.png)
 
 ## Control Unit
 
@@ -103,15 +103,19 @@ Below is the corresponding FSM:
 ![](assets/control-unit-FSM.png)
 
 Note:
-- Logisim FSM addon tool doesn't seem to allow transition to the same state, so I have defined two HALT states in a loop. I'll remove it when I implement it in Verilog.
+- Logisim FSM addon tool doesn't seem to allow transition to the same state, that is why the HALT state doesn't have any transition out of it. It should loop on itself. Anyway in Logisim's simulation it behaves as expected.
 
 ## Inbox
 
-![](logisim/diagram/inbox.png)
+![](logisim/diagram/INBOX.png)
+
+Notes:
+- When all the elements have been read (popped out of the IN belt)
+, the empty signal is asserted. Next INBOX instructions will go to HALT state.
 
 ## Outbox
 
-![](logisim/diagram/outbox.png)
+![](logisim/diagram/OUTBOX.png)
 
 ## Register
 
@@ -120,20 +124,22 @@ Note:
 ## Memory
 
 -  0x00-0x1f: 32 x 1 byte, general purpose ram (*Tiles* in HRM)
--  0x20-... program space. (PC starts at 0x20 upon reset)
 
-![](logisim/diagram/memory.png)
+![](logisim/diagram/MEMORY.png)
 
 ## PC (Program Counter)
 
-- starts at 0x20 upon reset, increment by 1 (1byte)
-- can be set to allow branching (JUMPs instructions)
+- Reinitialized to 0x00 upon reset
+- Increments by 1 (1byte) when wPC=1
+- Branch signals:
+    - Inconditional jump (JUMP) when *( branch && ijump )*
+    - Conditional jumps (JUMPZ/N) only when *( branch && aluFlag )*
 
-![](logisim/diagram/pc.png)
+![](logisim/diagram/PC.png)
 
 ## PROG (Program ROM)
 
-TODO
+![](logisim/diagram/PROG.png)
 
 ## IR (Instruction Register)
 
@@ -141,6 +147,7 @@ TODO
 
 ## ALU
 
+TODO: Design pending...
 ![]()
 
 # Simulations in Logisim
