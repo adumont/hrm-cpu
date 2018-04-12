@@ -96,6 +96,7 @@ The **Control Unit** is a Finite State Machine. It takes as input the instructio
 The following chart shows the control signals for some of the instruction:
 
 Control Signals:
+
 ![](assets/control-signals-1.png)
 
 Below is the corresponding FSM:
