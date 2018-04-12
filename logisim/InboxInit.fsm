@@ -1,0 +1,45 @@
+fsm InboxInit @[ 50 , 50 , 800 , 500 ]
+{ out s1 [ 1 ] @[ 829 , 99 , 21 , 15 ]
+;
+out s2 [ 1 ] @[ 829 , 137 , 21 , 15 ]
+;
+codeWidth = 3 ; reset = S0 ; state S0 = "000" @[ 80 , 101 , 30 , 30 ]
+{
+commands @[ 123 , 115 , 51 , 21 ]
+{
+s1 = "0" ;
+}
+transitions {
+S0 -> S1 when default @[ 257 , 115 , 50 , 21 ]
+;
+}
+}
+state S1 = "010" @[ 407 , 107 , 30 , 30 ]
+{
+commands @[ 452 , 122 , 51 , 21 ]
+{
+s1 = "1" ;
+}
+transitions {
+S1 -> S2 when default @[ 337 , 199 , 50 , 21 ]
+;
+}
+}
+state S2 = "100" @[ 313 , 247 , 30 , 30 ]
+{
+commands @[ 358 , 262 , 51 , 21 ]
+{
+s2 = "1" ;
+}
+transitions {
+S2 -> S4 when default @[ 444 , 248 , 50 , 21 ]
+;
+}
+}
+state S4 = "001" @[ 526 , 263 , 30 , 30 ]
+{
+commands @[ 571 , 278 , 30 , 20 ]
+{
+}
+}
+}
