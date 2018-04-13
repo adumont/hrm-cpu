@@ -148,8 +148,21 @@ Notes:
 
 ## ALU
 
-TODO: Design pending...
-![]()
+The ALU can perform 6 operations depending on signal aluCtl:
+
+| aluCtl | Operation | Output |
+|:------:|:---------:|:------:|
+|  0x0   |  R + M    | aluOut |
+|  0x1   |  R - M    | aluOut |
+|  x1x   |  R = 0 ?  | flag   |
+|  0x1   |  R < 0 ?  | flag   |
+|  1x0   |  M + 1    | aluOut |
+|  1x1   |  M - 1    | aluOut |
+
+Notes:
+- Clearly, aluCtl could be split in two, and its bits reorganized (but it would mean change a lot of things and all the documentation and images...)
+
+![](logisim/diagram/ALU.png)
 
 # Simulations in Logisim
 
