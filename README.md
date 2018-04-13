@@ -73,13 +73,13 @@ I have added a couple of instructions that were not in the HRM game: SET, and HA
 
 Instruction are encoded with 1 word (8 bit). Some instructions have one  operand which is also encoded with 8 bits. So the length of instruction is variable: some are 1 word wide, others are two words wide.
 
-# Micro Architecture
+# Microarchitecture
 
 The microarchitecture is very loosely inspired from MIPS architecture. The CPU is a multi-cycle CPU with a Harvard design.
 
 The following block diagram shows the components, the data path and control path (in red dashed line).
 
-![](assets/HRM-CPU-Harvard.svg)
+![](assets/HRM-CPU-Harvard.png)
 
 Sections below detail each module individually.
 
