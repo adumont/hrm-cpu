@@ -1,9 +1,9 @@
 #!/bin/bash
 
 LABELFILE=$( mktemp )
-LABELFILE=labels.txt
+TMPFILE=$( mktemp )
 
-awk -v lfile=$LABELFILE '
+awk -v lfile=$LABELFILE >$TMPFILE '
 BEGIN {
     addr=0;
     ass["INBOX"]="00";   i["INBOX"]=1;
@@ -19,7 +19,6 @@ BEGIN {
     ass["JUMPN"]="A0";   i["JUMPN"]=2;
     ass["SET"]="E0";     i["SET"]=2;
     ass["HALT"]="F0";    i["HALT"]=1;
-    
 }
 
 {
@@ -29,14 +28,28 @@ BEGIN {
         printf("%s:\n",$0);
     }
     else {
-        printf("  %02x: %s %s ; %s\n",addr,ass[$1],$2,$0);
+        printf("  %02x: %s %-2s ; %s\n",addr,ass[$1],$2,$0);
         addr+=i[$1];
     }
 }
 
 END { 
-    for (label in labelAddr) { printf("%s %02x\n", label, labelAddr[label]) >> lfile } ; 
+    for (label in labelAddr)
+       { printf("%s %02x\n", label, labelAddr[label]) >> lfile } ; 
 }
 
 '
+
+echo "labels:"
+cat $LABELFILE
+echo
+
+cat $LABELFILE | while read LABEL ADDR 
+do
+   sed -i -e "s/ $LABEL / $ADDR /" $TMPFILE
+done
+
+cat $TMPFILE
+
+echo $LABELFILE $TMPFILE
 
