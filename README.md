@@ -46,16 +46,16 @@ We can see how the game actually represents a CPU and it's internals.
 
 Here are some elements that make our analogy:
 
-| HRM  element  | CPU element          |
-| ------------- | -------------------- |
-| Office Worker | Register             |
-| In/Out belts  | I/O                  |
-| Floor Tiles   | Memory (RAM)         |
-| Instructions  | Program              |
-|               | Program Counter      |
-|               | Instruction Register |
+| HRM  element  |  #   |CPU element          |
+| ------------- |:---: |-------------------- |
+| Office Worker | 1    |Register             |
+| In/Out belts  | 2, 3 |I/O                  |
+| Floor Tiles   | 4    |Memory (RAM)         |
+| Program       | 5    | Instructions             |
+|               | 6    |Program Counter      |
+|               | 7    |Instruction Register |
 
-![](assets/hrm_04.png)
+![](assets/hrm_04-labels.png)
 
 # Instruction Set Architecture
 
