@@ -79,7 +79,7 @@ The microarchitecture is very loosely inspired from MIPS architecture. The CPU i
 
 The following block diagram shows the components, the data path and control path (in red dashed line).
 
-![](assets/HRM-CPU-Harvard.png)
+![](assets/HRM-CPU-Harvard.svg)
 
 Sections below detail each module individually.
 
