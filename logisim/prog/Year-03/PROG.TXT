@@ -1,0 +1,7 @@
+  00: 20 4  ; COPYFROM 4
+  02: 10    ; OUTBOX 
+  03: 20 0  ; COPYFROM 0
+  05: 10    ; OUTBOX 
+  06: 20 3  ; COPYFROM 3
+  08: 10    ; OUTBOX 
+  09: F0    ; HALT 
