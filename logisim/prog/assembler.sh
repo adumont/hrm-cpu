@@ -28,7 +28,7 @@ BEGIN {
         printf("%s:\n",$0);
     }
     else {
-        printf("  %02x: %s %-2s ; %s\n",addr,ass[$1],$2,$0);
+        printf("  %02x: %s %-2s ; %s %s\n",addr,ass[$1],$2,$1,$2);
         addr+=i[$1];
     }
 }
@@ -40,10 +40,6 @@ END {
 
 '
 
-echo "labels:"
-cat $LABELFILE
-echo
-
 cat $LABELFILE | while read LABEL ADDR 
 do
    sed -i -e "s/ $LABEL / $ADDR /" $TMPFILE
@@ -51,5 +47,4 @@ done
 
 cat $TMPFILE
 
-echo $LABELFILE $TMPFILE
-
+rm $LABELFILE $TMPFILE
