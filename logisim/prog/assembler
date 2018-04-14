@@ -1,9 +1,20 @@
 #!/bin/bash
 
-LABELFILE=$( mktemp )
-TMPFILE=$( mktemp )
+if [ -z $1 ]
+then
+	echo >&2 "Error: specify program file"
+	exit 1
+fi
 
-awk -v lfile=$LABELFILE >$TMPFILE '
+DIRNAME=$( dirname $1 )
+FILENAME=$( basename $1 )
+BASENAME="${FILENAME%.*}"
+
+LABELFILE=$( mktemp )
+TMPFILE=$DIRNAME/$BASENAME.TXT
+BINFILE=$DIRNAME/$BASENAME.BIN
+
+awk -v lfile=$LABELFILE -v binfile=$BINFILE >$TMPFILE <$1 '
 BEGIN {
     addr=0;
     ass["INBOX"]="00";   i["INBOX"]=1;
@@ -19,6 +30,8 @@ BEGIN {
     ass["JUMPN"]="A0";   i["JUMPN"]=2;
     ass["SET"]="E0";     i["SET"]=2;
     ass["HALT"]="F0";    i["HALT"]=1;
+
+    print "v2.0 raw" > binfile;
 }
 
 {
@@ -28,7 +41,9 @@ BEGIN {
         printf("%s:\n",$0);
     }
     else {
-        printf("  %02x: %s %-2s ; %s %s\n",addr,ass[$1],$2,$1,$2);
+        printf("  %02x: %s %-2s ; %s %s\n", addr, ass[$1], $2, $1, $2);
+        printf("%s ",ass[$1]) >> binfile;
+        if( i[$1] == 2) printf("%s ", $2) >> binfile;
         addr+=i[$1];
     }
 }
@@ -36,6 +51,7 @@ BEGIN {
 END { 
     for (label in labelAddr)
        { printf("%s %02x\n", label, labelAddr[label]) >> lfile } ; 
+    print "" >> binfile
 }
 
 '
@@ -43,8 +59,11 @@ END {
 cat $LABELFILE | while read LABEL ADDR 
 do
    sed -i -e "s/ $LABEL / $ADDR /" $TMPFILE
+   sed -i -e "s/ $LABEL / $ADDR /" $BINFILE
 done
 
 cat $TMPFILE
+echo ---
+cat $BINFILE 
 
-rm $LABELFILE $TMPFILE
+rm $LABELFILE #$TMPFILE $BINFILE
