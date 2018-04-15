@@ -5,6 +5,7 @@
     - [Disclaimer](#disclaimer)
     - [CPU Architecture components](#cpu-architecture-components)
 - [Instruction Set Architecture](#instruction-set-architecture)
+    - [Assembler](#assembler)
 - [Microarchitecture](#microarchitecture)
     - [Top module](#top-module)
     - [Control Unit](#control-unit)
@@ -32,7 +33,7 @@
         - [Logisim circuit](#logisim-circuit)
 - [Simulations in Logisim](#simulations-in-logisim)
     - [Year 4](#year-4)
-- [Tools used](#tools-used)
+- [Tools used in this project:](#tools-used-in-this-project)
 
 # Introduction
 
@@ -80,6 +81,8 @@ The instruction set is the one from the HRM game, made of a reduce set of 11 ins
 
 For now, the latest version of the instruction set is described in this [Google Spreadsheet](https://docs.google.com/spreadsheets/d/1WEB_RK878GqC6Xb1BZOdD-QtXDiJCOBEF22lt2ebCDg/edit?usp=sharing).
 
+The following picture shows the instruction set format, and corresponding machine language:
+
 ![](assets/instruction-set.png)
 
 The current implementation status is represented by the color in the first column (Green: implemented in Logisim, white: pending).
@@ -88,11 +91,52 @@ I have added a couple of instructions that were not in the HRM game: SET, and HA
 
 Instruction are encoded with 1 word (8 bit). Some instructions have one  operand which is also encoded with 8 bits. So the length of instruction is variable: some are 1 word wide, others are two words wide.
 
+## Assembler
+
+I have prepared a rudimentary [assembler](https://github.com/adumont/hrm-cpu/blob/harvard/logisim/prog/assembler) that translates an HRM program to the corresponding machine language that can then be loaded into the [PROG (Program ROM)](#prog-program-rom).
+
+This assembler is a shell script that uses awk(1).
+
+Usage:
+
+    $ assembler asmfile
+
+Output:
+
+- prog.BIN: the memory dump that can be loaded into Logisim ROM
+- prog.TXT: pretty print of the program with addresses, machine language, labels, and assembly instructions
+
+Example:
+
+Given a simple program that we save in FILE:
+
+    start:
+    INBOX
+    OUTBOX
+    JUMP start
+
+Let's run the assembler:
+
+    ./assembler FILE
+
+We'll get:
+
+    start:
+    00: 00    ; INBOX 
+    01: 10    ; OUTBOX 
+    02: 80 00 ; JUMP start
+
+And the corresponding machine language memory dump ready to load into PROG:
+
+    v2.0 raw
+    00 10 80 00 
+
+
 # Microarchitecture
 
 The microarchitecture is very loosely inspired from MIPS architecture. The CPU is a multi-cycle CPU with a Harvard design.
 
-The following block diagram shows the components, the data path and control path (in red dashed line).
+The following block diagram shows all the components, the data path and control path (in red dashed line).
 
 ![](assets/HRM-CPU-Harvard.png)
 
@@ -230,7 +274,7 @@ This is a simple example of the game, level 4: in this level, the worker has to 
 
 First let see the level in the game:
 
-[![](https://img.youtube.com/vi/JiQOIyq1n_M/0.jpg)](https://www.youtube.com/watch?v=JiQOIyq1n_M)
+[![](logisim/prog/Year-04/assets/hrm_youtube_preview.png)](https://www.youtube.com/watch?v=JiQOIyq1n_M)
 
 Now, we'll load the same program in our PROG memory, load the INBOX, clear the OUTBOX, and run the simulation in Logisim.
 
@@ -244,6 +288,8 @@ Program:
     05: 20 2  ; COPYFROM 2
     07: 10    ; OUTBOX 
     08: 80 00 ; JUMP init
+
+(That is the output of my rudimentary [assembler](https://github.com/adumont/hrm-cpu/blob/harvard/logisim/prog/assembler))
 
 In Logisim that is:
 
@@ -283,7 +329,7 @@ We clear the OUTBOX:
 
 And we run the simulation:
 
-[![](https://img.youtube.com/vi/S10Yhqw98eg/0.jpg)](https://www.youtube.com/watch?v=S10Yhqw98eg)
+[![](logisim/prog/Year-04/assets/logisim_youtube_preview.png)](https://www.youtube.com/watch?v=S10Yhqw98eg)
 
 Once the CPU halts (after trying to run INBOX instruction on an empty INBOX), we can see the resulting OUTBOX memory:
 
@@ -291,12 +337,17 @@ Once the CPU halts (after trying to run INBOX instruction on an empty INBOX), we
 
 Indeed, the elements have been inverted two by two.
 
-# Tools used
+# Tools used in this project:
 
 Pending to add reference/links.
 
-- Logisim Evolution with FSM Addon
+- [Logisim Evolution, fork with FSM Addon](https://github.com/sderrien/logisim-evolution): this version has an FSM editor, which is regat to design and test FSMs. Unfortunately, it's not based on the latest Logisim Evolution version, nor is it compatible with.
+- [Fizzim](http://www.fizzim.com/): a FREE, open-source GUI-based Java FSM design tool. It can generate Verilog from an FSM design. (unfortunately, apparently not compatible with Logisim Evolution)
 - Visual Studio Code
-- Fizzim
-- Opensource FPGA toolchain
+- Opensource FPGA toolchain ([installer](https://github.com/dcuartielles/open-fpga-install))
+    - Synthesizer: [Yosys](http://www.clifford.at/yosys/) ([github](https://github.com/cliffordwolf/yosys))
+    - Place & Route (PNR): [Arachne-pnr](https://github.com/cseed/arachne-pnr) (on github) 
+    - Utilities and FPGA programmer: [IceStorm Project](http://www.clifford.at/icestorm/)
+    - Verilog Simulator: [Icarus Verilog](http://iverilog.icarus.com/) 
+    - Waveform Viewer: [Gtkwave](http://gtkwave.sourceforge.net/)
 - SchemeIt
