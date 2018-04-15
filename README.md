@@ -31,8 +31,7 @@
     - [ALU](#alu)
         - [Logisim circuit](#logisim-circuit)
 - [Simulations in Logisim](#simulations-in-logisim)
-    - [Example of COPYTO/COPYFROM](#example-of-copytocopyfrom)
-    - [Example of JUMP](#example-of-jump)
+    - [Year 4](#year-4)
 - [Tools used](#tools-used)
 
 # Introduction
@@ -45,6 +44,8 @@ Here's an extract of an article on HRM, posted on [IEEE's Spectrum site](https:/
 >[...]Those in the know will recognize the office worker as a register, the temporary workspace on the office floor as random access memory, and many of the challenges as classic introductory computer science problems.[...]
 
 My resulting CPU design is a **8-bit multi-cycle RISC architecture** with **variable length instructions**.
+
+For impatients, you can see a demo at the end: [HRM Year 4 in Logisim](#year-4).
 
 ## Disclaimer
 
@@ -223,31 +224,72 @@ Notes:
 
 # Simulations in Logisim
 
-## Example of COPYTO/COPYFROM
+## Year 4
 
-Let's consider this simple program, which takes two items from Input, and outputs them in reverse order:
+This is a simple example of the game, level 4: in this level, the worker has to take each pair of elements from Inbox, and put them on the Outbox in reverse order.
 
-```
-    20  INBOX       00
-    21  COPYTO 0    30 00
-    23  INBOX       00
-    24  OUTBOX      10
-    25  COPYFROM 0  20 00
-    27  OUTBOX      10
-    28  HALT        F0
-```
+First let see the level in the game:
 
-TODO: add video, screenshots of Input/Ouput before/after
+(TODO add video - pending Youtube processing...)
 
-## Example of JUMP
+Now, we'll load the same program in our PROG memory, load the INBOX, clear the OUTBOX, and run the simulation in Logisim.
 
-```
-    20  INBOX       00
-    21  OUTBOX      10
-    22  JUMP 20     80 20
-```
+Program:
 
-TODO: add video, screenshots of Input/Ouput before/after
+    init:
+    00: 00    ; INBOX 
+    01: 30 2  ; COPYTO 2
+    03: 00    ; INBOX 
+    04: 10    ; OUTBOX 
+    05: 20 2  ; COPYFROM 2
+    07: 10    ; OUTBOX 
+    08: 80 00 ; JUMP init
+
+In Logisim that is:
+
+    v2.0 raw
+    00 30 2 00 10 20 2 10 80 00 
+
+We load the PROG in Logisim:
+
+![](logisim/prog/Year-04/assets/PROG.png)
+
+Inbox:
+
+The first element of the INBOX memory is the number of elements in the INBOX.
+
+| INBOX  |
+|:------:|
+|  0x06  |
+|  0x03  |
+|  0x09  |
+|  0x5a  |
+|  0x48  |
+|  0x02  |
+|  0x07  |
+
+In Logisim that is:
+
+    v2.0 raw
+    06 03 09 5a 48 02 07
+
+We load the INBOX in Logisim:
+
+![](logisim/prog/Year-04/assets/INBOX.png)
+
+We clear the OUTBOX:
+
+![](logisim/prog/Year-04/assets/OUTBOX-start.png)
+
+And we run the simulation:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/S10Yhqw98eg" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+Once the CPU halts (after trying to run INBOX instruction on an empty INBOX), we can see the resulting OUTBOX memory:
+
+![](logisim/prog/Year-04/assets/OUTBOX-end.png)
+
+Indeed, the elements have been inverted two by two.
 
 # Tools used
 
