@@ -3,8 +3,8 @@ module IR_tb;
     reg clk  = 0;
     reg wIR = 0;
 
-    reg  signed [7:0] nIR;
-    wire signed [7:0] rIR;
+    reg  [7:0] nIR;
+    wire [7:0] rIR;
 
     // Instanciate DUT
     IR IR0 (
