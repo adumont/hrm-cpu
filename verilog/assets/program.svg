@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:s="https://github.com/nturley/netlistsvg" width="300" height="197.5">
+  <style>svg {
+    stroke:#000;
+    fill:none;
+  }
+  text {
+    fill:#000;
+    stroke:none;
+    font-size:10px;
+    font-weight: bold;
+    font-family: "Courier New", monospace;
+  }
+  .nodelabel {
+    text-anchor: middle;
+  }
+  .inputPortLabel {
+    text-anchor: end;
+  }
+  .splitjoinBody {
+    fill:#000;
+  }</style>
+  <g s:type="inputExt" transform="translate(12,16.5)" s:width="30" s:height="20">
+    <text x="15" y="-4" class="nodelabel" s:attribute="ref">Addr</text>
+    <s:alias val="$_inputExt_"/>
+    <path d="M0,0 L0,20 L15,20 L30,10 L15,0 Z"/>
+    <g s:x="28" s:y="10" s:pid="Y"/>
+  </g>
+  <g s:type="inputExt" transform="translate(12,75.5)" s:width="30" s:height="20">
+    <text x="15" y="-4" class="nodelabel" s:attribute="ref">clk</text>
+    <s:alias val="$_inputExt_"/>
+    <path d="M0,0 L0,20 L15,20 L30,10 L15,0 Z"/>
+    <g s:x="28" s:y="10" s:pid="Y"/>
+  </g>
+  <g s:type="outputExt" transform="translate(246,16.5)" s:width="30" s:height="20">
+    <text x="15" y="-4" class="nodelabel" s:attribute="ref">Data</text>
+    <s:alias val="$_outputExt_"/>
+    <path d="M30,0 L30,20 L15,20 L0,10 L15,0 Z"/>
+    <g s:x="0" s:y="10" s:pid="A"/>
+  </g>
+  <g s:type="generic" transform="translate(137,16)" s:width="30" s:height="40">
+    <text x="15" y="-4" class="nodelabel" s:attribute="ref">$mem</text>
+    <rect width="30" height="140" s:generic="body"/>
+    <g transform="translate(0,10)" s:x="0" s:y="10" s:pid="in0">
+      <text x="-3" y="-4" class="inputPortLabel">RD_ADDR</text>
+    </g>
+    <g transform="translate(0,30)" s:x="0" s:y="10" s:pid="in0">
+      <text x="-3" y="-4" class="inputPortLabel">RD_CLK</text>
+    </g>
+    <g transform="translate(0,50)" s:x="0" s:y="10" s:pid="in0">
+      <text x="-3" y="-4" class="inputPortLabel">RD_EN</text>
+    </g>
+    <g transform="translate(0,70)" s:x="0" s:y="10" s:pid="in0">
+      <text x="-3" y="-4" class="inputPortLabel">WR_ADDR</text>
+    </g>
+    <g transform="translate(0,90)" s:x="0" s:y="10" s:pid="in0">
+      <text x="-3" y="-4" class="inputPortLabel">WR_CLK</text>
+    </g>
+    <g transform="translate(0,110)" s:x="0" s:y="10" s:pid="in0">
+      <text x="-3" y="-4" class="inputPortLabel">WR_DATA</text>
+    </g>
+    <g transform="translate(0,130)" s:x="0" s:y="10" s:pid="in0">
+      <text x="-3" y="-4" class="inputPortLabel">WR_EN</text>
+    </g>
+    <g transform="translate(30,10)" s:x="30" s:y="10" s:pid="out0">
+      <text x="5" y="-4" style="fill:#000; stroke:none">RD_DATA</text>
+    </g>
+  </g>
+  <g s:type="constant" transform="translate(12,130.5)" s:width="30" s:height="20">
+    <text x="15" y="-4" class="nodelabel" s:attribute="ref">1</text>
+    <s:alias val="$_constant_"/>
+    <rect width="30" height="20"/>
+    <g s:x="30" s:y="10" s:pid="Y"/>
+  </g>
+  <line x1="168" y1="26.5" x2="246" y2="26.5"/>
+  <line x1="40" y1="26.5" x2="137" y2="26.5"/>
+  <line x1="40" y1="85.5" x2="64" y2="85.5"/>
+  <line x1="64" y1="85.5" x2="64" y2="46.5"/>
+  <line x1="64" y1="46.5" x2="137" y2="46.5"/>
+  <line x1="42" y1="140.5" x2="74" y2="140.5"/>
+  <line x1="74" y1="140.5" x2="74" y2="66.5"/>
+  <line x1="74" y1="66.5" x2="137" y2="66.5"/>
+  <line x1="84" y1="106.5" x2="84" y2="185.5"/>
+  <line x1="84" y1="185.5" x2="84" y2="86.5"/>
+  <line x1="84" y1="86.5" x2="137" y2="86.5"/>
+  <line x1="84" y1="106.5" x2="84" y2="185.5"/>
+  <line x1="84" y1="185.5" x2="84" y2="106.5"/>
+  <circle cx="84" cy="106.5" r="2" style="fill:#000"/>
+  <line x1="84" y1="106.5" x2="137" y2="106.5"/>
+  <line x1="84" y1="106.5" x2="84" y2="185.5"/>
+  <line x1="84" y1="185.5" x2="84" y2="126.5"/>
+  <circle cx="84" cy="126.5" r="2" style="fill:#000"/>
+  <line x1="84" y1="126.5" x2="137" y2="126.5"/>
+  <line x1="84" y1="106.5" x2="84" y2="185.5"/>
+  <line x1="84" y1="185.5" x2="84" y2="146.5"/>
+  <circle cx="84" cy="146.5" r="2" style="fill:#000"/>
+  <line x1="84" y1="146.5" x2="137" y2="146.5"/>
+</svg>
