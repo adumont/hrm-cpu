@@ -230,7 +230,7 @@ This is a simple example of the game, level 4: in this level, the worker has to 
 
 First let see the level in the game:
 
-[![](https://www.youtube.com/watch?v=JiQOIyq1n_M/0.jpg)](https://www.youtube.com/watch?v=JiQOIyq1n_M)
+[![](https://img.youtube.com/vi/JiQOIyq1n_M/0.jpg)](https://www.youtube.com/watch?v=JiQOIyq1n_M)
 
 Now, we'll load the same program in our PROG memory, load the INBOX, clear the OUTBOX, and run the simulation in Logisim.
 
@@ -283,11 +283,11 @@ We clear the OUTBOX:
 
 And we run the simulation:
 
-[![](https://www.youtube.com/watch?v=S10Yhqw98eg/0.jpg)](https://www.youtube.com/watch?v=S10Yhqw98eg)
+[![](https://img.youtube.com/vi/S10Yhqw98eg/0.jpg)](https://www.youtube.com/watch?v=S10Yhqw98eg)
 
 Once the CPU halts (after trying to run INBOX instruction on an empty INBOX), we can see the resulting OUTBOX memory:
 
-![](logisim/prog/Year-04/assets/OUTBOX-end.png)
+![](logisim/prog/Year-04/assets/OUTPUT-end.png)
 
 Indeed, the elements have been inverted two by two.
 
