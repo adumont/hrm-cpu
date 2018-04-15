@@ -5,17 +5,31 @@
     - [Disclaimer](#disclaimer)
     - [CPU Architecture components](#cpu-architecture-components)
 - [Instruction Set Architecture](#instruction-set-architecture)
-- [Micro Architecture](#micro-architecture)
+- [Microarchitecture](#microarchitecture)
     - [Top module](#top-module)
     - [Control Unit](#control-unit)
     - [Inbox](#inbox)
+        - [Logisim circuit](#logisim-circuit)
     - [Outbox](#outbox)
+        - [Logisim circuit](#logisim-circuit)
     - [Register](#register)
+        - [Logisim circuit](#logisim-circuit)
     - [Memory](#memory)
+        - [Logisim circuit](#logisim-circuit)
     - [PC (Program Counter)](#pc-program-counter)
+        - [Logisim circuit](#logisim-circuit)
+        - [Circuit diagram](#circuit-diagram)
+        - [Testbench simulation](#testbench-simulation)
     - [PROG (Program ROM)](#prog-program-rom)
+        - [Logisim circuit](#logisim-circuit)
+        - [Circuit diagram](#circuit-diagram)
+        - [Testbench simulation](#testbench-simulation)
     - [IR (Instruction Register)](#ir-instruction-register)
+        - [Logisim circuit](#logisim-circuit)
+        - [Circuit diagram](#circuit-diagram)
+        - [Testbench simulation](#testbench-simulation)
     - [ALU](#alu)
+        - [Logisim circuit](#logisim-circuit)
 - [Simulations in Logisim](#simulations-in-logisim)
     - [Example of COPYTO/COPYFROM](#example-of-copytocopyfrom)
     - [Example of JUMP](#example-of-jump)
@@ -108,6 +122,8 @@ Note:
 
 ## Inbox
 
+### Logisim circuit
+
 ![](logisim/diagram/INBOX.png)
 
 Notes:
@@ -116,15 +132,21 @@ Notes:
 
 ## Outbox
 
+### Logisim circuit
+
 ![](logisim/diagram/OUTBOX.png)
 
 ## Register
+
+### Logisim circuit
 
 ![](logisim/diagram/R.png)
 
 ## Memory
 
 -  0x00-0x1f: 32 x 1 byte, general purpose ram (*Tiles* in HRM)
+
+### Logisim circuit
 
 ![](logisim/diagram/MEMORY.png)
 
@@ -136,15 +158,48 @@ Notes:
     - Inconditional jump (JUMP) when *( branch && ijump )*
     - Conditional jumps (JUMPZ/N) only when *( branch && aluFlag )*
 
+### Logisim circuit
+
 ![](logisim/diagram/PC.png)
+
+### Circuit diagram
+
+![](verilog/assets/PC.svg)
+
+### Testbench simulation
+
+![](verilog/assets/PC_sim.png)
+
 
 ## PROG (Program ROM)
 
+### Logisim circuit
+
 ![](logisim/diagram/PROG.png)
+
+### Circuit diagram
+
+![](verilog/assets/program.svg)
+
+### Testbench simulation
+
+![](verilog/assets/program_sim.png)
+
 
 ## IR (Instruction Register)
 
+### Logisim circuit
+
 ![](logisim/diagram/IR.png)
+
+### Circuit diagram
+
+![](verilog/assets/IR.svg)
+
+### Testbench simulation
+
+![](verilog/assets/IR_sim.png)
+
 
 ## ALU
 
@@ -161,6 +216,8 @@ The ALU can perform 6 operations depending on signal aluCtl:
 
 Notes:
 - Clearly, aluCtl could be split in two, and its bits reorganized (but it would mean change a lot of things and all the documentation and images...)
+
+### Logisim circuit
 
 ![](logisim/diagram/ALU.png)
 
