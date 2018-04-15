@@ -1,0 +1,27 @@
+[*]
+[*] GTKWave Analyzer v3.3.66 (w)1999-2015 BSI
+[*] Sun Apr 15 13:28:48 2018
+[*]
+[dumpfile] "/home/adumont/projects/hrm-cpu/verilog/IR_tb.vcd"
+[dumpfile_mtime] "Sun Apr 15 13:28:10 2018"
+[dumpfile_size] 705
+[savefile] "/home/adumont/projects/hrm-cpu/verilog/IR_tb.gtkw"
+[timestart] 0
+[size] 1016 591
+[pos] 661 389
+*-3.205735 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] IR_tb.
+[sst_width] 197
+[signals_width] 94
+[sst_expanded] 1
+[sst_vpaned_height] 154
+@22
+IR_tb.nIR[7:0]
+@28
+IR_tb.wIR
+@29
+IR_tb.clk
+@22
+IR_tb.rIR[7:0]
+[pattern_trace] 1
+[pattern_trace] 0

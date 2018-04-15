@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:s="https://github.com/nturley/netlistsvg" width="276" height="157">
+  <style>svg {
+    stroke:#000;
+    fill:none;
+  }
+  text {
+    fill:#000;
+    stroke:none;
+    font-size:10px;
+    font-weight: bold;
+    font-family: "Courier New", monospace;
+  }
+  .nodelabel {
+    text-anchor: middle;
+  }
+  .inputPortLabel {
+    text-anchor: end;
+  }
+  .splitjoinBody {
+    fill:#000;
+  }</style>
+  <g s:type="inputExt" transform="translate(86,125)" s:width="30" s:height="20">
+    <text x="15" y="-4" class="nodelabel" s:attribute="ref">clk</text>
+    <s:alias val="$_inputExt_"/>
+    <path d="M0,0 L0,20 L15,20 L30,10 L15,0 Z"/>
+    <g s:x="28" s:y="10" s:pid="Y"/>
+  </g>
+  <g s:type="inputExt" transform="translate(12,42)" s:width="30" s:height="20">
+    <text x="15" y="-4" class="nodelabel" s:attribute="ref">nIR</text>
+    <s:alias val="$_inputExt_"/>
+    <path d="M0,0 L0,20 L15,20 L30,10 L15,0 Z"/>
+    <g s:x="28" s:y="10" s:pid="Y"/>
+  </g>
+  <g s:type="inputExt" transform="translate(12,101)" s:width="30" s:height="20">
+    <text x="15" y="-4" class="nodelabel" s:attribute="ref">wIR</text>
+    <s:alias val="$_inputExt_"/>
+    <path d="M0,0 L0,20 L15,20 L30,10 L15,0 Z"/>
+    <g s:x="28" s:y="10" s:pid="Y"/>
+  </g>
+  <g s:type="outputExt" transform="translate(225,32)" s:width="30" s:height="20">
+    <text x="15" y="-4" class="nodelabel" s:attribute="ref">rIR</text>
+    <s:alias val="$_outputExt_"/>
+    <path d="M30,0 L30,20 L15,20 L0,10 L15,0 Z"/>
+    <g s:x="0" s:y="10" s:pid="A"/>
+  </g>
+  <g s:type="dff" transform="translate(160,32)" s:width="30" s:height="40">
+    <s:alias val="$dff"/>
+    <s:alias val="$_DFF_"/>
+    <rect width="30" height="40" x="0" y="0"/>
+    <path d="M0,35 L5,30 L0,25"/>
+    <g s:x="30" s:y="10" s:pid="Q"/>
+    <g s:x="0" s:y="30" s:pid="CLK"/>
+    <g s:x="0" s:y="10" s:pid="D"/>
+  </g>
+  <g s:type="mux" transform="translate(95.66666666666667,22)" s:width="20" s:height="40">
+    <s:alias val="$pmux"/>
+    <s:alias val="$mux"/>
+    <s:alias val="$_MUX_"/>
+    <path d="M0,0 L20,10 L20,30 L0,40 Z"/>
+    <g s:x="0" s:y="10" s:pid="A"/>
+    <g s:x="0" s:y="30" s:pid="B"/>
+    <g s:x="10" s:y="35" s:pid="S"/>
+    <g s:x="20" s:y="20" s:pid="Y"/>
+  </g>
+  <line x1="190" y1="42" x2="225" y2="42"/>
+  <line x1="190" y1="42" x2="200" y2="42"/>
+  <line x1="200" y1="42" x2="200" y2="12"/>
+  <line x1="200" y1="12" x2="61" y2="12"/>
+  <line x1="61" y1="12" x2="61" y2="32"/>
+  <circle cx="200" cy="42" r="2" style="fill:#000"/>
+  <line x1="61" y1="32" x2="95.66666666666667" y2="32"/>
+  <line x1="114" y1="135" x2="135" y2="135"/>
+  <line x1="135" y1="135" x2="135" y2="62"/>
+  <line x1="135" y1="62" x2="160" y2="62"/>
+  <line x1="115.66666666666667" y1="42" x2="160" y2="42"/>
+  <line x1="40" y1="52" x2="95.66666666666667" y2="52"/>
+  <line x1="40" y1="111" x2="105.66666666666667" y2="111"/>
+  <line x1="105.66666666666667" y1="111" x2="105.66666666666667" y2="57"/>
+</svg>
