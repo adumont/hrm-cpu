@@ -230,7 +230,7 @@ This is a simple example of the game, level 4: in this level, the worker has to 
 
 First let see the level in the game:
 
-(TODO add video - pending Youtube processing...)
+[![](https://www.youtube.com/watch?v=JiQOIyq1n_M/0.jpg)](https://www.youtube.com/watch?v=JiQOIyq1n_M)
 
 Now, we'll load the same program in our PROG memory, load the INBOX, clear the OUTBOX, and run the simulation in Logisim.
 
@@ -283,7 +283,7 @@ We clear the OUTBOX:
 
 And we run the simulation:
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/S10Yhqw98eg" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+[![](https://www.youtube.com/watch?v=S10Yhqw98eg/0.jpg)](https://www.youtube.com/watch?v=S10Yhqw98eg)
 
 Once the CPU halts (after trying to run INBOX instruction on an empty INBOX), we can see the resulting OUTBOX memory:
 
