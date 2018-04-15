@@ -48,7 +48,7 @@ $(MODULE).json: $(MODULE).v $(DEPS)
 
 assets/$(MODULE).svg: $(MODULE).json
 
-	netlistsvg $(MODULE).json -o assets/$(MODULE).svg
+	netlistsvg $(MODULE).json -o assets/$(MODULE).svg && rm $(MODULE).json
 
 upload: $(MODULE).bin
 
