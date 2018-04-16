@@ -1,0 +1,7 @@
+init:
+  00: 00    ; INBOX 
+  01: 30 0  ; COPYTO 0
+  03: 00    ; INBOX 
+  04: 40 0  ; ADD 0
+  06: 10    ; OUTBOX 
+  07: 80 00 ; JUMP init
