@@ -15,6 +15,8 @@
         - [Logisim circuit](#logisim-circuit)
     - [Register](#register)
         - [Logisim circuit](#logisim-circuit)
+        - [Circuit diagram](#circuit-diagram)
+        - [Testbench simulation](#testbench-simulation)
     - [Memory](#memory)
         - [Logisim circuit](#logisim-circuit)
     - [PC (Program Counter)](#pc-program-counter)
@@ -207,6 +209,14 @@ TODO:
 ### Logisim circuit
 
 ![](logisim/diagram/R.png)
+
+### Circuit diagram
+
+![](verilog/assets/register.svg)
+
+### Testbench simulation
+
+![](verilog/assets/register_sim.png)
 
 ## Memory
 
