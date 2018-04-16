@@ -50,11 +50,11 @@ For impatients, you can see a demo at the end: [HRM Year 4 in Logisim](#year-4).
 
 ## Disclaimer
 
-- I'm not an Computer Science Engineer, nor a hardware engineer. I'm a novice in digital electronics, but I enjoy learning from books, youtube videos and tutorials online.
+- I'm not a Computer Science Engineer, nor a hardware engineer. I'm a novice in digital electronics, but I enjoy learning from books, youtube videos and tutorials online.
 - This is a strictly personal project, with entertaining and educational objectives exlusively.
 - It's not optimized in any way. I'll be happy if it even gets to work.
 - It's a work in progress, so it's incomplete (and may never be complete).
-- Documentation is also incomplete (and may never be complete).
+- ALthough I try to be thorough, this documentation is incomplete (and may never be complete).
 
 ## CPU Architecture components
 
@@ -62,14 +62,14 @@ We can see how the game actually represents a CPU and it's internals.
 
 Here are some elements that make our analogy:
 
-| HRM  element  |  #   |CPU element          |
-| ------------- |:---: |-------------------- |
-| Office Worker | 1    |Register             |
-| In/Out belts  | 2, 3 |I/O                  |
-| Floor Tiles   | 4    |Memory (RAM)         |
-| Program       | 5    | Instructions             |
-|               | 6    |Program Counter      |
-|               | 7    |Instruction Register |
+| HRM  components | #     | CPU components       |
+| --------------- | :---: | -------------------- |
+| Office Worker   | 1     | Register             |
+| In/Out belts    | 2, 3  | I/O                  |
+| Floor Tiles     | 4     | Memory (RAM)         |
+| Program         | 5     | Program Memory       |
+|                 | 6     | Program Counter      |
+|                 | 7     | Instruction Register |
 
 ![](assets/hrm_04-labels.png)
 
@@ -77,7 +77,7 @@ Here are some elements that make our analogy:
 
 The instruction set is the one from the HRM game, made of a reduce set of 11 instructions, 6 of which can function in direct and indirect addressing modes.
 
-*TODO: for now, I'm only focusing on Direct Addressing mode. Indirect mode will require some changes in the Control Unit.*
+TODO: #4 Implement Indirect addressing mode
 
 For now, the latest version of the instruction set is described in this [Google Spreadsheet](https://docs.google.com/spreadsheets/d/1WEB_RK878GqC6Xb1BZOdD-QtXDiJCOBEF22lt2ebCDg/edit?usp=sharing).
 
@@ -167,13 +167,27 @@ Note:
 
 ## Inbox
 
+We load the Inbox with some elements. The first element of the inbox is expected to be the length of the inbox (that is the number of elements).
+
 ### Logisim circuit
+
+In an initial design, the length of the inbox was fixed (see the 04 at the input of the comparator?).
 
 ![](logisim/diagram/INBOX.png)
 
+Then I designed a small FSM inside the Inbox module that reads the first element, and sets the length of the queue. It then position the cursor on the actual first element of the Inbox, ready for the program to consume it.
+
+This is the resulting design:
+
+![](logisim/diagram/INBOX-2.png)
+
+The INBOX FSM is very simple. (for some reason, I was unable to create it in Logisim with 2-bit states encoding, that's probaby a bug. That's why it has 3 bit state encoding.)
+
+![](logisim/diagram/INBOX-2-FSM.png)
+
 Notes:
-- When all the elements have been read (popped out of the IN belt)
-, the empty signal is asserted. Next INBOX instructions will go to HALT state.
+- When all the elements have been read (popped out of the IN belt), the empty signal is asserted. Once empty = 1, any INBOX instruction will go to HALT state and the program with stop.
+- TODO: See #1
 
 ## Outbox
 
@@ -251,16 +265,16 @@ Notes:
 The ALU can perform 6 operations depending on signal aluCtl:
 
 | aluCtl | Operation | Output |
-|:------:|:---------:|:------:|
-|  0x0   |  R + M    | aluOut |
-|  0x1   |  R - M    | aluOut |
-|  x1x   |  R = 0 ?  | flag   |
-|  0x1   |  R < 0 ?  | flag   |
-|  1x0   |  M + 1    | aluOut |
-|  1x1   |  M - 1    | aluOut |
+| :----: | :-------: | :----: |
+| 0x0    | R + M     | aluOut |
+| 0x1    | R - M     | aluOut |
+| x1x    | R = 0 ?   | flag   |
+| 0x1    | R < 0 ?   | flag   |
+| 1x0    | M + 1     | aluOut |
+| 1x1    | M - 1     | aluOut |
 
 Notes:
-- Clearly, aluCtl could be split in two, and its bits reorganized (but it would mean change a lot of things and all the documentation and images...)
+- TODO: #3 ALU: split aluCtl in two 
 
 ### Logisim circuit
 
@@ -281,17 +295,17 @@ Now, we'll load the same program in our PROG memory, load the INBOX, clear the O
 Program:
 
     init:
-    00: 00    ; INBOX 
-    01: 30 2  ; COPYTO 2
-    03: 00    ; INBOX 
-    04: 10    ; OUTBOX 
-    05: 20 2  ; COPYFROM 2
-    07: 10    ; OUTBOX 
-    08: 80 00 ; JUMP init
+      00: 00    ; INBOX 
+      01: 30 2  ; COPYTO 2
+      03: 00    ; INBOX 
+      04: 10    ; OUTBOX 
+      05: 20 2  ; COPYFROM 2
+      07: 10    ; OUTBOX 
+      08: 80 00 ; JUMP init
 
-(That is the output of my rudimentary [assembler](https://github.com/adumont/hrm-cpu/blob/harvard/logisim/prog/assembler))
+(This is the output of my [Assembler](#assembler))
 
-In Logisim that is:
+The corresponding Logisim memory dump (machine language) is:
 
     v2.0 raw
     00 30 2 00 10 20 2 10 80 00 
@@ -302,17 +316,17 @@ We load the PROG in Logisim:
 
 Inbox:
 
-The first element of the INBOX memory is the number of elements in the INBOX.
+The first element of the INBOX memory is the length (number of elements) of the INBOX.
 
-| INBOX  |
-|:------:|
-|  0x06  |
-|  0x03  |
-|  0x09  |
-|  0x5a  |
-|  0x48  |
-|  0x02  |
-|  0x07  |
+| INBOX |
+| :---: |
+| 0x06  |
+| 0x03  |
+| 0x09  |
+| 0x5a  |
+| 0x48  |
+| 0x02  |
+| 0x07  |
 
 In Logisim that is:
 
@@ -335,7 +349,16 @@ Once the CPU halts (after trying to run INBOX instruction on an empty INBOX), we
 
 ![](logisim/prog/Year-04/assets/OUTPUT-end.png)
 
-Indeed, the elements have been inverted two by two.
+Indeed, we can verify that the elements have been inverted two by two:
+
+| OUTBOX |
+| :----: |
+| 0x09   |
+| 0x03   |
+| 0x48   |
+| 0x5a   |
+| 0x07   |
+| 0x02   |
 
 # Tools used in this project:
 
