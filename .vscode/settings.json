@@ -1,0 +1,5 @@
+{
+    // Range of levels for table of contents. Use `x..y` for level x to y
+    "markdown.extension.toc.levels": "1..2"
+
+}
