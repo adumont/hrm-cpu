@@ -173,7 +173,7 @@ The INBOX FSM is very simple. (for some reason, I was unable to create it in Log
 ![](logisim/diagram/INBOX-2-FSM.png)
 
 Notes:
-- When all the elements have been read (popped out of the IN belt), the empty signal is asserted. Once empty = 1, any INBOX instruction will go to HALT state and the program with stop.
+- When all the elements have been read (popped out of the IN belt), the empty signal is asserted. Once empty = 1, any INBOX instruction will wait until a new element is loaded in INBOX. At this time, the elements in INBOX si fixed, so that's equivalent to ending the program. Whenever I'll add a UART-RX at this end, it will allow the CPU to process items endlessly.
 
 TODO:
 - Transform INBOX into a FIFO [#1](https://github.com/adumont/hrm-cpu/issues/1)
