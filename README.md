@@ -268,19 +268,23 @@ TODO:
 
 ## ALU
 
-The ALU can perform 6 operations depending on signal aluCtl:
+The ALU can perform 6 different operations selectable via aluCtl[2:0]:
 
-| aluCtl | Operation | Output |
-| :----: | :-------: | :----: |
-| 0x0    | R + M     | aluOut |
-| 0x1    | R - M     | aluOut |
-| x1x    | R = 0 ?   | flag   |
-| 0x1    | R < 0 ?   | flag   |
-| 1x0    | M + 1     | aluOut |
-| 1x1    | M - 1     | aluOut |
+- 4 Arithmetic operations, selectable via aluCtl[1:0]:
 
-TODO:
-- Split aluCtl in two [#3](https://github.com/adumont/hrm-cpu/issues/3)
+| aluCtl[1:0] | Operation | Output |
+| :---------: | :-------: | :----: |
+| 00          | R + M     | aluOut |
+| 01          | R - M     | aluOut |
+| 10          | M + 1     | aluOut |
+| 11          | M - 1     | aluOut |
+
+- 2 comparison operations, which will be used in JUMPZ/JUMPN, selectable via aluCtl[2]:
+
+| aluCtl[2] | Operation | Output |
+| :-------: | :-------: | :----: |
+| 0         | R = 0 ?   | flag   |
+| 1         | R < 0 ?   | flag   |
 
 ### Logisim circuit
 
