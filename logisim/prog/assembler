@@ -58,8 +58,8 @@ END {
 
 cat $LABELFILE | while read LABEL ADDR 
 do
-   sed -i -e "s/ $LABEL / $ADDR /" $TMPFILE
-   sed -i -e "s/ $LABEL / $ADDR /" $BINFILE
+   sed -i -e "s/ $LABEL / $ADDR /g" $TMPFILE
+   sed -i -e "s/ $LABEL / $ADDR /g" $BINFILE
 done
 
 cat $TMPFILE
