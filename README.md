@@ -2,8 +2,9 @@
 
 - [Human Resource Machine CPU (Verilog)](#human-resource-machine-cpu-verilog)
 - [Introduction](#introduction)
-    - [Disclaimer](#disclaimer)
     - [CPU Architecture components](#cpu-architecture-components)
+    - [Project status](#project-status)
+    - [Disclaimer](#disclaimer)
 - [Instruction Set Architecture](#instruction-set-architecture)
     - [Assembler](#assembler)
 - [Microarchitecture](#microarchitecture)
@@ -23,24 +24,16 @@
 
 # Introduction
 
-This personal project aims at designing a soft core CPU in Verilog , synthetizable in an FPGA that behaves like the game [Human Resource Machine](https://tomorrowcorporation.com/humanresourcemachine) by Tomorrow Corp.
+This personal project aims at designing a soft core CPU in Verilog, synthetizable in an FPGA that will behave like the gameplay of [Human Resource Machine](https://tomorrowcorporation.com/humanresourcemachine) by Tomorrow Corp.
 
 Here's an extract of an article on HRM, posted on [IEEE's Spectrum site](https://spectrum.ieee.org/geek-life/reviews/three-computer-games-that-make-assembly-language-fun):
 >In this game the player takes on the role of an office worker who must handle numbers and letters arriving on an “in” conveyor belt and put the desired results on an “out” conveyor belt.
 >
 >[...]Those in the know will recognize the office worker as a register, the temporary workspace on the office floor as random access memory, and many of the challenges as classic introductory computer science problems.[...]
 
-My resulting CPU design is a **8-bit multi-cycle RISC architecture** with **variable length instructions**.
+My *HRM CPU* design is an **8-bit multi-cycle RISC CPU** based on **Harvard architecture** with **variable length instructions**.
 
-For impatients, you can see a demo at the end: [HRM Year 4 in Logisim](#year-4).
-
-## Disclaimer
-
-- I'm not a Computer Science Engineer, nor a hardware engineer. I'm a novice in digital electronics, but I enjoy learning from books, youtube videos and tutorials online.
-- This is a strictly personal project, with entertaining and educational objectives exlusively.
-- It's not optimized in any way. I'll be happy if it even gets to work.
-- It's a work in progress, so it's incomplete (and may never be complete).
-- ALthough I try to be thorough, this documentation is incomplete (and may never be complete).
+**TL;DR**: For the impatients, you can see this demo at the end: [HRM Year 4 in Logisim](#year-4).
 
 ## CPU Architecture components
 
@@ -58,6 +51,18 @@ Here are some elements that make our analogy:
 |                 | 7     | Instruction Register |
 
 ![](assets/hrm_04-labels.png)
+
+## Project status
+
+![](assets/status.png)
+
+## Disclaimer
+
+- I'm a passionate hobbist with a recent interest in digital electronics: I'm not a Computer Science Engineer, nor a hardware engineer. I enjoy learning from books, youtube videos and tutorials online. This project is about practicing and learning.
+- This is a strictly personal project, with entertaining and educational objectives exlusively, not commercial nor industrial.
+- It's not optimized in any way. I'll be happy if it even gets to work.
+- It's a work in progress, so it's incomplete (and may never be complete).
+- ALthough I try to be thorough, this documentation is incomplete (and may never be complete).
 
 # Instruction Set Architecture
 
