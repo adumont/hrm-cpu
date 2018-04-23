@@ -2,6 +2,6 @@ init:
 INBOX
 COPYTO 4
 INBOX
-ADD 4
+SUB 4
 OUTBOX
 JUMP init

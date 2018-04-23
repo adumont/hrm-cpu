@@ -2,6 +2,6 @@ init:
   00: 00    ; INBOX 
   01: 30 4  ; COPYTO 4
   03: 00    ; INBOX 
-  04: 40 4  ; ADD 4
+  04: 50 4  ; SUB 4
   06: 10    ; OUTBOX 
   07: 80 00 ; JUMP init

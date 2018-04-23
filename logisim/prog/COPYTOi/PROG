@@ -1,0 +1,4 @@
+init:
+INBOX
+COPYTO 5
+JUMP init
