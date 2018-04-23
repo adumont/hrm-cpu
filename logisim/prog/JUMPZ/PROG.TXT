@@ -1,0 +1,5 @@
+init:
+  00: 00    ; INBOX 
+  01: 90 00 ; JUMPZ init
+  03: 10    ; OUTBOX 
+  04: 80 00 ; JUMP init

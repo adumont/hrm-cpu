@@ -1,0 +1,5 @@
+init:
+INBOX
+JUMPN init
+OUTBOX
+JUMP init
