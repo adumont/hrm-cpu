@@ -37,9 +37,7 @@ My *HRM CPU* design is an **8-bit multi-cycle RISC CPU** based on **Harvard arch
 
 ## CPU Architecture components
 
-We can see how the game actually represents a CPU and it's internals.
-
-Here are some elements that make our analogy:
+We can see how the game actually represents a CPU and its internal components:
 
 | HRM  components | #     | CPU components       |
 | --------------- | :---: | -------------------- |
