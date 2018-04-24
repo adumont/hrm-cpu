@@ -151,7 +151,7 @@ Control Signals:
 
 Below is the corresponding FSM:
 
-![](assets/control-unit-FSM.png)
+[![](assets/control-unit-FSM.png)](assets/control-unit-FSM.png)
 
 Note:
 - Logisim FSM addon tool doesn't seem to allow transition to the same state, that is why the HALT state doesn't have any transition out of it. It should loop on itself. Anyway in Logisim's simulation it behaves as expected.
