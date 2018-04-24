@@ -1,0 +1,5 @@
+  00: 20 4  ; COPYFROM 4
+  02: 40 5  ; ADD 5
+  04: 60 5  ; BUMP+ 5
+  06: 10    ; OUTBOX 
+  07: F0    ; HALT 
