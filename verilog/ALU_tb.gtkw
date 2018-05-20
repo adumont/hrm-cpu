@@ -1,0 +1,28 @@
+[*]
+[*] GTKWave Analyzer v3.3.66 (w)1999-2015 BSI
+[*] Sun May 20 14:24:01 2018
+[*]
+[dumpfile] "/home/adumont/projects/hrm-cpu/verilog/ALU_tb.vcd"
+[dumpfile_mtime] "Sun May 20 14:23:36 2018"
+[dumpfile_size] 877
+[savefile] "/home/adumont/projects/hrm-cpu/verilog/ALU_tb.gtkw"
+[timestart] 0
+[size] 1475 911
+[pos] -1 -1
+*-1.836501 2 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] ALU_tb.
+[sst_width] 197
+[signals_width] 176
+[sst_expanded] 1
+[sst_vpaned_height] 267
+@420
+ALU_tb.alu0.inR[7:0]
+ALU_tb.alu0.inM[7:0]
+@28
+ALU_tb.alu0.aluCtl[2:0]
+@420
+ALU_tb.alu0.aluOut[7:0]
+@28
+ALU_tb.alu0.flag
+[pattern_trace] 1
+[pattern_trace] 0

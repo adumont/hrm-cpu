@@ -289,6 +289,15 @@ The ALU can perform 6 different operations selectable via aluCtl[2:0]:
 
 ![](logisim/diagram/ALU.png)
 
+### Circuit diagram
+
+![](verilog/assets/ALU.svg)
+
+### Testbench simulation
+
+![](verilog/assets/ALU_sim.png)
+
+
 # Simulations in Logisim
 
 ## Year 4
