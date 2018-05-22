@@ -694,17 +694,6 @@
                 wR
             </text>
         </g>
-        <rect x="692.1" y="845.1" width="1.8" height="1.8" fill="#000000"
-              stroke="none" pointer-events="none"/>
-        <path d="M 693 846.9 L 693 863.1" fill="#000000" stroke="#000000"
-              stroke-width="1.8" stroke-linecap="square" stroke-miterlimit="10"
-              pointer-events="none"/>
-        <g fill="#bf0000" font-family="Arial,Helvetica" font-weight="bold"
-           text-anchor="middle" font-size="10.8px">
-            <text x="692.5" y="875.7">
-                fb
-            </text>
-        </g>
         <rect x="998.1" y="845.1" width="1.8" height="1.8" fill="#000000"
               stroke="none" pointer-events="none"/>
         <path d="M 999 846.9 L 999 863.1" fill="#000000" stroke="#000000"
@@ -760,14 +749,25 @@
                 wIR
             </text>
         </g>
-        <rect x="773.1" y="845.1" width="1.8" height="1.8" fill="#000000"
+        <rect x="764.1" y="845.1" width="1.8" height="1.8" fill="#000000"
               stroke="none" pointer-events="none"/>
-        <path d="M 774 846.9 L 774 863.1" fill="#000000" stroke="#000000"
+        <path d="M 765 846.9 L 765 863.1" fill="#000000" stroke="#000000"
               stroke-width="1.8" stroke-linecap="square" stroke-miterlimit="10"
               pointer-events="none"/>
         <g fill="#bf0000" font-family="Arial,Helvetica" font-weight="bold"
            text-anchor="middle" font-size="10.8px">
-            <text x="773.5" y="875.7">
+            <text x="764.5" y="875.7">
+                wAR
+            </text>
+        </g>
+        <rect x="683.1" y="845.1" width="1.8" height="1.8" fill="#000000"
+              stroke="none" pointer-events="none"/>
+        <path d="M 684 846.9 L 684 863.1" fill="#000000" stroke="#000000"
+              stroke-width="1.8" stroke-linecap="square" stroke-miterlimit="10"
+              pointer-events="none"/>
+        <g fill="#bf0000" font-family="Arial,Helvetica" font-weight="bold"
+           text-anchor="middle" font-size="10.8px">
+            <text x="683.5" y="875.7">
                 srcA
             </text>
         </g>
@@ -861,49 +861,47 @@
         <path d="M 1197 846 L 1197 324 L 918 324 L 918 297" fill="none"
               stroke="#bf0000" stroke-width="1.8" stroke-miterlimit="10"
               stroke-dasharray="1.8 1.8" pointer-events="none"/>
-        <rect x="756" y="612" width="36" height="63" fill="#efd3d2"
+        <rect x="666" y="612" width="36" height="63" fill="#efd3d2"
               stroke="#000000" pointer-events="none"/>
-        <rect x="773.1" y="692.1" width="1.8" height="1.8" fill="#000000"
+        <rect x="683.1" y="692.1" width="1.8" height="1.8" fill="#000000"
               stroke="none" pointer-events="none"/>
-        <path d="M 774 675.9 L 774 692.1" fill="#000000" stroke="#000000"
+        <path d="M 684 675.9 L 684 692.1" fill="#000000" stroke="#000000"
               stroke-width="1.8" stroke-linecap="square" stroke-miterlimit="10"
               pointer-events="none"/>
         <g fill="#bf0000" font-family="Arial,Helvetica" font-weight="bold"
            text-anchor="middle" font-size="10.8px">
-            <text x="773.5" y="669.5">
+            <text x="683.5" y="669.5">
                 srcA
             </text>
         </g>
-        <rect x="809.1" y="647.1" width="1.8" height="1.8" fill="#000000"
+        <rect x="719.1" y="647.1" width="1.8" height="1.8" fill="#000000"
               stroke="none" pointer-events="none"/>
-        <path d="M 792.9 648 L 809.1 648" fill="#000000" stroke="#000000"
+        <path d="M 702.9 648 L 719.1 648" fill="#000000" stroke="#000000"
               stroke-width="1.8" stroke-linecap="square" stroke-miterlimit="10"
               pointer-events="none"/>
-        <rect x="737.1" y="620.1" width="1.8" height="1.8" fill="#000000"
+        <rect x="647.1" y="620.1" width="1.8" height="1.8" fill="#000000"
               stroke="none" pointer-events="none"/>
-        <path d="M 738.9 621 L 755.1 621" fill="#000000" stroke="#000000"
-              stroke-width="1.8" stroke-linecap="square" stroke-miterlimit="10"
-              pointer-events="none"/>
-        <g fill="#007f00" font-family="Arial,Helvetica" font-weight="bold"
-           font-size="10.8px">
-            <text x="757.8" y="624.1">
-                0
-            </text>
-        </g>
-        <rect x="737.1" y="656.1" width="1.8" height="1.8" fill="#000000"
-              stroke="none" pointer-events="none"/>
-        <path d="M 738.9 657 L 755.1 657" fill="#000000" stroke="#000000"
+        <path d="M 648.9 621 L 665.1 621" fill="#000000" stroke="#000000"
               stroke-width="1.8" stroke-linecap="square" stroke-miterlimit="10"
               pointer-events="none"/>
         <g fill="#007f00" font-family="Arial,Helvetica" font-weight="bold"
            font-size="10.8px">
-            <text x="757.8" y="660.1">
+            <text x="667.8" y="624.1">
                 1
             </text>
         </g>
-        <path d="M 810 648 L 828 648" fill="none" stroke="#000000"
-              stroke-width="1.8" stroke-miterlimit="10" pointer-events="none"/>
-        <path d="M 774 846 L 774 702 L 774 693" fill="none" stroke="#bf0000"
+        <rect x="647.1" y="647.1" width="1.8" height="1.8" fill="#000000"
+              stroke="none" pointer-events="none"/>
+        <path d="M 648.9 648 L 665.1 648" fill="#000000" stroke="#000000"
+              stroke-width="1.8" stroke-linecap="square" stroke-miterlimit="10"
+              pointer-events="none"/>
+        <g fill="#007f00" font-family="Arial,Helvetica" font-weight="bold"
+           font-size="10.8px">
+            <text x="667.8" y="651.1">
+                0
+            </text>
+        </g>
+        <path d="M 684 846 L 684 702 L 684 693" fill="none" stroke="#bf0000"
               stroke-width="1.8" stroke-miterlimit="10"
               stroke-dasharray="1.8 1.8" pointer-events="none"/>
         <path d="M 324 846 L 324 540 L 360 540" fill="none" stroke="#bf0000"
@@ -933,43 +931,49 @@
                 </div>
             </foreignObject>
         </g>
-        <rect x="675" y="603" width="36" height="27" fill="#efd3d2"
+        <rect x="747" y="630" width="36" height="27" fill="#efd3d2"
               stroke="#000000" pointer-events="none"/>
-        <rect x="656.1" y="620.1" width="1.8" height="1.8" fill="#000000"
+        <rect x="728.1" y="647.1" width="1.8" height="1.8" fill="#000000"
               stroke="none" pointer-events="none"/>
-        <path d="M 657.9 621 L 674.1 621" fill="#000000" stroke="#000000"
+        <path d="M 729.9 648 L 746.1 648" fill="#000000" stroke="#000000"
               stroke-width="1.8" stroke-linecap="square" stroke-miterlimit="10"
               pointer-events="none"/>
-        <rect x="728.1" y="620.1" width="1.8" height="1.8" fill="#000000"
+        <rect x="800.1" y="647.1" width="1.8" height="1.8" fill="#000000"
               stroke="none" pointer-events="none"/>
-        <path d="M 711.9 621 L 728.1 621" fill="#000000" stroke="#000000"
+        <path d="M 783.9 648 L 800.1 648" fill="#000000" stroke="#000000"
               stroke-width="1.8" stroke-linecap="square" stroke-miterlimit="10"
               pointer-events="none"/>
-        <rect x="701.1" y="584.1" width="1.8" height="1.8" fill="#000000"
+        <rect x="773.1" y="611.1" width="1.8" height="1.8" fill="#000000"
               stroke="none" pointer-events="none"/>
-        <path d="M 702 585.9 L 702 602.1" fill="#000000" stroke="#000000"
+        <path d="M 774 612.9 L 774 629.1" fill="#000000" stroke="#000000"
               stroke-width="1.8" stroke-linecap="square" stroke-miterlimit="10"
               pointer-events="none"/>
         <g fill="#000000" font-family="Arial,Helvetica" font-weight="bold"
            text-anchor="middle" font-size="10.8px">
-            <text x="701.5" y="614.7">
+            <text x="773.5" y="641.7">
                 V
             </text>
         </g>
-        <rect x="692.1" y="647.1" width="1.8" height="1.8" fill="#000000"
+        <rect x="764.1" y="674.1" width="1.8" height="1.8" fill="#000000"
               stroke="none" pointer-events="none"/>
-        <path d="M 693 630.9 L 693 647.1" fill="#000000" stroke="#000000"
+        <path d="M 765 657.9 L 765 674.1" fill="#000000" stroke="#000000"
               stroke-width="1.8" stroke-linecap="square" stroke-miterlimit="10"
               pointer-events="none"/>
         <g fill="#bf0000" font-family="Arial,Helvetica" font-weight="bold"
            text-anchor="middle" font-size="10.8px">
-            <text x="692.5" y="624.5">
-                fb
+            <text x="764.5" y="651.5">
+                wAR
             </text>
         </g>
-        <path d="M 729 621 L 738 621 L 738 621" fill="none" stroke="#0000ff"
-              stroke-width="1.8" stroke-miterlimit="10" pointer-events="none"/>
-        <path d="M 693 648 L 693 846" fill="none" stroke="#bf0000"
+        <rect x="747" y="612" width="15.3" height="12.6" fill-opacity="0"
+              fill="#dae2f2" stroke="none" pointer-events="none"/>
+        <g fill="#000000" font-family="Arial,Helvetica" font-weight="bold"
+           text-anchor="middle" font-size="10.8px">
+            <text x="754.65" y="621.9">
+                AR
+            </text>
+        </g>
+        <path d="M 765 675 L 765 846" fill="none" stroke="#bf0000"
               stroke-width="1.8" stroke-miterlimit="10"
               stroke-dasharray="1.8 1.8" pointer-events="none"/>
         <rect x="801" y="684" width="45" height="27" fill="transparent"
@@ -1041,20 +1045,27 @@
               stroke-miterlimit="10" pointer-events="none"/>
         <ellipse cx="414" cy="342" rx="1.8" ry="1.8" fill="#000000"
                  stroke="#000000" stroke-width="1.8" pointer-events="none"/>
-        <path d="M 657 621 L 657 576 L 954 576 L 954 657" fill="none"
-              stroke="#0000ff" stroke-width="1.8" stroke-miterlimit="10"
-              pointer-events="none"/>
-        <path d="M 738 657 L 567 657 L 567 343.8" fill="none" stroke="#000000"
+        <path d="M 631.8 576 L 954 576 L 954 657" fill="none" stroke="#0000ff"
+              stroke-width="1.8" stroke-miterlimit="10" pointer-events="none"/>
+        <ellipse cx="630" cy="576" rx="1.8" ry="1.8" fill="#0000ff"
+                 stroke="#0000ff" stroke-width="1.8" pointer-events="none"/>
+        <path d="M 648 648 L 567 648 L 567 343.8" fill="none" stroke="#000000"
               stroke-width="1.8" stroke-miterlimit="10" pointer-events="none"/>
         <ellipse cx="567" cy="342" rx="1.8" ry="1.8" fill="#000000"
                  stroke="#000000" stroke-width="1.8" pointer-events="none"/>
         <path d="M 963 252 L 963 153 L 297 153 L 297 306 L 315 306" fill="none"
               stroke="#000000" stroke-width="1.8" stroke-miterlimit="10"
               pointer-events="none"/>
-        <path d="M 486 522 L 486 522 L 486 576 L 655.2 576" fill="none"
+        <path d="M 486 522 L 486 522 L 486 576 L 630 576" fill="none"
               stroke="#0000ff" stroke-width="1.8" stroke-miterlimit="10"
               pointer-events="none"/>
-        <ellipse cx="657" cy="576" rx="1.8" ry="1.8" fill="#0000ff"
+        <path d="M 801 648 L 828 648" fill="none" stroke="#000000"
+              stroke-width="1.8" stroke-miterlimit="10" pointer-events="none"/>
+        <path d="M 720 648 L 729 648" fill="none" stroke="#000000"
+              stroke-width="1.8" stroke-miterlimit="10" pointer-events="none"/>
+        <path d="M 648 621 L 630 621 L 630 577.8" fill="none" stroke="#0000ff"
+              stroke-width="1.8" stroke-miterlimit="10" pointer-events="none"/>
+        <ellipse cx="630" cy="576" rx="1.8" ry="1.8" fill="#0000ff"
                  stroke="#0000ff" stroke-width="1.8" pointer-events="none"/>
     </g>
 </svg>
