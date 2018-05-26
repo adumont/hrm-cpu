@@ -14,22 +14,32 @@ LABELFILE=$( mktemp )
 TMPFILE=$DIRNAME/$BASENAME.TXT
 BINFILE=$DIRNAME/$BASENAME.BIN
 
-awk -v lfile=$LABELFILE -v binfile=$BINFILE >$TMPFILE <$1 '
+cat $1 | tr -s "[]" "@@" | sed -r -e "s/([a-zA-Z+-]+)\s+@([0-9]+)@/i\1 \2/g" |
+    awk -v lfile=$LABELFILE -v binfile=$BINFILE >$TMPFILE '
 BEGIN {
     addr=0;
-    ass["INBOX"]="00";   i["INBOX"]=1;
-    ass["OUTBOX"]="10";  i["OUTBOX"]=1;
-    ass["COPYFROM"]="20";i["COPYFROM"]=2;
-    ass["COPYTO"]="30";  i["COPYTO"]=2;
-    ass["ADD"]="40";     i["ADD"]=2;
-    ass["SUB"]="50";     i["SUB"]=2;
-    ass["BUMP+"]="60";   i["BUMP+"]=2;
-    ass["BUMP-"]="70";   i["BUMP-"]=2;
-    ass["JUMP"]="80";    i["JUMP"]=2;
-    ass["JUMPZ"]="90";   i["JUMPZ"]=2;
-    ass["JUMPN"]="A0";   i["JUMPN"]=2;
-    ass["SET"]="E0";     i["SET"]=2;
-    ass["HALT"]="F0";    i["HALT"]=1;
+    ass["INBOX"]="00";    i["INBOX"]=1;
+    ass["OUTBOX"]="10";   i["OUTBOX"]=1;
+
+    ass["COPYFROM"]="20"; i["COPYFROM"]=2;
+    ass["COPYTO"]="30";   i["COPYTO"]=2;
+    ass["ADD"]="40";      i["ADD"]=2;
+    ass["SUB"]="50";      i["SUB"]=2;
+    ass["BUMP+"]="60";    i["BUMP+"]=2;
+    ass["BUMP-"]="70";    i["BUMP-"]=2;
+
+    ass["iCOPYFROM"]="28";i["iCOPYFROM"]=2;
+    ass["iCOPYTO"]="38";  i["iCOPYTO"]=2;
+    ass["iADD"]="48";     i["iADD"]=2;
+    ass["iSUB"]="58";     i["iSUB"]=2;
+    ass["iBUMP+"]="68";   i["iBUMP+"]=2;
+    ass["iBUMP-"]="78";   i["iBUMP-"]=2;
+
+    ass["JUMP"]="80";     i["JUMP"]=2;
+    ass["JUMPZ"]="90";    i["JUMPZ"]=2;
+    ass["JUMPN"]="A0";    i["JUMPN"]=2;
+    ass["SET"]="E0";      i["SET"]=2;
+    ass["HALT"]="F0";     i["HALT"]=1;
 
     print "v2.0 raw" > binfile;
 }
@@ -61,6 +71,8 @@ do
    sed -i -e "s/ $LABEL / $ADDR /g" $TMPFILE
    sed -i -e "s/ $LABEL / $ADDR /g" $BINFILE
 done
+
+sed -i -r -e "s/; i([a-zA-Z+-]+)\s+([0-9]+)/; \1 \[\2\]/g" $TMPFILE
 
 cat $TMPFILE
 echo ---
