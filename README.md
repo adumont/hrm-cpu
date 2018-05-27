@@ -89,7 +89,8 @@ This assembler is a shell script that uses awk(1).
 
 Usage:
 
-    $ assembler asmfile
+    $ assembler prog
+
 
 Output:
 
@@ -101,9 +102,9 @@ Example:
 Given a simple program that we save in FILE:
 
     start:
-    INBOX
-    OUTBOX
-    JUMP start
+      INBOX
+      OUTBOX
+      JUMP start
 
 Let's run the assembler:
 
@@ -124,7 +125,7 @@ And the corresponding machine language memory dump ready to load into PROG:
 
 # Microarchitecture
 
-The microarchitecture is very loosely inspired from MIPS architecture. The CPU is a multi-cycle CPU with a Harvard design.
+The microarchitecture is loosely inspired from MIPS architecture. This CPU is a multi-cycle CPU with a Harvard architecture (program is held in a different memory as general memory).
 
 The following block diagram shows all the components, the data path and control path (in red dashed line).
 
@@ -142,7 +143,7 @@ The top module shows all the inner modules, the Data Path and Control Path:
 
 The **Control Unit** is a Finite State Machine. It takes as input the instruction, and some external signals, and generate control signals that will orchestrate the data flow along the data path.
 
-The following chart shows the control signals for some of the instruction:
+The following chart shows all the steps and control signals involved in each instruction:
 
 Control Signals:
 
