@@ -1,12 +1,31 @@
 # call with make MODULE=moduleName sim|svg|upload
 
+TOP:=top
+
 ifndef $(MODULE)
-	MODULE=top
+        MODULE:=$(TOP)
 endif
 
-ifeq ($(MODULE), top)
-	DEPS=block.v init.v prescaler.v
+ifeq ($(MODULE), $(TOP))
+  DEPS:=\
+    font.v \
+    tilemem.v \
+    ram.v \
+    vga_sync.v
+
+  AUXFILES:=\
+    ram.list\
+    ram65.list\
+        const.vh
+
+else ifeq ($(MODULE), MEMORY)
+
+  DEPS:=\
+    ram.v
+
 endif
+
+# YOSYSOPT:=-retime -abc2
 
 ifndef $(MEMORY)
 	MEMORY="1k"

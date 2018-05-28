@@ -1,0 +1,35 @@
+[*]
+[*] GTKWave Analyzer v3.3.66 (w)1999-2015 BSI
+[*] Mon May 28 22:13:27 2018
+[*]
+[dumpfile] "/home/adumont/projects/hrm-cpu/verilog/MEMORY_tb.vcd"
+[dumpfile_mtime] "Mon May 28 22:12:54 2018"
+[dumpfile_size] 1485
+[savefile] "/home/adumont/projects/hrm-cpu/verilog/MEMORY_tb.gtkw"
+[timestart] 0
+[size] 1436 823
+[pos] 26 0
+*-2.643856 14 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] MEMORY_tb.
+[sst_width] 197
+[signals_width] 269
+[sst_expanded] 1
+[sst_vpaned_height] 236
+@28
+MEMORY_tb.clk
+@22
+MEMORY_tb.ADDR[7:0]
+MEMORY_tb.M[7:0]
+@28
+MEMORY_tb.srcA
+MEMORY_tb.wAR
+@22
+MEMORY_tb.MEMORY0.AR_d[7:0]
+@23
+MEMORY_tb.MEMORY0.AR_q[7:0]
+@22
+MEMORY_tb.R[7:0]
+@28
+MEMORY_tb.wM
+[pattern_trace] 1
+[pattern_trace] 0
