@@ -51,9 +51,15 @@ BEGIN {
         printf("%s:\n",$0);
     }
     else {
-        printf("  %02x: %s %-2s ; %s %s\n", addr, ass[$1], $2, $1, $2);
-        printf("%s ",ass[$1]) >> binfile;
-        if( i[$1] == 2) printf("%s ", $2) >> binfile;
+        if( $0 ~ /JUMP/ ) {
+            printf("  %02x: %s %-2s ; %s %s\n", addr, ass[$1], $2, $1, $2);
+            printf("%s ",ass[$1]) >> binfile;
+            if( i[$1] == 2) printf("%s ", $2) >> binfile;
+        } else {
+            printf("  %02x: %s %02x ; %s %s\n", addr, ass[$1], $2, $1, $2);
+            printf("%s ",ass[$1]) >> binfile;
+            if( i[$1] == 2) printf("%02x ", $2) >> binfile;
+        }
         addr+=i[$1];
     }
 }
