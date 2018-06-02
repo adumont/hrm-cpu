@@ -1,0 +1,21 @@
+init:
+COPYFROM 14
+COPYTO 19
+COPYTO 16
+INBOX
+COPYTO 15
+nexttile:
+COPYFROM [19]
+JUMPZ outputcount
+SUB 15
+JUMPZ inccount
+inctileaddr:
+BUMP+ 19
+JUMP nexttile
+inccount:
+BUMP+ 16
+JUMP inctileaddr
+outputcount:
+COPYFROM 16
+OUTBOX
+JUMP init
