@@ -157,6 +157,10 @@ Below is the corresponding FSM:
 Note:
 - Logisim FSM addon tool doesn't seem to allow transition to the same state, that is why the HALT state doesn't have any transition out of it. It should loop on itself. Anyway in Logisim's simulation it behaves as expected.
 
+### Debug Mode
+
+I have added a *debug mode*  (which can be enabled by asserting the *debug* signal to 1). When in *debug mode*, the FSM will pause right before loading the next instruction into the Instruction Register (IR). It will then resume execution when the user press the "nxtInstr" button. This allows the user to run the program in an *Instruction by Instruction* fashion, and inspect the state of all the components after an instruction has run, and before we run the next.
+
 ## Inbox
 
 We load the Inbox with some elements. The first element of the inbox is expected to be the length of the inbox (that is the number of elements).
