@@ -20,6 +20,7 @@
     - [ALU](#alu)
 - [Simulations in Logisim](#simulations-in-logisim)
     - [Year 4](#year-4)
+    - [Year 32](#year-32)
 - [Tools used in this project:](#tools-used-in-this-project)
 
 # Introduction
@@ -382,6 +383,115 @@ Indeed, we can verify that the elements have been inverted two by two:
 | 0x5a   |
 | 0x07   |
 | 0x02   |
+
+## Year 32
+
+This level is more complex. In level 32 there are 14 letters on the tiles, plus a 0. For each letters that comes into the Inbox, you have to compute how many tiles have the same letter, and send the total count to the Outbox.
+
+This is how I did it in the real game:
+
+[![](logisim/prog/Year-32/assets/hrm-year32-thumbnail.png)](https://www.youtube.com/watch?v=O4R98aO1frI)
+
+Now let see how my HRM CPU behaves with the same program. First let's have a look at the program itself:
+
+Here's my solution for Level 32. It involves direct (`COPYFROM 14`) and indirect adressing mode (`COPYFROM [19]`).
+
+    init:
+        00: 20 0e ; COPYFROM 14
+        02: 30 13 ; COPYTO 19
+        04: 30 10 ; COPYTO 16
+        06: 00 00 ; INBOX 
+        07: 30 0f ; COPYTO 15
+    nexttile:
+        09: 28 13 ; COPYFROM [19]
+        0b: 90 19 ; JUMPZ outputcount
+        0d: 50 0f ; SUB 15
+        0f: 90 15 ; JUMPZ inccount
+    inctileaddr:
+        11: 60 13 ; BUMP+ 19
+        13: 80 09 ; JUMP nexttile
+    inccount:
+        15: 60 10 ; BUMP+ 16
+        17: 80 11 ; JUMP inctileaddr
+    outputcount:
+        19: 20 10 ; COPYFROM 16
+        1b: 10 00 ; OUTBOX 
+        1c: 80 00 ; JUMP init
+
+(This is the output of my [Assembler](#assembler))
+
+The corresponding Logisim memory dump (machine languag, ready for loading into Logisim) is:
+
+    v2.0 raw
+    20 0e 30 13 30 10 00 30 0f 28 13 90 19 50 0f 90 15 60 13 80 09 60 10 80 11 20 10 10 80 00 
+
+Below we can see it is loaded into the program memory (PROG) of the CPU:
+
+![](logisim/prog/Year-32/assets/PROG.png)
+
+Now let's see the Inbox:
+
+We'll load 5 elements: `1`, `2`, `5`, `3` and `4` into the INBOX. As we have to load first the number of elements, it is in total 6 items:
+
+| INBOX |
+| :---: |
+| 0x05  |
+| 0x01  |
+| 0x02  |
+| 0x05  |
+| 0x03  |
+| 0x04  |
+
+In Logisim format that is:
+
+    v2.0 raw
+    05 01 02 05 03 04
+
+We load the INBOX in Logisim:
+
+![](logisim/prog/Year-32/assets/INBOX.png)
+
+In this level, we also have to pre-load the tiles in MEMORY. Here's the file:
+
+    v2.0 raw
+    02 01 04 02 03 04 01 02 01 04 03 02 01 02 00
+
+Let's pause and count mentally how many of each item we have in the Tiles:
+
+| Item  | Count |
+| :---: | :---: |
+| 0x01  | 4     |
+| 0x02  | 5     |
+| 0x03  | 2     |
+| 0x04  | 3     |
+| 0x05  | 0     |
+
+(That is what we expect to get in the OUTBOX)
+
+Before running the program, let's clear the OUTBOX:
+
+![](logisim/prog/Year-32/assets/OUTBOX-start.png)
+
+And finally we run the program:
+
+[![](logisim/prog/Year-32/assets/hrm-cpu-logisim-year32-thumbnail.png)](https://www.youtube.com/watch?v=9MmbXoqh_AE)
+
+The program will finish when the last item in the inbox is processed. Let's see the result we get in OUTBOX:
+
+![](logisim/prog/Year-32/assets/OUTBOX-end.png)
+
+| OUTBOX |
+| :----: |
+| 0x05   |
+| 0x04   |
+| 0x00   |
+| 0x02   |
+| 0x03   |
+
+Indeed, we can verify that this is the total count of each item (from the INBOX) in the tiles: 4 x 0x01, 5 x 0x02, 0 x 0x05, 2 x 0x03 and 3 x 0x04.
+
+**So it works!!!**
+
 
 # Tools used in this project:
 
