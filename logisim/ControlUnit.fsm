@@ -1,226 +1,384 @@
-fsm ControlUnit @[ 34 , 30 , 1200 , 800 ]
+fsm ControlUnit @[ 34 , 30 , 1400 , 900 ]
 { in INSTR [ 8 ] @[ 34 , 100 , 71 , 15 ]
 ;
-in inEmpty [ 1 ] @[ 34 , 140 , 55 , 15 ]
+in inEmpty [ 1 ] @[ 34 , 132 , 55 , 15 ]
 ;
-in outFull [ 1 ] @[ 34 , 178 , 48 , 15 ]
+in outFull [ 1 ] @[ 34 , 167 , 48 , 15 ]
 ;
-out wIR [ 1 ] @[ 1208 , 93 , 26 , 15 ]
+in debug [ 1 ] @[ 34 , 204 , 46 , 15 ]
 ;
-out muxR [ 2 ] @[ 1165 , 150 , 69 , 15 ]
+in nxtInstr [ 1 ] @[ 34 , 240 , 53 , 15 ]
 ;
-out wR [ 1 ] @[ 1211 , 177 , 23 , 15 ]
+out wIR [ 1 ] @[ 1408 , 93 , 26 , 15 ]
 ;
-out muxM [ 1 ] @[ 1193 , 222 , 41 , 15 ]
+out muxR [ 2 ] @[ 1365 , 150 , 69 , 15 ]
 ;
-out srcA [ 1 ] @[ 1201 , 244 , 33 , 15 ]
+out wR [ 1 ] @[ 1411 , 177 , 23 , 15 ]
 ;
-out wM [ 1 ] @[ 1209 , 268 , 25 , 15 ]
+out srcA [ 1 ] @[ 1401 , 244 , 33 , 15 ]
 ;
-out fb [ 1 ] @[ 1216 , 303 , 18 , 15 ]
+out wM [ 1 ] @[ 1409 , 268 , 25 , 15 ]
 ;
-out aluCtl [ 3 ] @[ 1163 , 333 , 71 , 15 ]
+out wAR [ 1 ] @[ 1403 , 303 , 31 , 15 ]
 ;
-out wPC [ 1 ] @[ 1203 , 366 , 31 , 15 ]
+out aluCtl [ 3 ] @[ 1363 , 333 , 71 , 15 ]
 ;
-out rIn [ 1 ] @[ 1212 , 390 , 22 , 15 ]
+out wPC [ 1 ] @[ 1403 , 366 , 31 , 15 ]
 ;
-out wO [ 1 ] @[ 1210 , 415 , 24 , 15 ]
+out rIn [ 1 ] @[ 1412 , 390 , 22 , 15 ]
 ;
-out ijump [ 1 ] @[ 1195 , 467 , 39 , 15 ]
+out wO [ 1 ] @[ 1410 , 415 , 24 , 15 ]
 ;
-out branch [ 1 ] @[ 1184 , 490 , 50 , 15 ]
+out ijump [ 1 ] @[ 1395 , 467 , 39 , 15 ]
 ;
-out rst [ 1 ] @[ 1211 , 523 , 23 , 15 ]
+out branch [ 1 ] @[ 1384 , 490 , 50 , 15 ]
 ;
-out halt [ 1 ] @[ 1204 , 553 , 30 , 15 ]
+out rst [ 1 ] @[ 1411 , 523 , 23 , 15 ]
 ;
-codeWidth = 6 ; reset = RESET ; state RESET = "000000" @[ 116 , 74 , 30 , 30 ]
+out halt [ 1 ] @[ 1404 , 553 , 30 , 15 ]
+;
+codeWidth = 6 ; reset = RESET ; state RESET = "000000" @[ 105 , 72 , 30 , 30 ]
 {
-commands @[ 161 , 89 , 53 , 21 ]
+commands @[ 114 , 123 , 53 , 21 ]
 {
 rst = "1" ;
 }
 transitions {
-RESET -> FETCH_I when default @[ 280 , 79 , 50 , 21 ]
+RESET -> FETCH_I when default @[ 271 , 70 , 50 , 21 ]
 ;
 }
 }
-state Inc_PC = "000010" @[ 187 , 148 , 30 , 30 ]
+state Inc_PC = "000010" @[ 56 , 272 , 30 , 30 ]
 {
-commands @[ 241 , 155 , 61 , 21 ]
+commands @[ 53 , 324 , 61 , 21 ]
 {
 wPC = "1" ;
 }
 transitions {
-Inc_PC -> FETCH_I when default @[ 279 , 123 , 50 , 21 ]
+Inc_PC -> FETCH_I when default @[ 152 , 161 , 50 , 21 ]
 ;
 }
 }
-state FETCH_I = "000100" @[ 418 , 75 , 30 , 30 ]
+state FETCH_I = "000100" @[ 451 , 71 , 30 , 30 ]
 {
-commands @[ 484 , 83 , 56 , 21 ]
+commands @[ 499 , 117 , 56 , 21 ]
 {
 wIR = "0" ;
 }
 transitions {
-FETCH_I -> LOAD_IR when default @[ 388 , 132 , 50 , 21 ]
+FETCH_I -> LOAD_IR when default @[ 463 , 149 , 50 , 21 ]
+;
+FETCH_I -> WAIT_KEY when debug == "1" @[ 268 , 153 , 94 , 21 ]
 ;
 }
 }
-state INBOX1 = "000110" @[ 251 , 493 , 30 , 30 ]
+state INBOX1 = "000110" @[ 332 , 637 , 30 , 30 ]
 {
-commands @[ 297 , 508 , 52 , 21 ]
+commands @[ 377 , 652 , 52 , 21 ]
 {
 rIn = "1" ;
 }
 transitions {
-INBOX1 -> INBOX2 when default @[ 238 , 558 , 50 , 21 ]
+INBOX1 -> INBOX2 when default @[ 291 , 690 , 50 , 21 ]
 ;
 }
 }
-state INBOX2 = "001000" @[ 244 , 590 , 30 , 30 ]
+state INBOX2 = "001000" @[ 235 , 725 , 30 , 30 ]
 {
-commands @[ 290 , 605 , 77 , 36 ]
+commands @[ 280 , 740 , 77 , 36 ]
 {
 muxR = "00" ;
 wR = "1" ;
 }
 transitions {
-INBOX2 -> Inc_PC when default @[ 37 , 448 , 50 , 21 ]
+INBOX2 -> Inc_PC when default @[ 58 , 619 , 50 , 21 ]
 ;
 }
 }
-state OUTBOX = "001010" @[ 109 , 447 , 30 , 30 ]
+state OUTBOX = "001010" @[ 153 , 555 , 30 , 30 ]
 {
-commands @[ 154 , 462 , 54 , 21 ]
+commands @[ 198 , 570 , 54 , 21 ]
 {
 wO = "1" ;
 }
 transitions {
-OUTBOX -> Inc_PC when default @[ 55 , 330 , 50 , 21 ]
+OUTBOX -> Inc_PC when default @[ 44 , 514 , 50 , 21 ]
 ;
 }
 }
-state INCPC2 = "001100" @[ 652 , 208 , 30 , 30 ]
+state INCPC2 = "001100" @[ 652 , 157 , 30 , 30 ]
 {
-commands @[ 707 , 214 , 61 , 21 ]
+commands @[ 715 , 170 , 61 , 21 ]
 {
 wPC = "1" ;
 }
 transitions {
-INCPC2 -> FETCH_O when default @[ 665 , 268 , 50 , 21 ]
+INCPC2 -> FETCH_O when default @[ 662 , 225 , 50 , 21 ]
 ;
 }
 }
-state READMEM = "001110" @[ 652 , 407 , 30 , 30 ]
+state READMEM = "001110" @[ 686 , 503 , 30 , 30 ]
 {
-commands @[ 711 , 421 , 63 , 21 ]
+commands @[ 731 , 518 , 63 , 21 ]
 {
-srcA = "1" ;
+srcA = "0" ;
 }
 transitions {
-READMEM -> WAIT1 when default @[ 655 , 482 , 50 , 21 ]
+READMEM -> BUMPP when INSTR [ 7 : 4 ] == "0110" @[ 739 , 651 , 143 , 21 ]
+;
+READMEM -> BUMPN when INSTR [ 7 : 4 ] == "0111" @[ 804 , 618 , 143 , 21 ]
+;
+READMEM -> COPYFROM when INSTR [ 7 : 4 ] == "0010" @[ 533 , 641 , 143 , 21 ]
+;
+READMEM -> ADD when INSTR [ 7 : 4 ] == "0100" @[ 604 , 676 , 143 , 21 ]
+;
+READMEM -> HALT when default @[ 578 , 494 , 50 , 21 ]
+;
+READMEM -> SUB when INSTR [ 7 : 4 ] == "0101" @[ 644 , 702 , 143 , 21 ]
 ;
 }
 }
-state COPYFROM = "010000" @[ 555 , 622 , 30 , 30 ]
+state COPYFROM = "010000" @[ 495 , 727 , 30 , 30 ]
 {
-commands @[ 600 , 637 , 77 , 36 ]
+commands @[ 540 , 742 , 77 , 36 ]
 {
 muxR = "01" ;
 wR = "1" ;
 }
 transitions {
-COPYFROM -> Inc_PC when default @[ 85 , 624 , 50 , 21 ]
+COPYFROM -> Inc_PC when default @[ 90 , 722 , 50 , 21 ]
 ;
 }
 }
-state DECODE = "010010" @[ 296 , 247 , 30 , 30 ]
+state DECODE = "010010" @[ 348 , 284 , 30 , 30 ]
 {
-commands @[ 354 , 258 , 30 , 20 ]
+commands @[ 393 , 299 , 30 , 20 ]
 {
 }
 transitions {
-DECODE -> OUTBOX when INSTR [ 7 : 4 ] == "0001" @[ 123 , 311 , 143 , 21 ]
+DECODE -> OUTBOX when INSTR [ 7 : 4 ] == "0001" . outFull == "0" @[ 173 , 423 ,
+247 , 21 ]
 ;
-DECODE -> INBOX1 when INSTR [ 7 : 4 ] == "0000" . inEmpty == "0" @[ 188 , 338 ,
+DECODE -> INBOX1 when INSTR [ 7 : 4 ] == "0000" . inEmpty == "0" @[ 237 , 462 ,
 254 , 21 ]
 ;
-DECODE -> HALT when INSTR [ 7 : 4 ] == "1111" @[ 311 , 403 , 143 , 21 ]
+DECODE -> HALT when INSTR [ 7 : 4 ] == "1111" @[ 371 , 486 , 143 , 21 ]
 ;
-DECODE -> INCPC2 when default @[ 487 , 230 , 50 , 21 ]
+DECODE -> INCPC2 when default @[ 496 , 233 , 50 , 21 ]
 ;
-DECODE -> HALT when INSTR [ 7 : 4 ] == "0000" . inEmpty == "1" @[ 356 , 374 ,
-254 , 21 ]
+DECODE -> WAIT_INBOX when INSTR [ 7 : 4 ] == "0000" . inEmpty == "1" @[ 397 ,
+356 , 254 , 21 ]
+;
+DECODE -> WAIT_OUTBOX when INSTR [ 7 : 4 ] == "0001" . outFull == "1" @[ 124 ,
+320 , 247 , 21 ]
 ;
 }
 }
-state HALT = "010100" @[ 436 , 438 , 30 , 30 ]
+state HALT = "010100" @[ 463 , 569 , 30 , 30 ]
 {
-commands @[ 486 , 445 , 60 , 21 ]
+commands @[ 468 , 618 , 60 , 21 ]
 {
 halt = "1" ;
 }
 }
-state WAIT1 = "010110" @[ 641 , 515 , 30 , 30 ]
+state COPYTO = "010110" @[ 1303 , 851 , 30 , 30 ]
 {
-commands @[ 693 , 525 , 30 , 20 ]
-{
-}
-transitions {
-WAIT1 -> COPYFROM when INSTR [ 7 : 4 ] == "0010" @[ 516 , 570 , 143 , 21 ]
-;
-WAIT1 -> HALT when default @[ 549 , 501 , 50 , 21 ]
-;
-}
-}
-state COPYTO = "011000" @[ 738 , 664 , 30 , 30 ]
-{
-commands @[ 783 , 679 , 55 , 21 ]
+commands @[ 1347 , 866 , 55 , 21 ]
 {
 wM = "1" ;
 }
 transitions {
-COPYTO -> Inc_PC when default @[ 69 , 696 , 50 , 21 ]
+COPYTO -> Inc_PC when default @[ 74 , 794 , 50 , 21 ]
 ;
 }
 }
-state JUMP = "011010" @[ 991 , 586 , 30 , 30 ]
+state JUMP = "011000" @[ 818 , 138 , 30 , 30 ]
 {
-commands @[ 1052 , 591 , 80 , 51 ]
+commands @[ 847 , 186 , 80 , 51 ]
 {
 branch = "1" ;
 ijump = "1" ;
 wPC = "1" ;
 }
 transitions {
-JUMP -> FETCH_I when default @[ 910 , 247 , 50 , 21 ]
+JUMP -> FETCH_I when default @[ 679 , 111 , 50 , 21 ]
 ;
 }
 }
-state LOAD_IR = "011100" @[ 351 , 156 , 30 , 30 ]
+state LOAD_IR = "011010" @[ 410 , 173 , 30 , 30 ]
 {
-commands @[ 411 , 171 , 56 , 21 ]
+commands @[ 428 , 222 , 56 , 21 ]
 {
 wIR = "1" ;
 }
 transitions {
-LOAD_IR -> DECODE when default @[ 331 , 215 , 50 , 21 ]
+LOAD_IR -> DECODE when default @[ 387 , 246 , 50 , 21 ]
 ;
 }
 }
-state FETCH_O = "011110" @[ 651 , 305 , 30 , 30 ]
+state FETCH_O = "011100" @[ 654 , 258 , 30 , 30 ]
 {
-commands @[ 713 , 319 , 30 , 20 ]
+commands @[ 625 , 284 , 30 , 20 ]
 {
 }
 transitions {
-FETCH_O -> READMEM when default @[ 663 , 374 , 50 , 21 ]
+FETCH_O -> JUMP when INSTR [ 7 : 4 ] == "1000" @[ 735 , 239 , 143 , 21 ]
 ;
-FETCH_O -> JUMP when INSTR [ 7 : 4 ] == "1000" @[ 851 , 428 , 143 , 21 ]
+FETCH_O -> JUMPZ when INSTR [ 7 : 4 ] == "1001" @[ 803 , 265 , 143 , 21 ]
 ;
-FETCH_O -> COPYTO when INSTR [ 7 : 4 ] == "0011" @[ 794 , 503 , 143 , 21 ]
+FETCH_O -> JUMPN when INSTR [ 7 : 4 ] == "1010" @[ 902 , 289 , 143 , 21 ]
+;
+FETCH_O -> LOAD_AR when default @[ 704 , 315 , 50 , 21 ]
+;
+}
+}
+state ADD = "011110" @[ 595 , 781 , 30 , 30 ]
+{
+commands @[ 592 , 831 , 87 , 51 ]
+{
+muxR = "11" ;
+aluCtl = "000" ;
+wR = "1" ;
+}
+transitions {
+ADD -> Inc_PC when default @[ 96 , 768 , 50 , 21 ]
+;
+}
+}
+state SUB = "100000" @[ 719 , 784 , 30 , 30 ]
+{
+commands @[ 715 , 834 , 87 , 51 ]
+{
+muxR = "11" ;
+aluCtl = "001" ;
+wR = "1" ;
+}
+transitions {
+SUB -> Inc_PC when default @[ 60 , 821 , 50 , 21 ]
+;
+}
+}
+state WAIT_INBOX = "100010" @[ 484 , 388 , 30 , 30 ]
+{
+commands @[ 506 , 437 , 30 , 20 ]
+{
+}
+transitions {
+WAIT_INBOX -> INBOX1 when inEmpty == "0" @[ 384 , 518 , 103 , 21 ]
+;
+}
+}
+state JUMPZ = "100100" @[ 932 , 134 , 30 , 30 ]
+{
+commands @[ 956 , 184 , 87 , 66 ]
+{
+branch = "1" ;
+ijump = "0" ;
+aluCtl = "000" ;
+wPC = "1" ;
+}
+transitions {
+JUMPZ -> FETCH_I when default @[ 736 , 88 , 50 , 21 ]
+;
+}
+}
+state JUMPN = "100110" @[ 1043 , 136 , 30 , 30 ]
+{
+commands @[ 1069 , 185 , 87 , 66 ]
+{
+branch = "1" ;
+ijump = "0" ;
+aluCtl = "100" ;
+wPC = "1" ;
+}
+transitions {
+JUMPN -> FETCH_I when default @[ 801 , 69 , 50 , 21 ]
+;
+}
+}
+state BUMPP = "101000" @[ 830 , 732 , 30 , 30 ]
+{
+commands @[ 836 , 781 , 87 , 51 ]
+{
+muxR = "11" ;
+aluCtl = "010" ;
+wR = "1" ;
+}
+transitions {
+BUMPP -> COPYTO when default @[ 1040 , 810 , 50 , 21 ]
+;
+}
+}
+state BUMPN = "101010" @[ 922 , 664 , 30 , 30 ]
+{
+commands @[ 923 , 712 , 87 , 51 ]
+{
+muxR = "11" ;
+aluCtl = "011" ;
+wR = "1" ;
+}
+transitions {
+BUMPN -> COPYTO when default @[ 1177 , 776 , 50 , 21 ]
+;
+}
+}
+state WAIT_OUTBOX = "101100" @[ 159 , 351 , 30 , 30 ]
+{
+commands @[ 199 , 397 , 30 , 20 ]
+{
+}
+transitions {
+WAIT_OUTBOX -> OUTBOX when outFull == "0" @[ 140 , 473 , 96 , 21 ]
+;
+}
+}
+state LOAD_AR = "101110" @[ 657 , 332 , 30 , 30 ]
+{
+commands @[ 659 , 382 , 61 , 21 ]
+{
+wAR = "1" ;
+}
+transitions {
+LOAD_AR -> COPYTO when INSTR [ 7 : 4 ] == "0011" . INSTR [ 3 : 3 ] == "0" @[
+1115 , 383 , 270 , 21 ]
+;
+LOAD_AR -> READMEM2 when INSTR [ 3 : 3 ] == "1" @[ 727 , 391 , 119 , 21 ]
+;
+LOAD_AR -> READMEM when default @[ 652 , 433 , 50 , 21 ]
+;
+}
+}
+state LOAD_AR2 = "110000" @[ 885 , 454 , 30 , 30 ]
+{
+commands @[ 884 , 505 , 63 , 36 ]
+{
+srcA = "1" ;
+wAR = "1" ;
+}
+transitions {
+LOAD_AR2 -> READMEM when default @[ 780 , 476 , 50 , 21 ]
+;
+LOAD_AR2 -> COPYTO when INSTR [ 7 : 4 ] == "0011" @[ 1109 , 621 , 143 , 21 ]
+;
+}
+}
+state READMEM2 = "110010" @[ 880 , 352 , 30 , 30 ]
+{
+commands @[ 891 , 404 , 30 , 20 ]
+{
+}
+transitions {
+READMEM2 -> LOAD_AR2 when default @[ 935 , 428 , 50 , 21 ]
+;
+}
+}
+state WAIT_KEY = "110100" @[ 205 , 188 , 30 , 30 ]
+{
+commands @[ 219 , 237 , 30 , 20 ]
+{
+}
+transitions {
+WAIT_KEY -> LOAD_IR when nxtInstr == "1" @[ 274 , 250 , 101 , 21 ]
 ;
 }
 }
