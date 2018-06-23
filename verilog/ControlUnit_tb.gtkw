@@ -1,0 +1,50 @@
+[*]
+[*] GTKWave Analyzer v3.3.66 (w)1999-2015 BSI
+[*] Sat Jun 23 14:26:07 2018
+[*]
+[dumpfile] "/home/adumont/projects/hrm-cpu/verilog/ControlUnit_tb.vcd"
+[dumpfile_mtime] "Sat Jun 23 14:25:51 2018"
+[dumpfile_size] 14874
+[savefile] "/home/adumont/projects/hrm-cpu/verilog/ControlUnit_tb.gtkw"
+[timestart] 0
+[size] 1678 998
+[pos] -1 -1
+*-2.951978 20 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] ControlUnit_tb.
+[treeopen] ControlUnit_tb.ControlUnit0.
+[sst_width] 197
+[signals_width] 303
+[sst_expanded] 1
+[sst_vpaned_height] 301
+@28
+ControlUnit_tb.clk
+ControlUnit_tb.debug
+ControlUnit_tb.nxtInstr
+ControlUnit_tb.i_rst
+ControlUnit_tb.inEmpty
+ControlUnit_tb.outFull
+ControlUnit_tb.INSTR[7:0]
+@820
+ControlUnit_tb.ControlUnit0.statename[79:0]
+@200
+-Control Path
+@28
+ControlUnit_tb.ControlUnit0.wIR
+ControlUnit_tb.ControlUnit0.muxR[1:0]
+ControlUnit_tb.ControlUnit0.wR
+ControlUnit_tb.ControlUnit0.srcA
+ControlUnit_tb.ControlUnit0.wM
+ControlUnit_tb.ControlUnit0.wAR
+ControlUnit_tb.ControlUnit0.aluCtl[2:0]
+ControlUnit_tb.ControlUnit0.branch
+ControlUnit_tb.ControlUnit0.ijump
+ControlUnit_tb.ControlUnit0.wPC
+ControlUnit_tb.ControlUnit0.rIn
+ControlUnit_tb.ControlUnit0.wO
+@200
+-
+@28
+ControlUnit_tb.ControlUnit0.halt
+ControlUnit_tb.ControlUnit0.rst
+[pattern_trace] 1
+[pattern_trace] 0
