@@ -76,6 +76,12 @@ module ControlUnit (
     // o_SET      = 4'b 1110,
     o_HALT     = 4'b 1111;
 
+    reg [4:0] state, nextstate;
+
+    initial begin
+      state = S_RESET; // 5'b 00000; // only value we can initialize correctly
+    end
+    
     // comb always block
     // NEXT STATE LOGIC (depends on currState and INPUTS)
     always @* begin
