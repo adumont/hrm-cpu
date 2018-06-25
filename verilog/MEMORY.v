@@ -12,6 +12,8 @@ module MEMORY (
 
     wire [7:0] AR_d;
 
+    parameter ROMFILE = "";
+
     // MUX: select what goes into AR
     assign AR_d = ( srcA == 0 ) ? ADDR : M ;
 
@@ -37,5 +39,6 @@ module MEMORY (
         .waddr( AR_q ),
         .din( R )
     );
+    defparam ram0.ROMFILE = ROMFILE;
 
 endmodule
