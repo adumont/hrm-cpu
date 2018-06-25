@@ -44,12 +44,13 @@ ifndef $(MEMORY)
 	MEMORY="1k"
 endif
 
-all: bin svg sim
+all: bin svg dot sim
 
 bin: $(MODULE).bin
 sim: $(MODULE)_tb.vcd
 json: $(MODULE).json
 svg: assets/$(MODULE).svg
+dot: assets/$(MODULE)_dot.svg
 
 # @echo '@: $@' # file name of the target
 # @echo '%: $%' # name of the archive member
@@ -83,6 +84,12 @@ assets/$(MODULE).svg: $(MODULE).json
 
 	netlistsvg $(MODULE).json -o assets/$(MODULE).svg && rm $(MODULE).json
 
+assets/$(MODULE)_dot.svg: $(MODULE).v $(DEPS)
+
+	yosys -p "read_verilog $(MODULE).v $(DEPS); hierarchy -check; proc; opt; fsm; opt; memory; opt; clean; stat; show -colors 1 -format svg -stretch -prefix $(MODULE)_dot $(MODULE);"
+	mv $(MODULE)_dot.svg assets/
+	[ -f $(MODULE)_dot.dot ] && rm $(MODULE)_dot.dot
+
 upload: $(MODULE).bin
 
 	iceprog $(MODULE).bin
@@ -91,4 +98,4 @@ clean:
 
 	rm -f *.bin *.pnr *.blif *.out *.vcd *~
 
-.PHONY: all clean json svg sim
+.PHONY: all clean json svg sim dot
