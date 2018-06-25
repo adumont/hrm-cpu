@@ -23,6 +23,19 @@ else ifeq ($(MODULE), MEMORY)
   DEPS:=\
     ram.v
 
+else ifeq ($(MODULE), hrmcpu)
+
+  DEPS:=\
+    ufifo.v \
+    ALU.v \
+    MEMORY.v \
+    register.v \
+    IR.v \
+    program.v \
+    PC.v \
+    ControlUnit.v \
+    ram.v
+
 endif
 
 # YOSYSOPT:=-retime -abc2
@@ -55,7 +68,8 @@ $(MODULE)_tb.vcd: $(MODULE).v $(DEPS) $(MODULE)_tb.v
 
 $(MODULE).bin: $(MODULE).pcf $(MODULE).v $(DEPS)
 	
-	yosys -p "synth_ice40 -blif $(MODULE).blif" $(MODULE).v $(DEPS)
+	yosys -p "synth_ice40 -blif $(MODULE).blif $(YOSYSOPT)" \
+              -l $(MODULE).log -q $(MODULE).v $(DEPS)  
 	
 	arachne-pnr -d $(MEMORY) -p $(MODULE).pcf $(MODULE).blif -o $(MODULE).pnr
 	
