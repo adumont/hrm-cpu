@@ -1,0 +1,91 @@
+[*]
+[*] GTKWave Analyzer v3.3.66 (w)1999-2015 BSI
+[*] Tue Jun 26 17:59:11 2018
+[*]
+[dumpfile] "/home/adumont/projects/hrm-cpu/verilog/hrmcpu_tb.vcd"
+[dumpfile_mtime] "Tue Jun 26 17:52:23 2018"
+[dumpfile_size] 36148
+[savefile] "/home/adumont/projects/hrm-cpu/verilog/hrmcpu_tb.gtkw"
+[timestart] 0
+[size] 1678 998
+[pos] -1 -1
+*-2.000000 9 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] hrmcpu_tb.
+[treeopen] hrmcpu_tb.CPU.
+[treeopen] hrmcpu_tb.CPU.ControlUnit0.
+[treeopen] hrmcpu_tb.CPU.OUTB.
+[treeopen] hrmcpu_tb.CPU.register0.
+[sst_width] 197
+[signals_width] 242
+[sst_expanded] 1
+[sst_vpaned_height] 299
+@28
+hrmcpu_tb.clk
+hrmcpu_tb.i_rst
+hrmcpu_tb.cpu_debug
+@22
+hrmcpu_tb.cpu_in_data[7:0]
+@28
+hrmcpu_tb.cpu_in_wr
+hrmcpu_tb.cpu_out_rd
+@22
+hrmcpu_tb.cpu_out_data[7:0]
+@28
+hrmcpu_tb.cpu_out_empty
+@200
+-ControlUnit
+@820
+hrmcpu_tb.CPU.ControlUnit0.instrname[79:0]
+hrmcpu_tb.CPU.ControlUnit0.statename[79:0]
+@28
+hrmcpu_tb.CPU.ControlUnit0.inEmpty
++{hrmcpu_tb.CPU.ControlUnit0.i_rst} hrmcpu_tb.CPU.ControlUnit0.i_rst
+hrmcpu_tb.CPU.ControlUnit0.rst
+@200
+-PC
+@28
+hrmcpu_tb.CPU.PC0.wPC
+@22
+hrmcpu_tb.CPU.PC0.PC[7:0]
+@200
+-PROG
+@22
+hrmcpu_tb.CPU.program0.Addr[7:0]
+hrmcpu_tb.CPU.program0.Data[7:0]
+@200
+-IR
+@28
+hrmcpu_tb.CPU.IR0.wIR
+@22
+hrmcpu_tb.CPU.IR0.rIR[7:0]
+@200
+-INBOX
+@22
+hrmcpu_tb.CPU.INBOX.i_data[7:0]
+@28
+hrmcpu_tb.CPU.INBOX.i_wr
+@22
+hrmcpu_tb.CPU.INBOX.o_data[7:0]
+@29
+hrmcpu_tb.CPU.ControlUnit0.rIn
+@28
+hrmcpu_tb.CPU.INBOX.o_empty_n
+@200
+-R
+@28
+hrmcpu_tb.CPU.register0.wR
+@22
+hrmcpu_tb.CPU.register0.R[7:0]
+@200
+-OUTBOX
+@22
+hrmcpu_tb.CPU.OUTB.i_data[7:0]
+@28
+hrmcpu_tb.CPU.OUTB.i_wr
+@22
+hrmcpu_tb.CPU.OUTB.o_data[7:0]
+@28
+hrmcpu_tb.CPU.OUTB.o_empty_n
+hrmcpu_tb.CPU.OUTB.o_status[15:0]
+[pattern_trace] 1
+[pattern_trace] 0
