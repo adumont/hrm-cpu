@@ -21,8 +21,8 @@ module ControlUnit (
     output reg        rst,
     output reg        halt,
     // generic signals
-    input clk,
-    input i_rst
+    input wire clk,
+    input wire i_rst
 );
 
     // States
@@ -242,7 +242,9 @@ module ControlUnit (
     // This code allows you to see state names in simulation
     `ifndef SYNTHESIS
     reg [79:0] statename;
+    reg [79:0] instrname;
     always @* begin
+      // decode state name
       case (state)
         S_ADD         : statename = "ADD";
         S_BUMPN       : statename = "BUMPN";
@@ -273,6 +275,25 @@ module ControlUnit (
         S_WAIT_OUTBOX : statename = "WAIT_OUTBOX";
         default       : statename = "XXXXXXXXXX";
       endcase
+
+      // decode instrname name
+      case (opcode)
+        o_INBOX    : instrname = "INBOX";
+        o_OUTBOX   : instrname = "OUTBOX";
+        o_COPYFROM : instrname = "COPYFROM";
+        o_COPYTO   : instrname = "COPYTO";
+        o_ADD      : instrname = "ADD";
+        o_SUB      : instrname = "SUB";
+        o_BUMPP    : instrname = "BUMPP";
+        o_BUMPN    : instrname = "BUMPN";
+        o_JUMP     : instrname = "JUMP";
+        o_JUMPZ    : instrname = "JUMPZ";
+        o_JUMPN    : instrname = "JUMPN";
+        o_HALT     : instrname = "HALT";
+        default    : instrname = "XXXXXXXXXX";
+      endcase
+
+      $display("%t - opcode: %10s (%1b) - State: %12s", $time, instrname, indirect, statename);
     end
     `endif
 
