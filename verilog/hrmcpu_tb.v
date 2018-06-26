@@ -1,3 +1,12 @@
+// Use of `define allows override from iverilog using -Dkey=value
+`ifndef PROGRAM
+`define PROGRAM "program.rom"
+`endif
+
+`ifndef ROMFILE
+`define ROMFILE ""
+`endif
+
 module hrmcpu_tb;
 
     // input signals
@@ -30,8 +39,8 @@ module hrmcpu_tb;
         .clk(clk),
         .i_rst(i_rst)
     );
-    defparam CPU.PROGRAM = "program.rom";
-    defparam CPU.ROMFILE = "";
+    defparam CPU.PROGRAM = `PROGRAM;
+    defparam CPU.ROMFILE = `ROMFILE;
 
     // Simulate clock
     always #1 clk = ~clk;
@@ -81,7 +90,7 @@ module hrmcpu_tb;
 
         //---pop some data out of OUTBOX--------------------
         #2 cpu_out_rd = 1'b 1;
-           $display("%t OUTBOX> %h", $time, cpu_out_data);
+           $display("%t OUTBOX= %h", $time, cpu_out_data);
         #2 cpu_out_rd = 1'b 0;
 
         // wait a bit
@@ -89,7 +98,7 @@ module hrmcpu_tb;
         
         //---pop some data out of OUTBOX--------------------
         #2 cpu_out_rd = 1'b 1;
-           $display("%t OUTBOX> %h", $time, cpu_out_data);
+           $display("%t OUTBOX= %h", $time, cpu_out_data);
         #2 cpu_out_rd = 1'b 0;
 
         // wait a bit
@@ -97,7 +106,7 @@ module hrmcpu_tb;
         
         //---pop some data out of OUTBOX--------------------
         #2 cpu_out_rd = 1'b 1;
-           $display("%t OUTBOX> %h", $time, cpu_out_data);
+           $display("%t OUTBOX= %h", $time, cpu_out_data);
         #2 cpu_out_rd = 1'b 0;
 
         // wait a bit
@@ -105,7 +114,7 @@ module hrmcpu_tb;
         
         //---pop some data out of OUTBOX--------------------
         #2 cpu_out_rd = 1'b 1;
-           $display("%t OUTBOX> %h", $time, cpu_out_data);
+           $display("%t OUTBOX= %h", $time, cpu_out_data);
         #2 cpu_out_rd = 1'b 0;
 
         #1000 $finish;
