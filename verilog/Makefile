@@ -38,6 +38,16 @@ else ifeq ($(MODULE), hrmcpu)
 
 endif
 
+IVERILOG_MACRO=
+
+ifndef $(PROGRAM)
+        IVERILOG_MACRO:=$(IVERILOG_MACRO) -DPROGRAM=\"$(PROGRAM)\"
+endif
+
+ifdef $(ROMFILE)
+        IVERILOG_MACRO:=$(IVERILOG_MACRO) -DROMFILE=$(ROMFILE)\"
+endif
+
 # YOSYSOPT:=-retime -abc2
 
 ifndef $(MEMORY)
@@ -47,7 +57,8 @@ endif
 all: bin svg dot sim
 
 bin: $(MODULE).bin
-sim: $(MODULE)_tb.vcd
+vcd: $(MODULE)_tb.vcd
+sim: vcd gtkwave
 json: $(MODULE).json
 svg: assets/$(MODULE).svg
 dot: assets/$(MODULE)_dot.svg
@@ -63,9 +74,12 @@ dot: assets/$(MODULE)_dot.svg
 
 $(MODULE)_tb.vcd: $(MODULE).v $(DEPS) $(MODULE)_tb.v
 
-	iverilog $^ -o $(MODULE)_tb.out
+	iverilog $^ $(IVERILOG_MACRO) -o $(MODULE)_tb.out
 	./$(MODULE)_tb.out
-	gtkwave $@ $(MODULE)_tb.gtkw &
+
+gtkwave: $(MODULE).v $(DEPS) $(MODULE)_tb.v $(MODULE)_tb.vcd
+
+	gtkwave $(MODULE)_tb.vcd $(MODULE)_tb.gtkw &
 
 $(MODULE).bin: $(MODULE).pcf $(MODULE).v $(DEPS)
 	
