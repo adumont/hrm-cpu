@@ -36,8 +36,7 @@ module ControlUnit (
     S_FETCH_I     = 5'b 00010,
     S_FETCH_O     = 5'b 01110,
     S_HALT        = 5'b 01010,
-    S_INBOX1      = 5'b 00011,
-    S_INBOX2      = 5'b 00100,
+    S_INBOX       = 5'b 00011,
     S_Inc_PC      = 5'b 00001,
     S_INCPC2      = 5'b 00110,
     S_JUMP        = 5'b 01100,
@@ -92,8 +91,7 @@ module ControlUnit (
         S_Inc_PC      : nextstate = S_FETCH_I;
         S_FETCH_I     : if (debug)  nextstate = S_WAIT_KEY;
                         else        nextstate = S_LOAD_IR;
-        S_INBOX1      : nextstate = S_INBOX2;
-        S_INBOX2      : nextstate = S_Inc_PC;
+        S_INBOX       : nextstate = S_Inc_PC;
         S_OUTBOX      : nextstate = S_Inc_PC;
         S_INCPC2      : nextstate = S_FETCH_O;
         S_READMEM     : case (opcode)
@@ -107,7 +105,7 @@ module ControlUnit (
         S_COPYFROM    : nextstate = S_Inc_PC;
         S_DECODE      : case (opcode)
                           o_INBOX  : if( inEmpty ) nextstate = S_WAIT_INBOX;
-                                     else          nextstate = S_INBOX1;
+                                     else          nextstate = S_INBOX;
                           o_OUTBOX : if( outFull ) nextstate = S_WAIT_OUTBOX;
                                      else          nextstate = S_OUTBOX;
                           o_HALT   : nextstate = S_HALT;
@@ -124,7 +122,7 @@ module ControlUnit (
                         endcase
         S_ADD         : nextstate = S_Inc_PC;
         S_SUB         : nextstate = S_Inc_PC;
-        S_WAIT_INBOX  : if( ~inEmpty ) nextstate = S_INBOX1;
+        S_WAIT_INBOX  : if( ~inEmpty ) nextstate = S_INBOX;
         S_JUMPZ       : nextstate = S_FETCH_I;
         S_JUMPN       : nextstate = S_FETCH_I;
         S_BUMPP       : nextstate = S_COPYTO;
@@ -190,8 +188,8 @@ module ControlUnit (
         end
         S_COPYTO     : wM = 1'b 1;
         S_HALT       : halt = 1'b 1;
-        S_INBOX1     : rIn  = 1'b 1;
-        S_INBOX2     : begin
+        S_INBOX      : begin
+          rIn    = 1'b   1;
           muxR   = 2'b  00;
           wR     = 1'b   1;
         end
@@ -255,8 +253,7 @@ module ControlUnit (
         S_FETCH_I     : statename = "FETCH_I";
         S_FETCH_O     : statename = "FETCH_O";
         S_HALT        : statename = "HALT";
-        S_INBOX1      : statename = "INBOX1";
-        S_INBOX2      : statename = "INBOX2";
+        S_INBOX       : statename = "INBOX";
         S_Inc_PC      : statename = "Inc_PC";
         S_INCPC2      : statename = "INCPC2";
         S_JUMP        : statename = "JUMP";
