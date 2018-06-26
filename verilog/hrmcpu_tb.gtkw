@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.66 (w)1999-2015 BSI
-[*] Tue Jun 26 17:59:11 2018
+[*] Tue Jun 26 18:25:34 2018
 [*]
 [dumpfile] "/home/adumont/projects/hrm-cpu/verilog/hrmcpu_tb.vcd"
-[dumpfile_mtime] "Tue Jun 26 17:52:23 2018"
-[dumpfile_size] 36148
+[dumpfile_mtime] "Tue Jun 26 18:22:54 2018"
+[dumpfile_size] 36505
 [savefile] "/home/adumont/projects/hrm-cpu/verilog/hrmcpu_tb.gtkw"
-[timestart] 0
+[timestart] 121
 [size] 1678 998
 [pos] -1 -1
-*-2.000000 9 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-2.000000 132 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] hrmcpu_tb.
 [treeopen] hrmcpu_tb.CPU.
 [treeopen] hrmcpu_tb.CPU.ControlUnit0.
@@ -66,9 +66,8 @@ hrmcpu_tb.CPU.INBOX.i_data[7:0]
 hrmcpu_tb.CPU.INBOX.i_wr
 @22
 hrmcpu_tb.CPU.INBOX.o_data[7:0]
-@29
-hrmcpu_tb.CPU.ControlUnit0.rIn
 @28
+hrmcpu_tb.CPU.ControlUnit0.rIn
 hrmcpu_tb.CPU.INBOX.o_empty_n
 @200
 -R
@@ -85,7 +84,10 @@ hrmcpu_tb.CPU.OUTB.i_wr
 @22
 hrmcpu_tb.CPU.OUTB.o_data[7:0]
 @28
+hrmcpu_tb.CPU.OUTB.i_rd
+hrmcpu_tb.cpu_out_rd
 hrmcpu_tb.CPU.OUTB.o_empty_n
+@29
 hrmcpu_tb.CPU.OUTB.o_status[15:0]
 [pattern_trace] 1
 [pattern_trace] 0

@@ -81,6 +81,7 @@ module hrmcpu_tb;
 
         //---pop some data out of OUTBOX--------------------
         #2 cpu_out_rd = 1'b 1;
+           $display("%t OUTBOX> %h", $time, cpu_out_data);
         #2 cpu_out_rd = 1'b 0;
 
         // wait a bit
@@ -88,6 +89,23 @@ module hrmcpu_tb;
         
         //---pop some data out of OUTBOX--------------------
         #2 cpu_out_rd = 1'b 1;
+           $display("%t OUTBOX> %h", $time, cpu_out_data);
+        #2 cpu_out_rd = 1'b 0;
+
+        // wait a bit
+        #2
+        
+        //---pop some data out of OUTBOX--------------------
+        #2 cpu_out_rd = 1'b 1;
+           $display("%t OUTBOX> %h", $time, cpu_out_data);
+        #2 cpu_out_rd = 1'b 0;
+
+        // wait a bit
+        #2
+        
+        //---pop some data out of OUTBOX--------------------
+        #2 cpu_out_rd = 1'b 1;
+           $display("%t OUTBOX> %h", $time, cpu_out_data);
         #2 cpu_out_rd = 1'b 0;
 
         #1000 $finish;
