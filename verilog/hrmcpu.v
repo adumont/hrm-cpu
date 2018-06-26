@@ -10,8 +10,8 @@ module hrmcpu (
     output reg        cpu_out_empty,
     output reg  [7:0] cpu_out_data,
     // generic signals
-    input clk,
-    input i_rst
+    input wire clk,
+    input wire i_rst
 );
 
     parameter PROGRAM = "program.rom";
@@ -99,7 +99,7 @@ module hrmcpu (
         .PC(PC0_PC),
         // clk, rst
         .clk(clk),
-        .rst(PC0_rst),
+        .rst(PC0_rst)
     );
 
     // Connect inputs
@@ -297,7 +297,8 @@ module hrmcpu (
         // clk, rst
         .i_rst(OUTB_i_rst),
         .i_clk(clk)
-    );    
+    );
+    defparam OUTB.RXFIFO=1'b1;
     // Connect inputs
     assign OUTB_i_data = R_value;
     assign OUTB_i_wr = cu_wO;
