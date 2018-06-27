@@ -1,0 +1,129 @@
+$ iverilog ../hrmcpu.v ../ufifo.v ../ALU.v ../MEMORY.v ../register.v ../IR.v ../program.v ../PC.v ../ControlUnit.v ../ram.v tester.v -DPROGRAM=\"program.rom\" -o tester.out
+
+$ ./tester.out 
+WARNING: ../program.v:20: $readmemh(program.rom): Not enough words in the file for the requested range [0:255].
+VCD info: dumpfile tester.vcd opened for output.
+                   0 - opcode: XXXXXXXXXX (x) - State:        RESET
+                   1 - opcode: XXXXXXXXXX (x) - State:      FETCH_I
+                   3 - opcode: XXXXXXXXXX (x) - State:      LOAD_IR
+                   5 - opcode: XXXXXXXXXX (x) - State:       DECODE
+                   5 - opcode:      INBOX (0) - State:       DECODE
+                   7 - opcode:      INBOX (0) - State:   WAIT_INBOX
+                  20   5
+                  23 - opcode:      INBOX (0) - State:        INBOX
+                  25 - opcode:      INBOX (0) - State:       Inc_PC
+                  27 - opcode:      INBOX (0) - State:      FETCH_I
+                  29 - opcode:      INBOX (0) - State:      LOAD_IR
+                  30  16
+                  31 - opcode:      INBOX (0) - State:       DECODE
+                  31 - opcode:     COPYTO (0) - State:       DECODE
+                  33 - opcode:     COPYTO (0) - State:       INCPC2
+                  35 - opcode:     COPYTO (0) - State:      FETCH_O
+                  37 - opcode:     COPYTO (0) - State:      LOAD_AR
+                  39 - opcode:     COPYTO (0) - State:       COPYTO
+                  40   3
+                  41 - opcode:     COPYTO (0) - State:       Inc_PC
+                  43 - opcode:     COPYTO (0) - State:      FETCH_I
+                  45 - opcode:     COPYTO (0) - State:      LOAD_IR
+                  47 - opcode:     COPYTO (0) - State:       DECODE
+                  47 - opcode:      INBOX (0) - State:       DECODE
+                  49 - opcode:      INBOX (0) - State:        INBOX
+                  50  64
+                  51 - opcode:      INBOX (0) - State:       Inc_PC
+                  53 - opcode:      INBOX (0) - State:      FETCH_I
+                  55 - opcode:      INBOX (0) - State:      LOAD_IR
+                  57 - opcode:      INBOX (0) - State:       DECODE
+                  57 - opcode:     OUTBOX (0) - State:       DECODE
+                  59 - opcode:     OUTBOX (0) - State:       OUTBOX
+                  61 - opcode:     OUTBOX (0) - State:       Inc_PC
+                  63 OUTPUT: 10
+                  63 - opcode:     OUTBOX (0) - State:      FETCH_I
+                  65 - opcode:     OUTBOX (0) - State:      LOAD_IR
+                  67 - opcode:     OUTBOX (0) - State:       DECODE
+                  67 - opcode:   COPYFROM (0) - State:       DECODE
+                  69 - opcode:   COPYFROM (0) - State:       INCPC2
+                  71 - opcode:   COPYFROM (0) - State:      FETCH_O
+                  73 - opcode:   COPYFROM (0) - State:      LOAD_AR
+                  75 - opcode:   COPYFROM (0) - State:      READMEM
+                  77 - opcode:   COPYFROM (0) - State:     COPYFROM
+                  79 - opcode:   COPYFROM (0) - State:       Inc_PC
+                  81 - opcode:   COPYFROM (0) - State:      FETCH_I
+                  83 - opcode:   COPYFROM (0) - State:      LOAD_IR
+                  85 - opcode:   COPYFROM (0) - State:       DECODE
+                  85 - opcode:     OUTBOX (0) - State:       DECODE
+                  87 - opcode:     OUTBOX (0) - State:       OUTBOX
+                  89 - opcode:     OUTBOX (0) - State:       Inc_PC
+                  91 OUTPUT: 05
+                  91 - opcode:     OUTBOX (0) - State:      FETCH_I
+                  93 - opcode:     OUTBOX (0) - State:      LOAD_IR
+                  95 - opcode:     OUTBOX (0) - State:       DECODE
+                  95 - opcode:       JUMP (0) - State:       DECODE
+                  97 - opcode:       JUMP (0) - State:       INCPC2
+                  99 - opcode:       JUMP (0) - State:      FETCH_O
+                 101 - opcode:       JUMP (0) - State:         JUMP
+                 103 - opcode:       JUMP (0) - State:      FETCH_I
+                 105 - opcode:       JUMP (0) - State:      LOAD_IR
+                 107 - opcode:       JUMP (0) - State:       DECODE
+                 107 - opcode:      INBOX (0) - State:       DECODE
+                 109 - opcode:      INBOX (0) - State:        INBOX
+                 111 - opcode:      INBOX (0) - State:       Inc_PC
+                 113 - opcode:      INBOX (0) - State:      FETCH_I
+                 115 - opcode:      INBOX (0) - State:      LOAD_IR
+                 117 - opcode:      INBOX (0) - State:       DECODE
+                 117 - opcode:     COPYTO (0) - State:       DECODE
+                 119 - opcode:     COPYTO (0) - State:       INCPC2
+                 121 - opcode:     COPYTO (0) - State:      FETCH_O
+                 123 - opcode:     COPYTO (0) - State:      LOAD_AR
+                 125 - opcode:     COPYTO (0) - State:       COPYTO
+                 127 - opcode:     COPYTO (0) - State:       Inc_PC
+                 129 - opcode:     COPYTO (0) - State:      FETCH_I
+                 131 - opcode:     COPYTO (0) - State:      LOAD_IR
+                 133 - opcode:     COPYTO (0) - State:       DECODE
+                 133 - opcode:      INBOX (0) - State:       DECODE
+                 135 - opcode:      INBOX (0) - State:        INBOX
+                 137 - opcode:      INBOX (0) - State:       Inc_PC
+                 139 - opcode:      INBOX (0) - State:      FETCH_I
+                 141 - opcode:      INBOX (0) - State:      LOAD_IR
+                 143 - opcode:      INBOX (0) - State:       DECODE
+                 143 - opcode:     OUTBOX (0) - State:       DECODE
+                 145 - opcode:     OUTBOX (0) - State:       OUTBOX
+                 147 - opcode:     OUTBOX (0) - State:       Inc_PC
+                 149 OUTPUT: 40
+                 149 - opcode:     OUTBOX (0) - State:      FETCH_I
+                 151 - opcode:     OUTBOX (0) - State:      LOAD_IR
+                 153 - opcode:     OUTBOX (0) - State:       DECODE
+                 153 - opcode:   COPYFROM (0) - State:       DECODE
+                 155 - opcode:   COPYFROM (0) - State:       INCPC2
+                 157 - opcode:   COPYFROM (0) - State:      FETCH_O
+                 159 - opcode:   COPYFROM (0) - State:      LOAD_AR
+                 161 - opcode:   COPYFROM (0) - State:      READMEM
+                 163 - opcode:   COPYFROM (0) - State:     COPYFROM
+                 165 - opcode:   COPYFROM (0) - State:       Inc_PC
+                 167 - opcode:   COPYFROM (0) - State:      FETCH_I
+                 169 - opcode:   COPYFROM (0) - State:      LOAD_IR
+                 171 - gtkwave tester.vcd tester.gtkwopcode:   COPYFROM (0) - State:       DECODE
+                 171 - opcode:     OUTBOX (0) - State:       DECODE
+                 173 - opcode:     OUTBOX (0) - State:       OUTBOX
+                 175 - opcode:     OUTBOX (0) - State:       Inc_PC
+                 177 OUTPUT: 03
+                 177 - opcode:     OUTBOX (0) - State:      FETCH_I
+                 179 - opcode:     OUTBOX (0) - State:      LOAD_IR
+                 181 - opcode:     OUTBOX (0) - State:       DECODE
+                 181 - opcode:       JUMP (0) - State:       DECODE
+                 183 - opcode:       JUMP (0) - State:       INCPC2
+                 185 - opcode:       JUMP (0) - State:      FETCH_O
+                 187 - opcode:       JUMP (0) - State:         JUMP
+                 189 - opcode:       JUMP (0) - State:      FETCH_I
+                 191 - opcode:       JUMP (0) - State:      LOAD_IR
+                 193 - opcode:       JUMP (0) - State:       DECODE
+                 193 - opcode:      INBOX (0) - State:       DECODE
+                 195 - opcode:      INBOX (0) - State:   WAIT_INBOX
+TIME LIMIT REACHED
+
+$ ./tester.out | grep OUTPUT | awk '{ print $3 }'
+10
+05
+40
+03
+
+$ gtkwave tester.vcd tester.gtkw

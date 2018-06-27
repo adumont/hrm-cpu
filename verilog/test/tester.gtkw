@@ -1,0 +1,60 @@
+[*]
+[*] GTKWave Analyzer v3.3.66 (w)1999-2015 BSI
+[*] Wed Jun 27 19:09:33 2018
+[*]
+[dumpfile] "/home/adumont/projects/hrm-cpu/verilog/tester.vcd"
+[dumpfile_mtime] "Wed Jun 27 19:08:17 2018"
+[dumpfile_size] 111777
+[savefile] "/home/adumont/projects/hrm-cpu/verilog/tester.gtkw"
+[timestart] 47
+[size] 1678 998
+[pos] -1 -1
+*-2.109520 65 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] tester.
+[treeopen] tester.CPU.
+[treeopen] tester.CPU.MEMORY0.
+[sst_width] 197
+[signals_width] 241
+[sst_expanded] 1
+[sst_vpaned_height] 299
+@28
+tester.clk
+@200
+-ControlUnit
+@820
+tester.CPU.ControlUnit0.instrname[79:0]
+tester.CPU.ControlUnit0.statename[79:0]
+@22
+tester.readInputFile0.data[7:0]
+tester.CPU.cpu_in_data[7:0]
+@28
+tester.CPU.cpu_in_full
+tester.readInputFile0.data_ready
+tester.CPU.cpu_in_wr
+@200
+-INBOX
+@28
+tester.CPU.INBOX.i_wr
+tester.CPU.INBOX.o_empty_n
+tester.CPU.INBOX.i_rd
+@200
+-OUTBOX
+@22
+tester.CPU.OUTB.i_data[7:0]
+@28
+tester.CPU.OUTB.i_wr
+@29
+tester.CPU.OUTB.o_empty_n
+@28
+tester.CPU.OUTB.i_rd
+@22
+tester.CPU.OUTB.o_data[7:0]
+@200
+-We read the OUTBOX FIFO
+@28
+tester.readCPUOuput.pop_value
+@22
+tester.readCPUOuput.data[7:0]
+tester.readCPUOuput.mdata[7:0]
+[pattern_trace] 1
+[pattern_trace] 0
