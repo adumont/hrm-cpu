@@ -39,10 +39,10 @@ module tester;
     always #1 clk = ~clk;
 
     // Start simulation
-    initial begin
-        $dumpfile("tester.vcd");
-        $dumpvars(0, tester);
-    end
+    // initial begin
+    //     $dumpfile("tester.vcd");
+    //     $dumpvars(0, tester);
+    // end
 
     // Instanciate DUT
     hrmcpu CPU (
@@ -68,7 +68,7 @@ module tester;
         .data(cpu_in_data)
     );
 
-    forceEnd forceEnd0();
+    forceEnd forceEnd0(); 
 
     readCPUOuput readCPUOuput(
         .clk(clk),
@@ -106,7 +106,7 @@ module readInputFile (
         data=0;
         data_ready=0;
 
-        file = $fopenr("INBOX.txt");
+        file = $fopenr(`INBFILE);
 
         #2;
         // endless loop (row is 1 bit)

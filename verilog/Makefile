@@ -70,7 +70,7 @@ dot: assets/$(MODULE)_dot.svg
 # @echo '^: $^' # names of all prerequisites
 # @echo '|: $|' # names of all the order-only prerequisites
 # @echo '*: $*' # stem with which an implicit rule matches
-
+# @echo $(word 2, $?) 2nd word names of all prerequisites 
 
 $(MODULE)_tb.vcd: $(MODULE).v $(DEPS) $(MODULE)_tb.v
 

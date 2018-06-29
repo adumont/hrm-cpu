@@ -127,3 +127,18 @@ $ ./tester.out | grep OUTPUT | awk '{ print $3 }'
 03
 
 $ gtkwave tester.vcd tester.gtkw
+
+/test/
+    level01
+        rom
+        program
+        input.001
+        output.001
+        input.002
+        output.002
+        ...
+    level02
+    ...
+    level34
+
+
