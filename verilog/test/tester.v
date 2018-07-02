@@ -15,8 +15,12 @@
 `define INBFILE "INBOX.txt"
 `endif
 
+`ifndef DUMPFILE
+`define DUMPFILE "tester.vcd"
+`endif
+
 `ifndef TIME_LIMIT
-`define TIME_LIMIT 5000
+`define TIME_LIMIT 10000
 `endif
 
 module tester;
@@ -38,11 +42,11 @@ module tester;
     // Simulate clock
     always #1 clk = ~clk;
 
-    // Start simulation
-    // initial begin
-    //     $dumpfile("tester.vcd");
-    //     $dumpvars(0, tester);
-    // end
+    // dump simulation data
+    initial begin
+        $dumpfile(`DUMPFILE);
+        $dumpvars(0, tester);
+    end
 
     // Instanciate DUT
     hrmcpu CPU (
