@@ -24,7 +24,10 @@ module ram #(
 
     always @(posedge rclk) // Read memory
     begin
-        dout <= mem[raddr];
+        if (write_en)
+            dout <= din;
+        else
+            dout <= mem[raddr];
     end
 
     always @(posedge wclk) // Write memory.
