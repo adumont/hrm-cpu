@@ -6,6 +6,8 @@ AUXFILE:=program ram
 
 MAKEFLAGS += -j 8
 
+#.SILENT:
+
 # Add ../ to list of dependency files:
 SRCFILEPATH:=$(addprefix ../../, $(SOURCES))
 
@@ -13,18 +15,6 @@ LEVEL_DIR := $(strip $(notdir $(patsubst %/,%,$(CURDIR))))
 
 help:
 	@printf "%b" "$(COM_COLOR)$(COM_STRING) $(OBJ_COLOR)$(@)$(NO_COLOR)\n";
-
-# Regular Colors
-Black=\033[30m        # Black
-Red=\033[31m          # Red
-Green="\033[0;32m"        # Green
-Yellow=\033[33m       # Yellow
-Blue=\033[34m         # Blue
-Purple=\033[35m       # Purple
-Cyan=\033[36m         # Cyan
-White=\033[37m        # White
-# Reset
-Color_Off=\033[0m       # Text Reset
 
 # COM_COLOR   = \033[0;34m
 # OBJ_COLOR   = \033[0;36m
@@ -44,10 +34,10 @@ test : $(all-tests)
 #.PRECIOUS: %.ivl %.test 
 
 %.ivl : $(SRCFILEPATH) $(AUXFILE)
-	iverilog $(SRCFILEPATH) -DPROGRAM=\"program\" -DROMFILE=\"ram\" -DINBFILE=\"$*.in\" -o $*.ivl
+	iverilog $(SRCFILEPATH) -DPROGRAM=\"program\" -DROMFILE=\"ram\" -DINBFILE=\"$*.in\" -DDUMPFILE=\"$*.lxt\" -o $*.ivl
 
 %.test_out : %.in %.ivl
-	./$*.ivl > $@
+	vvp $*.ivl -lxt2 > $@
 
 %.check : %.test_out %.out
 	grep OUTPUT: $*.test_out | awk '{ print $$3 }' | diff -q $*.out - >/dev/null && \
@@ -58,4 +48,4 @@ all : test
 	@printf "%b" "$(GREEN)$(LEVEL_DIR): Success, all tests passed$(NO_COLOR)\n"
 
 clean :
-	rm *.ivl *.test *.check || true
+	rm *.ivl *.test *.check *.vcd *.lxt *.test_out|| true	
