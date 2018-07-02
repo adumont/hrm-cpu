@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.66 (w)1999-2015 BSI
-[*] Wed Jun 27 19:09:33 2018
+[*] Mon Jul  2 21:07:57 2018
 [*]
-[dumpfile] "/home/adumont/projects/hrm-cpu/verilog/tester.vcd"
-[dumpfile_mtime] "Wed Jun 27 19:08:17 2018"
-[dumpfile_size] 111777
-[savefile] "/home/adumont/projects/hrm-cpu/verilog/tester.gtkw"
-[timestart] 47
+[dumpfile] "/home/adumont/projects/hrm-cpu/verilog/test/year32/test01.vcd"
+[dumpfile_mtime] "Mon Jul  2 18:50:48 2018"
+[dumpfile_size] 478728
+[savefile] "/home/adumont/projects/hrm-cpu/verilog/test/tester.gtkw"
+[timestart] 906
 [size] 1678 998
 [pos] -1 -1
-*-2.109520 65 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-2.109520 909 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] tester.
 [treeopen] tester.CPU.
 [treeopen] tester.CPU.MEMORY0.
@@ -24,6 +24,8 @@ tester.clk
 @820
 tester.CPU.ControlUnit0.instrname[79:0]
 tester.CPU.ControlUnit0.statename[79:0]
+@28
+tester.CPU.ControlUnit0.indirect
 @22
 tester.readInputFile0.data[7:0]
 tester.CPU.cpu_in_data[7:0]
@@ -32,20 +34,61 @@ tester.CPU.cpu_in_full
 tester.readInputFile0.data_ready
 tester.CPU.cpu_in_wr
 @200
+-PROG
+@22
+tester.CPU.program0.Data[7:0]
+@200
+-PC
+@28
+tester.CPU.PC0.wPC
+@23
+[color] 6
+tester.CPU.PC0.PC[7:0]
+@28
+tester.CPU.PC0.aluFlag
+tester.CPU.PC0.ijump
+tester.CPU.PC0.branch
+@22
+tester.CPU.PC0.jmpAddr[7:0]
+@200
+-Register
+@22
+tester.CPU.register0.R[7:0]
+@28
+tester.CPU.register0.wR
+@200
+-Memory
+@28
+tester.CPU.MEMORY0.srcA
+@22
+tester.CPU.MEMORY0.AR_d[7:0]
+@28
+tester.CPU.MEMORY0.wAR
+@22
+tester.CPU.MEMORY0.AR_q[7:0]
+tester.CPU.MEMORY0.M[7:0]
+@200
 -INBOX
 @28
 tester.CPU.INBOX.i_wr
 tester.CPU.INBOX.o_empty_n
 tester.CPU.INBOX.i_rd
 @200
+-ALU
+@28
+[color] 3
+tester.CPU.alu0.flag
+@22
+tester.CPU.alu0.aluOut[7:0]
+@28
+tester.CPU.alu0.aluCtl[2:0]
+@200
 -OUTBOX
 @22
 tester.CPU.OUTB.i_data[7:0]
 @28
 tester.CPU.OUTB.i_wr
-@29
 tester.CPU.OUTB.o_empty_n
-@28
 tester.CPU.OUTB.i_rd
 @22
 tester.CPU.OUTB.o_data[7:0]
