@@ -11,18 +11,16 @@ MAKEFLAGS += -j 8
 # Add ../ to list of dependency files:
 SRCFILEPATH:=$(addprefix ../../, $(SOURCES))
 
+# Directory name we are in now...
 LEVEL_DIR := $(strip $(notdir $(patsubst %/,%,$(CURDIR))))
 
-help:
-	@printf "%b" "$(COM_COLOR)$(COM_STRING) $(OBJ_COLOR)$(@)$(NO_COLOR)\n";
+-include $(LEVEL_DIR).mk
 
-# COM_COLOR   = \033[0;34m
-# OBJ_COLOR   = \033[0;36m
-RED         = \033[0;31m
-GREEN       = \033[0;32m
-YELLOW      = \033[0;33m
-NO_COLOR    = \033[m
-BLUE        = \033[0;34m
+RED      = \033[0;31m
+GREEN    = \033[0;32m
+YELLOW   = \033[0;33m
+BLUE     = \033[0;34m
+NO_COLOR = \033[m
 
 all-tests := $(addsuffix .check, $(basename $(wildcard *.in)))
 
@@ -31,7 +29,7 @@ all-tests := $(addsuffix .check, $(basename $(wildcard *.in)))
 test : $(all-tests)
 
 # Do not remove these files at the end
-#.PRECIOUS: %.ivl %.test 
+#.PRECIOUS: %.ivl %.test_out 
 
 %.ivl : $(SRCFILEPATH) $(AUXFILE)
 	iverilog $(SRCFILEPATH) -DPROGRAM=\"program\" -DROMFILE=\"ram\" -DINBFILE=\"$*.in\" -DDUMPFILE=\"$*.lxt\" -o $*.ivl
@@ -48,4 +46,4 @@ all : test
 	@printf "%b" "$(GREEN)$(LEVEL_DIR): Success, all tests passed$(NO_COLOR)\n"
 
 clean :
-	rm *.ivl *.test *.check *.vcd *.lxt *.test_out|| true	
+	-rm -f *.ivl *.check *.vcd *.lxt *.test_out
