@@ -5,3 +5,5 @@
 *.asc
 *.bin
 *.ivl
+*.pnr
+*.log
