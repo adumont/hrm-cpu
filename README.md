@@ -21,7 +21,12 @@
 - [Simulations in Logisim](#simulations-in-logisim)
     - [Year 4](#year-4)
     - [Year 32](#year-32)
+- [Verilog & Simulations](#verilog--simulations)
+- [Sinthesis in FPGA](#sinthesis-in-fpga)
+    - [Top module design](#top-module-design)
+    - [How to build and flash in the FPGA](#how-to-build-and-flash-in-the-fpga)
 - [Tools used in this project:](#tools-used-in-this-project)
+- [External files](#external-files)
 
 # Introduction
 
@@ -59,7 +64,7 @@ We can see how the game actually represents a CPU and its internal components:
 
 - I'm a passionate hobbist with a recent interest in digital electronics: I'm not a Computer Science Engineer, nor a hardware engineer. I enjoy learning from books, youtube videos and tutorials online. This project is about practicing and learning.
 - This is a strictly personal project, with entertaining and educational objectives exlusively, not commercial nor industrial.
-- It's not optimized in any way. I'll be happy if it even gets to work.
+- It's not optimized in any way. I'll be happy if it even gets to work. [EDIT] It actually does work, in Logisim, Verilog simulation, and synthesized in the Icezum Alhambra FPGA.
 - It's a work in progress, so it's incomplete (and may never be complete).
 - ALthough I try to be thorough, this documentation is incomplete (and may never be complete).
 
@@ -488,13 +493,104 @@ Indeed, we can verify that this is the total count of each item (from the INBOX)
 
 **So it works!!!**
 
+# Verilog & Simulations
+
+[TODO]
+
+- explain folders structure
+- explain regression test suite structure and how it works
+    - Makefile, tester.v, tester.mk,
+    - Icarus Verilog MACRO injection from Makefile
+    - If the any source file, or program or ram file has changed, the necesarry tests (depending on the modified files) will be rerun (that's the power of using Makefile!)
+    - Generic testbench + tests folders (one per game level)
+        - program and initial ram file
+        - as many pairs of input and expected output files as tests we want to do
+        - Makefile finds all levels and run all tests within a level (until a test would fail)
+    - show sample tests
+    - how to run tests
+
+From `verilog/test`
+
+Run all tests:
+
+```
+$ make -s 
+BUMP+: Success, all tests passed
+Echo: Test [test01] OK
+Echo: Success, all tests passed
+Year-01: Success, all tests passed
+Year-03: Success, all tests passed
+Year-04: Success, all tests passed
+Year-32: Success, all tests passed
+```
+
+Run all tests of 1 level:
+
+```
+$ cd Year-04
+$ make -s -f ../tester.mk
+Year-04: Test [test02] OK
+Year-04: Test [test01] OK
+Year-04: Success, all tests passed
+```
+
+Run only 1 test of a particular level
+
+```
+$ cd Year-04
+$ make -s -f ../tester.mk test02.check
+Year-04: Test [test02] OK
+```
+
+Clean all test files
+```
+$ make -s clean
+```
+
+# Sinthesis in FPGA
+
+## Top module design
+
+The top modules is the one that will connect the IO pins, the UART-RX to the CPU's Inbox, the CPU's Outbox to the UART-TX. I have also added a small *controller* that to only pop data out of the Outbox when it's not empty AND UART-TX is not busy.
+
+![](verilog/assets/top.svg)
+
+![](verilog/assets/top_dot.svg)
+
+## How to build and flash in the FPGA
+
+From `verilog` directory:
+
+```
+make upload
+```
+From a clean folder, it will generate the bitstream and program it to the FPGA connected via USB.
+
+
+The Makefile offers several handy targets to do different actions, per module:
+
+If no module is specified with `MODULE=<module>`, it will default to `MODULE=top`.
+
+| Target | What it does                                                                                                         | Comments                   |
+| :----: | :------------------------------------------------------------------------------------------------------------------- | :------------------------ |
+| bin    | Generates bitstream                                                                                                  | Makes sense for top module |
+| upload | Upload bitstream to FPGA                                                                                             | Makes sense for top module |
+| svg    | Generates a netlistsvg output in asset/ folder                                                                       |                            |
+| dot    | Generates a GraphViz DOT output in asset/ folder                                                                     |                            |
+| sim    | Runs a testbench simulation of a specific module, generates Variables dumps and open Gtkwave to inspect the waveform | Use with `MODULE=<module>`. Testbench must be called <module>_tb.v |
+
+[TODO]: add more detail
+
+- Write (or choose a program) and eventually initial ram file.
+- Convert it to machine language, so it can be read by Verilog $readmemh().
+- Sinthesize the bitstream
+- Program the FPGA
 
 # Tools used in this project:
 
 Pending to add reference/links.
 
 - [Logisim Evolution, fork with FSM Addon](https://github.com/sderrien/logisim-evolution): this version has an FSM editor, which is regat to design and test FSMs. Unfortunately, it's not based on the latest Logisim Evolution version, nor is it compatible with.
-- [Fizzim](http://www.fizzim.com/): a FREE, open-source GUI-based Java FSM design tool. It can generate Verilog from an FSM design. (unfortunately, apparently not compatible with Logisim Evolution)
 - Visual Studio Code
 - Opensource FPGA toolchain ([installer](https://github.com/dcuartielles/open-fpga-install))
     - Synthesizer: [Yosys](http://www.clifford.at/yosys/) ([github](https://github.com/cliffordwolf/yosys))
@@ -503,3 +599,9 @@ Pending to add reference/links.
     - Verilog Simulator: [Icarus Verilog](http://iverilog.icarus.com/) 
     - Waveform Viewer: [Gtkwave](http://gtkwave.sourceforge.net/)
 - SchemeIt
+
+# External files
+
+I have re-used some files from external sources:
+
+- UART (RX,TX) & FIFO by Dan Gisselquist, from https://github.com/ZipCPU/wbuart32 (GPL)
