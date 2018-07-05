@@ -2,50 +2,51 @@
 
 TOP:=top
 
-ifndef $(MODULE)
-        MODULE:=$(TOP)
-endif
+MODULE?=$(TOP)
+
+DEPS_MEMORY:=\
+  ram.v
+
+DEPS_HRMCPU:=\
+  ufifo.v \
+  ALU.v \
+  MEMORY.v \
+  $(DEPS_MEMORY) \
+  register.v \
+  IR.v \
+  program.v \
+  PC.v \
+  ControlUnit.v
+
+DEPS_TOP:=\
+  hrmcpu.v \
+  $(DEPS_HRMCPU) \
+  debouncer.v \
+  rxuartlite.v \
+  txuartlite.v
 
 ifeq ($(MODULE), $(TOP))
-  DEPS:=\
-    font.v \
-    tilemem.v \
-    ram.v \
-    vga_sync.v
+  DEPS:=$(DEPS_TOP)
 
-  AUXFILES:=\
-    ram.list\
-    ram65.list\
-        const.vh
 
 else ifeq ($(MODULE), MEMORY)
 
-  DEPS:=\
-    ram.v
+  DEPS:=$(DEPS_MEMORY)
 
 else ifeq ($(MODULE), hrmcpu)
 
-  DEPS:=\
-    ufifo.v \
-    ALU.v \
-    MEMORY.v \
-    register.v \
-    IR.v \
-    program.v \
-    PC.v \
-    ControlUnit.v \
-    ram.v
+  DEPS:=$(DEPS_HRMCPU)
 
 endif
 
 IVERILOG_MACRO=
 
-ifndef $(PROGRAM)
-        IVERILOG_MACRO:=$(IVERILOG_MACRO) -DPROGRAM=\"$(PROGRAM)\"
+ifdef $(PROGRAM)
+  IVERILOG_MACRO:=$(IVERILOG_MACRO) -DPROGRAM=\"$(PROGRAM)\"
 endif
 
 ifdef $(ROMFILE)
-        IVERILOG_MACRO:=$(IVERILOG_MACRO) -DROMFILE=$(ROMFILE)\"
+  IVERILOG_MACRO:=$(IVERILOG_MACRO) -DROMFILE=$(ROMFILE)\"
 endif
 
 # YOSYSOPT:=-retime -abc2
@@ -83,7 +84,7 @@ gtkwave: $(MODULE).v $(DEPS) $(MODULE)_tb.v $(MODULE)_tb.vcd
 
 $(MODULE).bin: $(MODULE).pcf $(MODULE).v $(DEPS)
 	
-	yosys -p "synth_ice40 -blif $(MODULE).blif $(YOSYSOPT)" \
+	yosys -p "synth_ice40 -top $(MODULE) -blif $(MODULE).blif $(YOSYSOPT)" \
               -l $(MODULE).log -q $(MODULE).v $(DEPS)  
 	
 	arachne-pnr -d $(MEMORY) -p $(MODULE).pcf $(MODULE).blif -o $(MODULE).pnr
