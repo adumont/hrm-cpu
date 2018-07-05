@@ -67,9 +67,6 @@ We can see how the game actually represents a CPU and its internal components:
 
 The instruction set is the same as in the HRM game. It's made of a limited set of 11 instructions, 6 of which can function in direct and indirect adressing modes.
 
-TODO:
-- Implement Indirect adressing mode [#4](https://github.com/adumont/hrm-cpu/issues/4)
-
 For now, the latest version of the instruction set is described in this [Google Spreadsheet](https://docs.google.com/spreadsheets/d/1WEB_RK878GqC6Xb1BZOdD-QtXDiJCOBEF22lt2ebCDg/edit?usp=sharing).
 
 The following picture shows the instruction set format, and corresponding machine language:
@@ -189,14 +186,9 @@ The INBOX FSM is very simple. (for some reason, I was unable to create it in Log
 Notes:
 - When all the elements have been read (popped out of the IN belt), the empty signal is asserted. Once empty = 1, any INBOX instruction will wait until a new element is loaded in INBOX. At this time, the elements in INBOX si fixed, so that's equivalent to ending the program. Whenever I'll add a UART-RX at this end, it will allow the CPU to process items endlessly.
 
-TODO:
-- Transform INBOX into a FIFO [#1](https://github.com/adumont/hrm-cpu/issues/1)
-- Plug UART-RX to INBOX [#2](https://github.com/adumont/hrm-cpu/issues/2)
+[Update] The Verilog implementation is based on a FIFO queue, and doesn't require anymore to indicate the number of elements as first element.
 
 ## Outbox
-
-TODO:
-- Transform OUTBOX into a FIFO [#5](https://github.com/adumont/hrm-cpu/issues/5)
 
 ### Logisim circuit
 
