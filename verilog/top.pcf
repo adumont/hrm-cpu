@@ -1,0 +1,22 @@
+set_io   clk               21
+set_io   sw1               10
+set_io   sw2               11
+
+# Debug LEDs.
+set_io   leds[0]           95
+set_io   leds[1]           96
+set_io   leds[2]           97
+set_io   leds[3]           98
+set_io   leds[4]           99
+set_io   leds[5]           101
+set_io   leds[6]           102
+set_io   leds[7]           104
+
+# --- FTDI 1: (Serial port)
+# set_io --warn-no-port DCD 1
+# set_io --warn-no-port DSR 2
+# set_io --warn-no-port DTR 3
+# set_io --warn-no-port CTS 4
+# set_io --warn-no-port RTS 7
+set_io --warn-no-port TX  8
+set_io --warn-no-port RX  9
