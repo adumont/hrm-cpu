@@ -39,16 +39,16 @@ endif
 
 IVERILOG_MACRO=
 
-ifdef $(PROGRAM)
+ifdef PROGRAM
   IVERILOG_MACRO:=$(IVERILOG_MACRO) -DPROGRAM=\"$(PROGRAM)\"
 endif
 
-ifdef $(ROMFILE)
+ifdef ROMFILE
   IVERILOG_MACRO:=$(IVERILOG_MACRO) -DROMFILE=$(ROMFILE)\"
 endif
 
 # YOSYSOPT:=-retime -abc2
 
-ifndef $(MEMORY)
+ifndef MEMORY
 	MEMORY="1k"
 endif
