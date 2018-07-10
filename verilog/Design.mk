@@ -37,8 +37,22 @@ else ifeq ($(MODULE), hrmcpu)
 
 endif
 
-IVERILOG_MACRO=
+M4_OPTIONS=
+AUXFILES=
 
+ifdef PROGRAM
+  M4_OPTIONS += -D_PROGRAM_=$(PROGRAM)
+  DEPS := top_wrapper.v $(filter-out top_wrapper.v,$(DEPS)) 
+  AUXFILES += $(PROGRAM)
+endif
+
+ifdef ROMFILE
+  M4_OPTIONS += -D_ROMFILE_=$(ROMFILE)
+  DEPS := top_wrapper.v $(filter-out top_wrapper.v,$(DEPS)) 
+  AUXFILES += $(ROMFILE)
+endif
+
+IVERILOG_MACRO=
 ifdef PROGRAM
   IVERILOG_MACRO:=$(IVERILOG_MACRO) -DPROGRAM=\"$(PROGRAM)\"
 endif

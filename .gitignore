@@ -7,3 +7,5 @@
 *.ivl
 *.pnr
 *.log
+top_wrapper.v
+build.config

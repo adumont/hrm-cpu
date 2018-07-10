@@ -1,5 +1,7 @@
+`ifndef __TOP_MODULE__
+`define __TOP_MODULE__
+
 `default_nettype none
-//`include "const.vh"
 
 // Use of `define allows override from iverilog using -Dkey=value
 `ifndef PROGRAM
@@ -22,6 +24,12 @@ module top (
     );
 
     localparam baudsDivider=24'd104;
+
+    initial begin
+        // will dump parameters values in the yosys log
+        $display("PARAM PROGRAM: %s",`PROGRAM);
+        $display("PARAM ROMFILE: %s",`ROMFILE);
+    end
 
     wire sw1_d; // pulse when sw pressed
     wire sw1_u; // pulse when sw released
@@ -151,3 +159,4 @@ module out2txCtl (
     end
 
 endmodule
+`endif // __TOP_MODULE__

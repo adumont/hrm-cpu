@@ -29,10 +29,10 @@ gtkwave: $(MODULE).v $(DEPS) $(MODULE)_tb.v $(MODULE)_tb.vcd
 
 	gtkwave $(MODULE)_tb.vcd $(MODULE)_tb.gtkw &
 
-$(MODULE).bin: $(MODULE).pcf $(MODULE).v $(DEPS)
+$(MODULE).bin: $(MODULE).pcf $(MODULE).v $(DEPS) $(AUXFILES) build.config
 	
 	yosys -p "synth_ice40 -top $(MODULE) -blif $(MODULE).blif $(YOSYSOPT)" \
-              -l $(MODULE).log -q $(MODULE).v $(DEPS)  
+              -l $(MODULE).log -q $(DEPS) $(MODULE).v
 	
 	arachne-pnr -d $(MEMORY) -p $(MODULE).pcf $(MODULE).blif -o $(MODULE).pnr
 	
@@ -53,11 +53,18 @@ assets/$(MODULE)_dot.svg: $(MODULE).v $(DEPS)
 	[ -f $(MODULE)_dot.dot ] && rm $(MODULE)_dot.dot
 
 upload: $(MODULE).bin
-
 	iceprog $(MODULE).bin
+
+# We save AUXFILES names to build.config. Force a rebuild if they have changed
+build.config: $(AUXFILES) .force
+	@echo '$(AUXFILES)' | cmp -s - $@ || echo '$(AUXFILES)' > $@
+
+top_wrapper.v: top_wrapper.m4 build.config
+	m4 $(M4_OPTIONS) top_wrapper.m4 > top_wrapper.v
 
 clean:
 
-	rm -f *.bin *.pnr *.blif *.out *.vcd *~
+	rm -f *.bin *.pnr *.blif *.out *.vcd *~ top_wrapper.v build.config
 
-.PHONY: all clean json svg sim dot
+.PHONY: all clean json svg bin sim dot .force
+ 
