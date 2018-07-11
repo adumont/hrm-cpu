@@ -2,7 +2,7 @@ init:
   00: 20 d6 ; COPYFROM 214
   02: 30 db ; COPYTO 219
   04: 30 d8 ; COPYTO 216
-  06: 00 00 ; INBOX 
+  06: 00    ; INBOX
   07: 30 d7 ; COPYTO 215
 nexttile:
   09: 28 db ; COPYFROM [219]
@@ -17,5 +17,5 @@ inccount:
   17: 80 11 ; JUMP inctileaddr
 outputcount:
   19: 20 d8 ; COPYFROM 216
-  1b: 10 00 ; OUTBOX 
+  1b: 10    ; OUTBOX
   1c: 80 00 ; JUMP init
