@@ -2,9 +2,11 @@
 
 include Design.mk
 
+BUILDDIR?=builddir/
+
 all: bin svg dot sim
 
-bin: $(MODULE).bin
+bin: $(BUILDDIR)$(MODULE).bin
 vcd: $(MODULE)_tb.vcd
 sim: vcd gtkwave
 json: $(MODULE).json
@@ -29,16 +31,16 @@ gtkwave: $(MODULE).v $(DEPS) $(MODULE)_tb.v $(MODULE)_tb.vcd
 
 	gtkwave $(MODULE)_tb.vcd $(MODULE)_tb.gtkw &
 
-$(MODULE).bin: $(MODULE).pcf $(MODULE).v $(DEPS) $(AUXFILES) build.config
+$(BUILDDIR)$(MODULE).bin: $(MODULE).pcf $(MODULE).v $(DEPS) $(AUXFILES) $(BUILDDIR)build.config
 	
-	yosys -p "synth_ice40 -top $(MODULE) -blif $(MODULE).blif $(YOSYSOPT)" \
-              -l $(MODULE).log -q $(DEPS) $(MODULE).v
+	yosys -p "synth_ice40 -top $(MODULE) -blif $(BUILDDIR)$(MODULE).blif $(YOSYSOPT)" \
+              -l $(BUILDDIR)$(MODULE).log -q $(DEPS) $(MODULE).v
 	
-	arachne-pnr -d $(MEMORY) -p $(MODULE).pcf $(MODULE).blif -o $(MODULE).pnr
+	arachne-pnr -d $(MEMORY) -p $(MODULE).pcf $(BUILDDIR)$(MODULE).blif -o $(BUILDDIR)$(MODULE).pnr
 	
-	icepack $(MODULE).pnr $(MODULE).bin
+	icepack $(BUILDDIR)$(MODULE).pnr $(BUILDDIR)$(MODULE).bin
 
-$(MODULE).json: $(MODULE).v $(DEPS)
+$(BUILDDIR)$(MODULE).json: $(MODULE).v $(DEPS)
 
 	yosys -p "prep -top $(MODULE); write_json $(MODULE).json" $(MODULE).v $(DEPS)
 
@@ -52,19 +54,29 @@ assets/$(MODULE)_dot.svg: $(MODULE).v $(DEPS)
 	mv $(MODULE)_dot.svg assets/
 	[ -f $(MODULE)_dot.dot ] && rm $(MODULE)_dot.dot
 
-upload: $(MODULE).bin
-	iceprog $(MODULE).bin
+upload: $(BUILDDIR)$(MODULE).bin
+	iceprog $(BUILDDIR)$(MODULE).bin
 
 # We save AUXFILES names to build.config. Force a rebuild if they have changed
-build.config: $(AUXFILES) .force
+$(BUILDDIR)build.config: $(AUXFILES) $(BUILDDIR) .force
 	@echo '$(AUXFILES)' | cmp -s - $@ || echo '$(AUXFILES)' > $@
 
-top_wrapper.v: top_wrapper.m4 build.config
-	m4 $(M4_OPTIONS) top_wrapper.m4 > top_wrapper.v
+$(BUILDDIR):
+	mkdir -p $(BUILDDIR)
+
+$(BUILDDIR)top_wrapper.v: top_wrapper.m4 $(BUILDDIR)build.config
+	m4 $(M4_OPTIONS) top_wrapper.m4 > $(BUILDDIR)top_wrapper.v
 
 clean:
 
-	rm -f *.bin *.pnr *.blif *.out *.vcd *~ top_wrapper.v build.config
+	rm -f $(BUILDDIR)$(MODULE).bin
+	rm -f $(BUILDDIR)$(MODULE).pnr
+	rm -f $(BUILDDIR)$(MODULE).blif
+	rm -f $(BUILDDIR)top_wrapper.v
+	rm -f $(BUILDDIR)$(MODULE).log
+	rm -f $(BUILDDIR)build.config
+	rmdir $(BUILDDIR) 2>/dev/null || true
+	rm -f *.out *.vcd
 
 .PHONY: all clean json svg bin sim dot .force
  

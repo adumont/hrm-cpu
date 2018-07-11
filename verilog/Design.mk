@@ -37,18 +37,27 @@ else ifeq ($(MODULE), hrmcpu)
 
 endif
 
+# shortcut to the test cases in test/,
+# call with LEVEL=<levelname> (aka Dir name)
+# Will load default program and ram files
+ifdef LEVEL
+  BUILDDIR:=buildir/$(LEVEL)/
+  PROGRAM:=test/$(LEVEL)/program
+  ROMFILE:=test/$(LEVEL)/ram
+endif
+
 M4_OPTIONS=
 AUXFILES=
 
 ifdef PROGRAM
   M4_OPTIONS += -D_PROGRAM_=$(PROGRAM)
-  DEPS := top_wrapper.v $(filter-out top_wrapper.v,$(DEPS)) 
+  DEPS := $(BUILDDIR)top_wrapper.v $(filter-out top_wrapper.v,$(DEPS)) 
   AUXFILES += $(PROGRAM)
 endif
 
 ifdef ROMFILE
   M4_OPTIONS += -D_ROMFILE_=$(ROMFILE)
-  DEPS := top_wrapper.v $(filter-out top_wrapper.v,$(DEPS)) 
+  DEPS := $(BUILDDIR)top_wrapper.v $(filter-out top_wrapper.v,$(DEPS)) 
   AUXFILES += $(ROMFILE)
 endif
 
