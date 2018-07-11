@@ -56,7 +56,8 @@ BEGIN {
             printf("%s ",ass[$1]) >> binfile;
             if( i[$1] == 2) printf("%s ", $2) >> binfile;
         } else {
-            printf("  %02x: %s %02x ; %s %s\n", addr, ass[$1], $2, $1, $2);
+            if( i[$1] == 1) printf("  %02x: %s    ; %s\n", addr, ass[$1], $1);
+            if( i[$1] == 2) printf("  %02x: %s %02x ; %s %s\n", addr, ass[$1], $2, $1, $2);
             printf("%s ",ass[$1]) >> binfile;
             if( i[$1] == 2) printf("%02x ", $2) >> binfile;
         }
