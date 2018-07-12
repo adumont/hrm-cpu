@@ -1,0 +1,21 @@
+init:
+  00: 20 d6 ; COPYFROM 214
+  02: 30 db ; COPYTO 219
+  04: 30 d8 ; COPYTO 216
+  06: 00    ; INBOX
+  07: 30 d7 ; COPYTO 215
+nexttile:
+  09: 28 db ; COPYFROM [219]
+  0b: 90 19 ; JUMPZ outputcount
+  0d: 50 d7 ; SUB 215
+  0f: 90 15 ; JUMPZ inccount
+inctileaddr:
+  11: 60 db ; BUMP+ 219
+  13: 80 09 ; JUMP nexttile
+inccount:
+  15: 60 d8 ; BUMP+ 216
+  17: 80 11 ; JUMP inctileaddr
+outputcount:
+  19: 20 d8 ; COPYFROM 216
+  1b: 10    ; OUTBOX
+  1c: 80 00 ; JUMP init

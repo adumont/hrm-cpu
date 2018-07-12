@@ -1,0 +1,38 @@
+Code:    32 0x20 ' ' Count: 12
+Code:    35 0x23 '#' Count: 2
+Code:    50 0x32 '2' Count: 1
+Code:    51 0x33 '3' Count: 1
+Code:    64 0x40 '@' Count: 1
+Code:    65 0x41 'A' Count: 3
+Code:    67 0x43 'C' Count: 1
+Code:    70 0x46 'F' Count: 2
+Code:    71 0x47 'G' Count: 2
+Code:    72 0x48 'H' Count: 1
+Code:    73 0x49 'I' Count: 1
+Code:    77 0x4D 'M' Count: 1
+Code:    80 0x50 'P' Count: 3
+Code:    82 0x52 'R' Count: 1
+Code:    84 0x54 'T' Count: 1
+Code:    85 0x55 'U' Count: 1
+Code:    97 0x61 'a' Count: 4
+Code:    98 0x62 'b' Count: 1
+Code:    99 0x63 'c' Count: 1
+Code:   100 0x64 'd' Count: 2
+Code:   101 0x65 'e' Count: 4
+Code:   102 0x66 'f' Count: 1
+Code:   104 0x68 'h' Count: 2
+Code:   105 0x69 'i' Count: 3
+Code:   108 0x6C 'l' Count: 3
+Code:   109 0x6D 'm' Count: 4
+Code:   110 0x6E 'n' Count: 2
+Code:   111 0x6F 'o' Count: 3
+Code:   114 0x72 'r' Count: 2
+Code:   115 0x73 's' Count: 3
+Code:   116 0x74 't' Count: 1
+Code:   117 0x75 'u' Count: 2
+Code:   118 0x76 'v' Count: 1
+Code:   119 0x77 'w' Count: 1
+Code:   122 0x7A 'z' Count: 1
+-----TOTAL CHARACTERS: 75
+
+https://www.somacon.com/p525.php
