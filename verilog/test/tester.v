@@ -20,7 +20,7 @@
 `endif
 
 `ifndef TIME_LIMIT
-`define TIME_LIMIT 10000
+`define TIME_LIMIT 5000
 `endif
 
 module tester;

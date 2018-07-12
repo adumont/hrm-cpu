@@ -32,7 +32,7 @@ test : $(all-tests)
 #.PRECIOUS: %.ivl %.test_out 
 
 %.ivl : $(SRCFILEPATH) $(AUXFILE)
-	iverilog $(SRCFILEPATH) -DPROGRAM=\"program\" -DROMFILE=\"ram\" -DINBFILE=\"$*.in\" -DDUMPFILE=\"$*.lxt\" -o $*.ivl
+	iverilog $(SRCFILEPATH) -DPROGRAM=\"program\" -DROMFILE=\"ram\" -DINBFILE=\"$*.in\" $(IVERILOG_OPT) -DDUMPFILE=\"$*.lxt\" -o $*.ivl
 
 %.test_out : %.in %.ivl
 	vvp $*.ivl -lxt2 > $@
