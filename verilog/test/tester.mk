@@ -38,7 +38,7 @@ test : $(all-tests)
 	vvp $*.ivl -lxt2 > $@
 
 %.check : %.test_out %.out
-	grep OUTPUT: $*.test_out | awk '{ print $$3 }' | diff -q $*.out - >/dev/null && \
+	grep "TX OUT:" $*.test_out | awk '{ print $$4 }' | diff -q $*.out - >/dev/null && \
 	( touch $*.check; printf "%b" "$(GREEN)$(LEVEL_DIR): Test [$*] OK$(NO_COLOR)\n" ) || \
 	( printf "%b" "$(RED)$(LEVEL_DIR): Test [$*] FAILED$(NO_COLOR)\n" ; false )
 

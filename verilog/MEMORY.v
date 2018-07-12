@@ -41,4 +41,11 @@ module MEMORY (
     );
     defparam ram0.ROMFILE = ROMFILE;
 
+`ifndef SYNTHESIS
+    always @(R)
+       $display("%t DEBUG AR_q=%h", $time, AR_q);
+    always @(M)
+       $display("%t DEBUG M=%h", $time, M);
+`endif
+
 endmodule

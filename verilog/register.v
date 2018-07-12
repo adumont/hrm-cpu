@@ -21,4 +21,9 @@ module register (
         end
     end
 
+`ifndef SYNTHESIS
+    always @(R)
+       $display("%t DEBUG R=%h", $time, R);
+`endif
+
 endmodule

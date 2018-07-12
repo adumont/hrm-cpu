@@ -121,7 +121,7 @@ module readInputFile (
             // if( count == 0 ) $finish;
             if( count == 2 ) begin
                 #(2*delay-2);
-                    $display("%t %d", $time, num);
+                    $display("%t RX IN:%h", $time, num);
                     data = num;
                     data_ready = 1'b 1;
 
@@ -153,7 +153,7 @@ module readCPUOuput (
             pop_value <= 1'b 1;
             mdata <= data;
             just_read <= 1;
-            $display("%t OUTPUT: %h", $time, data);
+            $display("%t TX OUT: %h", $time, data);
         end
 
         // dirty hack to wait 1 clock cycle before reading again from OUTBOX FIFO
