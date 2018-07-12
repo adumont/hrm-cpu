@@ -1,0 +1,11 @@
+JUMP label2
+label0:
+COPYTO 0
+SUB 0
+SUB 0
+label1:
+OUTBOX
+label2:
+INBOX
+JUMPN label0
+JUMP label1

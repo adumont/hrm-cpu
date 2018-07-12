@@ -1,0 +1,14 @@
+init:
+INBOX
+COPYTO 1
+INBOX
+COPYTO 2
+SUB 1
+JUMPN isneg
+COPYFROM 2
+JUMP out
+isneg:
+COPYFROM 1
+out:
+OUTBOX
+JUMP init

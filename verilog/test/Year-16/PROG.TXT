@@ -1,0 +1,11 @@
+  00: 80 09 ; JUMP label2
+label0:
+  02: 30 00 ; COPYTO 0
+  04: 50 00 ; SUB 0
+  06: 50 00 ; SUB 0
+label1:
+  08: 10    ; OUTBOX
+label2:
+  09: 00    ; INBOX
+  0a: A0 02 ; JUMPN label0
+  0c: 80 08 ; JUMP label1

@@ -1,0 +1,22 @@
+init:
+INBOX
+JUMPN isneg1
+COPYFROM 4
+JUMP save
+isneg1:
+COPYFROM 5
+save:
+COPYTO 0
+INBOX
+JUMPN isneg2
+COPYFROM 4
+JUMP cmp
+isneg2:
+COPYFROM 5
+cmp:
+SUB 0
+JUMPZ out
+COPYFROM 5
+out:
+OUTBOX
+JUMP init

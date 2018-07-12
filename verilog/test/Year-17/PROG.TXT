@@ -1,0 +1,22 @@
+init:
+  00: 00    ; INBOX
+  01: A0 07 ; JUMPN isneg1
+  03: 20 04 ; COPYFROM 4
+  05: 80 09 ; JUMP save
+isneg1:
+  07: 20 05 ; COPYFROM 5
+save:
+  09: 30 00 ; COPYTO 0
+  0b: 00    ; INBOX
+  0c: A0 12 ; JUMPN isneg2
+  0e: 20 04 ; COPYFROM 4
+  10: 80 14 ; JUMP cmp
+isneg2:
+  12: 20 05 ; COPYFROM 5
+cmp:
+  14: 50 00 ; SUB 0
+  16: 90 1a ; JUMPZ out
+  18: 20 05 ; COPYFROM 5
+out:
+  1a: 10    ; OUTBOX
+  1b: 80 00 ; JUMP init

@@ -1,0 +1,14 @@
+init:
+  00: 00    ; INBOX
+  01: 30 01 ; COPYTO 1
+  03: 00    ; INBOX
+  04: 30 02 ; COPYTO 2
+  06: 50 01 ; SUB 1
+  08: A0 0e ; JUMPN isneg
+  0a: 20 02 ; COPYFROM 2
+  0c: 80 10 ; JUMP out
+isneg:
+  0e: 20 01 ; COPYFROM 1
+out:
+  10: 10    ; OUTBOX
+  11: 80 00 ; JUMP init
