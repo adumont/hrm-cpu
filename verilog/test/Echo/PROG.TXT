@@ -1,4 +1,4 @@
 init:
-  00: 00 00 ; INBOX 
-  01: 10 00 ; OUTBOX 
+  00: 00    ; INBOX
+  01: 10    ; OUTBOX
   02: 80 00 ; JUMP init
