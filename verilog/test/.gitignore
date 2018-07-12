@@ -1,3 +1,4 @@
 !*.out
 *.check
 *.lxt
+*.test_out
