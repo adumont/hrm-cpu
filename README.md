@@ -30,7 +30,7 @@
 
 # Introduction
 
-This personal project aims at designing a soft core CPU in Verilog, synthetizable in an FPGA that will behave like the gameplay of [Human Resource Machine](https://tomorrowcorporation.com/humanresourcemachine) by Tomorrow Corp.
+This personal project aims at designing a soft core CPU in Verilog, **synthetizable in an FPGA** that will behave like the gameplay of [Human Resource Machine](https://tomorrowcorporation.com/humanresourcemachine) by Tomorrow Corp.
 
 Here's an extract of an article on HRM, posted on [IEEE's Spectrum site](https://spectrum.ieee.org/geek-life/reviews/three-computer-games-that-make-assembly-language-fun):
 >In this game the player takes on the role of an office worker who must handle numbers and letters arriving on an “in” conveyor belt and put the desired results on an “out” conveyor belt.
@@ -39,7 +39,9 @@ Here's an extract of an article on HRM, posted on [IEEE's Spectrum site](https:/
 
 My *HRM CPU* design is an **8-bit multi-cycle RISC CPU** based on **Harvard architecture** with **variable length instructions**.
 
-**TL;DR**: For the impatients, you can see this demo at the end: [HRM Year 4 in Logisim](#year-4).
+**TL;DR**: For the impatients, you can jump to these demos (with videos) at the end:
+- [HRM Year 4 in Logisim](#year-4)
+- [HRM Year 32 in Logisim](#year-32)
 
 ## CPU Architecture components
 
@@ -48,7 +50,7 @@ We can see how the game actually represents a CPU and its internal components:
 | HRM  components | #     | CPU components       |
 | --------------- | :---: | -------------------- |
 | Office Worker   | 1     | Register             |
-| In/Out belts    | 2, 3  | I/O                  |
+| In/Out belts    | 2, 3  | Input/Ouput (I/O)    |
 | Floor Tiles     | 4     | Memory (RAM)         |
 | Program         | 5     | Program Memory       |
 |                 | 6     | Program Counter      |
@@ -64,9 +66,9 @@ We can see how the game actually represents a CPU and its internal components:
 
 - I'm a passionate hobbist with a recent interest in digital electronics: I'm not a Computer Science Engineer, nor a hardware engineer. I enjoy learning from books, youtube videos and tutorials online. This project is about practicing and learning.
 - This is a strictly personal project, with entertaining and educational objectives exlusively, not commercial nor industrial.
-- It's not optimized in any way. I'll be happy if it even gets to work. [EDIT] It actually does work, in Logisim, Verilog simulation, and synthesized in the Icezum Alhambra FPGA.
+- It's not optimized in any way. I'll be happy if it even gets to work. [EDIT] **It actually does work, in Logisim, Verilog simulation, and synthesized in the Icezum Alhambra FPGA.**
 - It's a work in progress, so it's incomplete (and may never be complete).
-- ALthough I try to be thorough, this documentation is incomplete (and may never be complete).
+- Although I try to be thorough, this documentation is also incomplete (and may never be complete).
 
 # Instruction Set Architecture
 
@@ -120,11 +122,12 @@ We'll get:
     01: 10    ; OUTBOX 
     02: 80 00 ; JUMP start
 
-And the corresponding machine language memory dump ready to load into PROG:
+And the corresponding machine language memory dump ready to load into PROG (in Logisim):
 
     v2.0 raw
     00 10 80 00 
 
+Note: The same *machine language format* is also used later to load into the Verilog design (removing the first line `v2.0 raw`).
 
 # Microarchitecture
 
@@ -145,6 +148,9 @@ The sections below detail each module individually.
 The top module shows all the inner modules, the Data Path and Control Path:
 
 ![](logisim/diagram/TOP.png)
+
+TODO:
+- Document hrmcpu testbench & waveform screenshots
 
 ## Control Unit
 
@@ -497,6 +503,7 @@ Indeed, we can verify that this is the total count of each item (from the INBOX)
 
 [TODO]
 
+- show hrmcpu module testbench
 - explain folders structure
 - explain regression test suite structure and how it works
     - Makefile, tester.v, tester.mk,
@@ -571,12 +578,12 @@ The Makefile offers several handy targets to do different actions, per module:
 
 If no module is specified with `MODULE=<module>`, it will default to `MODULE=top`.
 
-| Target | What it does                                                                                                         | Comments                   |
-| :----: | :------------------------------------------------------------------------------------------------------------------- | :------------------------ |
-| bin    | Generates bitstream                                                                                                  | Makes sense for top module |
-| upload | Upload bitstream to FPGA                                                                                             | Makes sense for top module |
-| svg    | Generates a netlistsvg output in asset/ folder                                                                       |                            |
-| dot    | Generates a GraphViz DOT output in asset/ folder                                                                     |                            |
+| Target | What it does                                                                                                         | Comments                                                           |
+| :----: | :------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------- |
+| bin    | Generates bitstream                                                                                                  | Makes sense for top module                                         |
+| upload | Upload bitstream to FPGA                                                                                             | Makes sense for top module                                         |
+| svg    | Generates a netlistsvg output in asset/ folder                                                                       |                                                                    |
+| dot    | Generates a GraphViz DOT output in asset/ folder                                                                     |                                                                    |
 | sim    | Runs a testbench simulation of a specific module, generates Variables dumps and open Gtkwave to inspect the waveform | Use with `MODULE=<module>`. Testbench must be called <module>_tb.v |
 
 [TODO]: add more detail
