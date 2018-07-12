@@ -42,6 +42,7 @@ My *HRM CPU* design is an **8-bit multi-cycle RISC CPU** based on **Harvard arch
 **TL;DR**: For the impatients, you can jump to these demos (with videos) at the end:
 - [HRM Year 4 in Logisim](#year-4)
 - [HRM Year 32 in Logisim](#year-32)
+- [Demo 3 programs running on HRMCPU in the Icezum Alhambra FPGA](https://www.youtube.com/watch?v=BREuXfzeU0w)
 
 ## CPU Architecture components
 
