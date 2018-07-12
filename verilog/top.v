@@ -20,7 +20,7 @@ module top (
 
         input  wire       sw1,    // board button 1
         input  wire       sw2,    // board button 2
-        output wire [7:0] leds    // board leds
+        output reg  [7:0] leds    // board leds
     );
 
     localparam baudsDivider=24'd104;
@@ -116,6 +116,18 @@ module top (
     // Connect inputs
     assign tx_i_wr = txctl_o_pop_value;
     assign tx_i_data = cpu_out_data;
+    // ---------------------------------------- //
+
+    // ---------------------------------------- //
+    // Leds
+    initial leds = 0;
+
+    always @(posedge clk)
+    begin
+        leds <= leds;
+        if(tx_i_wr)
+            leds <= tx_i_data;
+    end
     // ---------------------------------------- //
 
     // ---------------------------------------- //
