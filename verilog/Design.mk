@@ -41,7 +41,7 @@ endif
 # call with LEVEL=<levelname> (aka Dir name)
 # Will load default program and ram files
 ifdef LEVEL
-  BUILDDIR:=buildir/$(LEVEL)/
+  BUILDDIR:=builddir/$(LEVEL)/
   PROGRAM:=test/$(LEVEL)/program
   ROMFILE:=test/$(LEVEL)/ram
 endif
