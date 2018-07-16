@@ -38,11 +38,11 @@ test : $(all-tests)
 	$(MAKE) -C ../../ LEVEL=$(LEVEL_DIR) upload
 	@printf "\n%b\n" "$(BLUE)Running test $(LEVEL_DIR)/$*$(NO_COLOR)\n"
 	../run1hwtest.sh /dev/ttyUSB1 $* && \
-	( touch $*.hwcheck; printf "\n%b\n" "$(GREEN)$(LEVEL_DIR): Test [$*] OK$(NO_COLOR)\n" ) || \
-	( printf "\n%b\n" "$(RED)$(LEVEL_DIR): Test [$*] FAILED$(NO_COLOR)\n" ; false )
+	( touch $*.hwcheck; printf "\n%b\n" "$(GREEN)$(LEVEL_DIR): HW Test [$*] OK$(NO_COLOR)\n" ) || \
+	( printf "\n%b\n" "$(RED)$(LEVEL_DIR): HW Test [$*] FAILED$(NO_COLOR)\n" ; false )
 
 all : test 
-	@printf "\n%b\n" "$(GREEN)$(LEVEL_DIR): Success, all tests passed$(NO_COLOR)\n"
+	@printf "\n%b\n" "$(GREEN)$(LEVEL_DIR): Success, all HW tests passed$(NO_COLOR)\n"
 
 clean :
 	-rm -f *.hwcheck *.hwtest_out
