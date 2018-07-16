@@ -26,7 +26,7 @@ NO_COLOR = \033[m
 
 all-tests := $(addsuffix .hwcheck, $(basename $(wildcard *.in)))
 
-.PHONY : test all #%.hwtest_out %.ivl %.check
+.PHONY : test all
 
 test : $(all-tests)
 
@@ -34,13 +34,15 @@ test : $(all-tests)
 #.PRECIOUS: %.ivl %.hwtest_out 
 
 %.hwcheck : %.out %.in $(AUXFILE) $(SRCFILEPATH)
+	@printf "\n%b\n" "$(BLUE)Programming FPGA with $(LEVEL_DIR)$(NO_COLOR)\n"
 	$(MAKE) -C ../../ LEVEL=$(LEVEL_DIR) upload
+	@printf "\n%b\n" "$(BLUE)Running test $(LEVEL_DIR)/$*$(NO_COLOR)\n"
 	../run1hwtest.sh /dev/ttyUSB1 $* && \
-	( touch $*.hwcheck; printf "%b" "$(GREEN)$(LEVEL_DIR): Test [$*] OK$(NO_COLOR)\n" ) || \
-	( printf "%b" "$(RED)$(LEVEL_DIR): Test [$*] FAILED$(NO_COLOR)\n" ; false )
+	( touch $*.hwcheck; printf "\n%b\n" "$(GREEN)$(LEVEL_DIR): Test [$*] OK$(NO_COLOR)\n" ) || \
+	( printf "\n%b\n" "$(RED)$(LEVEL_DIR): Test [$*] FAILED$(NO_COLOR)\n" ; false )
 
 all : test 
-	@printf "%b" "$(GREEN)$(LEVEL_DIR): Success, all tests passed$(NO_COLOR)\n"
+	@printf "\n%b\n" "$(GREEN)$(LEVEL_DIR): Success, all tests passed$(NO_COLOR)\n"
 
 clean :
-	-rm -f *.hwcheck *.hwtest_out *.pid
+	-rm -f *.hwcheck *.hwtest_out

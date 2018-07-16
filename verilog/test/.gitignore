@@ -2,3 +2,5 @@
 *.check
 *.lxt
 *.test_out
+*.hwcheck
+*.hwtest_out
