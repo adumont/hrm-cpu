@@ -9,7 +9,7 @@ all: bin svg dot sim
 bin: $(BUILDDIR)$(MODULE).bin
 vcd: $(MODULE)_tb.vcd
 sim: vcd gtkwave
-json: $(MODULE).json
+json: $(BUILDDIR)$(MODULE).json
 svg: assets/$(MODULE).svg
 dot: assets/$(MODULE)_dot.svg
 
@@ -44,7 +44,7 @@ $(BUILDDIR)$(MODULE).json: $(MODULE).v $(DEPS)
 
 	yosys -p "prep -top $(MODULE); write_json $(MODULE).json" $(MODULE).v $(DEPS)
 
-assets/$(MODULE).svg: $(MODULE).json
+assets/$(MODULE).svg: $(BUILDDIR)$(MODULE).json
 
 	netlistsvg $(MODULE).json -o assets/$(MODULE).svg && rm $(MODULE).json
 
