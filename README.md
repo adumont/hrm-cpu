@@ -483,7 +483,7 @@ Before running the program, let's clear the OUTBOX:
 
 And finally we run the program:
 
-[![](logisim/prog/Year-32/assets/hrm-cpu-logisim-year32-thumbnail.png)](https://www.youtube.com/watch?v=9MmbXoqh_AE)
+[![](logisim/prog/Year-32/assets/hrm-cpu-logisim-year32-thumbnail.png)](https://www.youtube.com/watch?v=9MmbXoqh_AE) [![Join the chat at https://gitter.im/hrm-cpu/Lobby](https://badges.gitter.im/hrm-cpu/Lobby.svg)](https://gitter.im/hrm-cpu/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 The program will finish when the last item in the inbox is processed. Let's see the result we get in OUTBOX:
 
