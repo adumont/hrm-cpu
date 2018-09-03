@@ -1,0 +1,22 @@
+# -------------------------- SYSTEM CLOCK -------------------------------------
+set_io --warn-no-port clk   J3  # input
+
+# Debug LEDs.
+set_io --warn-no-port leds[0]  B5  # output
+set_io --warn-no-port leds[1]  B4  # output
+set_io --warn-no-port leds[2]  A2  # output
+set_io --warn-no-port leds[3]  A1  # output
+set_io --warn-no-port leds[4]  C5  # output
+set_io --warn-no-port leds[5]  C4  # output
+set_io --warn-no-port leds[6]  B3  # output
+set_io --warn-no-port leds[7]  C3  # output
+
+# ------------------------------ FTDI 1 ---------------------------------------
+# UART
+set_io --warn-no-port TX    B12  # output
+set_io --warn-no-port RX    B10  # input
+# set_io --warn-no-port DCD   B15  # output
+# set_io --warn-no-port DSR   B14  # output
+# set_io --warn-no-port DTR   A16  # input
+# set_io --warn-no-port CTS   A15  # output
+# set_io --warn-no-port RTS   B13  # input

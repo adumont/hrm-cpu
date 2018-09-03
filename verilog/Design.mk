@@ -41,7 +41,7 @@ endif
 # call with LEVEL=<levelname> (aka Dir name)
 # Will load default program and ram files
 ifdef LEVEL
-  BUILDDIR:=builddir/$(LEVEL)/
+  BUILDDIR:=builddir/$(BOARD)/$(LEVEL)/
   PROGRAM:=test/$(LEVEL)/program
   ROMFILE:=test/$(LEVEL)/ram
 endif
@@ -71,7 +71,3 @@ ifdef ROMFILE
 endif
 
 # YOSYSOPT:=-retime -abc2
-
-ifndef MEMORY
-	MEMORY="1k"
-endif
