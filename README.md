@@ -590,6 +590,10 @@ If no module is specified with `MODULE=<module>`, it will default to `MODULE=top
 | dot    | Generates a GraphViz DOT output in asset/ folder                                                                     |                                                                    |
 | sim    | Runs a testbench simulation of a specific module, generates Variables dumps and open Gtkwave to inspect the waveform | Use with `MODULE=<module>`. Testbench must be called <module>_tb.v |
 
+Additionally:
+- a board can be specified: `BOARD=<board>`, it will default to `MODULE=alhambra` (board must be defined first in Board.mk)
+- a game level can be specified: `LEVEL=<level>`. Level files must exist in /test/. See examples.
+
 [TODO]: add more detail
 
 - Write (or choose a program) and eventually initial ram file.
