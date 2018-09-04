@@ -18,8 +18,10 @@ module top (
         input  wire       RX,
         output wire       TX,
 
+        `ifdef BOARD_HAVE_BUTTONS
         input  wire       sw1,    // board button 1
         input  wire       sw2,    // board button 2
+        `endif
         output reg  [7:0] leds    // board leds
     );
 
@@ -31,10 +33,12 @@ module top (
         $display("PARAM ROMFILE: %s",`ROMFILE);
     end
 
+    `ifdef BOARD_HAVE_BUTTONS
     wire sw1_d; // pulse when sw pressed
     wire sw1_u; // pulse when sw released
     wire sw1_s; // sw state
     debouncer db_sw1 (.clk(clk), .PB(sw1), .PB_down(sw1_d), .PB_up(sw1_u), .PB_state(sw1_s));
+    `endif
 
     // Assign top Module Output
     assign TX = tx_o_uart_tx;
@@ -75,7 +79,10 @@ module top (
     assign cpu_in_data = rx_o_data;
     assign cpu_in_wr = rx_o_wr;
     assign cpu_out_rd = txctl_o_pop_value;
+
+    `ifdef BOARD_HAVE_BUTTONS
     assign cpu_i_rst = sw1_d;
+    `endif
     // ---------------------------------------- //
 
     // ---------------------------------------- //

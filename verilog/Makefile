@@ -4,6 +4,7 @@ include Boards.mk
 include Design.mk
 
 BUILDDIR?=builddir/$(BOARD)/
+DEPS += $(BUILDDIR)top_wrapper.v
 
 all: bin svg dot sim
 

@@ -46,20 +46,15 @@ ifdef LEVEL
   ROMFILE:=test/$(LEVEL)/ram
 endif
 
-M4_OPTIONS=
 AUXFILES=
 
-ifdef PROGRAM
-  M4_OPTIONS += -D_PROGRAM_=$(PROGRAM)
-  DEPS := $(BUILDDIR)top_wrapper.v $(filter-out top_wrapper.v,$(DEPS)) 
-  AUXFILES += $(PROGRAM)
-endif
+PROGRAM?=test/Echo/program
+M4_OPTIONS += -D_PROGRAM_=$(PROGRAM)
+AUXFILES += $(PROGRAM)
 
-ifdef ROMFILE
-  M4_OPTIONS += -D_ROMFILE_=$(ROMFILE)
-  DEPS := $(BUILDDIR)top_wrapper.v $(filter-out top_wrapper.v,$(DEPS)) 
-  AUXFILES += $(ROMFILE)
-endif
+ROMFILE?=
+M4_OPTIONS += -D_ROMFILE_=$(ROMFILE)
+AUXFILES += $(ROMFILE)
 
 IVERILOG_MACRO=
 ifdef PROGRAM
