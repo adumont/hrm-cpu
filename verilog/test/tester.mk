@@ -35,7 +35,7 @@ test : $(all-tests)
 	iverilog $(SRCFILEPATH) -DPROGRAM=\"program\" -DROMFILE=\"ram\" -DINBFILE=\"$*.in\" $(IVERILOG_OPT) -DDUMPFILE=\"$*.lxt\" -o $*.ivl
 
 %.test_out : %.in %.ivl
-	vvp $*.ivl -lxt2 > $@
+	vvp $*.ivl -lxt > $@
 
 %.check : %.test_out %.out
 	grep "TX OUT:" $*.test_out | awk '{ print $$4 }' | diff -q $*.out - >/dev/null && \
