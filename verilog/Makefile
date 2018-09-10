@@ -74,8 +74,10 @@ $(BUILDDIR):
 $(BUILDDIR)top_wrapper.v: top_wrapper.m4 $(BUILDDIR)build.config
 	m4 $(M4_OPTIONS) top_wrapper.m4 > $(BUILDDIR)top_wrapper.v
 
-clean:
+test:
+	$(MAKE) -C test all
 
+clean:
 	rm -f $(BUILDDIR)$(MODULE).bin
 	rm -f $(BUILDDIR)$(MODULE).pnr
 	rm -f $(BUILDDIR)$(MODULE).blif
@@ -84,6 +86,6 @@ clean:
 	rm -f $(BUILDDIR)build.config
 	rmdir $(BUILDDIR) 2>/dev/null || true
 	rm -f *.out *.vcd
+	$(MAKE) -C test clean
 
-.PHONY: all clean json svg bin sim dot .force
- 
+.PHONY: all clean json svg bin sim dot .force test
