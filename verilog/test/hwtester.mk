@@ -1,4 +1,4 @@
-SOURCES:=hrmcpu.v ufifo.v ALU.v MEMORY.v register.v IR.v program.v PC.v ControlUnit.v ram.v test/tester.v
+SOURCES:=hrmcpu.v fifo.v ALU.v MEMORY.v register.v IR.v program.v PC.v ControlUnit.v ram.v test/tester.v
 
 AUXFILE:=program ram
 

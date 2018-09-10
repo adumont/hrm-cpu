@@ -250,7 +250,7 @@ module hrmcpu (
     wire              INBOX_full;
     wire              INBOX_i_rst;
 
-    ufifo #(.LGFLEN(4'd5)) INBOX (
+    fifo #( .B(8), .W(5), .NAME("IN")) INBOX (
         // write port (push)
         .i_wr(INBOX_i_wr),
         .i_data(INBOX_i_data),
@@ -259,12 +259,12 @@ module hrmcpu (
         .o_data(INBOX_o_data),
         // flags
         .o_empty_n( INBOX_empty_n ), // not empty
-        .o_err( INBOX_full ), // overflow aka full, CPU output pin
-        // .o_status(),
+        .o_full( INBOX_full ),
         // clk, rst
         .i_rst(INBOX_i_rst),
         .i_clk(clk)
-    );    
+    );
+
     // Connect inputs
     assign INBOX_i_data = cpu_in_data;
     assign INBOX_i_wr = cpu_in_wr;
@@ -283,7 +283,7 @@ module hrmcpu (
     wire              OUTB_full;
     wire              OUTB_i_rst;
 
-    ufifo #(.LGFLEN(4'd5)) OUTB (
+    fifo #( .B(8), .W(5), .NAME("OUT") ) OUTB (
         // write port (push)
         .i_wr(OUTB_i_wr),
         .i_data(OUTB_i_data),
@@ -291,14 +291,13 @@ module hrmcpu (
         .i_rd(OUTB_i_rd),
         .o_data(OUTB_o_data),
         // flags
-        .o_empty_n( OUTB_empty_n ), // not empty, CPU output pin
-        .o_err( OUTB_full ), // overflow aka full
-        // .o_status(),
+        .o_empty_n( OUTB_empty_n ), // not empty
+        .o_full( OUTB_full ),
         // clk, rst
         .i_rst(OUTB_i_rst),
         .i_clk(clk)
     );
-    defparam OUTB.RXFIFO=1'b1;
+
     // Connect inputs
     assign OUTB_i_data = R_value;
     assign OUTB_i_wr = cu_wO;

@@ -143,6 +143,11 @@ module readCPUOuput (
     reg [7:0] mdata = 0;
     reg just_read=0; // we've just read 1 value.
 
+    // `ifndef SYNTHESIS
+    // initial
+    //     $monitor("%t readCPUOuput E:%b P:%b D:%h M:%h J:%b", $time, empty_n, pop_value, data, mdata, just_read);
+    // `endif
+
     always @(posedge clk)
     begin
         mdata <= mdata;
@@ -151,14 +156,16 @@ module readCPUOuput (
         if(empty_n && ~just_read)
         begin
             pop_value <= 1'b 1;
-            mdata <= data;
             just_read <= 1;
-            $display("%t TX OUT: %h", $time, data);
         end
 
         // dirty hack to wait 1 clock cycle before reading again from OUTBOX FIFO
         if(just_read)
+        begin
             just_read <= 0;
+            mdata <= data;
+            $display("%t TX OUT: %h", $time, data);
+        end
 
     end
 

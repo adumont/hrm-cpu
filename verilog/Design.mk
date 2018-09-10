@@ -6,6 +6,7 @@ DEPS_MEMORY:=\
   ram.v
 
 DEPS_HRMCPU:=\
+  fifo.v \
   ufifo.v \
   ALU.v \
   MEMORY.v \
