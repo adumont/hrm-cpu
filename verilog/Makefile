@@ -4,7 +4,10 @@ include Boards.mk
 include Design.mk
 
 BUILDDIR?=builddir/$(BOARD)/
-DEPS += $(BUILDDIR)top_wrapper.v
+
+ifeq ($(MODULE), $(TOP))
+  DEPS += $(BUILDDIR)top_wrapper.v
+endif
 
 all: bin svg dot sim
 
