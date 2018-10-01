@@ -81,6 +81,41 @@ module tester;
         .pop_value(cpu_out_rd)
     );
 
+    // Output signals from vga_sync0
+    wire px_clk;
+    wire hsync0, vsync0, activevideo0;
+    wire [9:0] px_x0, px_y0;
+
+    // buffer vga signals for 1 clock cycle 
+    reg hsync1, vsync1, activevideo1;
+    reg [9:0] px_x1, px_y1;
+    reg hsync2, vsync2, activevideo2;
+    reg [9:0] px_x2, px_y2;
+
+    always @( posedge px_clk) begin
+      { hsync1, vsync1, activevideo1, px_x1, px_y1 } <= { hsync0, vsync0, activevideo0, px_x0, px_y0 };
+      { hsync2, vsync2, activevideo2, px_x2, px_y2 } <= { hsync1, vsync1, activevideo1, px_x1, px_y1 };
+    end
+
+    // Instanciate 'vga_sync' module.
+    vga_sync vga_sync0 (
+        .clk(clk),                  // Input clock: 12MHz.
+        .hsync(hsync0),             //  1 bit, Horizontal sync out
+        .vsync(vsync0),             //  1 bit, Vertical sync out
+        .x_px(px_x0),               // 10 bit, X position for actual pixel
+        .y_px(px_y0),               // 10 bit, Y position for actual pixel
+        .activevideo(activevideo0), //  1 bit, Video active
+        .px_clk(px_clk)             //  1 bit, Pixel clock
+    );
+
+    wire [6:0] pos_tmp; // 7 bit
+    wire [4:0] pos; // 5 bit
+    wire [1:0] sel; // 2 bit
+
+    assign pos_tmp = px_x0[9:3]+ 7'd5;
+    assign pos = pos_tmp[6:2]-5'd3;
+    assign sel = pos_tmp[1:0];
+
 endmodule
 
 module forceEnd();
