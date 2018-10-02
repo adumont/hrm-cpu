@@ -5,10 +5,15 @@ module hrmcpu (
     input  wire [7:0] cpu_in_data,
     input  wire       cpu_in_wr, // write to CPU's INBOX
     input  wire       cpu_out_rd,// read from CPU's OUTBOX
+    input  wire [3:0] cpu_ififo_pos,
+
     // output signals
     output reg        cpu_in_full,
     output reg        cpu_out_empty,
     output reg  [7:0] cpu_out_data,
+    output reg  [7:0] cpu_ififo_data, // data in INBOX FIFO @ position pos
+    output reg        cpu_ififo_valid,
+
     // generic signals
     input wire clk,
     input wire i_rst
@@ -249,6 +254,10 @@ module hrmcpu (
     wire              INBOX_empty_n;
     wire              INBOX_full;
     wire              INBOX_i_rst;
+    // dump ports
+    wire        [3:0] INBOX_i_dmp_pos;
+    wire        [7:0] INBOX_o_dmp_data; 
+    wire              INBOX_o_dmp_valid; 
 
     ufifo #(.LGFLEN(4'd5)) INBOX (
         // write port (push)
@@ -261,15 +270,21 @@ module hrmcpu (
         .o_empty_n( INBOX_empty_n ), // not empty
         .o_err( INBOX_full ), // overflow aka full, CPU output pin
         // .o_status(),
+        // dump ports
+        .i_dmp_pos(INBOX_i_dmp_pos),     // dump position in queue
+        .o_dmp_data(INBOX_o_dmp_data),   // value at dump position
+        .o_dmp_valid(INBOX_o_dmp_valid), // i_dmp_pos is valid 
         // clk, rst
         .i_rst(INBOX_i_rst),
         .i_clk(clk)
-    );    
+    );
+    defparam INBOX.RXFIFO=1'b1;
     // Connect inputs
     assign INBOX_i_data = cpu_in_data;
     assign INBOX_i_wr = cpu_in_wr;
     assign INBOX_i_rd = cu_rIn;
     assign INBOX_i_rst = cu_rst;
+    assign INBOX_i_dmp_pos = cpu_ififo_pos;
     // ---------------------------------------- //
 
     // ---------------------------------------- //
@@ -314,8 +329,9 @@ module hrmcpu (
         cpu_out_data = OUTB_o_data;
         cpu_out_empty = ~ OUTB_empty_n;
         cpu_in_full = INBOX_full;
+        cpu_ififo_data = INBOX_o_dmp_data;
+        cpu_ififo_valid = INBOX_o_dmp_valid;
     end
     // ---------------------------------------- //
-    
 
 endmodule

@@ -1,0 +1,48 @@
+[*]
+[*] GTKWave Analyzer v3.3.66 (w)1999-2015 BSI
+[*] Tue Oct 16 22:04:35 2018
+[*]
+[dumpfile] "/home/adumont/projects/hrmcpu/verilog/ufifo_tb.vcd"
+[dumpfile_mtime] "Tue Oct 16 22:04:05 2018"
+[dumpfile_size] 21328251
+[savefile] "/home/adumont/projects/hrmcpu/verilog/ufifo_tb.gtkw"
+[timestart] 66
+[size] 1678 998
+[pos] -1 -1
+*-6.000000 323 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] ufifo_tb.
+[sst_width] 197
+[signals_width] 198
+[sst_expanded] 1
+[sst_vpaned_height] 299
+@28
+ufifo_tb.clk
+@22
+ufifo_tb.INBOX_i_data[7:0]
+@28
+ufifo_tb.INBOX_i_wr
+ufifo_tb.INBOX.i_rd
+ufifo_tb.INBOX_empty_n
+[color] 2
+ufifo_tb.INBOX.o_dmp_valid
+@22
+ufifo_tb.INBOX.o_dmp_data[7:0]
+@200
+-Pixels
+@24
+ufifo_tb.px_y0[9:0]
+ufifo_tb.px_x0[9:0]
+ufifo_tb.INBOX_i_dmp_pos[4:0]
+@29
+[color] 6
+ufifo_tb.INBOX_o_dmp_valid
+@2
+ufifo_tb.INBOX_o_dmp_data[7:0]
+@22
+ufifo_tb.sel[1:0]
+@200
+-hex2digit
+@820
+ufifo_tb.ascii_code[7:0]
+[pattern_trace] 1
+[pattern_trace] 0

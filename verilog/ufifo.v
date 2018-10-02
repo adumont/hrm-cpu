@@ -44,7 +44,7 @@
 //
 `default_nettype	none
 //
-module ufifo(i_clk, i_rst, i_wr, i_data, o_empty_n, i_rd, o_data, o_status, o_err);
+module ufifo(i_clk, i_rst, i_wr, i_data, o_empty_n, i_rd, o_data, o_status, o_err, i_dmp_pos, o_dmp_data, o_dmp_valid);
 	parameter	BW=8;	// Byte/data width
 	parameter [3:0]	LGFLEN=4;
 	parameter 	RXFIFO=1'b0;
@@ -57,11 +57,16 @@ module ufifo(i_clk, i_rst, i_wr, i_data, o_empty_n, i_rd, o_data, o_status, o_er
 	output	wire	[15:0]	o_status;
 	output	wire		o_err;
 
+    input  wire [(LGFLEN-1):0] i_dmp_pos; // dump position in queue
+    output reg  [(BW-1):0] o_dmp_data;    // value at dump position
+    output reg             o_dmp_valid;   // out-of-bound
+
 	localparam	FLEN=(1<<LGFLEN);
 
 	reg	[(BW-1):0]	fifo[0:(FLEN-1)];
 
     `ifndef SYNTHESIS
+	// only usefull to inspect values from simulation/waveforms
 	genvar i;
 	generate
 		for (i=0; i<FLEN; i=i+1)
@@ -111,6 +116,9 @@ module ufifo(i_clk, i_rst, i_wr, i_data, o_empty_n, i_rd, o_data, o_status, o_er
 	always @(posedge i_clk)
 		if (i_wr) // Write our new value regardless--on overflow or not
 			fifo[r_first] <= i_data;
+
+	always @(posedge i_clk)
+		o_dmp_valid <= ( i_dmp_pos < r_fill ); //! only works if RXFIFO=1
 
 	// Reads
 	//	Following a read, the next sample will be available on the
@@ -172,6 +180,10 @@ module ufifo(i_clk, i_rst, i_wr, i_data, o_empty_n, i_rd, o_data, o_status, o_er
 		fifo_next <= fifo[r_next];
 	always @(posedge i_clk)
 		r_data <= i_data;
+
+	// dump value at position pos
+	always @(posedge i_clk)
+		o_dmp_data <= fifo[r_last + i_dmp_pos];
 
 	reg	[1:0]	osrc;
 	always @(posedge i_clk)
