@@ -2,6 +2,11 @@ dist: trusty
 sudo: false
 language: generic
 
+# safelist
+branches:
+  only:
+  - harvard
+
 addons:
   apt:
     packages:
@@ -13,11 +18,7 @@ cache:
 
 before_install:
 install:
-  # If env is not provided by the cache and marked passed, remove any cached env results and build it.
-  # - ( cd ci && if [[ ! -e env/PASSED ]]; then rm -rf env/* && ./make_env.sh; fi )
   - ${TRAVIS_BUILD_DIR}/ci/make_env.sh
-  # Record the commit ID of the latest yosys.
-  - git ls-remote --heads https://github.com/cliffordwolf/yosys.git refs/heads/master | cut -f1 > yosys_latest_commit_id.txt
 
 before_script:
   - cd verilog
