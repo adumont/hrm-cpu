@@ -1,0 +1,32 @@
+dist: trusty
+sudo: false
+language: generic
+
+addons:
+  apt:
+    packages:
+    - iverilog
+
+cache:
+  directories:
+    - ${TRAVIS_BUILD_DIR}/ci/env
+
+before_install:
+install:
+  # If env is not provided by the cache and marked passed, remove any cached env results and build it.
+  # - ( cd ci && if [[ ! -e env/PASSED ]]; then rm -rf env/* && ./make_env.sh; fi )
+  - ${TRAVIS_BUILD_DIR}/ci/make_env.sh
+  # Record the commit ID of the latest yosys.
+  - git ls-remote --heads https://github.com/cliffordwolf/yosys.git refs/heads/master | cut -f1 > yosys_latest_commit_id.txt
+
+before_script:
+  - cd verilog
+script:
+  - PATH=${TRAVIS_BUILD_DIR}/ci/env/bin:$PATH make test
+after_success:
+after_failure:
+  # Upload files for debug.
+  #  - echo "Uploading up to 4 failure traces for debug" && for FILE in `ls /home/travis/build/stevehoover/warp-v/formal/checks/*/FAIL | head -n 4`; do curl --upload-file `echo $FILE | sed s/FAIL$//`engine_0/trace.vcd https://transfer.sh/`echo $FILE | sed 's/^.*\/\([^\/]*\)\/FAIL$/\1/'`_trace.vcd && echo; done
+after_script:
+  # Report a message if we didn't use the latest commit of yosys.
+  - if cmp -s yosys_latest_commit_id.txt env/yosys_commit_id.txt; then echo '******** Using the following cached yosys (https://github.com/cliffordwolf/yosys.git) commit ID which is not the latest. Consider clearing Travis cache. **********' && cat env/yosys_commit_id.txt && echo '**********'; fi
