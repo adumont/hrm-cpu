@@ -1,4 +1,5 @@
 [![Join the HRMCPU chat at https://gitter.im/hrm-cpu/Lobby](https://badges.gitter.im/hrm-cpu/Lobby.svg)](https://gitter.im/hrm-cpu/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://travis-ci.org/adumont/hrm-cpu.svg?branch=harvard)](https://travis-ci.org/adumont/hrm-cpu)
 
 # Human Resource Machine CPU (Verilog)
 
@@ -27,6 +28,7 @@
 - [Sinthesis in FPGA](#sinthesis-in-fpga)
     - [Top module design](#top-module-design)
     - [How to build and flash in the FPGA](#how-to-build-and-flash-in-the-fpga)
+- [Continuous Integration (CI)](#continuous-integration-ci)
 - [Tools used in this project:](#tools-used-in-this-project)
 - [External files](#external-files)
 
@@ -601,6 +603,16 @@ Additionally:
 - Sinthesize the bitstream
 - Program the FPGA
 
+# Continuous Integration (CI)
+
+Tests: cd /verilog/, make test
+
+Latest Travis CI build status: [![Build Status](https://travis-ci.org/adumont/hrm-cpu.svg?branch=harvard)](https://travis-ci.org/adumont/hrm-cpu) (click to get all details)
+
+[TODO] Document this part
+
+
+
 # Tools used in this project:
 
 Pending to add reference/links.
@@ -614,6 +626,8 @@ Pending to add reference/links.
     - Verilog Simulator: [Icarus Verilog](http://iverilog.icarus.com/) 
     - Waveform Viewer: [Gtkwave](http://gtkwave.sourceforge.net/)
 - SchemeIt
+- Travis CI for continuous integration
+    - Thanks to [stevehoover](https://github.com/stevehoover/warp-v)
 
 # External files
 
