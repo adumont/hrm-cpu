@@ -78,14 +78,6 @@ test:
 	$(MAKE) -C test all
 
 clean:
-	rm -f $(BUILDDIR)$(MODULE).bin
-	rm -f $(BUILDDIR)$(MODULE).pnr
-	rm -f $(BUILDDIR)$(MODULE).blif
-	rm -f $(BUILDDIR)top_wrapper.v
-	rm -f $(BUILDDIR)$(MODULE).log
-	rm -f $(BUILDDIR)build.config
-	rmdir $(BUILDDIR) 2>/dev/null || true
-	rm -f *.out *.vcd
-	$(MAKE) -C test clean
+	rm -rf $(BUILDDIR)
 
 .PHONY: all clean json svg bin sim dot .force test
