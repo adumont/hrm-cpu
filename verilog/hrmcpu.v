@@ -250,7 +250,7 @@ module hrmcpu (
     wire              INBOX_full;
     wire              INBOX_i_rst;
 
-    ufifo #(.LGFLEN(4'd4)) INBOX (
+    ufifo #(.LGFLEN(4'd5)) INBOX (
         // write port (push)
         .i_wr(INBOX_i_wr),
         .i_data(INBOX_i_data),
@@ -283,7 +283,7 @@ module hrmcpu (
     wire              OUTB_full;
     wire              OUTB_i_rst;
 
-    ufifo #(.LGFLEN(4'd4)) OUTB (
+    ufifo #(.LGFLEN(4'd5)) OUTB (
         // write port (push)
         .i_wr(OUTB_i_wr),
         .i_data(OUTB_i_data),
