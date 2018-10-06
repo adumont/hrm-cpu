@@ -23,7 +23,7 @@ install:
   - make ci-deps
 
 before_script:
-  - cd verilog
+#   - cd verilog
 script:
   - PATH=~/.apio/packages/toolchain-icestorm/bin:$PATH make test
 

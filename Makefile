@@ -10,13 +10,8 @@ icestorm: ~/.apio/packages/toolchain-icestorm/bin
 	pip3 install --user -U apio
 
 test: 
-	#$(MAKE) -C verilog test
 	$(MAKE) -C verilog test
-
-	#$(MAKE) -C verilog/test BOARD=alhambra  hwbin
 	$(MAKE) -C verilog/test BOARD=alhambra  hwbin
-
-	#$(MAKE) -C verilog/test BOARD=ice40hx8k hwbin
 	$(MAKE) -C verilog/test BOARD=ice40hx8k hwbin
 
 clean:
