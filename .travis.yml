@@ -11,7 +11,6 @@ addons:
   apt:
     packages:
     - iverilog
-    - clang
     - libftdi-dev
 
 cache:
