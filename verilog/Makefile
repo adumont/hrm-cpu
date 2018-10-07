@@ -38,14 +38,22 @@ gtkwave: $(MODULE).v $(DEPS) $(MODULE)_tb.v $(MODULE)_tb.vcd
 
 	gtkwave $(MODULE)_tb.vcd $(MODULE)_tb.gtkw &
 
-$(BUILDDIR)$(MODULE).bin: $(PCF) $(MODULE).v $(DEPS) $(AUXFILES) $(BUILDDIR)build.config
+$(BUILDDIR)$(MODULE).blif: $(MODULE).v $(DEPS) $(AUXFILES) $(BUILDDIR)build.config
 	
 	yosys -p "synth_ice40 -top $(MODULE) -blif $(BUILDDIR)$(MODULE).blif $(YOSYSOPT)" \
               -l $(BUILDDIR)$(MODULE).log -q $(DEPS) $(MODULE).v
 	
+$(BUILDDIR)$(MODULE).pnr: $(PCF) $(BUILDDIR)$(MODULE).blif
+
 	arachne-pnr -d $(PNRDEV) -p $(PCF) $(BUILDDIR)$(MODULE).blif -o $(BUILDDIR)$(MODULE).pnr
 	
+$(BUILDDIR)$(MODULE).bin: $(BUILDDIR)$(MODULE).pnr
+
 	icepack $(BUILDDIR)$(MODULE).pnr $(BUILDDIR)$(MODULE).bin
+
+upload: $(BUILDDIR)$(MODULE).bin
+
+	iceprog $(BUILDDIR)$(MODULE).bin
 
 $(BUILDDIR)$(MODULE).json: $(MODULE).v $(DEPS)
 
@@ -60,9 +68,6 @@ assets/$(MODULE)_dot.svg: $(MODULE).v $(DEPS)
 	yosys -p "read_verilog $(MODULE).v $(DEPS); hierarchy -check; proc; opt; fsm; opt; memory; opt; clean; stat; show -colors 1 -format svg -stretch -prefix $(MODULE)_dot $(MODULE);"
 	mv $(MODULE)_dot.svg assets/
 	[ -f $(MODULE)_dot.dot ] && rm $(MODULE)_dot.dot
-
-upload: $(BUILDDIR)$(MODULE).bin
-	iceprog $(BUILDDIR)$(MODULE).bin
 
 # We save AUXFILES names to build.config. Force a rebuild if they have changed
 $(BUILDDIR)build.config: $(AUXFILES) $(BUILDDIR) .force
@@ -80,4 +85,4 @@ test:
 clean:
 	rm -rf $(BUILDDIR)
 
-.PHONY: all clean json svg bin sim dot .force test
+.PHONY: all clean json vcd svg bin sim dot .force test upload
