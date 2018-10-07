@@ -11,9 +11,6 @@ addons:
   apt:
     packages:
     - iverilog
-    - clang
-    - graphviz
-    - xdot
     - libftdi-dev
 
 cache:
