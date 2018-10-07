@@ -36,3 +36,13 @@ after_failure:
 after_script:
   # Report a message if we didn't use the latest commit of yosys.
   # - if cmp -s yosys_latest_commit_id.txt env/yosys_commit_id.txt; then echo '******** Using the following cached yosys (https://github.com/cliffordwolf/yosys.git) commit ID which is not the latest. Consider clearing Travis cache. **********' && cat env/yosys_commit_id.txt && echo '**********'; fi
+
+
+notifications:
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/f2cac961208727867d58
+    on_success: change  # options: [always|never|change] default: always
+    on_failure: always  # options: [always|never|change] default: always
+    on_start: never     # options: [always|never|change] default: always
+
