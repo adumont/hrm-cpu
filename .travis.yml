@@ -19,6 +19,9 @@ cache:
 
 before_install:
 install:
+  # check if there's an update
+  - make check_latest
+  # build updated tools
   - make ci-deps
 
 before_script:

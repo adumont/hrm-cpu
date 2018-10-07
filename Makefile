@@ -10,41 +10,52 @@ clean:
 
 PREFIX:=~/toolchain
 
-ci-deps: icestorm yosys arachne-pnr
+GIT_ICEST:=https://github.com/cliffordwolf/icestorm.git
+GIT_YOSYS:=https://github.com/cliffordwolf/yosys.git
+GIT_ARACH:=https://github.com/cseed/arachne-pnr.git
 
-icestorm: $(PREFIX)/icestorm.ok
+VER_ICEST:=$(PREFIX)/icestorm.ver
+VER_YOSYS:=$(PREFIX)/yosys.ver
+VER_ARACH:=$(PREFIX)/arachne-pnr.ver
 
-$(PREFIX)/icestorm.ok:
+check_latest:
+	[ -e $(VER_ICEST) ] && ( git ls-remote --heads $(GIT_ICEST) refs/heads/master | cut -f1 | cmp $(VER_ICEST) - || rm -f $(VER_ICEST) ) || true
+	[ -e $(VER_YOSYS) ] && ( git ls-remote --heads $(GIT_YOSYS) refs/heads/master | cut -f1 | cmp $(VER_YOSYS) - || rm -f $(VER_YOSYS) ) || true
+	[ -e $(VER_ARACH) ] && ( git ls-remote --heads $(GIT_ARACH) refs/heads/master | cut -f1 | cmp $(VER_ARACH) - || rm -f $(VER_ARACH) ) || true
+
+ci-deps: $(VER_ICEST) $(VER_YOSYS) $(VER_ARACH)
+
+$(VER_ICEST):
 	cd && \
 	rm -rf icestorm && \
-	git clone https://github.com/cliffordwolf/icestorm.git icestorm && \
+	git clone $(GIT_ICEST) && \
 	cd icestorm && \
+	git log -1 && \
 	nice make DESTDIR=~/toolchain PREFIX= install && \
-	touch $(PREFIX)/icestorm.ok && \
+	git rev-parse HEAD > $(VER_ICEST) && \
 	cd .. && \
 	rm -rf icestorm
 
-yosys: $(PREFIX)/yosys.ok
-
-$(PREFIX)/yosys.ok:
+$(VER_YOSYS):
 	cd && \
 	rm -rf yosys && \
-	git clone https://github.com/cliffordwolf/yosys.git yosys && \
+	git clone $(GIT_YOSYS) && \
 	cd yosys && \
-	nice make PREFIX=$(PREFIX) install && touch $(PREFIX)/yosys.ok && \
+	git log -1 && \
+	nice make PREFIX=$(PREFIX) install && \
+	git rev-parse HEAD > $(VER_YOSYS) && \
 	cd .. && \
 	rm -rf yosys
 
-arachne-pnr: $(PREFIX)/arachne-pnr.ok
-
-$(PREFIX)/arachne-pnr.ok:
+$(VER_ARACH):
 	cd && \
 	rm -rf arachne-pnr && \
-	git clone https://github.com/cseed/arachne-pnr.git arachne-pnr && \
+	git clone $(GIT_ARACH) && \
 	cd arachne-pnr && \
+	git log -1 && \
 	nice make PREFIX=~/toolchain install && \
-	touch $(PREFIX)/arachne-pnr.ok && \
+	git rev-parse HEAD > $(VER_ARACH) && \
 	cd .. && \
 	rm -rf arachne-pnr
 
-.PHONY: test clean ci-deps icestorm yosys arachne-pnr
+.PHONY: test clean ci-deps check_latest
