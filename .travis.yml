@@ -2,15 +2,16 @@ dist: trusty
 sudo: false
 language: generic
 
-# safelist
-branches:
-  only:
-  - harvard
+# # safelist
+# branches:
+#   only:
+#   - harvard
 
 addons:
   apt:
     packages:
     - iverilog
+    - clang
     - libftdi-dev
 
 cache:
