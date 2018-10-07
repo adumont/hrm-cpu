@@ -19,7 +19,7 @@ $(PREFIX)/icestorm.ok:
 	rm -rf icestorm && \
 	git clone https://github.com/cliffordwolf/icestorm.git icestorm && \
 	cd icestorm && \
-	nice make -j$(nproc) DESTDIR=~/toolchain PREFIX= install && \
+	nice make DESTDIR=~/toolchain PREFIX= install && \
 	touch $(PREFIX)/icestorm.ok && \
 	cd .. && \
 	rm -rf icestorm
@@ -31,7 +31,7 @@ $(PREFIX)/yosys.ok:
 	rm -rf yosys && \
 	git clone https://github.com/cliffordwolf/yosys.git yosys && \
 	cd yosys && \
-	nice make -j$(nproc) PREFIX=$(PREFIX) install && touch $(PREFIX)/yosys.ok && \
+	nice make PREFIX=$(PREFIX) install && touch $(PREFIX)/yosys.ok && \
 	cd .. && \
 	rm -rf yosys
 
@@ -42,7 +42,7 @@ $(PREFIX)/arachne-pnr.ok:
 	rm -rf arachne-pnr && \
 	git clone https://github.com/cseed/arachne-pnr.git arachne-pnr && \
 	cd arachne-pnr && \
-	nice make -j$(nproc) PREFIX=~/toolchain install && \
+	nice make PREFIX=~/toolchain install && \
 	touch $(PREFIX)/arachne-pnr.ok && \
 	cd .. && \
 	rm -rf arachne-pnr
