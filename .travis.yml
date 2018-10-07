@@ -10,13 +10,15 @@ branches:
 addons:
   apt:
     packages:
-    - python3-pip
     - iverilog
+    - clang
+    - graphviz
+    - xdot
+    - libftdi-dev
 
 cache:
   directories:
-    - ${HOME}/.local
-    - ${HOME}/.apio
+    - ~/toolchain
 
 before_install:
 install:
@@ -25,7 +27,7 @@ install:
 before_script:
 #   - cd verilog
 script:
-  - PATH=~/.apio/packages/toolchain-icestorm/bin:$PATH make test
+  - PATH=~/toolchain/bin:$PATH make test
 
 after_success:
 after_failure:
