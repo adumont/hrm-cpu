@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.66 (w)1999-2015 BSI
-[*] Tue Oct 16 22:04:35 2018
+[*] Tue Oct 16 23:22:18 2018
 [*]
 [dumpfile] "/home/adumont/projects/hrmcpu/verilog/ufifo_tb.vcd"
-[dumpfile_mtime] "Tue Oct 16 22:04:05 2018"
-[dumpfile_size] 21328251
+[dumpfile_mtime] "Tue Oct 16 23:19:01 2018"
+[dumpfile_size] 23489779
 [savefile] "/home/adumont/projects/hrmcpu/verilog/ufifo_tb.gtkw"
-[timestart] 66
+[timestart] 10472
 [size] 1678 998
 [pos] -1 -1
-*-6.000000 323 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-4.000000 10517 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] ufifo_tb.
 [sst_width] 197
 [signals_width] 198
@@ -23,26 +23,41 @@ ufifo_tb.INBOX_i_data[7:0]
 ufifo_tb.INBOX_i_wr
 ufifo_tb.INBOX.i_rd
 ufifo_tb.INBOX_empty_n
-[color] 2
-ufifo_tb.INBOX.o_dmp_valid
 @22
 ufifo_tb.INBOX.o_dmp_data[7:0]
+@28
+[color] 2
+ufifo_tb.INBOX.o_dmp_valid
 @200
 -Pixels
 @24
 ufifo_tb.px_y0[9:0]
 ufifo_tb.px_x0[9:0]
-ufifo_tb.INBOX_i_dmp_pos[4:0]
-@29
 [color] 6
-ufifo_tb.INBOX_o_dmp_valid
+ufifo_tb.INBOX_i_dmp_pos[4:0]
 @2
 ufifo_tb.INBOX_o_dmp_data[7:0]
-@22
-ufifo_tb.sel[1:0]
+@28
+[color] 6
+ufifo_tb.INBOX_o_dmp_valid
 @200
 -hex2digit
 @820
-ufifo_tb.ascii_code[7:0]
+ufifo_tb.hex_to_ascii_inbox.ascii_code[7:0]
+@200
+-
+@28
+ufifo_tb.bit_addr[2:0]
+@24
+ufifo_tb.bit_addr_i[2:0]
+@28
+ufifo_tb.inbox_on1
+ufifo_tb.char_addr[7:0]
+ufifo_tb.row_addr_i[2:0]
+ufifo_tb.rom_addr[10:0]
+ufifo_tb.font_bit2
+ufifo_tb.inbox_on1
+@29
+ufifo_tb.show_digit_i2
 [pattern_trace] 1
 [pattern_trace] 0

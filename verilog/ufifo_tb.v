@@ -1,3 +1,5 @@
+`default_nettype none
+
 module ufifo_tb;
     // generic signals
     reg        clk     = 0;
@@ -85,30 +87,100 @@ module ufifo_tb;
         #1000 $finish;
     end
 
-    wire [1:0] sel;     // 2 bit (0..3)
-
     assign INBOX_i_dmp_pos=px_x0[9:5]-2;
 
-    assign sel=px_x1[4:3];
-
-    reg [9:0] px_x0, px_y0;
-    reg [9:0] px_x1, px_y1;
-    reg [9:0] px_x2, px_y2;
+    reg         show_digit_i2;
+    reg [9:0]   px_x0, px_y0;
+    reg [9:0]   px_x1, px_y1;
+    reg [9:0]   px_x2, px_y2;
+    reg [1:0]   digit_sel_i2;
 
     always @( posedge clk) begin
         px_y0 <= y;
         px_x0 <= x;
         { px_x1, px_y1 } <= { px_x0, px_y0 };
         { px_x2, px_y2 } <= { px_x2, px_y2 };
+        show_digit_i2 <= show_digit_i1;
     end
 
-    wire [7:0] ascii_code;
-
-    hex_to_ascii_digit hex_to_ascii_digit0(
-        .data(INBOX_o_dmp_data),
-        .sel(sel),
-        .o_ascii_code(ascii_code)
+    // instantiate font ROM
+    wire [10:0] rom_addr;
+    wire        font_bit2;
+    font font0 (
+        .clk(clk),
+        .addr(rom_addr),
+        .bit(~bit_addr),
+        .data(font_bit2)
     );
+    assign rom_addr = {char_addr, row_addr};
+
+    //-------------------------------------------
+    // Inbox region
+    //-------------------------------------------
+    wire        inbox_on1; // do we show Inbox?
+    wire [7:0]  char_addr_i;
+    wire [2:0]  row_addr_i;
+    wire [2:0]  bit_addr_i;
+
+    assign inbox_on1 = ( px_y1[9:3] == 1 );   // line 1
+    assign row_addr_i = px_y1[2:0];
+    assign bit_addr_i = px_x1[2:0];
+
+    wire [1:0]  digit_sel_i;
+    assign digit_sel_i = px_x1[4:3];
+
+    wire show_digit_i1 = inbox_on1 && 
+        ( digit_sel_i == 2'd1 || digit_sel_i == 2'd2 ) &&
+        INBOX_o_dmp_valid;
+
+    hex_to_ascii_digit hex_to_ascii_inbox(
+        .data( INBOX_o_dmp_data ),
+        .sel( digit_sel_i ),
+        .o_ascii_code( char_addr_i )
+    );
+
+    //-------------------------------------------
+
+    //-------------------------------------------
+    // mux for font ROM addresses (on clock cycle 1) //-------------------------------------------
+    reg [7:0] char_addr;
+    reg [2:0] row_addr;
+    reg [2:0] bit_addr;
+
+    always @*
+    begin
+        if (inbox_on1)
+            begin
+                char_addr = char_addr_i;
+                row_addr = row_addr_i;
+                bit_addr = bit_addr_i;
+            end
+        else
+            begin
+                char_addr = 0;
+                row_addr = 0;
+                bit_addr = 0;
+            end
+    end
+
+    //-------------------------------------------
+    // mux for rgb  (on clock cycle 2) 
+    //-------------------------------------------
+    reg [2:0] text_rgb;
+    always @*
+    begin
+        text_rgb = 3'b110;  // background, yellow
+        if (show_digit_i2)
+            begin
+                if (font_bit2)
+                    text_rgb = 3'b001;
+            end
+        else
+            begin
+            if (font_bit2)
+                text_rgb = 3'b001;
+            end
+    end      
 
 endmodule
 
@@ -124,7 +196,7 @@ module hex_to_ascii_digit(data, sel, o_ascii_code);
     case (sel)
         2'd1: hex_digit = data[7:4];
         2'd2: hex_digit = data[3:0];
-        default: hex_digit = 4'hx; // don't care...
+        default: hex_digit = 4'h x; // don't care...
     endcase
 
     reg [7:0] ascii_code;
@@ -146,14 +218,14 @@ module hex_to_ascii_digit(data, sel, o_ascii_code);
         4'hD: ascii_code = 8'h44;
         4'hE: ascii_code = 8'h45;
         4'hF: ascii_code = 8'h46;
-        default: ascii_code = 8'h00;
+        default: ascii_code = 8'h xx; // don't care...
     endcase
 
     always @(*)
     case (sel)
         2'd1: o_ascii_code = ascii_code;
         2'd2: o_ascii_code = ascii_code;
-        default: o_ascii_code = 8'h00; // don't care...
+        default: o_ascii_code = 8'h xx; // don't care...
     endcase
 
 endmodule
