@@ -16,6 +16,7 @@ addons:
 cache:
   directories:
     - ~/toolchain
+    - ~/src
 
 before_install:
 install:
