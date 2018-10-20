@@ -1,0 +1,47 @@
+[*]
+[*] GTKWave Analyzer v3.3.66 (w)1999-2015 BSI
+[*] Sun Sep 30 08:47:22 2018
+[*]
+[dumpfile] "/home/adumont/projects/hrm-cpu/verilog/test/Echo/test01.lxt"
+[dumpfile_mtime] "Sun Sep 30 08:44:09 2018"
+[dumpfile_size] 10658
+[savefile] "/home/adumont/projects/hrm-cpu/verilog/test/Echo/echo.gtkw"
+[timestart] 0
+[size] 1597 960
+[pos] -1 -1
+*-4.000000 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] tester.
+[sst_width] 197
+[signals_width] 158
+[sst_expanded] 1
+[sst_vpaned_height] 284
+@28
+tester.CPU.INBOX.i_clk[0]
+tester.CPU.INBOX.i_rd[0]
+tester.CPU.INBOX.i_wr[0]
+@22
+tester.CPU.INBOX.r_last[3:0]
+tester.CPU.INBOX.r_first[3:0]
+@28
+tester.CPU.INBOX.r_empty_n[0]
+@22
+tester.CPU.INBOX.debug[0].fifo_i[7:0]
+tester.CPU.INBOX.debug[1].fifo_i[7:0]
+tester.CPU.INBOX.debug[2].fifo_i[7:0]
+tester.CPU.INBOX.debug[3].fifo_i[7:0]
+tester.CPU.INBOX.debug[4].fifo_i[7:0]
+tester.CPU.INBOX.debug[5].fifo_i[7:0]
+tester.CPU.INBOX.debug[6].fifo_i[7:0]
+@200
+-VGA
+@28
+tester.vga_sync0.clk[0]
+tester.vga_sync0.px_clk[0]
+@23
+tester.vga_sync0.vc[9:0]
+@24
+tester.px_y0[9:0]
+tester.px_x0[9:0]
+tester.pos[4:0]
+[pattern_trace] 1
+[pattern_trace] 0

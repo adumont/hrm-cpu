@@ -1,0 +1,28 @@
+[*]
+[*] GTKWave Analyzer v3.3.66 (w)1999-2015 BSI
+[*] Fri Oct 12 15:15:42 2018
+[*]
+[dumpfile] "/home/adumont/projects/hrmcpu/verilog/test/Echo/test01.lxt"
+[dumpfile_mtime] "Fri Oct 12 15:13:39 2018"
+[dumpfile_size] 10870
+[savefile] "/home/adumont/projects/hrmcpu/verilog/test/Echo/test.gtkw"
+[timestart] 0
+[size] 1680 1003
+[pos] -655 -1
+*-5.000000 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] tester.
+[treeopen] tester.CPU.
+[sst_width] 197
+[signals_width] 110
+[sst_expanded] 1
+[sst_vpaned_height] 299
+@28
+tester.px_clk[0]
+@23
+tester.px_x0[9:0]
+@22
+tester.pos[4:0]
+@28
+tester.sel[1:0]
+[pattern_trace] 1
+[pattern_trace] 0

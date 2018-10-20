@@ -1,0 +1,161 @@
+  00: 00    ; INBOX
+  01: 30 00 ; COPYTO 0
+  03: 20 00 ; COPYFROM 0
+  05: 10    ; OUTBOX
+  06: 00    ; INBOX
+  07: 30 03 ; COPYTO 3
+  09: 20 03 ; COPYFROM 3
+  0b: 10    ; OUTBOX
+  0c: 00    ; INBOX
+  0d: 30 09 ; COPYTO 9
+  0f: 20 09 ; COPYFROM 9
+  11: 10    ; OUTBOX
+  12: 00    ; INBOX
+  13: 30 0d ; COPYTO 13
+  15: 20 0d ; COPYFROM 13
+  17: 10    ; OUTBOX
+  18: 00    ; INBOX
+  19: 30 0e ; COPYTO 14
+  1b: 20 0e ; COPYFROM 14
+  1d: 10    ; OUTBOX
+  1e: 00    ; INBOX
+  1f: 30 12 ; COPYTO 18
+  21: 20 12 ; COPYFROM 18
+  23: 10    ; OUTBOX
+  24: 00    ; INBOX
+  25: 30 12 ; COPYTO 18
+  27: 20 12 ; COPYFROM 18
+  29: 10    ; OUTBOX
+  2a: 00    ; INBOX
+  2b: 30 16 ; COPYTO 22
+  2d: 20 16 ; COPYFROM 22
+  2f: 10    ; OUTBOX
+  30: 00    ; INBOX
+  31: 30 3b ; COPYTO 59
+  33: 20 3b ; COPYFROM 59
+  35: 10    ; OUTBOX
+  36: 00    ; INBOX
+  37: 30 46 ; COPYTO 70
+  39: 20 46 ; COPYFROM 70
+  3b: 10    ; OUTBOX
+  3c: 00    ; INBOX
+  3d: 30 47 ; COPYTO 71
+  3f: 20 47 ; COPYFROM 71
+  41: 10    ; OUTBOX
+  42: 00    ; INBOX
+  43: 30 51 ; COPYTO 81
+  45: 20 51 ; COPYFROM 81
+  47: 10    ; OUTBOX
+  48: 00    ; INBOX
+  49: 30 56 ; COPYTO 86
+  4b: 20 56 ; COPYFROM 86
+  4d: 10    ; OUTBOX
+  4e: 00    ; INBOX
+  4f: 30 5d ; COPYTO 93
+  51: 20 5d ; COPYFROM 93
+  53: 10    ; OUTBOX
+  54: 00    ; INBOX
+  55: 30 6a ; COPYTO 106
+  57: 20 6a ; COPYFROM 106
+  59: 10    ; OUTBOX
+  5a: 00    ; INBOX
+  5b: 30 6c ; COPYTO 108
+  5d: 20 6c ; COPYFROM 108
+  5f: 10    ; OUTBOX
+  60: 00    ; INBOX
+  61: 30 6e ; COPYTO 110
+  63: 20 6e ; COPYFROM 110
+  65: 10    ; OUTBOX
+  66: 00    ; INBOX
+  67: 30 75 ; COPYTO 117
+  69: 20 75 ; COPYFROM 117
+  6b: 10    ; OUTBOX
+  6c: 00    ; INBOX
+  6d: 30 75 ; COPYTO 117
+  6f: 20 75 ; COPYFROM 117
+  71: 10    ; OUTBOX
+  72: 00    ; INBOX
+  73: 30 a2 ; COPYTO 162
+  75: 20 a2 ; COPYFROM 162
+  77: 10    ; OUTBOX
+  78: 00    ; INBOX
+  79: 30 a2 ; COPYTO 162
+  7b: 20 a2 ; COPYFROM 162
+  7d: 10    ; OUTBOX
+  7e: 00    ; INBOX
+  7f: 30 a5 ; COPYTO 165
+  81: 20 a5 ; COPYFROM 165
+  83: 10    ; OUTBOX
+  84: 00    ; INBOX
+  85: 30 b0 ; COPYTO 176
+  87: 20 b0 ; COPYFROM 176
+  89: 10    ; OUTBOX
+  8a: 00    ; INBOX
+  8b: 30 b9 ; COPYTO 185
+  8d: 20 b9 ; COPYFROM 185
+  8f: 10    ; OUTBOX
+  90: 00    ; INBOX
+  91: 30 b9 ; COPYTO 185
+  93: 20 b9 ; COPYFROM 185
+  95: 10    ; OUTBOX
+  96: 00    ; INBOX
+  97: 30 bc ; COPYTO 188
+  99: 20 bc ; COPYFROM 188
+  9b: 10    ; OUTBOX
+  9c: 00    ; INBOX
+  9d: 30 bc ; COPYTO 188
+  9f: 20 bc ; COPYFROM 188
+  a1: 10    ; OUTBOX
+  a2: 00    ; INBOX
+  a3: 30 c1 ; COPYTO 193
+  a5: 20 c1 ; COPYFROM 193
+  a7: 10    ; OUTBOX
+  a8: 00    ; INBOX
+  a9: 30 c1 ; COPYTO 193
+  ab: 20 c1 ; COPYFROM 193
+  ad: 10    ; OUTBOX
+  ae: 00    ; INBOX
+  af: 30 c2 ; COPYTO 194
+  b1: 20 c2 ; COPYFROM 194
+  b3: 10    ; OUTBOX
+  b4: 00    ; INBOX
+  b5: 30 c3 ; COPYTO 195
+  b7: 20 c3 ; COPYFROM 195
+  b9: 10    ; OUTBOX
+  ba: 00    ; INBOX
+  bb: 30 c9 ; COPYTO 201
+  bd: 20 c9 ; COPYFROM 201
+  bf: 10    ; OUTBOX
+  c0: 00    ; INBOX
+  c1: 30 c9 ; COPYTO 201
+  c3: 20 c9 ; COPYFROM 201
+  c5: 10    ; OUTBOX
+  c6: 00    ; INBOX
+  c7: 30 d8 ; COPYTO 216
+  c9: 20 d8 ; COPYFROM 216
+  cb: 10    ; OUTBOX
+  cc: 00    ; INBOX
+  cd: 30 da ; COPYTO 218
+  cf: 20 da ; COPYFROM 218
+  d1: 10    ; OUTBOX
+  d2: 00    ; INBOX
+  d3: 30 da ; COPYTO 218
+  d5: 20 da ; COPYFROM 218
+  d7: 10    ; OUTBOX
+  d8: 00    ; INBOX
+  d9: 30 e8 ; COPYTO 232
+  db: 20 e8 ; COPYFROM 232
+  dd: 10    ; OUTBOX
+  de: 00    ; INBOX
+  df: 30 e9 ; COPYTO 233
+  e1: 20 e9 ; COPYFROM 233
+  e3: 10    ; OUTBOX
+  e4: 00    ; INBOX
+  e5: 30 f6 ; COPYTO 246
+  e7: 20 f6 ; COPYFROM 246
+  e9: 10    ; OUTBOX
+  ea: 00    ; INBOX
+  eb: 30 ff ; COPYTO 255
+  ed: 20 ff ; COPYFROM 255
+  ef: 10    ; OUTBOX
+  f0: F0    ; HALT
