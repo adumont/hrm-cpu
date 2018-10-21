@@ -3,18 +3,18 @@
 include Boards.mk
 include Design.mk
 
-BUILDDIR?=builddir/$(BOARD)/
+BUILDDIR?=builddir/$(BOARD)
 
 ifeq ($(MODULE), $(TOP))
-  DEPS += $(BUILDDIR)top_wrapper.v
+  DEPS += $(BOARD_BUILDDIR)/top_wrapper.v
 endif
 
 all: bin svg dot sim
 
-bin: $(BUILDDIR)$(MODULE).bin
+bin: $(BUILDDIR)/$(MODULE).bin
 vcd: $(MODULE)_tb.vcd
 sim: vcd gtkwave
-json: $(BUILDDIR)$(MODULE).json
+json: $(BUILDDIR)/$(MODULE).json
 svg: assets/$(MODULE).svg
 dot: assets/$(MODULE)_dot.svg
 
@@ -38,28 +38,36 @@ gtkwave: $(MODULE).v $(DEPS) $(MODULE)_tb.v $(MODULE)_tb.vcd
 
 	gtkwave $(MODULE)_tb.vcd $(MODULE)_tb.gtkw &
 
-$(BUILDDIR)$(MODULE).blif: $(MODULE).v $(DEPS) $(AUXFILES) $(BUILDDIR)build.config
+$(BOARD_BUILDDIR)/$(MODULE).blif: $(MODULE).v $(DEPS) $(AUXFILES) $(BOARD_BUILDDIR)/build.config
 	
-	yosys -p "synth_ice40 -top $(MODULE) -blif $(BUILDDIR)$(MODULE).blif $(YOSYSOPT)" \
-              -l $(BUILDDIR)$(MODULE).log -q $(DEPS) $(MODULE).v
+	yosys -p "synth_ice40 -top $(MODULE) -blif $(BOARD_BUILDDIR)/$(MODULE).blif $(YOSYSOPT)" \
+              -l $(BUILDDIR)/$(MODULE).log -q $(DEPS) $(MODULE).v
 	
-$(BUILDDIR)$(MODULE).pnr: $(PCF) $(BUILDDIR)$(MODULE).blif
+$(BOARD_BUILDDIR)/$(MODULE).pnr: $(PCF) $(BOARD_BUILDDIR)/$(MODULE).blif
 
-	arachne-pnr -d $(PNRDEV) -p $(PCF) $(BUILDDIR)$(MODULE).blif -o $(BUILDDIR)$(MODULE).pnr
-	
-$(BUILDDIR)$(MODULE).bin: $(BUILDDIR)$(MODULE).pnr
+	arachne-pnr -d $(PNRDEV) -p $(PCF) $(BOARD_BUILDDIR)/$(MODULE).blif -o $(BOARD_BUILDDIR)/$(MODULE).pnr
 
-	icepack $(BUILDDIR)$(MODULE).pnr $(BUILDDIR)$(MODULE).bin
+#ifdef LEVEL
+$(BUILDDIR)/$(MODULE).pnr: $(BOARD_BUILDDIR)/$(MODULE).pnr $(PROGRAM) $(ROMFILE)
 
-upload: $(BUILDDIR)$(MODULE).bin
+	icebram dummy_prg.hex $(PROGRAM) < $(BOARD_BUILDDIR)/$(MODULE).pnr > $(BUILDDIR)/$(MODULE)-tmp.pnr && \
+	icebram dummy_ram.hex $(ROMFILE) < $(BUILDDIR)/$(MODULE)-tmp.pnr > $(BUILDDIR)/$(MODULE).pnr && \
+	rm $(BUILDDIR)/$(MODULE)-tmp.pnr
+#endif
 
-	iceprog $(BUILDDIR)$(MODULE).bin
+$(BUILDDIR)/$(MODULE).bin: $(BUILDDIR)/$(MODULE).pnr
 
-$(BUILDDIR)$(MODULE).json: $(MODULE).v $(DEPS)
+	icepack $(BUILDDIR)/$(MODULE).pnr $(BUILDDIR)/$(MODULE).bin
+
+upload: $(BUILDDIR)/$(MODULE).bin
+
+	iceprog $(BUILDDIR)/$(MODULE).bin
+
+$(BUILDDIR)/$(MODULE).json: $(MODULE).v $(DEPS)
 
 	yosys -p "prep -top $(MODULE); write_json $(MODULE).json" $(MODULE).v $(DEPS)
 
-assets/$(MODULE).svg: $(BUILDDIR)$(MODULE).json
+assets/$(MODULE).svg: $(BUILDDIR)/$(MODULE).json
 
 	netlistsvg $(MODULE).json -o assets/$(MODULE).svg && rm $(MODULE).json
 
@@ -70,14 +78,14 @@ assets/$(MODULE)_dot.svg: $(MODULE).v $(DEPS)
 	[ -f $(MODULE)_dot.dot ] && rm $(MODULE)_dot.dot
 
 # We save AUXFILES names to build.config. Force a rebuild if they have changed
-$(BUILDDIR)build.config: $(AUXFILES) $(BUILDDIR) .force
+$(BOARD_BUILDDIR)/build.config: $(AUXFILES) $(BUILDDIR) .force
 	@echo '$(AUXFILES)' | cmp -s - $@ || echo '$(AUXFILES)' > $@
 
 $(BUILDDIR):
 	mkdir -p $(BUILDDIR)
 
-$(BUILDDIR)top_wrapper.v: top_wrapper.m4 $(BUILDDIR)build.config
-	m4 $(M4_OPTIONS) top_wrapper.m4 > $(BUILDDIR)top_wrapper.v
+$(BOARD_BUILDDIR)/top_wrapper.v: top_wrapper.m4 $(BOARD_BUILDDIR)/build.config
+	m4 $(M4_OPTIONS) top_wrapper.m4 > $(BOARD_BUILDDIR)/top_wrapper.v
 
 test:
 	$(MAKE) -C test all

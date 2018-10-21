@@ -5,11 +5,11 @@
 
 // Use of `define allows override from iverilog using -Dkey=value
 `ifndef PROGRAM
-`define PROGRAM "test/Echo/program"
+`define PROGRAM "dummy_prg.hex"
 `endif
 
 `ifndef ROMFILE
-`define ROMFILE ""
+`define ROMFILE "dummy_ram.hex"
 `endif
 
 module top (

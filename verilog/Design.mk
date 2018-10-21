@@ -37,24 +37,31 @@ else ifeq ($(MODULE), hrmcpu)
 
 endif
 
+BOARD_BUILDDIR:=builddir/$(BOARD)
+BUILDDIR:=$(BOARD_BUILDDIR)
+
+LEVEL?=none
+
 # shortcut to the test cases in test/,
 # call with LEVEL=<levelname> (aka Dir name)
 # Will load default program and ram files
 ifdef LEVEL
-  BUILDDIR:=builddir/$(BOARD)/$(LEVEL)/
-  PROGRAM:=test/$(LEVEL)/program
-  ROMFILE:=test/$(LEVEL)/ram
+  BUILDDIR:=$(BOARD_BUILDDIR)/$(LEVEL)
+  ifneq ($(MODULE), none)
+    PROGRAM:=test/$(LEVEL)/program
+    ROMFILE:=test/$(LEVEL)/ram
+  endif
 endif
 
 AUXFILES=
 
-PROGRAM?=test/Echo/program
-M4_OPTIONS += -D_PROGRAM_=$(PROGRAM)
-AUXFILES += $(PROGRAM)
+PROGRAM?=dummy_prg.hex
+#M4_OPTIONS += -D_PROGRAM_=$(PROGRAM)
+#AUXFILES += $(PROGRAM)
 
-ROMFILE?=
-M4_OPTIONS += -D_ROMFILE_=$(ROMFILE)
-AUXFILES += $(ROMFILE)
+ROMFILE?=dummy_ram.hex
+#M4_OPTIONS += -D_ROMFILE_=$(ROMFILE)
+#AUXFILES += $(ROMFILE)
 
 IVERILOG_MACRO=
 ifdef PROGRAM

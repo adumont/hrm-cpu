@@ -14,8 +14,8 @@ module hrmcpu (
     input wire i_rst
 );
 
-    parameter PROGRAM = "program.rom";
-    parameter ROMFILE = "";
+    parameter PROGRAM = "dummy_prg.hex";
+    parameter ROMFILE = "dummy_ram.hex";
 
     // ---------------------------------------- //
     // ControlUnit (FSM)

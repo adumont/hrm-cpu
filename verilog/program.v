@@ -11,7 +11,7 @@ module program (
     );
 
     // signals are coded into the microcode.rom file
-    parameter PROGRAM = "program.rom";
+    parameter PROGRAM = "dummy_prg.hex";
     parameter SIZE = 256;
 
     reg [7:0] rom [0: SIZE-1 ];
