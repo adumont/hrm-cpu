@@ -85,4 +85,14 @@ cat $TMPFILE
 echo ---
 cat $BINFILE 
 
+S=$( wc -w $BINFILE | awk '{ print $1 }' )
+
+echo $(
+  tail -1 $BINFILE
+  for i in $( seq 1 $(( 256 - S )) )
+  do
+   echo "00"
+  done
+) > program
+
 rm $LABELFILE #$TMPFILE $BINFILE
