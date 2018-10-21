@@ -61,17 +61,11 @@ ifdef LEVEL
   endif
 endif
 
-<<<<<<< 8968da2795fe41a67cf30a4845d5b14e8de25b4b
 AUXFILES=
 
 PROGRAM?=dummy_prg.hex
 #M4_OPTIONS += -D_PROGRAM_=$(PROGRAM)
 #AUXFILES += $(PROGRAM)
-=======
-PROGRAM?=test/Echo/program
-M4_OPTIONS += -D_PROGRAM_=$(PROGRAM)
-AUXFILES += $(PROGRAM)
->>>>>>> wip add font in ufifo_tb
 
 ROMFILE?=dummy_ram.hex
 #M4_OPTIONS += -D_ROMFILE_=$(ROMFILE)
