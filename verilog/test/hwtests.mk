@@ -19,17 +19,17 @@ YELLOW   = \033[0;33m
 BLUE     = \033[0;34m
 NO_COLOR = \033[m
 
-%.hwtest: ../builddir/%/.top.bin
+%.hwtest: ../builddir/$(BOARD)/%/.top.bin
 	@printf "\n%b\n" "$(BLUE)Running tests from Level $* $(NO_COLOR)\n"
-	$(MAKE) -C $* -f ../hwtester.mk all
+	$(MAKE) -C $* BOARD=$(BOARD) -f ../hwtester.mk all
 
 %.clean:
-	$(MAKE) -C $* -f ../hwtester.mk clean
+	$(MAKE) -C $* BOARD=$(BOARD) -f ../hwtester.mk clean
 
 # with .force we force a rebuild (we'll launche theç
 # $(MAKE), that will decide if it needs to build anything or not)
-../builddir/%/.top.bin:
+../builddir/$(BOARD)/%/.top.bin:
 	@printf "\n%b\n" "$(BLUE)Synthesizing bitstream for $* $(NO_COLOR)\n"
-	$(MAKE) -C .. LEVEL=$* bin && touch ../builddir/$*/.top.bin
+	$(MAKE) -C .. BOARD=$(BOARD) LEVEL=$* bin && touch ../builddir/$(BOARD)/$*/.top.bin
 
 .PHONY : test clean all $(LEVELS) %.hwtest .force %.clean

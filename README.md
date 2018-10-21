@@ -25,9 +25,11 @@
     - [Year 4](#year-4)
     - [Year 32](#year-32)
 - [Verilog & Simulations](#verilog--simulations)
+    - [generate new tests](#generate-new-tests)
 - [Sinthesis in FPGA](#sinthesis-in-fpga)
     - [Top module design](#top-module-design)
     - [How to build and flash in the FPGA](#how-to-build-and-flash-in-the-fpga)
+- [Hardware tests](#hardware-tests)
 - [Continuous Integration (CI)](#continuous-integration-ci)
 - [Tools used in this project:](#tools-used-in-this-project)
 - [External files](#external-files)
@@ -560,6 +562,14 @@ Clean all test files
 $ make -s clean
 ```
 
+## generate new tests
+
+Some levels have a test generator, so it's easy to generate new random tests (random input and the corresponding expected output). Insite the `gen_test.sh` you cna see information about size of input, number of tests to run...
+
+Check in `verilog/test/*/` for the `gen_test.sh` script. Simply run the script in the corresponding level test folder.
+
+Some tests also have a `gen_prog.sh` script that allows to generate new random programs (usually it randomizes the memory addresses used in the program).
+
 # Sinthesis in FPGA
 
 ## Top module design
@@ -575,7 +585,7 @@ The top modules is the one that will connect the IO pins, the UART-RX to the CPU
 From `verilog` directory:
 
 ```
-make upload
+make LEVEL=Echo upload
 ```
 From a clean folder, it will generate the bitstream and program it to the FPGA connected via USB.
 
@@ -594,14 +604,30 @@ If no module is specified with `MODULE=<module>`, it will default to `MODULE=top
 
 Additionally:
 - a board can be specified: `BOARD=<board>`, it will default to `MODULE=alhambra` (board must be defined first in Board.mk)
-- a game level can be specified: `LEVEL=<level>`. Level files must exist in /test/. See examples.
+- a game level should be specified: `LEVEL=<level>`. Level files must exist in /test/. See examples.
 
 [TODO]: add more detail
 
 - Write (or choose a program) and eventually initial ram file.
+    - For example: use `make PROGRAM=test/Year-32/program ROMFILE=test/Year-32/ram upload`
 - Convert it to machine language, so it can be read by Verilog $readmemh().
 - Sinthesize the bitstream
 - Program the FPGA
+
+# Hardware tests
+
+I have implemented a mechanism to run the tests against the FPGA.
+
+To run the tests, from the `verilog/test` directory:
+
+```
+make BOARD=alhambra hwtest
+```
+
+It will synthesize the bitstream for each test directory under `verilog/test`, and then for each test inside it, it will program the FPGA, send the input (testXX.in) and check that the generated output is the same as the expected output (testXX.out).
+
+NOTE:
+- If all hardware tests (or many) randomly fail, check if there are some processes "cat /dev/ttyUSB1" hanging and kill them (or run "killall cat").
 
 # Continuous Integration (CI)
 

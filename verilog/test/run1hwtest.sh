@@ -8,7 +8,7 @@ sleep 1
 cat ${PORT} > ${TEST}.hwtest_out &
 PID=$!
 
-cat ${TEST}.in | while read T C; do sleep $( echo "0.1 * $T" | bc ); echo "Sending $C"; echo -en "\x$C" > ${PORT}; done 
+cat ${TEST}.in | while read T C; do sleep $( echo "0.001 * $T" | bc ); echo "Sending $C"; echo -en "\x$C" > ${PORT}; done 
 
 sleep 1
 exec 2>/dev/null
