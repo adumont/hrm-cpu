@@ -11,6 +11,7 @@ clean:
 	$(MAKE) -C verilog clean
 	$(MAKE) -C verilog/test BOARD=alhambra  clean
 	$(MAKE) -C verilog/test BOARD=ice40hx8k clean
+	rm -rf verilog/builddir
 
 GIT_ICEST:=https://github.com/cliffordwolf/icestorm.git
 GIT_YOSYS:=https://github.com/cliffordwolf/yosys.git
