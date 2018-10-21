@@ -28,13 +28,17 @@ check_latest:
 
 ci-deps: $(VER_ICEST) $(VER_YOSYS) $(VER_ARACH)
 
+ifndef TRAVIS
+  NPROC:= -j$(shell nproc)
+endif
+
 $(VER_ICEST):
 	mkdir -p $(SOURCEDIR); cd $(SOURCEDIR) && \
 	( [ -e icestorm ] || git clone $(GIT_ICEST) ) && \
 	cd icestorm && \
 	git pull && \
 	git log -1 && \
-	nice make DESTDIR=$(TARGETDIR) PREFIX= install && \
+	nice make $(NPROC) DESTDIR=$(TARGETDIR) PREFIX= install && \
 	git rev-parse HEAD > $(VER_ICEST)
 
 $(VER_YOSYS):
@@ -43,7 +47,7 @@ $(VER_YOSYS):
 	cd yosys && \
 	git pull && \
 	git log -1 && \
-	nice make PREFIX=$(TARGETDIR) install && \
+	nice make $(NPROC) PREFIX=$(TARGETDIR) install && \
 	git rev-parse HEAD > $(VER_YOSYS)
 
 $(VER_ARACH):
@@ -52,7 +56,7 @@ $(VER_ARACH):
 	cd arachne-pnr && \
 	git pull && \
 	git log -1 && \
-	nice make PREFIX=$(TARGETDIR) install && \
+	nice make $(NPROC) PREFIX=$(TARGETDIR) install && \
 	git rev-parse HEAD > $(VER_ARACH)
 
 .PHONY: test clean ci-deps check_latest
