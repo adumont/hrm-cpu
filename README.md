@@ -26,11 +26,12 @@
     - [Year 32](#year-32)
 - [Verilog & Simulations](#verilog--simulations)
     - [generate new tests](#generate-new-tests)
-- [Sinthesis in FPGA](#sinthesis-in-fpga)
+- [Sinthesis to FPGA](#sinthesis-to-fpga)
     - [Top module design](#top-module-design)
     - [How to build and flash in the FPGA](#how-to-build-and-flash-in-the-fpga)
 - [Hardware tests](#hardware-tests)
 - [Continuous Integration (CI)](#continuous-integration-ci)
+- [Makefiles features](#makefiles-features)
 - [Tools used in this project:](#tools-used-in-this-project)
 - [External files](#external-files)
 
@@ -570,7 +571,7 @@ Check in `verilog/test/*/` for the `gen_test.sh` script. Simply run the script i
 
 Some tests also have a `gen_prog.sh` script that allows to generate new random programs (usually it randomizes the memory addresses used in the program).
 
-# Sinthesis in FPGA
+# Sinthesis to FPGA
 
 ## Top module design
 
@@ -637,26 +638,56 @@ Latest Travis CI build status: [![Build Status](https://travis-ci.org/adumont/hr
 
 [TODO] Document this part
 
+# Makefiles features
 
+There's a lot of effort put into progressively crafting the Makefiles in this project in order to acomplish several features:
+
+`verilog/Makefile` features:
+- Multi board support (each board with different Arachne-pnr Device parameter) and it's own PCF file
+- [Parameterized verilog](https://maker.itnerd.space/define-verilog-parameters-at-synthesis-time-yosys/) from Makefile using m4 wrapper (injected into verilog before sinthesis with yosys)
+- Build (rebuild) only what is needed. Every step is a Makefile target:
+	- Synthesis (yosys) verilog sources -> blif file
+	- Place and Route (arachne-pnr) blif -> pnr file
+	- Generate bitstream (icepack) pnr -> .bin file
+- Don't rebuild bitstream if only bram initialization files have chenged (use icebram instead)
+	- pnr -> pnr (with updated bram blocks)
+- Upload: Flash/program FPGA
+	- Only flash if bitstream has changed (keep md5 of last bitstream flashed)
+- For a specific module:
+	- svg: Generates a netlistsvg diagram
+	- dot: Generates a GraphViz diagram
+	- sim: Runs the testbench simulation of the specific module, generates variables dumps and opend gtkwave to inspect the waveform
+
+`verilog/test/Makefile`:
+- Discover all tests
+- Runs all tests (sends input and checks ouput for every level)
+- Syntesize all tests for a board (multi-board support)
+- Runs all test (sends input and checks ouput for every level) against an FPGA board connected via serial port. See [Hardware tests](#hardware-tests)
+
+root's `Makefile` features:
+- Update toolchain if upstream sources have been updated
+    - Incremental source update (git pull)
+    - Incremental rebuild (only rebuild what's changed)
+- Run testbenches (iverilog) and synthesize every level for every defined board (hw test aren't run as we can't test hardware from Travis CI... yet?)
+- Called from Travis, see [Continuous Integration (CI)](#continuous-integration-ci)
 
 # Tools used in this project:
 
-Pending to add reference/links.
-
 - [Logisim Evolution, fork with FSM Addon](https://github.com/sderrien/logisim-evolution): this version has an FSM editor, which is regat to design and test FSMs. Unfortunately, it's not based on the latest Logisim Evolution version, nor is it compatible with.
-- Visual Studio Code
+- [Visual Studio Code](https://code.visualstudio.com/) as code editor
+    - [Verilog HDL 0.3.5](https://github.com/mshr-h/vscode-verilog-hdl-support) extension
 - Opensource FPGA toolchain ([installer](https://github.com/dcuartielles/open-fpga-install))
     - Synthesizer: [Yosys](http://www.clifford.at/yosys/) ([github](https://github.com/cliffordwolf/yosys))
-    - Place & Route (PNR): [Arachne-pnr](https://github.com/cseed/arachne-pnr) (on github) 
+    - Place & Route (PnR): [Arachne-pnr](https://github.com/cseed/arachne-pnr) (on github) 
     - Utilities and FPGA programmer: [IceStorm Project](http://www.clifford.at/icestorm/)
     - Verilog Simulator: [Icarus Verilog](http://iverilog.icarus.com/) 
     - Waveform Viewer: [Gtkwave](http://gtkwave.sourceforge.net/)
-- SchemeIt
-- Travis CI for continuous integration
+- Diagram editor: [SchemeIt](https://www.digikey.com/schemeit)
+- [Travis CI](https://travis-ci.org/adumont/hrm-cpu) for continuous integration
     - Thanks to [stevehoover](https://github.com/stevehoover/warp-v)
 
 # External files
 
 I have re-used some files from external sources:
 
-- UART (RX,TX) & FIFO by Dan Gisselquist, from https://github.com/ZipCPU/wbuart32 (GPL)
+- UART and uFIFO by Dan Gisselquist, from https://github.com/ZipCPU/wbuart32 (GPL)
