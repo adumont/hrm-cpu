@@ -61,7 +61,9 @@ $(BUILDDIR)/$(MODULE).bin: $(BUILDDIR)/$(MODULE).pnr
 
 upload: $(BUILDDIR)/$(MODULE).bin
 
-	iceprog $(BUILDDIR)/$(MODULE).bin
+	md5sum $(BUILDDIR)/$(MODULE).bin | cmp $(BOARD_BUILDDIR)/flashed.md5 && \
+	( echo "INFO: FPGA $(BOARD) bitstream hasn't changed: Skipping programming and reseting board:" ; iceprog -t ) || \
+	( iceprog $(BUILDDIR)/$(MODULE).bin && md5sum $(BUILDDIR)/$(MODULE).bin > $(BOARD_BUILDDIR)/flashed.md5 || rm $(BOARD_BUILDDIR)/flashed.md5 )
 
 $(BUILDDIR)/$(MODULE).json: $(MODULE).v $(DEPS)
 
