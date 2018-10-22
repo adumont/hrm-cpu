@@ -35,6 +35,7 @@ hwclean: $(addsuffix .hwclean, $(LEVELS))
 
 %.hwclean:
 	$(MAKE) -C ../ BOARD=$(BOARD) LEVEL=$* clean
+	rm -f $*/*.hwcheck $*/*.hwtest_out
 
 $(SUBDIRS):
 	$(MAKE) BOARD=$(BOARD) -C $@ -f ../tester.mk $(MAKECMDGOALS)
