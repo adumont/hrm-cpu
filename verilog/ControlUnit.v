@@ -240,7 +240,7 @@ module ControlUnit (
 
     // This code allows you to see state names in simulation
     `ifndef SYNTHESIS
-    reg [79:0] statename;
+    reg [87:0] statename;
     reg [79:0] instrname;
     always @* begin
       // decode state name
