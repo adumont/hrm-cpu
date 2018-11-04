@@ -5,14 +5,15 @@ module hrmcpu (
     input  wire [7:0] cpu_in_data,
     input  wire       cpu_in_wr, // write to CPU's INBOX
     input  wire       cpu_out_rd,// read from CPU's OUTBOX
-    input  wire [3:0] cpu_ififo_pos,
+    input  wire [4:0] cpu_fifo_dmp_pos,
+    input  wire       cpu_fifo_sel, // select a FIFO for dumping values: 0 INBOX, 1 OUTBOX
 
     // output signals
     output reg        cpu_in_full,
     output reg        cpu_out_empty,
     output reg  [7:0] cpu_out_data,
-    output reg  [7:0] cpu_ififo_data, // data in INBOX FIFO @ position pos
-    output reg        cpu_ififo_valid,
+    output reg  [7:0] cpu_fifo_dmp_data,  // data in selected FIFO @ position "cpu_fifo_dmp_pos"
+    output reg        cpu_fifo_dmp_valid, // whether cpu_fifo_dmp_pos is a valid position
 
     // generic signals
     input wire clk,
@@ -255,7 +256,7 @@ module hrmcpu (
     wire              INBOX_full;
     wire              INBOX_i_rst;
     // dump ports
-    wire        [3:0] INBOX_i_dmp_pos;
+    wire        [4:0] INBOX_i_dmp_pos;
     wire        [7:0] INBOX_o_dmp_data; 
     wire              INBOX_o_dmp_valid; 
 
@@ -284,7 +285,7 @@ module hrmcpu (
     assign INBOX_i_wr = cpu_in_wr;
     assign INBOX_i_rd = cu_rIn;
     assign INBOX_i_rst = cu_rst;
-    assign INBOX_i_dmp_pos = cpu_ififo_pos;
+    assign INBOX_i_dmp_pos = cpu_fifo_dmp_pos;
     // ---------------------------------------- //
 
     // ---------------------------------------- //
@@ -329,8 +330,16 @@ module hrmcpu (
         cpu_out_data = OUTB_o_data;
         cpu_out_empty = ~ OUTB_empty_n;
         cpu_in_full = INBOX_full;
-        cpu_ififo_data = INBOX_o_dmp_data;
-        cpu_ififo_valid = INBOX_o_dmp_valid;
+        if( cpu_fifo_dmp_data == 0 ) // INBOX dump values
+        begin
+            cpu_fifo_dmp_data = INBOX_o_dmp_data;
+            cpu_fifo_dmp_valid = INBOX_o_dmp_valid;
+        end
+        else // OUTBOX dump values
+        begin
+            cpu_fifo_dmp_data = INBOX_o_dmp_data;  // TODO: change to OUTBOX
+            cpu_fifo_dmp_valid = INBOX_o_dmp_valid;// TODO: change to OUTBOX
+        end
     end
     // ---------------------------------------- //
 
