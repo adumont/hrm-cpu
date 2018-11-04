@@ -1,4 +1,4 @@
-module program_tb();
+module PROG_tb();
 
 	reg [7:0] Addr;
 
@@ -7,7 +7,7 @@ module program_tb();
 	localparam SIZE=10;
 
 	// Instanciate DUT
-	program program0 (.Addr(Addr), .clk(clk), .Data(Data));
+	PROG program0 (.Addr(Addr), .clk(clk), .Data(Data));
 	defparam program0.PROGRAM = "program.rom";
 	defparam program0.SIZE = SIZE;
 
@@ -18,7 +18,7 @@ module program_tb();
 	// start simulation
 	initial begin
 		$dumpfile("program_tb.vcd");
-		$dumpvars(0, program_tb);
+		$dumpvars(0, PROG_tb);
 
 		#2;
 

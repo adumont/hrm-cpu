@@ -1,4 +1,4 @@
-module program (
+module PROG (
         // Input: Addr
 
         input wire [7:0] Addr,

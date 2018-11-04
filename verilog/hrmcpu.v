@@ -123,7 +123,7 @@ module hrmcpu (
 	wire [7:0] program0_Addr;
 	wire [7:0] program0_Data;
 
-	program program0 (
+	PROG program0 (
         // input ports
         .Addr(program0_Addr),
         // output ports

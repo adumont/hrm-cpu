@@ -1,4 +1,7 @@
-SOURCES:=hrmcpu.v ufifo.v ALU.v MEMORY.v register.v IR.v program.v PC.v ControlUnit.v ram.v test/tester.v
+include ../Design.mk
+
+#SOURCES:=hrmcpu.v ufifo.v ALU.v MEMORY.v register.v IR.v program.v PC.v ControlUnit.v ram.v test/tester.v
+SOURCES:= $(DEPS_HRMCPU) hrmcpu.v test/tester.v
 
 AUXFILE:=program ram
 

@@ -14,7 +14,7 @@ DEPS_HRMCPU:=\
   $(DEPS_MEMORY) \
   register.v \
   IR.v \
-  program.v \
+  PROG.v \
   PC.v \
   ControlUnit.v
 
