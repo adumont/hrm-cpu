@@ -34,6 +34,10 @@ $(MODULE)_tb.vcd: $(MODULE).v $(DEPS) $(MODULE)_tb.v
 	iverilog $^ $(IVERILOG_MACRO) -o $(MODULE)_tb.out
 	./$(MODULE)_tb.out
 
+lint: $(MODULE).v $(DEPS)
+
+	verilator --lint-only $(MODULE).v
+
 gtkwave: $(MODULE).v $(DEPS) $(MODULE)_tb.v $(MODULE)_tb.vcd
 
 	gtkwave $(MODULE)_tb.vcd $(MODULE)_tb.gtkw &
@@ -95,4 +99,4 @@ test:
 clean:
 	rm -rf $(BUILDDIR)
 
-.PHONY: all clean json vcd svg bin sim dot .force test upload
+.PHONY: all clean json vcd svg bin sim dot .force test upload lint
