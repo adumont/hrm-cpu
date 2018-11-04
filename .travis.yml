@@ -12,6 +12,7 @@ addons:
     packages:
     - iverilog
     - libftdi-dev
+    - verilator
 
 cache:
   directories:
