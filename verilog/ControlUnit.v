@@ -136,6 +136,7 @@ module ControlUnit (
                         else nextstate = S_READMEM;
         S_READMEM2    : nextstate = S_LOAD_AR2;
         S_WAIT_KEY    : if (nxtInstr) nextstate = S_LOAD_IR;
+        default: nextstate = S_HALT; // should never happen (unless bug?)
       endcase
     end
 
