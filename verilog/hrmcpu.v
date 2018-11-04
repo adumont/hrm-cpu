@@ -330,7 +330,7 @@ module hrmcpu (
         cpu_out_data = OUTB_o_data;
         cpu_out_empty = ~ OUTB_empty_n;
         cpu_in_full = INBOX_full;
-        if( cpu_fifo_dmp_data == 0 ) // INBOX dump values
+        if( cpu_fifo_sel == 0 ) // INBOX dump values
         begin
             cpu_fifo_dmp_data = INBOX_o_dmp_data;
             cpu_fifo_dmp_valid = INBOX_o_dmp_valid;
