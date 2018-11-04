@@ -260,6 +260,7 @@ module hrmcpu (
     wire        [7:0] INBOX_o_dmp_data; 
     wire              INBOX_o_dmp_valid; 
 
+    /* verilator lint_off PINMISSING */
     ufifo #(.LGFLEN(4'd5)) INBOX (
         // write port (push)
         .i_wr(INBOX_i_wr),
@@ -279,6 +280,7 @@ module hrmcpu (
         .i_rst(INBOX_i_rst),
         .i_clk(clk)
     );
+    /* verilator lint_on PINMISSING */
     defparam INBOX.RXFIFO=1'b1;
     // Connect inputs
     assign INBOX_i_data = cpu_in_data;
@@ -299,6 +301,7 @@ module hrmcpu (
     wire              OUTB_full;
     wire              OUTB_i_rst;
 
+    /* verilator lint_off PINMISSING */
     ufifo #(.LGFLEN(4'd5)) OUTB (
         // write port (push)
         .i_wr(OUTB_i_wr),
@@ -314,6 +317,7 @@ module hrmcpu (
         .i_rst(OUTB_i_rst),
         .i_clk(clk)
     );
+    /* verilator lint_on PINMISSING */
     defparam OUTB.RXFIFO=1'b1;
     // Connect inputs
     assign OUTB_i_data = R_value;
