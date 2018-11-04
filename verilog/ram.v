@@ -18,7 +18,10 @@ module ram #(
 
     parameter ROMFILE = "";
     initial begin
-        if(ROMFILE) $readmemh(ROMFILE, mem);
+        /* verilator lint_off WIDTH */
+        // TODO: remove those lint_off
+        if( ROMFILE ) $readmemh(ROMFILE, mem);
+        /* verilator lint_on WIDTH */
         dout=0;
     end
 
