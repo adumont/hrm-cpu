@@ -69,7 +69,7 @@ module ufifo_tb;
         end
 
         // push some values
-        for (i = 0; i<10; i=i+1) begin
+        for (i = 0; i<20; i=i+1) begin
             #2  INBOX_i_data = i;
             #2  INBOX_i_wr = 1;
             #2  INBOX_i_wr = 0;
@@ -86,8 +86,6 @@ module ufifo_tb;
 
         #1000 $finish;
     end
-
-    assign INBOX_i_dmp_pos=px_x0[9:5]-2;
 
     reg         show_digit_i2;
     reg [9:0]   px_x0, px_y0;
@@ -115,23 +113,28 @@ module ufifo_tb;
     assign rom_addr = {char_addr, row_addr};
 
     //-------------------------------------------
-    // Inbox region
+    // Inbox region on  screen
     //-------------------------------------------
     wire        inbox_on1; // do we show Inbox?
     wire [7:0]  char_addr_i;
     wire [2:0]  row_addr_i;
     wire [2:0]  bit_addr_i;
 
-    assign inbox_on1 = ( px_y1[9:3] == 1 );   // line 1
+    assign inbox_on1 = ( px_y1[9:3] == 1 ) || ( px_y1[9:3] == 2 ) ;   // line 1 or line 2
     assign row_addr_i = px_y1[2:0];
     assign bit_addr_i = px_x1[2:0];
 
     wire [1:0]  digit_sel_i;
     assign digit_sel_i = px_x1[4:3];
 
-    wire show_digit_i1 = inbox_on1 && 
-        ( digit_sel_i == 2'd1 || digit_sel_i == 2'd2 ) &&
-        INBOX_o_dmp_valid;
+    // we get the data at that position in the Inbox FIFO
+
+    assign INBOX_i_dmp_pos=px_x0[9:5] - 5'd 2 + ( ( px_y0[9:3] == 2 ) ? 5'd 16 : 5'd 0 ) ; // if 2nd line, we add 16, we use px_y0 here!
+
+    wire show_digit_i1 = inbox_on1 &&                       // we're on an "inbox" line on screen
+        ( digit_sel_i == 2'd1 || digit_sel_i == 2'd2 ) &&   // we're on a meaningful digit
+        INBOX_o_dmp_valid &&                                // there's valid data at that position in INBOX
+        ( px_x1[9:3] >= 8 ) ;                               // it's a valid position we want to show
 
     hex_to_ascii_digit hex_to_ascii_inbox(
         .data( INBOX_o_dmp_data ),

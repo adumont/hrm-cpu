@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.66 (w)1999-2015 BSI
-[*] Tue Oct 16 23:22:18 2018
+[*] Sun Nov  4 14:26:33 2018
 [*]
 [dumpfile] "/home/adumont/projects/hrmcpu/verilog/ufifo_tb.vcd"
-[dumpfile_mtime] "Tue Oct 16 23:19:01 2018"
-[dumpfile_size] 23489779
+[dumpfile_mtime] "Sun Nov  4 13:39:11 2018"
+[dumpfile_size] 23929205
 [savefile] "/home/adumont/projects/hrmcpu/verilog/ufifo_tb.gtkw"
-[timestart] 10472
+[timestart] 10510
 [size] 1678 998
 [pos] -1 -1
-*-4.000000 10517 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-4.000000 10577 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] ufifo_tb.
 [sst_width] 197
 [signals_width] 198
@@ -55,9 +55,10 @@ ufifo_tb.inbox_on1
 ufifo_tb.char_addr[7:0]
 ufifo_tb.row_addr_i[2:0]
 ufifo_tb.rom_addr[10:0]
-ufifo_tb.font_bit2
 ufifo_tb.inbox_on1
 @29
+ufifo_tb.font_bit2
+@28
 ufifo_tb.show_digit_i2
 [pattern_trace] 1
 [pattern_trace] 0
