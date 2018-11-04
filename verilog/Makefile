@@ -17,6 +17,7 @@ sim: vcd gtkwave
 json: $(BUILDDIR)/$(MODULE).json
 svg: assets/$(MODULE).svg
 dot: assets/$(MODULE)_dot.svg
+lint: $(BOARD_BUILDDIR)/$(MODULE).lint
 
 # @echo '@: $@' # file name of the target
 # @echo '%: $%' # name of the archive member
@@ -34,9 +35,9 @@ $(MODULE)_tb.vcd: $(MODULE).v $(DEPS) $(MODULE)_tb.v
 	iverilog $^ $(IVERILOG_MACRO) -o $(MODULE)_tb.out
 	./$(MODULE)_tb.out
 
-lint: $(MODULE).v $(DEPS)
+$(BOARD_BUILDDIR)/$(MODULE).lint: $(MODULE).v $(DEPS)
 
-	verilator --lint-only $(MODULE).v
+	verilator --lint-only $(MODULE).v && > $@ || ( rm -f $@; false )
 
 gtkwave: $(MODULE).v $(DEPS) $(MODULE)_tb.v $(MODULE)_tb.vcd
 
@@ -59,7 +60,7 @@ $(BUILDDIR)/$(MODULE).pnr: $(BOARD_BUILDDIR)/$(MODULE).pnr $(PROGRAM) $(ROMFILE)
 	rm $(BUILDDIR)/$(MODULE)-tmp.pnr
 #endif
 
-$(BUILDDIR)/$(MODULE).bin: $(BUILDDIR)/$(MODULE).pnr
+$(BUILDDIR)/$(MODULE).bin: $(BOARD_BUILDDIR)/$(MODULE).lint $(BUILDDIR)/$(MODULE).pnr
 
 	icepack $(BUILDDIR)/$(MODULE).pnr $(BUILDDIR)/$(MODULE).bin
 
