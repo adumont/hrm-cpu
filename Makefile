@@ -86,7 +86,8 @@ $(VER_YICES):
 	git log -1 && \
 	autoconf && \
 	./configure --prefix=$(TARGETDIR) && \
-	nice make $(NPROC) install && \
+	nice make $(NPROC) && \
+	make $(NPROC) install && \
 	git rev-parse HEAD > $(VER_YICES)
 
 .PHONY: test clean ci-deps check_latest
