@@ -13,6 +13,7 @@ addons:
     - iverilog
     - libftdi-dev
     - verilator
+    - gperf
 
 cache:
   directories:
