@@ -18,6 +18,8 @@
 // Additional Comments:
 //
 //////////////////////////////////////////////////////////////////////////////////
+`default_nettype none
+
 module vga_sync (
             // inputs
             input wire       clk,           // Input clock: 12MHz

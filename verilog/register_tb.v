@@ -1,3 +1,5 @@
+`default_nettype none
+
 module register_tb;
 
     reg clk  = 0;

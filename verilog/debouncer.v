@@ -1,3 +1,5 @@
+`default_nettype none
+
 module debouncer(
     input clk,
     input PB,  // "PB" is the glitchy, asynchronous to clk, active low push-button signal

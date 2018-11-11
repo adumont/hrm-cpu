@@ -1,3 +1,5 @@
+`default_nettype none
+
 module PROG_tb();
 
 	reg [7:0] Addr;

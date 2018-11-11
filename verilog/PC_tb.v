@@ -1,3 +1,5 @@
+`default_nettype none
+
 module PC_tb;
 
     reg clk  = 0;

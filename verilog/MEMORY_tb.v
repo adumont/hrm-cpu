@@ -1,3 +1,5 @@
+`default_nettype none
+
 module MEMORY_tb;
 
     reg  [7:0] ADDR = 8'b00000000;

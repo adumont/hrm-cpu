@@ -1,3 +1,5 @@
+`default_nettype none
+
 module register (
         input clk,              // clock
         input [7:0] iInbox,

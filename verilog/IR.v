@@ -1,3 +1,5 @@
+`default_nettype none
+
 // Instruction Register
 module IR (
         input clk,              // clock

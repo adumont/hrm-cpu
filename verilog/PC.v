@@ -1,3 +1,5 @@
+`default_nettype none
+
 module PC (
         input clk,              // clock
         input rst,              // active high reset

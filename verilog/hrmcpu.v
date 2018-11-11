@@ -1,3 +1,5 @@
+`default_nettype none
+
 module hrmcpu (
     // input signals
     input  wire       cpu_debug,

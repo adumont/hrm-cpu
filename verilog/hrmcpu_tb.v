@@ -1,3 +1,5 @@
+`default_nettype none
+
 // Use of `define allows override from iverilog using -Dkey=value
 `ifndef PROGRAM
 `define PROGRAM "program.rom"
