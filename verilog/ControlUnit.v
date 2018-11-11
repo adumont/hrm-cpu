@@ -50,9 +50,7 @@ module ControlUnit (
     S_READMEM2    = 5'b 11001,
     S_RESET       = 5'b 00000,
     S_SUB         = 5'b 10000,
-    S_WAIT_INBOX  = 5'b 10001,
-    S_WAIT_KEY    = 5'b 11010,
-    S_WAIT_OUTBOX = 5'b 10110;
+    S_WAIT_KEY    = 5'b 11010;
 
     wire [3:0] opcode = INSTR[7:4];
     wire indirect = INSTR[3];
@@ -104,9 +102,9 @@ module ControlUnit (
                         endcase
         S_COPYFROM    : nextstate = S_Inc_PC;
         S_DECODE      : case (opcode)
-                          o_INBOX  : if( inEmpty ) nextstate = S_WAIT_INBOX;
+                          o_INBOX  : if( inEmpty ) nextstate = S_DECODE;
                                      else          nextstate = S_INBOX;
-                          o_OUTBOX : if( outFull ) nextstate = S_WAIT_OUTBOX;
+                          o_OUTBOX : if( outFull ) nextstate = S_DECODE;
                                      else          nextstate = S_OUTBOX;
                           o_HALT   : nextstate = S_HALT;
                           default  : nextstate = S_INCPC2;
@@ -122,12 +120,10 @@ module ControlUnit (
                         endcase
         S_ADD         : nextstate = S_Inc_PC;
         S_SUB         : nextstate = S_Inc_PC;
-        S_WAIT_INBOX  : if( ~inEmpty ) nextstate = S_INBOX;
         S_JUMPZ       : nextstate = S_FETCH_I;
         S_JUMPN       : nextstate = S_FETCH_I;
         S_BUMPP       : nextstate = S_COPYTO;
         S_BUMPN       : nextstate = S_COPYTO;
-        S_WAIT_OUTBOX : if( ~outFull ) nextstate = S_OUTBOX;
         S_HALT        : nextstate = S_HALT;
         S_LOAD_AR     : if      ( ~indirect && opcode == o_COPYTO ) nextstate = S_COPYTO;
                         else if (  indirect )                       nextstate = S_READMEM2;
@@ -231,9 +227,7 @@ module ControlUnit (
         // S_FETCH_O    : ;
         // S_READMEM    : ;
         // S_READMEM2   : ;
-        // S_WAIT_INBOX : ;
         // S_WAIT_KEY   : ;
-        // S_WAIT_OUTBOX: ;
         default: ;
       endcase
     end
@@ -268,9 +262,7 @@ module ControlUnit (
         S_READMEM2    : statename = "READMEM2";
         S_RESET       : statename = "RESET";
         S_SUB         : statename = "SUB";
-        S_WAIT_INBOX  : statename = "WAIT_INBOX";
         S_WAIT_KEY    : statename = "WAIT_KEY";
-        S_WAIT_OUTBOX : statename = "WAIT_OUTBOX";
         default       : statename = "XXXXXXXXXX";
       endcase
 
