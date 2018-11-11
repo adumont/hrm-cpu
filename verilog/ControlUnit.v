@@ -70,10 +70,10 @@ module ControlUnit (
     o_JUMP     = 4'b 1000,
     o_JUMPZ    = 4'b 1001,
     o_JUMPN    = 4'b 1010,
-    // o_NOP1     = 4'b 1011,
-    // o_NOP2     = 4'b 1100,
-    // o_NOP3     = 4'b 1101,
-    // o_SET      = 4'b 1110,
+    o_NOP1     = 4'b 1011,
+    o_NOP2     = 4'b 1100,
+    o_NOP3     = 4'b 1101,
+    o_NOP4     = 4'b 1110,
     o_HALT     = 4'b 1111;
 
     reg [4:0] state, nextstate;
@@ -110,6 +110,10 @@ module ControlUnit (
                           o_OUTBOX : if( outFull ) nextstate = S_DECODE;
                                      else          nextstate = S_OUTBOX;
                           o_HALT   : nextstate = S_HALT;
+                          o_NOP1   : nextstate = S_Inc_PC;
+                          o_NOP2   : nextstate = S_Inc_PC;
+                          o_NOP3   : nextstate = S_Inc_PC;
+                          o_NOP4   : nextstate = S_Inc_PC;
                           default  : nextstate = S_INCPC2;
                         endcase
         S_COPYTO      : nextstate = S_Inc_PC;
@@ -284,6 +288,10 @@ module ControlUnit (
         o_JUMPZ    : instrname = "JUMPZ";
         o_JUMPN    : instrname = "JUMPN";
         o_HALT     : instrname = "HALT";
+        o_NOP1     : instrname = "NOP1";
+        o_NOP2     : instrname = "NOP2";
+        o_NOP3     : instrname = "NOP3";
+        o_NOP4     : instrname = "NOP4";
         default    : instrname = "XXXXXXXXXX";
       endcase
 

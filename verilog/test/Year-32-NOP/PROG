@@ -1,0 +1,31 @@
+NOP1
+init:
+COPYFROM 14
+NOP3
+NOP4
+COPYTO 19
+NOP2
+COPYTO 16
+INBOX 
+NOP1
+COPYTO 15
+nexttile:
+COPYFROM [19]
+JUMPZ outputcount
+SUB 15
+JUMPZ inccount
+NOP1
+inctileaddr:
+BUMP+ 19
+NOP2
+JUMP nexttile
+inccount:
+BUMP+ 16
+NOP1
+JUMP inctileaddr
+outputcount:
+NOP2
+COPYFROM 16
+OUTBOX 
+NOP4
+JUMP init

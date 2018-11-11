@@ -38,7 +38,10 @@ BEGIN {
     ass["JUMP"]="80";     i["JUMP"]=2;
     ass["JUMPZ"]="90";    i["JUMPZ"]=2;
     ass["JUMPN"]="A0";    i["JUMPN"]=2;
-    ass["SET"]="E0";      i["SET"]=2;
+    ass["NOP1"]="B0";     i["NOP1"]=1;
+    ass["NOP2"]="C0";     i["NOP2"]=1;
+    ass["NOP3"]="D0";     i["NOP3"]=1;
+    ass["NOP4"]="E0";     i["NOP4"]=1;
     ass["HALT"]="F0";     i["HALT"]=1;
 
     print "v2.0 raw" > binfile;
