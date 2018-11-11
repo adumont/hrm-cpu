@@ -24,7 +24,7 @@
 - [Simulations in Logisim](#simulations-in-logisim)
     - [Year 4](#year-4)
     - [Year 32](#year-32)
-- [Verilog & Simulations](#verilog--simulations)
+- [Automated test (simulations)](#automated-test-simulations)
     - [generate new tests](#generate-new-tests)
 - [Sinthesis to FPGA](#sinthesis-to-fpga)
     - [Top module design](#top-module-design)
@@ -508,7 +508,7 @@ Indeed, we can verify that this is the total count of each item (from the INBOX)
 
 **So it works!!!**
 
-# Verilog & Simulations
+# Automated test (simulations)
 
 [TODO]
 
@@ -556,6 +556,20 @@ Run only 1 test of a particular level
 $ cd Year-04
 $ make -s -f ../tester.mk test02.check
 Year-04: Test [test02] OK
+```
+
+Inspect a particular tests and traces: for that we need to run the test manually, so it will generate the trace for Gtkwave:
+
+```
+$ cd Year-32-NOP
+$ make -f ../tester.mk clean
+$ make -f ../tester.mk test01.test.out
+```
+
+In addition to test01.test_out (output of the simulation), this will generate the test01.lxt (interLaced eXtensible Trace file), suitable for Gtkwave inspection:
+
+```
+$ gtkwave test01.lxt
 ```
 
 Clean all test files
