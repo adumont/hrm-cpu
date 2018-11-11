@@ -1,3 +1,5 @@
+`default_nettype none
+
 module ControlUnit (
     // input signals
     input  wire [7:0] INSTR,
@@ -50,7 +52,8 @@ module ControlUnit (
     S_READMEM2    = 5'b 11001,
     S_RESET       = 5'b 00000,
     S_SUB         = 5'b 10000,
-    S_WAIT_KEY    = 5'b 11010;
+    S_WAIT_KEY    = 5'b 11010,
+    S_INVALID     = 5'b 10001; // should never be reached!
 
     wire [3:0] opcode = INSTR[7:4];
     wire indirect = INSTR[3];
@@ -132,7 +135,7 @@ module ControlUnit (
                         else nextstate = S_READMEM;
         S_READMEM2    : nextstate = S_LOAD_AR2;
         S_WAIT_KEY    : if (nxtInstr) nextstate = S_LOAD_IR;
-        default: nextstate = S_HALT; // should never happen (unless bug?)
+        default: nextstate = S_INVALID; // should never happen (unless bug?)
       endcase
     end
 
@@ -263,6 +266,7 @@ module ControlUnit (
         S_RESET       : statename = "RESET";
         S_SUB         : statename = "SUB";
         S_WAIT_KEY    : statename = "WAIT_KEY";
+        S_INVALID     : statename = "INVALID";
         default       : statename = "XXXXXXXXXX";
       endcase
 
@@ -285,6 +289,34 @@ module ControlUnit (
 
       $display("%t - opcode: %10s (%1b) - State: %12s", $time, instrname, indirect, statename);
     end
+    `endif
+
+    `ifdef FORMAL
+
+      reg	f_past_valid;
+      initial	f_past_valid = 1'b0;
+      always @(posedge clk)
+        f_past_valid <= 1'b1;
+
+      always @(*) assume( instrname != "XXXXXXXXXX" ); // we assume the opcode are always valid
+
+      always @(*) assert( statename != "XXXXXXXXXX" ); // asserts MUST stay true
+      always @(*) assert( statename != "INVALID"    );
+
+      always @(posedge clk)
+      if (f_past_valid)
+      begin
+        if( $past( i_rst ) ) assert( state == S_RESET );
+
+        // check valid transitions in FSM when no async reset happening
+        if( $stable(i_rst) && !i_rst )
+        begin
+          if($past( state == S_RESET  ) ) assert( state == S_FETCH_I );
+          if($past( state == S_Inc_PC ) ) assert( state == S_FETCH_I );
+        end
+
+      end
+
     `endif
 
 endmodule

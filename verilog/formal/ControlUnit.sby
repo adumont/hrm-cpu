@@ -1,0 +1,13 @@
+[options]
+mode bmc
+
+[engines]
+smtbmc
+
+[script]
+
+read -formal ControlUnit.v
+prep -top ControlUnit
+
+[files]
+../ControlUnit.v
