@@ -1,18 +1,13 @@
 `default_nettype none
 
 module PROG (
-        // Input: Addr
-
+        // Input:
         input wire [7:0] Addr,
         input clk,
-
-        // Output: Data, 8 bit: Instruction or Operand
-
-        output wire [7:0] Data
-        // output wire signed [11:0] Data   # do we need to have "signed" here?
+        // Output:
+        output wire [7:0] Data  // Data, 8 bit: Instruction or Operand
     );
 
-    // signals are coded into the microcode.rom file
     parameter PROGRAM = "dummy_prg.hex";
     parameter SIZE = 256;
 
