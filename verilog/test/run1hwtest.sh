@@ -5,6 +5,9 @@ TEST=$2
 
 sleep 1
 
+kill -9 $( ps -ef | grep "cat /dev/ttyUSB1" | grep -v grep | awk '{ print $2 }' ) 2>/dev/null
+stty -F ${PORT} 115200 cs8 -cstopb -parenb
+
 cat ${PORT} > ${TEST}.hwtest_out &
 PID=$!
 
