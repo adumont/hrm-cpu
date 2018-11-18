@@ -25,8 +25,8 @@
     - [Year 4](#year-4)
     - [Year 32](#year-32)
 - [Automated test (simulations)](#automated-test-simulations)
-    - [generate new tests](#generate-new-tests)
-- [Sinthesis to FPGA](#sinthesis-to-fpga)
+    - [Generate new tests](#generate-new-tests)
+- [Synthesis to FPGA](#synthesis-to-fpga)
     - [Top module design](#top-module-design)
     - [How to build and flash in the FPGA](#how-to-build-and-flash-in-the-fpga)
 - [Hardware tests](#hardware-tests)
@@ -577,15 +577,20 @@ Clean all test files
 $ make -s clean
 ```
 
-## generate new tests
+## Generate new tests
 
-Some levels have a test generator, so it's easy to generate new random tests (random input and the corresponding expected output). Insite the `gen_test.sh` you cna see information about size of input, number of tests to run...
+Some levels have a test generator, so it's easy to generate new random tests (random input and the corresponding expected output). Insite the `gen_test.sh` you can see information about size of input, number of tests to run...
+
+Generally, each test will feature:
+- a random input length
+- random input values
+- random timing for when to input each value
 
 Check in `verilog/test/*/` for the `gen_test.sh` script. Simply run the script in the corresponding level test folder.
 
 Some tests also have a `gen_prog.sh` script that allows to generate new random programs (usually it randomizes the memory addresses used in the program).
 
-# Sinthesis to FPGA
+# Synthesis to FPGA
 
 ## Top module design
 
