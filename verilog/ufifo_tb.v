@@ -105,10 +105,10 @@ module ufifo_tb;
     wire [10:0] rom_addr;
     wire        font_bit2;
     font font0 (
-        .clk(clk),
-        .addr(rom_addr),
-        .bit(~bit_addr),
-        .data(font_bit2)
+        .i_clk(clk),
+        .i_addr(rom_addr),
+        .i_bit(~bit_addr),
+        .o_data(font_bit2)
     );
     assign rom_addr = {char_addr, row_addr};
 
@@ -145,7 +145,8 @@ module ufifo_tb;
     //-------------------------------------------
 
     //-------------------------------------------
-    // mux for font ROM addresses (on clock cycle 1) //-------------------------------------------
+    // mux for font ROM addresses (on clock cycle 1)
+    //-------------------------------------------
     reg [7:0] char_addr;
     reg [2:0] row_addr;
     reg [2:0] bit_addr;
@@ -178,11 +179,11 @@ module ufifo_tb;
                 if (font_bit2)
                     text_rgb = 3'b001;
             end
-        else
-            begin
-            if (font_bit2)
-                text_rgb = 3'b001;
-            end
+        // else
+        //     begin
+        //     if (font_bit2)
+        //         text_rgb = 3'b001;
+        //     end
     end      
 
 endmodule
