@@ -1,0 +1,13 @@
+[options]
+mode bmc
+
+[engines]
+smtbmc
+
+[script]
+
+read -formal register.v
+prep -top register
+
+[files]
+../register.v

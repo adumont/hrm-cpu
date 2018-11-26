@@ -28,4 +28,16 @@ module register (
        $display("%t DEBUG R=%h", $time, R);
 `endif
 
+`ifdef FORMAL
+
+    reg	f_past_valid;
+    initial	f_past_valid = 1'b0;
+    always @(posedge clk)
+        f_past_valid <= 1'b1;
+
+    always @(*) assume( muxR != 2'b10 );
+    always @(*) assert( ^R == 1'b0 || ^R == 1'b1 ); // XOR all bits --> no X/Z bits in ^R
+
+`endif
+
 endmodule
