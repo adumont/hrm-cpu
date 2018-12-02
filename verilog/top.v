@@ -53,14 +53,14 @@ module top (
     wire       cpu_in_wr; // write to CPU's INBOX
     wire       cpu_out_rd;// read from CPU's OUTBOX
     wire       cpu_i_rst;
-    wire [4:0] cpu_fifo_dmp_pos;
-    wire       cpu_fifo_sel;
+    wire [2:0] cpu_dmp_chip_select;
+    wire [4:0] cpu_dmp_fifo_pos;
     // output signals
     wire       cpu_in_full;
     wire       cpu_out_empty;
     wire [7:0] cpu_out_data;
-    wire [7:0] cpu_fifo_dmp_data;
-    wire       cpu_fifo_dmp_valid;
+    wire [7:0] cpu_dmp_data;
+    wire       cpu_dmp_valid;
 
     hrmcpu CPU (
         // input ports
@@ -69,14 +69,14 @@ module top (
         .cpu_in_data(cpu_in_data),
         .cpu_in_wr(cpu_in_wr),
         .cpu_out_rd(cpu_out_rd),
-        .cpu_fifo_dmp_pos(cpu_fifo_dmp_pos),
-        .cpu_fifo_sel(cpu_fifo_sel),
+        .cpu_dmp_fifo_pos(cpu_dmp_fifo_pos),
+        .cpu_dmp_chip_select(cpu_dmp_chip_select),
         // output ports
         .cpu_in_full(cpu_in_full),
         .cpu_out_empty(cpu_out_empty),
         .cpu_out_data(cpu_out_data),
-        .cpu_fifo_dmp_data(cpu_fifo_dmp_data),
-        .cpu_fifo_dmp_valid(cpu_fifo_dmp_valid),
+        .cpu_dmp_data(cpu_dmp_data),
+        .cpu_dmp_valid(cpu_dmp_valid),
         // clk, rst
         .clk(clk),
         .i_rst(cpu_i_rst)
@@ -87,7 +87,8 @@ module top (
     assign cpu_in_data = rx_o_data;
     assign cpu_in_wr = rx_o_wr;
     assign cpu_out_rd = txctl_o_pop_value;
-    // TODO: connect cpu_fifo_dmp_pos & cpu_fifo_sel
+    // assign cpu_dmp_chip_select = ; // TODO: connect
+    // assign cpu_dmp_fifo_pos = ; // TODO: connect
 
     `ifdef BOARD_HAVE_BUTTONS
     assign cpu_i_rst = sw1_d;
