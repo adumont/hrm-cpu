@@ -5,23 +5,33 @@ module hrmcpu (
     input  wire       cpu_debug,
     input  wire       cpu_nxtInstr,
     input  wire [7:0] cpu_in_data,
-    input  wire       cpu_in_wr, // write to CPU's INBOX
-    input  wire       cpu_out_rd,// read from CPU's OUTBOX
-    input  wire [4:0] cpu_fifo_dmp_pos,
-    input  wire       cpu_fifo_sel, // select a FIFO for dumping values: 0 INBOX, 1 OUTBOX
+    input  wire       cpu_in_wr,  // write to CPU's INBOX
+    input  wire       cpu_out_rd, // read from CPU's OUTBOX
+    input  wire [2:0] cpu_dmp_chip_select, // component to dump
+    input  wire [4:0] cpu_dmp_fifo_pos,    // dump fifo at this position 
 
     // output signals
     output reg        cpu_in_full,
     output reg        cpu_out_empty,
     output reg  [7:0] cpu_out_data,
-    output reg  [7:0] cpu_fifo_dmp_data,  // data in selected FIFO @ position "cpu_fifo_dmp_pos"
-    output reg        cpu_fifo_dmp_valid, // whether cpu_fifo_dmp_pos is a valid position
+    output reg  [7:0] cpu_dmp_data,  // data in selected component/pos
+    output reg        cpu_dmp_valid, // whether cpu_dmp_data is valid
 
     // generic signals
     input wire clk,
     input wire i_rst
 );
-
+    // HRM-CPU Components
+    // referenced for dumping values to screen
+    localparam
+    m_INBOX     = 3'd 0,
+    m_OUTBOX    = 3'd 1,
+    m_PC        = 3'd 2,
+    m_RAM       = 3'd 3,
+    m_REG       = 3'd 4,
+    m_INSTR     = 3'd 5;
+    // TODO: FORMAL Assume cpu_dmp_chip_select is  between 0 .. 6
+    
     parameter PROGRAM = "dummy_prg.hex";
     parameter ROMFILE = "dummy_ram.hex";
 
@@ -289,7 +299,7 @@ module hrmcpu (
     assign INBOX_i_wr = cpu_in_wr;
     assign INBOX_i_rd = cu_rIn;
     assign INBOX_i_rst = cu_rst;
-    assign INBOX_i_dmp_pos = cpu_fifo_dmp_pos;
+    assign INBOX_i_dmp_pos = cpu_dmp_fifo_pos;
     // ---------------------------------------- //
 
     // ---------------------------------------- //
@@ -302,6 +312,10 @@ module hrmcpu (
     wire              OUTB_empty_n;
     wire              OUTB_full;
     wire              OUTB_i_rst;
+    // dump ports
+    wire        [4:0] OUTB_i_dmp_pos;
+    wire        [7:0] OUTB_o_dmp_data; 
+    wire              OUTB_o_dmp_valid; 
 
     /* verilator lint_off PINMISSING */
     ufifo #(.LGFLEN(4'd5)) OUTB (
@@ -315,7 +329,10 @@ module hrmcpu (
         .o_empty_n( OUTB_empty_n ), // not empty, CPU output pin
         .o_err( OUTB_full ), // overflow aka full
         // .o_status(),
-        // clk, rst
+        // dump ports
+        .i_dmp_pos(OUTB_i_dmp_pos),     // dump position in queue
+        .o_dmp_data(OUTB_o_dmp_data),   // value at dump position
+        .o_dmp_valid(OUTB_o_dmp_valid), // i_dmp_pos is valid         // clk, rst
         .i_rst(OUTB_i_rst),
         .i_clk(clk)
     );
@@ -326,6 +343,7 @@ module hrmcpu (
     assign OUTB_i_wr = cu_wO;
     assign OUTB_i_rd = cpu_out_rd;
     assign OUTB_i_rst = cu_rst;
+    assign OUTB_i_dmp_pos = cpu_dmp_fifo_pos;
     // ---------------------------------------- //
 
 
@@ -336,16 +354,31 @@ module hrmcpu (
         cpu_out_data = OUTB_o_data;
         cpu_out_empty = ~ OUTB_empty_n;
         cpu_in_full = INBOX_full;
-        if( cpu_fifo_sel == 0 ) // INBOX dump values
-        begin
-            cpu_fifo_dmp_data = INBOX_o_dmp_data;
-            cpu_fifo_dmp_valid = INBOX_o_dmp_valid;
-        end
-        else // OUTBOX dump values
-        begin
-            cpu_fifo_dmp_data = INBOX_o_dmp_data;  // TODO: change to OUTBOX
-            cpu_fifo_dmp_valid = INBOX_o_dmp_valid;// TODO: change to OUTBOX
-        end
+
+    end
+    // ---------------------------------------- //
+
+    // ---------------------------------------- //
+    // MUX Dump Output
+    always @*
+    begin
+        cpu_dmp_data  = 8'b x; // TODO FORMAL This should never happen !
+        cpu_dmp_valid = 1'b 1; // we'll overwrite below
+
+        case (cpu_dmp_chip_select)
+            m_INBOX  : begin
+                cpu_dmp_data  = INBOX_o_dmp_data;
+                cpu_dmp_valid = INBOX_o_dmp_valid;
+            end
+            m_OUTBOX  : begin
+                cpu_dmp_data  = OUTB_o_dmp_data;
+                cpu_dmp_valid = OUTB_o_dmp_valid;
+            end
+            m_PC     : cpu_dmp_data  = PC0_PC;
+            m_INSTR  : cpu_dmp_data  = IR0_rIR;
+            m_REG    : cpu_dmp_data  = R_value;
+            default  : cpu_dmp_data  = PC0_PC;
+        endcase
     end
     // ---------------------------------------- //
 
