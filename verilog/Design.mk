@@ -48,7 +48,7 @@ endif
 BOARD_BUILDDIR:=builddir/$(BOARD)
 BUILDDIR:=$(BOARD_BUILDDIR)
 
-LEVEL?=none
+LEVEL?=Echo
 
 # shortcut to the test cases in test/,
 # call with LEVEL=<levelname> (aka Dir name)
