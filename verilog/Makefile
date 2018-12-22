@@ -98,6 +98,6 @@ test:
 	$(MAKE) -C test all
 
 clean:
-	rm -rf $(BUILDDIR)
+	rm -rf $(BOARD_BUILDDIR) $(BUILDDIR)
 
 .PHONY: all clean json vcd svg bin sim dot .force test upload lint
