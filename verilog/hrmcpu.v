@@ -175,6 +175,7 @@ module hrmcpu (
     wire signed [7:0] R_iInbox;
     wire signed [7:0] R_iAlu;
     wire signed [7:0] R_iMem;
+    wire signed [7:0] R_iData;
     wire        [1:0] R_muxR;
     wire              R_wR;
 
@@ -185,6 +186,7 @@ module hrmcpu (
         .iInbox(R_iInbox),
         .iAlu(R_iAlu),
         .iMem(R_iMem),
+        .iData(R_iData),
         .muxR(R_muxR),
         .wR(R_wR),
         // output ports
@@ -196,6 +198,7 @@ module hrmcpu (
     assign R_iInbox = INBOX_o_data;
     assign R_iAlu = alu_Out;
     assign R_iMem = mem_M;
+    assign R_iData = program0_Data;
     assign R_muxR = cu_muxR;
     assign R_wR = cu_wR;
     // ---------------------------------------- //

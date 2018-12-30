@@ -53,6 +53,7 @@ module ControlUnit (
     S_RESET       = 5'b 00000,
     S_SUB         = 5'b 10000,
     S_WAIT_KEY    = 5'b 11010,
+    S_SET         = 5'b 11011,
     S_INVALID     = 5'b 10001; // should never be reached!
 
     wire [3:0] opcode = INSTR[7:4];
@@ -73,7 +74,7 @@ module ControlUnit (
     o_NOP1     = 4'b 1011,
     o_NOP2     = 4'b 1100,
     o_NOP3     = 4'b 1101,
-    o_NOP4     = 4'b 1110,
+    o_SET      = 4'b 1110,
     o_HALT     = 4'b 1111;
 
     reg [4:0] state, nextstate;
@@ -113,7 +114,6 @@ module ControlUnit (
                           o_NOP1   : nextstate = S_Inc_PC;
                           o_NOP2   : nextstate = S_Inc_PC;
                           o_NOP3   : nextstate = S_Inc_PC;
-                          o_NOP4   : nextstate = S_Inc_PC;
                           default  : nextstate = S_INCPC2;
                         endcase
         S_COPYTO      : nextstate = S_Inc_PC;
@@ -123,12 +123,14 @@ module ControlUnit (
                           o_JUMP  : nextstate = S_JUMP;
                           o_JUMPZ : nextstate = S_JUMPZ;
                           o_JUMPN : nextstate = S_JUMPN;
+                          o_SET   : nextstate = S_SET;
                           default : nextstate = S_LOAD_AR;
                         endcase
         S_ADD         : nextstate = S_Inc_PC;
         S_SUB         : nextstate = S_Inc_PC;
         S_JUMPZ       : nextstate = S_FETCH_I;
         S_JUMPN       : nextstate = S_FETCH_I;
+        S_SET         : nextstate = S_Inc_PC;
         S_BUMPP       : nextstate = S_COPYTO;
         S_BUMPN       : nextstate = S_COPYTO;
         S_HALT        : nextstate = S_HALT;
@@ -216,6 +218,10 @@ module ControlUnit (
           aluCtl = 3'b 000;
           wPC    = 1'b 1;
         end
+        S_SET      : begin
+          muxR   = 2'b  10;
+          wR     = 1'b   1;
+        end
         S_LOAD_AR    : wAR  = 1'b 1;
         S_LOAD_AR2   : begin
           srcA   = 1'b 1;
@@ -270,6 +276,7 @@ module ControlUnit (
         S_RESET       : statename = "RESET";
         S_SUB         : statename = "SUB";
         S_WAIT_KEY    : statename = "WAIT_KEY";
+        S_SET         : statename = "SET";
         S_INVALID     : statename = "INVALID";
         default       : statename = "XXXXXXXXXX";
       endcase
@@ -291,7 +298,7 @@ module ControlUnit (
         o_NOP1     : instrname = "NOP1";
         o_NOP2     : instrname = "NOP2";
         o_NOP3     : instrname = "NOP3";
-        o_NOP4     : instrname = "NOP4";
+        o_SET      : instrname = "SET";
         default    : instrname = "XXXXXXXXXX";
       endcase
 

@@ -1,0 +1,160 @@
+  00: E0 05 ; SET 5
+  02: 10    ; OUTBOX
+  03: E0 81 ; SET 129
+  05: 10    ; OUTBOX
+  06: E0 bb ; SET 187
+  08: 10    ; OUTBOX
+  09: E0 78 ; SET 120
+  0b: 10    ; OUTBOX
+  0c: E0 00 ; SET 0
+  0e: 10    ; OUTBOX
+  0f: E0 8b ; SET 139
+  11: 10    ; OUTBOX
+  12: E0 27 ; SET 39
+  14: 10    ; OUTBOX
+  15: E0 b8 ; SET 184
+  17: 10    ; OUTBOX
+  18: E0 f0 ; SET 240
+  1a: 10    ; OUTBOX
+  1b: E0 51 ; SET 81
+  1d: 10    ; OUTBOX
+  1e: E0 77 ; SET 119
+  20: 10    ; OUTBOX
+  21: E0 db ; SET 219
+  23: 10    ; OUTBOX
+  24: E0 10 ; SET 16
+  26: 10    ; OUTBOX
+  27: E0 fb ; SET 251
+  29: 10    ; OUTBOX
+  2a: E0 d3 ; SET 211
+  2c: 10    ; OUTBOX
+  2d: E0 a9 ; SET 169
+  2f: 10    ; OUTBOX
+  30: E0 71 ; SET 113
+  32: 10    ; OUTBOX
+  33: E0 7d ; SET 125
+  35: 10    ; OUTBOX
+  36: E0 b9 ; SET 185
+  38: 10    ; OUTBOX
+  39: E0 04 ; SET 4
+  3b: 10    ; OUTBOX
+  3c: E0 2b ; SET 43
+  3e: 10    ; OUTBOX
+  3f: E0 a0 ; SET 160
+  41: 10    ; OUTBOX
+  42: E0 e1 ; SET 225
+  44: 10    ; OUTBOX
+  45: E0 0c ; SET 12
+  47: 10    ; OUTBOX
+  48: E0 9d ; SET 157
+  4a: 10    ; OUTBOX
+  4b: E0 19 ; SET 25
+  4d: 10    ; OUTBOX
+  4e: E0 97 ; SET 151
+  50: 10    ; OUTBOX
+  51: E0 ae ; SET 174
+  53: 10    ; OUTBOX
+  54: E0 1b ; SET 27
+  56: 10    ; OUTBOX
+  57: E0 52 ; SET 82
+  59: 10    ; OUTBOX
+  5a: E0 7f ; SET 127
+  5c: 10    ; OUTBOX
+  5d: E0 1c ; SET 28
+  5f: 10    ; OUTBOX
+  60: E0 6c ; SET 108
+  62: 10    ; OUTBOX
+  63: E0 89 ; SET 137
+  65: 10    ; OUTBOX
+  66: E0 5b ; SET 91
+  68: 10    ; OUTBOX
+  69: E0 0b ; SET 11
+  6b: 10    ; OUTBOX
+  6c: E0 68 ; SET 104
+  6e: 10    ; OUTBOX
+  6f: E0 de ; SET 222
+  71: 10    ; OUTBOX
+  72: E0 46 ; SET 70
+  74: 10    ; OUTBOX
+  75: E0 d6 ; SET 214
+  77: 10    ; OUTBOX
+  78: E0 ca ; SET 202
+  7a: 10    ; OUTBOX
+  7b: E0 4f ; SET 79
+  7d: 10    ; OUTBOX
+  7e: E0 48 ; SET 72
+  80: 10    ; OUTBOX
+  81: E0 8e ; SET 142
+  83: 10    ; OUTBOX
+  84: E0 11 ; SET 17
+  86: 10    ; OUTBOX
+  87: E0 d1 ; SET 209
+  89: 10    ; OUTBOX
+  8a: E0 9a ; SET 154
+  8c: 10    ; OUTBOX
+  8d: E0 1a ; SET 26
+  8f: 10    ; OUTBOX
+  90: E0 75 ; SET 117
+  92: 10    ; OUTBOX
+  93: E0 f3 ; SET 243
+  95: 10    ; OUTBOX
+  96: E0 54 ; SET 84
+  98: 10    ; OUTBOX
+  99: E0 03 ; SET 3
+  9b: 10    ; OUTBOX
+  9c: E0 ac ; SET 172
+  9e: 10    ; OUTBOX
+  9f: E0 e8 ; SET 232
+  a1: 10    ; OUTBOX
+  a2: E0 28 ; SET 40
+  a4: 10    ; OUTBOX
+  a5: E0 bd ; SET 189
+  a7: 10    ; OUTBOX
+  a8: E0 e2 ; SET 226
+  aa: 10    ; OUTBOX
+  ab: E0 a3 ; SET 163
+  ad: 10    ; OUTBOX
+  ae: E0 ff ; SET 255
+  b0: 10    ; OUTBOX
+  b1: E0 c3 ; SET 195
+  b3: 10    ; OUTBOX
+  b4: E0 df ; SET 223
+  b6: 10    ; OUTBOX
+  b7: E0 5a ; SET 90
+  b9: 10    ; OUTBOX
+  ba: E0 2f ; SET 47
+  bc: 10    ; OUTBOX
+  bd: E0 ce ; SET 206
+  bf: 10    ; OUTBOX
+  c0: E0 c0 ; SET 192
+  c2: 10    ; OUTBOX
+  c3: E0 64 ; SET 100
+  c5: 10    ; OUTBOX
+  c6: E0 da ; SET 218
+  c8: 10    ; OUTBOX
+  c9: E0 12 ; SET 18
+  cb: 10    ; OUTBOX
+  cc: E0 49 ; SET 73
+  ce: 10    ; OUTBOX
+  cf: E0 f4 ; SET 244
+  d1: 10    ; OUTBOX
+  d2: E0 bf ; SET 191
+  d4: 10    ; OUTBOX
+  d5: E0 80 ; SET 128
+  d7: 10    ; OUTBOX
+  d8: E0 82 ; SET 130
+  da: 10    ; OUTBOX
+  db: E0 fa ; SET 250
+  dd: 10    ; OUTBOX
+  de: E0 0f ; SET 15
+  e0: 10    ; OUTBOX
+  e1: E0 3f ; SET 63
+  e3: 10    ; OUTBOX
+  e4: E0 a6 ; SET 166
+  e6: 10    ; OUTBOX
+  e7: E0 5f ; SET 95
+  e9: 10    ; OUTBOX
+  ea: E0 0e ; SET 14
+  ec: 10    ; OUTBOX
+  ed: E0 1d ; SET 29
+  ef: 10    ; OUTBOX
