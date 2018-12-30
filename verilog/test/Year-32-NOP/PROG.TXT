@@ -2,30 +2,28 @@
 init:
   01: 20 0e ; COPYFROM 14
   03: D0    ; NOP3
-  04: E0    ; NOP4
-  05: 30 13 ; COPYTO 19
-  07: C0    ; NOP2
-  08: 30 10 ; COPYTO 16
-  0a: 00    ; INBOX
-  0b: B0    ; NOP1
-  0c: 30 0f ; COPYTO 15
+  04: 30 13 ; COPYTO 19
+  06: C0    ; NOP2
+  07: 30 10 ; COPYTO 16
+  09: 00    ; INBOX
+  0a: B0    ; NOP1
+  0b: 30 0f ; COPYTO 15
 nexttile:
-  0e: 28 13 ; COPYFROM [19]
-  10: 90 21 ; JUMPZ outputcount
-  12: 50 0f ; SUB 15
-  14: 90 1c ; JUMPZ inccount
-  16: B0    ; NOP1
+  0d: 28 13 ; COPYFROM [19]
+  0f: 90 20 ; JUMPZ outputcount
+  11: 50 0f ; SUB 15
+  13: 90 1b ; JUMPZ inccount
+  15: B0    ; NOP1
 inctileaddr:
-  17: 60 13 ; BUMP+ 19
-  19: C0    ; NOP2
-  1a: 80 0e ; JUMP nexttile
+  16: 60 13 ; BUMP+ 19
+  18: C0    ; NOP2
+  19: 80 0d ; JUMP nexttile
 inccount:
-  1c: 60 10 ; BUMP+ 16
-  1e: B0    ; NOP1
-  1f: 80 17 ; JUMP inctileaddr
+  1b: 60 10 ; BUMP+ 16
+  1d: B0    ; NOP1
+  1e: 80 16 ; JUMP inctileaddr
 outputcount:
-  21: C0    ; NOP2
-  22: 20 10 ; COPYFROM 16
-  24: 10    ; OUTBOX
-  25: E0    ; NOP4
-  26: 80 01 ; JUMP init
+  20: C0    ; NOP2
+  21: 20 10 ; COPYFROM 16
+  23: 10    ; OUTBOX
+  24: 80 01 ; JUMP init
