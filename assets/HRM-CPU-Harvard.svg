@@ -913,7 +913,7 @@
             <foreignObject style="overflow:visible;" pointer-events="all"
                            width="112" height="43">
                 <div xmlns="http://www.w3.org/1999/xhtml"
-                     style="display: inline-block; font-size: 12px; font-family: Arial, Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; overflow: hidden; max-height: 60px; max-width: 185px; width: 113px; white-space: normal; word-wrap: normal; text-align: center;">
+                     style="display: inline-block; font-size: 12px; font-family: Arial, Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; overflow: hidden; max-height: 60px; max-width: 185px; width: 113px; white-space: normal; overflow-wrap: normal; text-align: center;">
                     <div xmlns="http://www.w3.org/1999/xhtml"
                          style="display:inline-block;text-align:inherit;text-decoration:inherit;">
                         <p style="margin: 0px">
@@ -982,7 +982,7 @@
             <foreignObject style="overflow:visible;" pointer-events="all"
                            width="10" height="13">
                 <div xmlns="http://www.w3.org/1999/xhtml"
-                     style="display: inline-block; font-size: 12px; font-family: Arial, Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; overflow: hidden; max-height: 20px; max-width: 45px; width: 10px; white-space: normal; word-wrap: normal; text-align: center;">
+                     style="display: inline-block; font-size: 12px; font-family: Arial, Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; overflow: hidden; max-height: 20px; max-width: 45px; width: 10px; white-space: normal; overflow-wrap: normal; text-align: center;">
                     <div xmlns="http://www.w3.org/1999/xhtml"
                          style="display:inline-block;text-align:inherit;text-decoration:inherit;">
                         <p style="text-align: center ; margin: 0px">
@@ -1067,5 +1067,9 @@
               stroke-width="1.8" stroke-miterlimit="10" pointer-events="none"/>
         <ellipse cx="630" cy="576" rx="1.8" ry="1.8" fill="#0000ff"
                  stroke="#0000ff" stroke-width="1.8" pointer-events="none"/>
+        <path d="M 486 468 L 459 468 L 459 343.8" fill="none" stroke="#000000"
+              stroke-width="1.8" stroke-miterlimit="10" pointer-events="none"/>
+        <ellipse cx="459" cy="342" rx="1.8" ry="1.8" fill="#000000"
+                 stroke="#000000" stroke-width="1.8" pointer-events="none"/>
     </g>
 </svg>
