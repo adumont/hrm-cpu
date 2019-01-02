@@ -1,0 +1,50 @@
+init:
+  00: E0 0d ; SET 13
+  02: 30 03 ; COPYTO 3
+  04: E0 41 ; SET 65
+  06: 30 05 ; COPYTO 5
+  08: E0 4e ; SET 78
+  0a: 30 06 ; COPYTO 6
+  0c: E0 5b ; SET 91
+  0e: 30 07 ; COPYTO 7
+  10: E0 61 ; SET 97
+  12: 30 0a ; COPYTO 10
+  14: E0 6e ; SET 110
+  16: 30 0b ; COPYTO 11
+  18: E0 7b ; SET 123
+  1a: 30 0c ; COPYTO 12
+next:
+  1c: 00    ; INBOX
+  1d: 30 00 ; COPYTO 0
+  1f: 50 05 ; SUB 5
+  21: A0 43 ; JUMPN asis
+  23: 20 00 ; COPYFROM 0
+  25: 50 06 ; SUB 6
+  27: A0 4a ; JUMPN plus13
+  29: 20 00 ; COPYFROM 0
+  2b: 50 07 ; SUB 7
+  2d: A0 50 ; JUMPN minus13
+  2f: 20 00 ; COPYFROM 0
+  31: 50 0a ; SUB 10
+  33: A0 43 ; JUMPN asis
+  35: 20 00 ; COPYFROM 0
+  37: 50 0b ; SUB 11
+  39: A0 4a ; JUMPN plus13
+  3b: 20 00 ; COPYFROM 0
+  3d: 50 0c ; SUB 12
+  3f: A0 50 ; JUMPN minus13
+  41: 80 43 ; JUMP asis
+asis:
+  43: 20 00 ; COPYFROM 0
+  45: 80 47 ; JUMP out
+out:
+  47: 10    ; OUTBOX
+  48: 80 1c ; JUMP next
+plus13:
+  4a: 20 00 ; COPYFROM 0
+  4c: 40 03 ; ADD 3
+  4e: 80 47 ; JUMP out
+minus13:
+  50: 20 00 ; COPYFROM 0
+  52: 50 03 ; SUB 3
+  54: 80 47 ; JUMP out
