@@ -1,7 +1,7 @@
   00: 20 04 ; COPYFROM 4
-  02: 10    ; OUTBOX 
+  02: 10    ; OUTBOX
   03: 20 00 ; COPYFROM 0
-  05: 10    ; OUTBOX 
+  05: 10    ; OUTBOX
   06: 20 03 ; COPYFROM 3
-  08: 10    ; OUTBOX 
-  09: F0    ; HALT 
+  08: 10    ; OUTBOX
+  09: F0    ; HALT
