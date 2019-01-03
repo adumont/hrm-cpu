@@ -37,6 +37,9 @@ test : $(all-tests)
 %.ivl : $(SRCFILEPATH) $(AUXFILE)
 	iverilog $(SRCFILEPATH) -DPROGRAM=\"program\" -DROMFILE=\"ram\" -DINBFILE=\"$*.in\" $(IVERILOG_OPT) -DDUMPFILE=\"$*.lxt\" -o $*.ivl
 
+program: PROG
+	../../../logisim/prog/assembler PROG && rm PROG.BIN
+
 %.test_out : %.in %.ivl
 	vvp $*.ivl -lxt > $@
 
@@ -49,4 +52,4 @@ all : test
 	@printf "%b" "$(GREEN)$(LEVEL_DIR): Success, all tests passed$(NO_COLOR)\n"
 
 clean :
-	-rm -f *.ivl *.check *.vcd *.lxt *.test_out
+	-rm -f *.ivl *.check *.vcd *.lxt *.test_out program
