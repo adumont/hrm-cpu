@@ -38,7 +38,7 @@ test : $(all-tests)
 	iverilog $(SRCFILEPATH) -DPROGRAM=\"program\" -DROMFILE=\"ram\" -DINBFILE=\"$*.in\" $(IVERILOG_OPT) -DDUMPFILE=\"$*.lxt\" -o $*.ivl
 
 program: PROG
-	../../../logisim/prog/assembler PROG && rm PROG.BIN
+	../../../logisim/prog/assembler PROG >/dev/null && rm PROG.BIN
 
 %.test_out : %.in %.ivl
 	vvp $*.ivl -lxt > $@
