@@ -30,9 +30,16 @@ lint: $(BOARD_BUILDDIR)/$(MODULE).lint
 
 PCF:=$(MODULE)-$(BOARD).pcf
 
-$(MODULE)_tb.vcd: $(MODULE).v $(DEPS) $(MODULE)_tb.v
+#ifeq ($(PROGRAM),test/$(LEVEL)/program)
+CLEAN_PROGRAM:=$(PROGRAM)
 
-	iverilog $^ $(IVERILOG_MACRO) -o $(MODULE)_tb.out
+$(PROGRAM): test/$(LEVEL)/PROG
+	make -C test/$(LEVEL) -f ../tester.mk program
+#endif
+
+$(MODULE)_tb.vcd: $(MODULE).v $(DEPS) $(MODULE)_tb.v $(PROGRAM) $(ROMFILE)
+
+	iverilog $(MODULE).v $(DEPS) $(MODULE)_tb.v $(IVERILOG_MACRO) -o $(MODULE)_tb.out
 	./$(MODULE)_tb.out
 
 $(BOARD_BUILDDIR)/$(MODULE).lint: $(MODULE).v $(DEPS)
@@ -98,6 +105,6 @@ test:
 	$(MAKE) -C test all
 
 clean:
-	rm -rf $(BOARD_BUILDDIR) $(BUILDDIR)
+	rm -rf $(BOARD_BUILDDIR) $(BUILDDIR) $(CLEAN_PROGRAM)
 
 .PHONY: all clean json vcd svg bin sim dot .force test upload lint
