@@ -1,5 +1,9 @@
 `default_nettype none
 
+`ifndef ROMFILE
+`define ROMFILE "dummy_ram.hex"
+`endif
+
 module MEMORY_tb;
 
     reg  [7:0] ADDR = 8'b00000000;
@@ -21,6 +25,8 @@ module MEMORY_tb;
         .wAR(wAR),
         .M(M)
     );
+    defparam MEMORY0.ROMFILE = `ROMFILE;
+
 
     // Simulate clock
     //always #1 clk = ~clk;
