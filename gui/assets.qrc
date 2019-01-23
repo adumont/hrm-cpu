@@ -1,0 +1,22 @@
+<RCC>
+    <qresource prefix="/assets/leds">
+        <file>assets/leds/blue.svg</file>
+        <file>assets/leds/green.svg</file>
+        <file>assets/leds/red.svg</file>
+        <file>assets/leds/white.svg</file>
+        <file>assets/leds/yellow.svg</file>
+        <file>assets/leds/red_off.svg</file>
+        <file>assets/leds/blue_off.svg</file>
+        <file>assets/leds/green_off.svg</file>
+        <file>assets/leds/yellow_off.svg</file>
+    </qresource>
+    <qresource prefix="/gates">
+        <file>assets/gates/NOT.svg</file>
+        <file>assets/gates/AND.svg</file>
+        <file>assets/gates/NAND.svg</file>
+        <file>assets/gates/OR.svg</file>
+        <file>assets/gates/XNOR.svg</file>
+        <file>assets/gates/XOR.svg</file>
+        <file>assets/gates/NOR.svg</file>
+    </qresource>
+</RCC>

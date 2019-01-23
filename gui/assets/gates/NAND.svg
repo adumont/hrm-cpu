@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="28.610559mm"
+   height="16.826237mm"
+   viewBox="0 0 101.376 59.620524"
+   id="svg6090"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="NAND.svg">
+  <defs
+     id="defs6092" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="2.8"
+     inkscape:cx="-18.247415"
+     inkscape:cy="-22.219424"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1680"
+     inkscape:window-height="1003"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata6095">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(847.83087,223.16234)">
+    <rect
+       style="fill:#000000;stroke:none"
+       id="rect68"
+       pointer-events="none"
+       height="2.816"
+       width="2.816"
+       y="-194.75464"
+       x="-749.27087" />
+    <rect
+       style="fill:#000000;stroke:none"
+       id="rect70"
+       pointer-events="none"
+       height="2.816"
+       width="2.816"
+       y="-208.83466"
+       x="-847.83087" />
+    <rect
+       style="fill:#000000;stroke:none"
+       id="rect72"
+       pointer-events="none"
+       height="2.816"
+       width="2.816"
+       y="-180.67464"
+       x="-847.83087" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:2.81599998"
+       r="3.4937592"
+       id="ellipse74"
+       pointer-events="none"
+       cy="-193.34666"
+       cx="-763.70282" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2.81599998;stroke-linecap:square;stroke-miterlimit:10"
+       inkscape:connector-curvature="0"
+       id="path76"
+       pointer-events="none"
+       stroke-miterlimit="10"
+       d="m -759.12685,-193.34666 9.856,0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2.81599998;stroke-linecap:square;stroke-miterlimit:10"
+       inkscape:connector-curvature="0"
+       id="path78"
+       pointer-events="none"
+       stroke-miterlimit="10"
+       d="m -845.01485,-207.42666 19.712,0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2.81599998;stroke-linecap:square;stroke-miterlimit:10"
+       inkscape:connector-curvature="0"
+       id="path80"
+       pointer-events="none"
+       stroke-miterlimit="10"
+       d="m -845.01485,-179.26666 19.712,0" />
+    <path
+       style="fill:#ffffff;stroke:#000000;stroke-width:2.27919984;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+       inkscape:connector-curvature="0"
+       id="path82"
+       pointer-events="none"
+       stroke-miterlimit="10"
+       d="m -816.79325,-221.91146 -8.8176,0.009 c 0.009,17.5296 0.0968,35.332 0.1056,57.024 l 8.5712,0.1232 c 14.1944,-0.0352 25.5552,0.968 34.7248,-3.9072 7.9464,-4.224 14.7488,-12.9712 14.7048,-24.4904 -0.0528,-11.8712 -6.7144,-19.58 -15.3736,-24.7896 -8.4568,-5.0952 -19.932,-3.9424 -33.9152,-3.9688 z" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="-819.60699"
+       y="-187.40755"
+       id="text5105"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5107"
+         x="-819.60699"
+         y="-187.40755"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;font-family:sans-serif;-inkscape-font-specification:sans-serif">NAND</tspan></text>
+  </g>
+</svg>
