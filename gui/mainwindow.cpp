@@ -16,15 +16,10 @@ MainWindow::MainWindow(QWidget *parent) :
     m_timer = new QTimer(this);
     QObject::connect(m_timer, SIGNAL(timeout()), this, SLOT(clkTick()));
     m_timer->start(500);
-    counter = 0;
-    ui->lcdNumber->display(counter);
 
     led_on = QPixmap(":/assets/leds/assets/leds/red.svg");
     led_off = QPixmap(":/assets/leds/assets/leds/red_off.svg");
-    ui->ledC->setPixmap(led_off);
 
-    ui->ledC_2->setColor(0);
-    ui->ledC_2->setOn();
 
 //    m_pTableWidget = new QTableWidget(this);
 //    m_pTableWidget->setRowCount(10);
@@ -43,17 +38,22 @@ MainWindow::MainWindow(QWidget *parent) :
 //    m_pTableWidget->setItem(0, 1, new QTableWidgetItem("Hello"));
 //    m_pTableWidget->setItem(0, 1, new QTableWidgetItem("Hello"));
 
-    ui->tableWidget->setItem(0,0,new QTableWidgetItem("Hello"));
-    ui->tableWidget->item(0,0)->setText("Bah");
+//    ui->tableWidget->setItem(0,0,new QTableWidgetItem("Hello"));
+//    ui->tableWidget->item(0,0)->setText("Bah");
 
     QStringList LIST;
     for(int i=0; i<256; i++){ LIST.append(QString("%1").arg(i,2,16,QChar('0'))); }
-
     ui->tableWidget->setVerticalHeaderLabels(LIST);
     ui->tableWidget->setHorizontalHeaderLabels(QStringList("Data"));
 
-
     top = new Vhrmcpu;
+    top->eval();
+    for(int i=0; i<256; i++){
+        // top->hrmcpu__DOT__program0__DOT__rom[i]
+        ui->tableWidget->setItem(0,i,new QTableWidgetItem( QString("%1").arg( top->hrmcpu__DOT__program0__DOT__rom[i] ,2,16,QChar('0')) ));
+//        ui->tableWidget->setItem(0,i,new QTableWidgetItem( QString("%1").arg( i ,2,16,QChar('0')) ));
+    }
+
     updateUI();
 }
 
@@ -68,9 +68,6 @@ void MainWindow::clkTick()
 
     top->clk = clk;
     main_time++;
-
-    if(clk)
-        ui->lcdNumber->display(++counter);
 
     updateUI();
 }
@@ -94,11 +91,20 @@ void MainWindow::updateUI()
 {
     top->eval();
 
-    ui->label->setText(QTime::currentTime().toString("hh:mm:ss"));
+    // Clock
     ui->clk->setPixmap( clk ? led_on : led_off );
 
-    ui->lcdPC->display(top->hrmcpu__DOT__PC0_PC);
-    ui->lcdR->display(top->hrmcpu__DOT__R_value);
+    // PC
+    ui->PC_PC->setText(QString("%1").arg( top->hrmcpu__DOT__PC0_PC ,2,16,QChar('0')));
+    ui->led_PC_branch->setState( top->hrmcpu__DOT__cu_branch );
+    ui->led_PC_ijump->setState( top->hrmcpu__DOT__cu_ijump );
 
-    ui->ledC_2->setState( top->hrmcpu__DOT__cu_wIR ); // test
+    // PROG
+    ui->PROG_ADDR->setText(QString("%1").arg( top->hrmcpu__DOT__PC0_PC ,2,16,QChar('0')));
+    ui->PROG_DATA->setText(QString("%1").arg( top->hrmcpu__DOT__program0__DOT__r_data ,2,16,QChar('0')));
+
+    // Register R
+    ui->R_R->setText(QString("%1").arg( top->hrmcpu__DOT__R_value ,2,16,QChar('0')));
+    ui->led_R_wR->setState( top->hrmcpu__DOT__cu_wR );
+
 }

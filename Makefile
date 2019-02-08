@@ -11,6 +11,7 @@ test:
 
 clean:
 	$(MAKE) -C verilog clean
+	$(MAKE) -C gui clean
 	$(MAKE) -C verilog/test BOARD=alhambra  clean
 	$(MAKE) -C verilog/test BOARD=alhambra  hwclean
 	$(MAKE) -C verilog/test BOARD=ice40hx8k clean

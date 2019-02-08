@@ -30,7 +30,6 @@ private:
     Ui::MainWindow *ui;
     QTimer *m_timer;
     bool clk = true;
-    int counter;
     Vhrmcpu * top;
     QPixmap led_on;
     QPixmap led_off;
