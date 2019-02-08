@@ -5,6 +5,7 @@
 #include <QTime>
 #include <QApplication>
 #include <QHeaderView>
+
 #include "Vhrmcpu.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -13,45 +14,25 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // Create our design model with Verilator
+    top = new Vhrmcpu;
+    top->eval(); // initialize (so PROG gets loaded)
+
+    // Clock Initialization
+    clk = true;
     m_timer = new QTimer(this);
     QObject::connect(m_timer, SIGNAL(timeout()), this, SLOT(clkTick()));
-    m_timer->start(500);
+    //m_timer->start(500);
 
-    led_on = QPixmap(":/assets/leds/assets/leds/red.svg");
-    led_off = QPixmap(":/assets/leds/assets/leds/red_off.svg");
-
-
-//    m_pTableWidget = new QTableWidget(this);
-//    m_pTableWidget->setRowCount(10);
-//    m_pTableWidget->setColumnCount(3);
-//    m_TableHeader<<"#"<<"Name"<<"Text";
-//    m_pTableWidget->setHorizontalHeaderLabels(m_TableHeader);
-//    m_pTableWidget->verticalHeader()->setVisible(false);
-//    m_pTableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
-//    m_pTableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
-//    m_pTableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
-//    m_pTableWidget->setShowGrid(false);
-//    m_pTableWidget->setStyleSheet("QTableView {selection-background-color: red;}");
-//    m_pTableWidget->setGeometry(QApplication::desktop()->screenGeometry());
-
-//    //insert data
-//    m_pTableWidget->setItem(0, 1, new QTableWidgetItem("Hello"));
-//    m_pTableWidget->setItem(0, 1, new QTableWidgetItem("Hello"));
-
-//    ui->tableWidget->setItem(0,0,new QTableWidgetItem("Hello"));
-//    ui->tableWidget->item(0,0)->setText("Bah");
-
+    // PROG table, set headers
     QStringList LIST;
     for(int i=0; i<256; i++){ LIST.append(QString("%1").arg(i,2,16,QChar('0'))); }
-    ui->tableWidget->setVerticalHeaderLabels(LIST);
-    ui->tableWidget->setHorizontalHeaderLabels(QStringList("Data"));
+    ui->tblPROG->setVerticalHeaderLabels(LIST);
+    ui->tblPROG->setHorizontalHeaderLabels(QStringList("Data"));
 
-    top = new Vhrmcpu;
-    top->eval();
+    // PROG table, fill with current program
     for(int i=0; i<256; i++){
-        // top->hrmcpu__DOT__program0__DOT__rom[i]
-        ui->tableWidget->setItem(0,i,new QTableWidgetItem( QString("%1").arg( top->hrmcpu__DOT__program0__DOT__rom[i] ,2,16,QChar('0')) ));
-//        ui->tableWidget->setItem(0,i,new QTableWidgetItem( QString("%1").arg( i ,2,16,QChar('0')) ));
+        ui->tblPROG->setItem(0,i,new QTableWidgetItem( QString("%1").arg( top->hrmcpu__DOT__program0__DOT__rom[i] ,2,16,QChar('0')) ));
     }
 
     updateUI();
@@ -72,13 +53,12 @@ void MainWindow::clkTick()
     updateUI();
 }
 
-
-// Factorizar los on_..._toggled() en 1 solo y usar el ->sender()->getState/getChecked
-// o como sea
-void MainWindow::on_pbA_toggled(bool checked)
+void MainWindow::on_pbA_pressed()
 {
-    top->cpu_in_wr=checked?1:0;
+    clkTick();
     updateUI();
+//    clkTick();
+//    updateUI();
 }
 
 void MainWindow::on_pbB_toggled(bool checked)
@@ -91,20 +71,30 @@ void MainWindow::updateUI()
 {
     top->eval();
 
-    // Clock
-    ui->clk->setPixmap( clk ? led_on : led_off );
+    // Clock led
+    ui->clk->setState( clk );
 
     // PC
     ui->PC_PC->setText(QString("%1").arg( top->hrmcpu__DOT__PC0_PC ,2,16,QChar('0')));
-    ui->led_PC_branch->setState( top->hrmcpu__DOT__cu_branch );
-    ui->led_PC_ijump->setState( top->hrmcpu__DOT__cu_ijump );
+    ui->led_PC_branch->setState( top->hrmcpu__DOT__PC0_branch );
+    ui->led_PC_ijump->setState( top->hrmcpu__DOT__PC0_ijump );
+    ui->led_PC_wPC->setState( top->hrmcpu__DOT__PC0_wPC );
+    ui->tblPROG->setCurrentCell(top->hrmcpu__DOT__PC0_PC, 0);
 
     // PROG
     ui->PROG_ADDR->setText(QString("%1").arg( top->hrmcpu__DOT__PC0_PC ,2,16,QChar('0')));
     ui->PROG_DATA->setText(QString("%1").arg( top->hrmcpu__DOT__program0__DOT__r_data ,2,16,QChar('0')));
 
+    // IR Instruction Register
+    ui->IR_INSTR->setText(QString("%1").arg( top->hrmcpu__DOT__IR0_rIR ,2,16,QChar('0')));
+    ui->led_IR_wIR->setState( top->hrmcpu__DOT__cu_wIR );
+
     // Register R
     ui->R_R->setText(QString("%1").arg( top->hrmcpu__DOT__R_value ,2,16,QChar('0')));
     ui->led_R_wR->setState( top->hrmcpu__DOT__cu_wR );
 
+//    ui->lbl_STATE->setText(QString( top->hrmcpu__DOT__ControlUnit0__DOT__statename ));
+//    ui->lbl_INSTR->setText(QString( top->hrmcpu__DOT__ControlUnit0__DOT__instrname ));
+
 }
+
