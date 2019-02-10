@@ -181,7 +181,7 @@ module hrmcpu (
 
     wire signed [7:0] R_value;
 
-    register register0 (
+    REG register0 (
         // input ports
         .iInbox(R_iInbox),
         .iAlu(R_iAlu),

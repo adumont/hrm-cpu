@@ -1,6 +1,6 @@
 `default_nettype none
 
-module register_tb;
+module REG_tb;
 
     reg clk  = 0;
     reg rstn = 1; // not active
@@ -14,7 +14,7 @@ module register_tb;
     wire signed [7:0] R;
 
     // Instanciate DUT
-    register register0 (
+    REG register0 (
         .clk(clk),
         .iInbox(iInbox),
         .iAlu(iAlu),

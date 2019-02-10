@@ -12,7 +12,7 @@ DEPS_HRMCPU:=\
   ALU.v \
   MEMORY.v \
   $(DEPS_MEMORY) \
-  register.v \
+  REG.v \
   IR.v \
   PROG.v \
   PC.v \
