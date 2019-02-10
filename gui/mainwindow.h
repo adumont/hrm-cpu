@@ -19,12 +19,21 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+protected:
+    void keyPressEvent(QKeyEvent *e);
+
 private slots:
     void clkTick();
 
     void on_pbB_toggled(bool checked);
 
     void on_pbA_pressed();
+
+    void on_clkPeriod_valueChanged(int period);
+
+    void on_pbReset_toggled(bool checked);
+
+    void on_pbRcommit_pressed();
 
 private:
     Ui::MainWindow *ui;

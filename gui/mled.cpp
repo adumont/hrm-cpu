@@ -4,7 +4,7 @@
 
 MLed::MLed(QWidget* parent, Qt::WindowFlags f)
     : QLabel(parent) {
-    this->setColor(0);
+    this->setColor(1);
     this->setOff();
 }
 
@@ -25,7 +25,7 @@ void MLed::setColor( int color )
     if(color<4){
         m_color = color;
     } else {
-        m_color = 0;
+        m_color = 1;
     }
 
     switch(m_color) {

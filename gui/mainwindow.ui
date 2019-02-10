@@ -6,85 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>965</width>
+    <width>1012</width>
     <height>649</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>HRMCPU</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="pbA">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>31</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>A</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pbB">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>40</y>
-      <width>30</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>B</string>
-    </property>
-    <property name="checkable">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="MLed" name="clk">
-    <property name="geometry">
-     <rect>
-      <x>90</x>
-      <y>10</y>
-      <width>10</width>
-      <height>10</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap resource="assets.qrc">:/assets/leds/assets/leds/green_off.svg</pixmap>
-    </property>
-    <property name="scaledContents">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_3">
-    <property name="geometry">
-     <rect>
-      <x>100</x>
-      <y>10</y>
-      <width>30</width>
-      <height>10</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>clk</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
    <widget class="QGroupBox" name="gPROG">
     <property name="geometry">
      <rect>
-      <x>370</x>
-      <y>0</y>
+      <x>100</x>
+      <y>130</y>
       <width>111</width>
-      <height>231</height>
+      <height>381</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -99,7 +35,7 @@
        <x>10</x>
        <y>60</y>
        <width>91</width>
-       <height>161</height>
+       <height>308</height>
       </rect>
      </property>
      <property name="frameShape">
@@ -107,6 +43,9 @@
      </property>
      <property name="frameShadow">
       <enum>QFrame::Sunken</enum>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
      </property>
      <property name="selectionMode">
       <enum>QAbstractItemView::SingleSelection</enum>
@@ -121,7 +60,7 @@
       <number>46</number>
      </attribute>
      <attribute name="verticalHeaderDefaultSectionSize">
-      <number>20</number>
+      <number>18</number>
      </attribute>
      <row/>
      <row/>
@@ -473,8 +412,8 @@
    <widget class="QGroupBox" name="gPC">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>0</y>
+      <x>10</x>
+      <y>130</y>
       <width>81</width>
       <height>91</height>
      </rect>
@@ -489,9 +428,9 @@
      <property name="geometry">
       <rect>
        <x>50</x>
-       <y>30</y>
+       <y>29</y>
        <width>20</width>
-       <height>10</height>
+       <height>12</height>
       </rect>
      </property>
      <property name="font">
@@ -656,7 +595,7 @@
    <widget class="QGroupBox" name="gR">
     <property name="geometry">
      <rect>
-      <x>580</x>
+      <x>310</x>
       <y>0</y>
       <width>81</width>
       <height>81</height>
@@ -757,8 +696,8 @@
    <widget class="QGroupBox" name="gIR">
     <property name="geometry">
      <rect>
-      <x>490</x>
-      <y>0</y>
+      <x>220</x>
+      <y>130</y>
       <width>81</width>
       <height>81</height>
      </rect>
@@ -855,48 +794,523 @@
      </property>
     </widget>
    </widget>
-   <widget class="QLabel" name="lbl_STATE">
+   <widget class="QGroupBox" name="gControl">
     <property name="geometry">
      <rect>
-      <x>19</x>
-      <y>120</y>
-      <width>121</width>
-      <height>20</height>
+      <x>10</x>
+      <y>10</y>
+      <width>231</width>
+      <height>81</height>
      </rect>
     </property>
-    <property name="font">
-     <font>
-      <family>Monospace</family>
-      <pointsize>9</pointsize>
-     </font>
+    <property name="title">
+     <string>Control</string>
     </property>
-    <property name="text">
-     <string>STATE</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-    </property>
+    <widget class="QSpinBox" name="clkPeriod">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>45</y>
+       <width>60</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="minimum">
+      <number>50</number>
+     </property>
+     <property name="maximum">
+      <number>2000</number>
+     </property>
+     <property name="singleStep">
+      <number>50</number>
+     </property>
+     <property name="value">
+      <number>100</number>
+     </property>
+    </widget>
+    <widget class="MLed" name="clk">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>29</y>
+       <width>10</width>
+       <height>10</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="assets.qrc">:/assets/leds/assets/leds/green_off.svg</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>29</y>
+       <width>30</width>
+       <height>10</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>clk</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pbB">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>25</y>
+       <width>60</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Run (F5)</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pbA">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>45</y>
+       <width>60</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>1 tick</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pbReset">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>45</y>
+       <width>60</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Reset</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="MLed" name="led_i_rst">
+     <property name="geometry">
+      <rect>
+       <x>152</x>
+       <y>30</y>
+       <width>10</width>
+       <height>10</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="assets.qrc">:/assets/leds/assets/leds/green_off.svg</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_4">
+     <property name="geometry">
+      <rect>
+       <x>163</x>
+       <y>29</y>
+       <width>30</width>
+       <height>10</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>i_rst</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
    </widget>
-   <widget class="QLabel" name="lbl_INSTR">
+   <widget class="QGroupBox" name="gMEMORY">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>130</y>
+      <width>431</width>
+      <height>381</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="title">
+     <string>MEMORY</string>
+    </property>
+    <widget class="QTableWidget" name="tblRAM">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>60</y>
+       <width>407</width>
+       <height>308</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::SingleSelection</enum>
+     </property>
+     <property name="rowCount">
+      <number>16</number>
+     </property>
+     <property name="columnCount">
+      <number>16</number>
+     </property>
+     <attribute name="horizontalHeaderDefaultSectionSize">
+      <number>24</number>
+     </attribute>
+     <attribute name="verticalHeaderDefaultSectionSize">
+      <number>18</number>
+     </attribute>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+     <column/>
+    </widget>
+    <widget class="QLabel" name="MEM_ADDR">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>30</y>
+       <width>20</width>
+       <height>10</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Monospace</family>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>AA</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="MEM_DATA">
+     <property name="geometry">
+      <rect>
+       <x>392</x>
+       <y>30</y>
+       <width>20</width>
+       <height>10</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Monospace</family>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>AA</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_24">
+     <property name="geometry">
+      <rect>
+       <x>8</x>
+       <y>30</y>
+       <width>40</width>
+       <height>10</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Monospace</family>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>ADDR:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_25">
+     <property name="geometry">
+      <rect>
+       <x>350</x>
+       <y>30</y>
+       <width>40</width>
+       <height>10</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Monospace</family>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>DATA:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="MEM_AR">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>30</y>
+       <width>20</width>
+       <height>10</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Monospace</family>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>AA</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_26">
+     <property name="geometry">
+      <rect>
+       <x>78</x>
+       <y>30</y>
+       <width>40</width>
+       <height>10</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Monospace</family>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>AR:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="MLed" name="led_MEM_wAR">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>45</y>
+       <width>10</width>
+       <height>10</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="assets.qrc">:/assets/leds/assets/leds/green_off.svg</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_22">
+     <property name="geometry">
+      <rect>
+       <x>83</x>
+       <y>40</y>
+       <width>31</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Monospace</family>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>wAR</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_23">
+     <property name="geometry">
+      <rect>
+       <x>15</x>
+       <y>40</y>
+       <width>31</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Monospace</family>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>srcA</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="MLed" name="led_MEM_srcA">
+     <property name="geometry">
+      <rect>
+       <x>52</x>
+       <y>45</y>
+       <width>10</width>
+       <height>10</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="assets.qrc">:/assets/leds/assets/leds/green_off.svg</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_27">
+     <property name="geometry">
+      <rect>
+       <x>173</x>
+       <y>30</y>
+       <width>31</width>
+       <height>10</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Monospace</family>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>wM</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="MLed" name="led_MEM_wM">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>30</y>
+       <width>10</width>
+       <height>10</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="assets.qrc">:/assets/leds/assets/leds/green_off.svg</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>100</y>
-      <width>121</width>
-      <height>20</height>
+      <y>540</y>
+      <width>31</width>
+      <height>22</height>
      </rect>
     </property>
-    <property name="font">
-     <font>
-      <family>Monospace</family>
-      <pointsize>9</pointsize>
-     </font>
+    <property name="inputMask">
+     <string>HH</string>
+    </property>
+    <property name="maxLength">
+     <number>2</number>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbRcommit">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>540</y>
+      <width>60</width>
+      <height>22</height>
+     </rect>
     </property>
     <property name="text">
-     <string>INSTR</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     <string>Commit</string>
     </property>
    </widget>
   </widget>
@@ -905,7 +1319,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>965</width>
+     <width>1012</width>
      <height>19</height>
     </rect>
    </property>
