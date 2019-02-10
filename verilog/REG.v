@@ -1,6 +1,6 @@
 `default_nettype none
 
-module register (
+module REG (
         input clk,              // clock
         input [7:0] iInbox,
         input [7:0] iAlu,
