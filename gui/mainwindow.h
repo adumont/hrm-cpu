@@ -35,6 +35,8 @@ private slots:
 
     void on_pbRcommit_pressed();
 
+    void on_pbSave_pressed();
+
 private:
     Ui::MainWindow *ui;
     QTimer *m_timer;

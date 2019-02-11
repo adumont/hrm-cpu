@@ -8,6 +8,7 @@
 #include <QKeyEvent>
 
 #include "Vhrmcpu.h"
+//#include "verilated_save.h"
 //#include "Vhrmcpu_hrmcpu.h"
 //#include "Vhrmcpu_PROG.h"
 
@@ -45,12 +46,14 @@ MainWindow::MainWindow(QWidget *parent) :
     LIST.clear();
     for(int i=0; i<16; i++){ LIST.append(QString("%1").arg(i,1,16,QChar('0'))); }
     ui->tblRAM->setVerticalHeaderLabels(LIST);
+    LIST.clear();
+    for(int i=0; i<16; i++){ LIST.append(QString("_%1").arg(i,1,16,QChar('0'))); }
     ui->tblRAM->setHorizontalHeaderLabels(LIST);
 
     // Initialize RAM table
     for(int i=0; i<16; i++){
         for(int j=0; j<16; j++){
-            ui->tblRAM->setItem(i,j,new QTableWidgetItem("00"));
+            ui->tblRAM->setItem(j,i,new QTableWidgetItem( QString("%1").arg( top->hrmcpu__DOT__MEMORY0__DOT__ram0__DOT__mem[16*j+i] ,2,16,QChar('0')) ));
         }
     }
 
@@ -97,15 +100,18 @@ void MainWindow::on_pbB_toggled(bool checked)
         ui->pbReset->setEnabled(true);
     }
     updateUI();
+
 }
 
 void MainWindow::updateUI()
 {
     top->eval();
 
-    // Clock led
+    // Control Block
     ui->clk->setState( clk );
     ui->led_i_rst->setState(top->i_rst);
+    ui->main_time->setText(QString("%1").arg( main_time ));
+    ui->led_halt->setState(top->hrmcpu__DOT__cu_halt);
 
     // PC
     ui->PC_PC->setText(QString("%1").arg( top->hrmcpu__DOT__PC0_PC ,2,16,QChar('0')));
@@ -130,12 +136,17 @@ void MainWindow::updateUI()
     ui->MEM_AR->setText( QString("%1").arg( top->hrmcpu__DOT__MEMORY0__DOT__AR_q ,2,16,QChar('0')) );
     ui->MEM_ADDR->setText( QString("%1").arg( top->hrmcpu__DOT__MEMORY0__DOT__ADDR ,2,16,QChar('0')) );
     ui->MEM_DATA->setText( QString("%1").arg( top->hrmcpu__DOT__MEMORY0__DOT__M ,2,16,QChar('0')) );
-
     ui->led_MEM_srcA->setState( top->hrmcpu__DOT__MEMORY0__DOT__srcA );
     ui->led_MEM_wAR->setState( top->hrmcpu__DOT__MEMORY0__DOT__wAR );
     ui->led_MEM_wM->setState( top->hrmcpu__DOT__MEMORY0__DOT__wM );
 
-    //ui->tblRAM->setCurrentCell();
+    // fill RAM table with current values
+    for(int i=0; i<16; i++){
+        for(int j=0; j<16; j++){
+            ui->tblRAM->item(j,i)->setText(QString("%1").arg( top->hrmcpu__DOT__MEMORY0__DOT__ram0__DOT__mem[16*j+i] ,2,16,QChar('0')));
+        }
+    }
+    ui->tblRAM->setCurrentCell( (int)( top->hrmcpu__DOT__MEMORY0__DOT__AR_q / 16 ), top->hrmcpu__DOT__MEMORY0__DOT__AR_q % 16 );
 
     //    ui->lbl_STATE->setText(QString( top->hrmcpu__DOT__ControlUnit0__DOT__statename ));
     //    ui->lbl_INSTR->setText(QString( top->hrmcpu__DOT__ControlUnit0__DOT__instrname ));
@@ -167,4 +178,12 @@ void MainWindow::on_pbRcommit_pressed()
     top->hrmcpu__DOT__cu_wR=true;
     ui->lineEdit->setText("Hola");
     updateUI();
+}
+
+void MainWindow::on_pbSave_pressed()
+{
+//    VerilatedSave os;
+//    os.open(filenamep);
+//    os << main_time;  // user code must save the timestamp, etc
+//    os << *topp;
 }
