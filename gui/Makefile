@@ -11,6 +11,8 @@ RTL_DEPS := $(addprefix $(RTL_DIR)/, $(DEPS))
 
 VOBJS := $(RTL_DIR)/obj_dir/verilated.o  $(RTL_DIR)/obj_dir/V$(PROJECT)__ALLcls.o  $(RTL_DIR)/obj_dir/V$(PROJECT)__ALLsup.o
 
+verilator: $(VOBJS)
+
 $(PROJECT): $(PROJECT).mk $(VOBJS) .FORCE
 	cd $(GUI_DIR) && make -f $(PROJECT).mk
 
@@ -19,7 +21,7 @@ $(VOBJS): $(RTL_DIR)/$(PROJECT).v $(RTL_DEPS)
 	make -C $(RTL_DIR)/obj_dir/ -f V$(PROJECT).mk V$(PROJECT)__ALL.a verilated.o
 
 $(PROJECT).mk: $(PROJECT).pro
-	qmake $(PROJECT).pro -r -spec linux-g++-64 -o $(PROJECT).mk
+	cd $(GUI_DIR) && qmake $(PROJECT).pro -r -spec linux-g++-64 -o $(PROJECT).mk
 
 vclean:
 	cd $(RTL_DIR) && rm -rf obj_dir/
@@ -29,5 +31,5 @@ qtclean:
 
 clean: vclean qtclean
 
-.PHONY: clean .FORCE qtclean vclean
+.PHONY: clean .FORCE qtclean vclean verilator
 
