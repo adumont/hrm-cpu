@@ -8,7 +8,7 @@
 #include <QKeyEvent>
 
 #include "Vhrmcpu.h"
-//#include "verilated_save.h"
+#include "verilated_save.h"
 //#include "Vhrmcpu_hrmcpu.h"
 //#include "Vhrmcpu_PROG.h"
 
@@ -182,7 +182,7 @@ void MainWindow::on_pbRcommit_pressed()
 
 void MainWindow::on_pbSave_pressed()
 {
-//    VerilatedSave os;
+    VerilatedSave os;
 //    os.open(filenamep);
 //    os << main_time;  // user code must save the timestamp, etc
 //    os << *topp;

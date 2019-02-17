@@ -9,7 +9,7 @@ RTL_DEPS := $(addprefix $(RTL_DIR)/, $(DEPS))
 
 .DEFAULT_GOAL := $(PROJECT)
 
-VOBJS := $(RTL_DIR)/obj_dir/verilated.o  $(RTL_DIR)/obj_dir/V$(PROJECT)__ALLcls.o  $(RTL_DIR)/obj_dir/V$(PROJECT)__ALLsup.o
+VOBJS := $(addprefix $(RTL_DIR)/obj_dir/, verilated.o verilated_save.o V$(PROJECT)__ALLcls.o V$(PROJECT)__ALLsup.o )
 
 verilator: $(VOBJS)
 
@@ -17,8 +17,8 @@ $(PROJECT): $(PROJECT).mk $(VOBJS) .FORCE
 	cd $(GUI_DIR) && make -f $(PROJECT).mk
 
 $(VOBJS): $(RTL_DIR)/$(PROJECT).v $(RTL_DEPS)
-	cd $(RTL_DIR) && verilator --public -cc $(PROJECT).v
-	make -C $(RTL_DIR)/obj_dir/ -f V$(PROJECT).mk V$(PROJECT)__ALL.a verilated.o
+	cd $(RTL_DIR) && verilator --savable --public -cc $(PROJECT).v
+	make -C $(RTL_DIR)/obj_dir/ -f V$(PROJECT).mk V$(PROJECT)__ALL.a verilated.o verilated_save.o
 
 $(PROJECT).mk: $(PROJECT).pro
 	cd $(GUI_DIR) && qmake $(PROJECT).pro -r -spec linux-g++-64 -o $(PROJECT).mk
@@ -32,4 +32,3 @@ qtclean:
 clean: vclean qtclean
 
 .PHONY: clean .FORCE qtclean vclean verilator
-

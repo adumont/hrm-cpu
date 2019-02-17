@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QTableWidget>
 #include "Vhrmcpu.h"
+#include "verilated_save.h"
 
 extern vluint64_t main_time;
 
