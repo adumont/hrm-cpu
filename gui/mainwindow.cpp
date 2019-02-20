@@ -41,6 +41,15 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->tblPROG->setItem(0,i,new QTableWidgetItem( QString("%1").arg( top->hrmcpu__DOT__program0__DOT__rom[i] ,2,16,QChar('0')) ));
     }
 
+    // INBOX table
+    for(int i=0; i<32; i++){
+        ui->tblINBOX->setItem(0,i,new QTableWidgetItem( QString("%1").arg( top->hrmcpu__DOT__INBOX__DOT__fifo[i] ,2,16,QChar('0')) ));
+    }
+
+    // OUTBOX table
+    for(int i=0; i<32; i++){
+        ui->tblOUTBOX->setItem(0,i,new QTableWidgetItem( QString("%1").arg( top->hrmcpu__DOT__OUTB__DOT__fifo[i] ,2,16,QChar('0')) ));
+    }
 
     // RAM table, set headers
     LIST.clear();
@@ -56,6 +65,8 @@ MainWindow::MainWindow(QWidget *parent) :
             ui->tblRAM->setItem(j,i,new QTableWidgetItem( QString("%1").arg( top->hrmcpu__DOT__MEMORY0__DOT__ram0__DOT__mem[16*j+i] ,2,16,QChar('0')) ));
         }
     }
+
+    ttr_pbPUSH = 0;
 
     updateUI();
 }
@@ -74,37 +85,40 @@ void MainWindow::clkTick()
 
     updateUI();
 
-//    if(clk && top->i_rst) {
-//        ui->pbReset->released();
-//    }
-
 }
 
 void MainWindow::on_pbA_pressed()
 {
     clkTick();
-    updateUI();
-//    clkTick();
-//    updateUI();
 }
 
 void MainWindow::on_pbB_toggled(bool checked)
 {
     if(checked) {
         ui->pbA->setDisabled(true);
-        ui->pbReset->setDisabled(true);
+//        ui->pbReset->setDisabled(true);
         m_timer->start( ui->clkPeriod->value() );
     } else {
         m_timer->stop();
         ui->pbA->setEnabled(true);
-        ui->pbReset->setEnabled(true);
+//        ui->pbReset->setEnabled(true);
     }
-    updateUI();
-
 }
 
 void MainWindow::updateUI()
 {
+    bool toUintSuccess;
+
+    // update INPUTS before we EVAL()
+    top->cpu_in_wr = ui->pbPUSH->isChecked();
+
+//    int x;
+//    std::stringstream ss;
+//    ss << std::hex << ui->editINdata->text();
+//    ss >> top->cpu_in_data;
+
+    top->cpu_in_data = ui->editINdata->text().toUInt(&toUintSuccess,16);; //ui->editINdata->text().toInt();
+
     top->eval();
 
     // Control Block
@@ -148,9 +162,28 @@ void MainWindow::updateUI()
     }
     ui->tblRAM->setCurrentCell( (int)( top->hrmcpu__DOT__MEMORY0__DOT__AR_q / 16 ), top->hrmcpu__DOT__MEMORY0__DOT__AR_q % 16 );
 
+    // udpate INBOX leds and Labels
+    ui->led_INBOX_empty->setState( ! top->hrmcpu__DOT__INBOX_empty_n );
+    ui->led_INBOX_full->setState( top->hrmcpu__DOT__INBOX_full );
+    ui->led_INBOX_rd->setState( top->hrmcpu__DOT__INBOX_i_rd );
+    ui->INBOX_data->setText( QString("%1").arg( top->hrmcpu__DOT__INBOX_o_data ,2,16,QChar('0')) );
+
+    // udpate INBOX table
+    for(int i=0; i<32; i++){
+        ui->tblINBOX->setItem(0,i,new QTableWidgetItem( QString("%1").arg( top->hrmcpu__DOT__INBOX__DOT__fifo[i] ,2,16,QChar('0')) ));
+    }
+
+    // OUTBOX table
+    for(int i=0; i<32; i++){
+        ui->tblOUTBOX->setItem(0,i,new QTableWidgetItem( QString("%1").arg( top->hrmcpu__DOT__OUTB__DOT__fifo[i] ,2,16,QChar('0')) ));
+    }
+
     //    ui->lbl_STATE->setText(QString( top->hrmcpu__DOT__ControlUnit0__DOT__statename ));
     //    ui->lbl_INSTR->setText(QString( top->hrmcpu__DOT__ControlUnit0__DOT__instrname ));
 
+    if( main_time>=ttr_pbPUSH && ui->pbPUSH->isChecked() ) {
+        ui->pbPUSH->setChecked(false); // release
+    }
 }
 
 
@@ -172,18 +205,16 @@ void MainWindow::on_pbReset_toggled(bool checked)
     updateUI();
 }
 
-void MainWindow::on_pbRcommit_pressed()
-{
-    top->hrmcpu__DOT__register0__DOT__R=1;
-    top->hrmcpu__DOT__cu_wR=true;
-    ui->lineEdit->setText("Hola");
-    updateUI();
-}
-
 void MainWindow::on_pbSave_pressed()
 {
     VerilatedSave os;
 //    os.open(filenamep);
 //    os << main_time;  // user code must save the timestamp, etc
 //    os << *topp;
+}
+
+void MainWindow::on_pbPUSH_toggled(bool checked)
+{
+    top->cpu_in_wr = checked;
+    if(checked) ttr_pbPUSH = main_time+2; // release in 2 ticks
 }

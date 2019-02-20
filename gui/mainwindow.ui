@@ -1389,42 +1389,13 @@
      </property>
     </widget>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>540</y>
-      <width>31</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="inputMask">
-     <string>HH</string>
-    </property>
-    <property name="maxLength">
-     <number>2</number>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pbRcommit">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>540</y>
-      <width>60</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Commit</string>
-    </property>
-   </widget>
-   <widget class="QGroupBox" name="gPROG_2">
+   <widget class="QGroupBox" name="gINBOX">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>110</y>
       <width>111</width>
-      <height>381</height>
+      <height>401</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -1433,11 +1404,11 @@
     <property name="title">
      <string>INBOX</string>
     </property>
-    <widget class="QTableWidget" name="tblPROG_2">
+    <widget class="QTableWidget" name="tblINBOX">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>60</y>
+       <y>40</y>
        <width>91</width>
        <height>308</height>
       </rect>
@@ -1455,7 +1426,7 @@
       <enum>QAbstractItemView::SingleSelection</enum>
      </property>
      <property name="rowCount">
-      <number>256</number>
+      <number>32</number>
      </property>
      <property name="columnCount">
       <number>1</number>
@@ -1466,230 +1437,6 @@
      <attribute name="verticalHeaderDefaultSectionSize">
       <number>18</number>
      </attribute>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
      <row/>
      <row/>
      <row/>
@@ -1724,33 +1471,11 @@
      <row/>
      <column/>
     </widget>
-    <widget class="QLabel" name="PROG_ADDR_2">
+    <widget class="QLabel" name="INBOX_data">
      <property name="geometry">
       <rect>
        <x>50</x>
-       <y>30</y>
-       <width>20</width>
-       <height>10</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Monospace</family>
-       <pointsize>9</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>AA</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="PROG_DATA_2">
-     <property name="geometry">
-      <rect>
-       <x>50</x>
-       <y>40</y>
+       <y>20</y>
        <width>20</width>
        <height>20</height>
       </rect>
@@ -1768,33 +1493,11 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="label_29">
-     <property name="geometry">
-      <rect>
-       <x>8</x>
-       <y>30</y>
-       <width>40</width>
-       <height>10</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Monospace</family>
-       <pointsize>9</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>ADDR:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
     <widget class="QLabel" name="label_30">
      <property name="geometry">
       <rect>
        <x>8</x>
-       <y>40</y>
+       <y>20</y>
        <width>40</width>
        <height>20</height>
       </rect>
@@ -1812,8 +1515,131 @@
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
+    <widget class="QLabel" name="label_33">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>350</y>
+       <width>51</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Monospace</family>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>empty</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="MLed" name="led_INBOX_empty">
+     <property name="geometry">
+      <rect>
+       <x>67</x>
+       <y>355</y>
+       <width>10</width>
+       <height>10</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="assets.qrc">:/assets/leds/assets/leds/green_off.svg</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_34">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>365</y>
+       <width>51</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Monospace</family>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>full</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="MLed" name="led_INBOX_full">
+     <property name="geometry">
+      <rect>
+       <x>67</x>
+       <y>370</y>
+       <width>10</width>
+       <height>10</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="assets.qrc">:/assets/leds/assets/leds/green_off.svg</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="MLed" name="led_INBOX_rd">
+     <property name="geometry">
+      <rect>
+       <x>67</x>
+       <y>385</y>
+       <width>10</width>
+       <height>10</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="assets.qrc">:/assets/leds/assets/leds/green_off.svg</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_35">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>380</y>
+       <width>31</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Monospace</family>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>rd</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
    </widget>
-   <widget class="QGroupBox" name="gPROG_3">
+   <widget class="QGroupBox" name="gOUTBOX">
     <property name="geometry">
      <rect>
       <x>690</x>
@@ -1828,7 +1654,7 @@
     <property name="title">
      <string>OUTBOX</string>
     </property>
-    <widget class="QTableWidget" name="tblPROG_3">
+    <widget class="QTableWidget" name="tblOUTBOX">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -1850,7 +1676,7 @@
       <enum>QAbstractItemView::SingleSelection</enum>
      </property>
      <property name="rowCount">
-      <number>256</number>
+      <number>32</number>
      </property>
      <property name="columnCount">
       <number>1</number>
@@ -1861,230 +1687,6 @@
      <attribute name="verticalHeaderDefaultSectionSize">
       <number>18</number>
      </attribute>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
      <row/>
      <row/>
      <row/>
@@ -2222,6 +1824,38 @@
     </property>
     <property name="title">
      <string>ALU</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="editINdata">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>520</y>
+      <width>31</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="inputMask">
+     <string>HH</string>
+    </property>
+    <property name="maxLength">
+     <number>2</number>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbPUSH">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>520</y>
+      <width>51</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Push</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>

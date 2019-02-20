@@ -34,9 +34,9 @@ private slots:
 
     void on_pbReset_toggled(bool checked);
 
-    void on_pbRcommit_pressed();
-
     void on_pbSave_pressed();
+
+    void on_pbPUSH_toggled(bool checked);
 
 private:
     Ui::MainWindow *ui;
@@ -44,6 +44,7 @@ private:
     bool clk;
     int counter;
     Vhrmcpu * top;
+    vluint64_t ttr_pbPUSH; // time to release pbPUSH
 
     QStringList m_TableHeader;
 
