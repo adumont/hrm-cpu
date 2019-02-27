@@ -216,5 +216,11 @@ void MainWindow::on_pbSave_pressed()
 void MainWindow::on_pbPUSH_toggled(bool checked)
 {
     top->cpu_in_wr = checked;
-    if(checked) ttr_pbPUSH = main_time+2; // release in 2 ticks
+    /* if(checked) */ ttr_pbPUSH = main_time+2; // release in 2 ticks
+}
+
+void MainWindow::on_pbPOP_toggled(bool checked)
+{
+    top->cpu_out_rd = checked;
+    ttr_pbPOP = main_time+2;
 }

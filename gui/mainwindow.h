@@ -38,6 +38,8 @@ private slots:
 
     void on_pbPUSH_toggled(bool checked);
 
+    void on_pbPOP_toggled(bool checked);
+
 private:
     Ui::MainWindow *ui;
     QTimer *m_timer;
@@ -45,6 +47,7 @@ private:
     int counter;
     Vhrmcpu * top;
     vluint64_t ttr_pbPUSH; // time to release pbPUSH
+    vluint64_t ttr_pbPOP;  // time to release pbPOP
 
     QStringList m_TableHeader;
 

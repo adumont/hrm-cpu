@@ -1395,7 +1395,7 @@
       <x>10</x>
       <y>110</y>
       <width>111</width>
-      <height>401</height>
+      <height>381</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -1408,7 +1408,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>40</y>
+       <y>60</y>
        <width>91</width>
        <height>308</height>
       </rect>
@@ -1474,8 +1474,8 @@
     <widget class="QLabel" name="INBOX_data">
      <property name="geometry">
       <rect>
-       <x>50</x>
-       <y>20</y>
+       <x>87</x>
+       <y>40</y>
        <width>20</width>
        <height>20</height>
       </rect>
@@ -1496,8 +1496,8 @@
     <widget class="QLabel" name="label_30">
      <property name="geometry">
       <rect>
-       <x>8</x>
-       <y>20</y>
+       <x>45</x>
+       <y>40</y>
        <width>40</width>
        <height>20</height>
       </rect>
@@ -1518,9 +1518,9 @@
     <widget class="QLabel" name="label_33">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>350</y>
-       <width>51</width>
+       <x>2</x>
+       <y>20</y>
+       <width>41</width>
        <height>20</height>
       </rect>
      </property>
@@ -1540,8 +1540,8 @@
     <widget class="MLed" name="led_INBOX_empty">
      <property name="geometry">
       <rect>
-       <x>67</x>
-       <y>355</y>
+       <x>46</x>
+       <y>25</y>
        <width>10</width>
        <height>10</height>
       </rect>
@@ -1559,9 +1559,9 @@
     <widget class="QLabel" name="label_34">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>365</y>
-       <width>51</width>
+       <x>64</x>
+       <y>20</y>
+       <width>31</width>
        <height>20</height>
       </rect>
      </property>
@@ -1581,8 +1581,8 @@
     <widget class="MLed" name="led_INBOX_full">
      <property name="geometry">
       <rect>
-       <x>67</x>
-       <y>370</y>
+       <x>97</x>
+       <y>25</y>
        <width>10</width>
        <height>10</height>
       </rect>
@@ -1600,8 +1600,8 @@
     <widget class="MLed" name="led_INBOX_rd">
      <property name="geometry">
       <rect>
-       <x>67</x>
-       <y>385</y>
+       <x>27</x>
+       <y>44</y>
        <width>10</width>
        <height>10</height>
       </rect>
@@ -1619,9 +1619,9 @@
     <widget class="QLabel" name="label_35">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>380</y>
-       <width>31</width>
+       <x>1</x>
+       <y>39</y>
+       <width>20</width>
        <height>20</height>
       </rect>
      </property>
@@ -1830,7 +1830,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>520</y>
+      <y>500</y>
       <width>31</width>
       <height>22</height>
      </rect>
@@ -1846,13 +1846,29 @@
     <property name="geometry">
      <rect>
       <x>60</x>
-      <y>520</y>
+      <y>500</y>
       <width>51</width>
       <height>22</height>
      </rect>
     </property>
     <property name="text">
      <string>Push</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbPOP">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>500</y>
+      <width>51</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Pop</string>
     </property>
     <property name="checkable">
      <bool>true</bool>
