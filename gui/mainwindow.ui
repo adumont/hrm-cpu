@@ -1874,6 +1874,19 @@
      <bool>true</bool>
     </property>
    </widget>
+   <widget class="QPushButton" name="pbLoadPROG">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>500</y>
+      <width>91</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Load Prog</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

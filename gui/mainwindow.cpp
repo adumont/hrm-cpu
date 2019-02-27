@@ -6,6 +6,10 @@
 #include <QApplication>
 #include <QHeaderView>
 #include <QKeyEvent>
+#include <QDebug>
+#include <QFile>
+#include <QTextStream>
+#include <QFileDialog>
 
 #include "Vhrmcpu.h"
 #include "verilated_save.h"
@@ -117,7 +121,7 @@ void MainWindow::updateUI()
 //    ss << std::hex << ui->editINdata->text();
 //    ss >> top->cpu_in_data;
 
-    top->cpu_in_data = ui->editINdata->text().toUInt(&toUintSuccess,16);; //ui->editINdata->text().toInt();
+    top->cpu_in_data = ui->editINdata->text().toUInt(&toUintSuccess,16); //ui->editINdata->text().toInt();
 
     top->eval();
 
@@ -137,6 +141,10 @@ void MainWindow::updateUI()
     // PROG
     ui->PROG_ADDR->setText(QString("%1").arg( top->hrmcpu__DOT__PC0_PC ,2,16,QChar('0')));
     ui->PROG_DATA->setText(QString("%1").arg( top->hrmcpu__DOT__program0__DOT__r_data ,2,16,QChar('0')));
+    // PROG table
+    for(int i=0; i<256; i++){
+        ui->tblPROG->setItem(0,i,new QTableWidgetItem( QString("%1").arg( top->hrmcpu__DOT__program0__DOT__rom[i] ,2,16,QChar('0')) ));
+    }
 
     // IR Instruction Register
     ui->IR_INSTR->setText(QString("%1").arg( top->hrmcpu__DOT__IR0_rIR ,2,16,QChar('0')));
@@ -181,8 +189,11 @@ void MainWindow::updateUI()
     //    ui->lbl_STATE->setText(QString( top->hrmcpu__DOT__ControlUnit0__DOT__statename ));
     //    ui->lbl_INSTR->setText(QString( top->hrmcpu__DOT__ControlUnit0__DOT__instrname ));
 
-    if( main_time>=ttr_pbPUSH && ui->pbPUSH->isChecked() ) {
+    if( main_time==ttr_pbPUSH && ui->pbPUSH->isChecked() ) {
         ui->pbPUSH->setChecked(false); // release
+    }
+    if( main_time==ttr_pbPOP && ui->pbPOP->isChecked() ) {
+        ui->pbPOP->setChecked(false); // release
     }
 }
 
@@ -211,6 +222,22 @@ void MainWindow::on_pbSave_pressed()
 //    os.open(filenamep);
 //    os << main_time;  // user code must save the timestamp, etc
 //    os << *topp;
+
+    qDebug() << "We force PROG[i]=i:";
+    for (int i = 0; i < 16; ++i)
+    {
+        top->hrmcpu__DOT__program0__DOT__rom[i] = i;
+        qDebug() << i << ": " << top->hrmcpu__DOT__program0__DOT__rom[i];
+    }
+    qDebug() << "We eval()";
+    top->eval();
+    qDebug() << "We dump prog again";
+    for (int i = 0; i < 16; ++i)
+    {
+        qDebug() << i << ": " << top->hrmcpu__DOT__program0__DOT__rom[i];
+    }
+    qDebug() << "Done";
+
 }
 
 void MainWindow::on_pbPUSH_toggled(bool checked)
@@ -223,4 +250,53 @@ void MainWindow::on_pbPOP_toggled(bool checked)
 {
     top->cpu_out_rd = checked;
     ttr_pbPOP = main_time+2;
+}
+
+void MainWindow::LoadProgramFromFile(QString fileName)
+{
+    if (fileName.isEmpty()) {
+         qDebug() << "filename is empty, not loading";
+        return;
+    }
+
+    QFile file(fileName);
+
+    if(!file.open(QIODevice::ReadOnly))
+    {
+        qDebug() << "error opening file: " << file.error();
+        return;
+    }
+
+    QTextStream instream(&file);
+
+    QString line = instream.readLine();
+
+    qDebug() << "first line: " << line;
+
+    QStringList list = line.split(QRegExp("\\s+"), QString::SkipEmptyParts);
+
+    qDebug() << list;
+
+    bool success;
+
+    for (int i = 0; i < list.size(); ++i)
+    {
+        top->hrmcpu__DOT__program0__DOT__rom[i] = list.at(i).toUInt(&success,16);
+    }
+    file.close();
+
+    updateUI();
+}
+
+void MainWindow::on_pbLoad_pressed()
+{
+}
+
+void MainWindow::on_pbLoadPROG_pressed()
+{
+    QString fileName = QFileDialog::getOpenFileName(this,
+        tr("Select Program to load"), "",
+        tr("Program files (program);;Hex files (*.hex);;All Files (*)"));
+
+    LoadProgramFromFile(fileName);
 }

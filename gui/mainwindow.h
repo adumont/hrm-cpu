@@ -40,6 +40,10 @@ private slots:
 
     void on_pbPOP_toggled(bool checked);
 
+    void on_pbLoad_pressed();
+
+    void on_pbLoadPROG_pressed();
+
 private:
     Ui::MainWindow *ui;
     QTimer *m_timer;
@@ -52,6 +56,7 @@ private:
     QStringList m_TableHeader;
 
     void updateUI();
+    void LoadProgramFromFile(QString fileName);
 };
 
 #endif // MAINWINDOW_H
