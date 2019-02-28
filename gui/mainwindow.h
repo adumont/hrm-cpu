@@ -57,6 +57,8 @@ private:
 
     void updateUI();
     void LoadProgramFromFile(QString fileName);
+
+    QString formatData(CData data);
 };
 
 #endif // MAINWINDOW_H

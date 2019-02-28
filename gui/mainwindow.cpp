@@ -11,6 +11,7 @@
 #include <QTextStream>
 #include <QFileDialog>
 
+
 #include "Vhrmcpu.h"
 #include "verilated_save.h"
 //#include "Vhrmcpu_hrmcpu.h"
@@ -36,28 +37,28 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // PROG table, set headers
     QStringList LIST;
-    for(int i=0; i<256; i++){ LIST.append(QString("%1").arg(i,2,16,QChar('0'))); }
+    for(int i=0; i<256; i++){ LIST.append(formatData(i)); }
     ui->tblPROG->setVerticalHeaderLabels(LIST);
     ui->tblPROG->setHorizontalHeaderLabels(QStringList("Data"));
 
     // PROG table, fill with current program
     for(int i=0; i<256; i++){
-        ui->tblPROG->setItem(0,i,new QTableWidgetItem( QString("%1").arg( top->hrmcpu__DOT__program0__DOT__rom[i] ,2,16,QChar('0')) ));
+        ui->tblPROG->setItem(0,i,new QTableWidgetItem( formatData( top->hrmcpu__DOT__program0__DOT__rom[i] ) ));
     }
 
     // INBOX table
     for(int i=0; i<32; i++){
-        ui->tblINBOX->setItem(0,i,new QTableWidgetItem( QString("%1").arg( top->hrmcpu__DOT__INBOX__DOT__fifo[i] ,2,16,QChar('0')) ));
+        ui->tblINBOX->setItem(0,i,new QTableWidgetItem( formatData( top->hrmcpu__DOT__INBOX__DOT__fifo[i] ) ));
     }
 
     // OUTBOX table
     for(int i=0; i<32; i++){
-        ui->tblOUTBOX->setItem(0,i,new QTableWidgetItem( QString("%1").arg( top->hrmcpu__DOT__OUTB__DOT__fifo[i] ,2,16,QChar('0')) ));
+        ui->tblOUTBOX->setItem(0,i,new QTableWidgetItem( formatData( top->hrmcpu__DOT__OUTB__DOT__fifo[i] ) ));
     }
 
     // RAM table, set headers
     LIST.clear();
-    for(int i=0; i<16; i++){ LIST.append(QString("%1").arg(i,1,16,QChar('0'))); }
+    for(int i=0; i<16; i++){ LIST.append(QString("%1").arg( i,1,16,QChar('0'))); }
     ui->tblRAM->setVerticalHeaderLabels(LIST);
     LIST.clear();
     for(int i=0; i<16; i++){ LIST.append(QString("_%1").arg(i,1,16,QChar('0'))); }
@@ -66,7 +67,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // Initialize RAM table
     for(int i=0; i<16; i++){
         for(int j=0; j<16; j++){
-            ui->tblRAM->setItem(j,i,new QTableWidgetItem( QString("%1").arg( top->hrmcpu__DOT__MEMORY0__DOT__ram0__DOT__mem[16*j+i] ,2,16,QChar('0')) ));
+            ui->tblRAM->setItem(j,i,new QTableWidgetItem( formatData( top->hrmcpu__DOT__MEMORY0__DOT__ram0__DOT__mem[16*j+i] ) ));
         }
     }
 
@@ -128,36 +129,36 @@ void MainWindow::updateUI()
     // Control Block
     ui->clk->setState( clk );
     ui->led_i_rst->setState(top->i_rst);
-    ui->main_time->setText(QString("%1").arg( main_time ));
+    ui->main_time->setText(formatData( main_time ));
     ui->led_halt->setState(top->hrmcpu__DOT__cu_halt);
 
     // PC
-    ui->PC_PC->setText(QString("%1").arg( top->hrmcpu__DOT__PC0_PC ,2,16,QChar('0')));
+    ui->PC_PC->setText(formatData( top->hrmcpu__DOT__PC0_PC ));
     ui->led_PC_branch->setState( top->hrmcpu__DOT__PC0_branch );
     ui->led_PC_ijump->setState( top->hrmcpu__DOT__PC0_ijump );
     ui->led_PC_wPC->setState( top->hrmcpu__DOT__PC0_wPC );
     ui->tblPROG->setCurrentCell(top->hrmcpu__DOT__PC0_PC, 0);
 
     // PROG
-    ui->PROG_ADDR->setText(QString("%1").arg( top->hrmcpu__DOT__PC0_PC ,2,16,QChar('0')));
-    ui->PROG_DATA->setText(QString("%1").arg( top->hrmcpu__DOT__program0__DOT__r_data ,2,16,QChar('0')));
+    ui->PROG_ADDR->setText(formatData( top->hrmcpu__DOT__PC0_PC ));
+    ui->PROG_DATA->setText(formatData( top->hrmcpu__DOT__program0__DOT__r_data ));
     // PROG table
     for(int i=0; i<256; i++){
-        ui->tblPROG->setItem(0,i,new QTableWidgetItem( QString("%1").arg( top->hrmcpu__DOT__program0__DOT__rom[i] ,2,16,QChar('0')) ));
+        ui->tblPROG->setItem(0,i,new QTableWidgetItem( formatData( top->hrmcpu__DOT__program0__DOT__rom[i] ) ));
     }
 
     // IR Instruction Register
-    ui->IR_INSTR->setText(QString("%1").arg( top->hrmcpu__DOT__IR0_rIR ,2,16,QChar('0')));
+    ui->IR_INSTR->setText(formatData( top->hrmcpu__DOT__IR0_rIR ));
     ui->led_IR_wIR->setState( top->hrmcpu__DOT__cu_wIR );
 
     // Register R
-    ui->R_R->setText(QString("%1").arg( top->hrmcpu__DOT__R_value ,2,16,QChar('0')));
+    ui->R_R->setText(formatData( top->hrmcpu__DOT__R_value ));
     ui->led_R_wR->setState( top->hrmcpu__DOT__register0__DOT__wR );
 
     // RAM
-    ui->MEM_AR->setText( QString("%1").arg( top->hrmcpu__DOT__MEMORY0__DOT__AR_q ,2,16,QChar('0')) );
-    ui->MEM_ADDR->setText( QString("%1").arg( top->hrmcpu__DOT__MEMORY0__DOT__ADDR ,2,16,QChar('0')) );
-    ui->MEM_DATA->setText( QString("%1").arg( top->hrmcpu__DOT__MEMORY0__DOT__M ,2,16,QChar('0')) );
+    ui->MEM_AR->setText( formatData( top->hrmcpu__DOT__MEMORY0__DOT__AR_q ) );
+    ui->MEM_ADDR->setText( formatData( top->hrmcpu__DOT__MEMORY0__DOT__ADDR ) );
+    ui->MEM_DATA->setText( formatData( top->hrmcpu__DOT__MEMORY0__DOT__M ) );
     ui->led_MEM_srcA->setState( top->hrmcpu__DOT__MEMORY0__DOT__srcA );
     ui->led_MEM_wAR->setState( top->hrmcpu__DOT__MEMORY0__DOT__wAR );
     ui->led_MEM_wM->setState( top->hrmcpu__DOT__MEMORY0__DOT__wM );
@@ -165,7 +166,7 @@ void MainWindow::updateUI()
     // fill RAM table with current values
     for(int i=0; i<16; i++){
         for(int j=0; j<16; j++){
-            ui->tblRAM->item(j,i)->setText(QString("%1").arg( top->hrmcpu__DOT__MEMORY0__DOT__ram0__DOT__mem[16*j+i] ,2,16,QChar('0')));
+            ui->tblRAM->item(j,i)->setText(formatData( top->hrmcpu__DOT__MEMORY0__DOT__ram0__DOT__mem[16*j+i] ));
         }
     }
     ui->tblRAM->setCurrentCell( (int)( top->hrmcpu__DOT__MEMORY0__DOT__AR_q / 16 ), top->hrmcpu__DOT__MEMORY0__DOT__AR_q % 16 );
@@ -174,16 +175,16 @@ void MainWindow::updateUI()
     ui->led_INBOX_empty->setState( ! top->hrmcpu__DOT__INBOX_empty_n );
     ui->led_INBOX_full->setState( top->hrmcpu__DOT__INBOX_full );
     ui->led_INBOX_rd->setState( top->hrmcpu__DOT__INBOX_i_rd );
-    ui->INBOX_data->setText( QString("%1").arg( top->hrmcpu__DOT__INBOX_o_data ,2,16,QChar('0')) );
+    ui->INBOX_data->setText( formatData( top->hrmcpu__DOT__INBOX_o_data ) );
 
     // udpate INBOX table
     for(int i=0; i<32; i++){
-        ui->tblINBOX->setItem(0,i,new QTableWidgetItem( QString("%1").arg( top->hrmcpu__DOT__INBOX__DOT__fifo[i] ,2,16,QChar('0')) ));
+        ui->tblINBOX->setItem(0,i,new QTableWidgetItem( formatData( top->hrmcpu__DOT__INBOX__DOT__fifo[i] ) ));
     }
 
     // OUTBOX table
     for(int i=0; i<32; i++){
-        ui->tblOUTBOX->setItem(0,i,new QTableWidgetItem( QString("%1").arg( top->hrmcpu__DOT__OUTB__DOT__fifo[i] ,2,16,QChar('0')) ));
+        ui->tblOUTBOX->setItem(0,i,new QTableWidgetItem( formatData( top->hrmcpu__DOT__OUTB__DOT__fifo[i] )));
     }
 
     //    ui->lbl_STATE->setText(QString( top->hrmcpu__DOT__ControlUnit0__DOT__statename ));
@@ -299,4 +300,10 @@ void MainWindow::on_pbLoadPROG_pressed()
         tr("Program files (program);;Hex files (*.hex);;All Files (*)"));
 
     LoadProgramFromFile(fileName);
+}
+
+QString MainWindow::formatData(CData data) {
+    // for now we don't use mode
+    return QString("%1").arg( data ,2,16,QChar('0'));
+    // ASCII mode --> return QString("%1").arg( QChar(data) );
 }
