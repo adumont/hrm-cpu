@@ -9,7 +9,8 @@ RTL_DEPS := $(addprefix $(RTL_DIR)/, $(DEPS))
 
 .DEFAULT_GOAL := $(PROJECT)
 
-VOBJS := $(addprefix $(RTL_DIR)/obj_dir/, verilated.o verilated_save.o V$(PROJECT)__ALLcls.o V$(PROJECT)__ALLsup.o )
+VLIBS := verilated.o verilated_save.o verilated_vcd_c.o
+VOBJS := $(addprefix $(RTL_DIR)/obj_dir/, $(VLIBS) V$(PROJECT)__ALLcls.o V$(PROJECT)__ALLsup.o )
 
 verilator: $(VOBJS)
 
@@ -17,8 +18,8 @@ $(PROJECT): $(PROJECT).mk $(VOBJS) .FORCE
 	cd $(GUI_DIR) && make -f $(PROJECT).mk
 
 $(VOBJS): $(RTL_DIR)/$(PROJECT).v $(RTL_DEPS)
-	cd $(RTL_DIR) && verilator --savable --public -cc $(PROJECT).v
-	make -C $(RTL_DIR)/obj_dir/ -f V$(PROJECT).mk V$(PROJECT)__ALL.a verilated.o verilated_save.o
+	cd $(RTL_DIR) && verilator --savable --trace --trace-max-array 256 --public -cc $(PROJECT).v
+	make -C $(RTL_DIR)/obj_dir/ -f V$(PROJECT).mk V$(PROJECT)__ALL.a $(VLIBS)
 
 $(PROJECT).mk: $(PROJECT).pro
 	cd $(GUI_DIR) && qmake $(PROJECT).pro -r -spec linux-g++-64 -o $(PROJECT).mk
