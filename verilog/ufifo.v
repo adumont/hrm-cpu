@@ -65,18 +65,6 @@ module ufifo(i_clk, i_rst, i_wr, i_data, o_empty_n, i_rd, o_data, o_status, o_er
 
 	reg	[(BW-1):0]	fifo[0:(FLEN-1)];
 
-    `ifndef SYNTHESIS
-	// only usefull to inspect values from simulation/waveforms
-	genvar i;
-	generate
-		for (i=0; i<FLEN; i=i+1)
-		begin : debug
-			wire [(BW-1):0] fifo_i;
-			assign fifo_i=fifo[i];
-		end
-	endgenerate
-    `endif
-
 	reg	[(LGFLEN-1):0]	r_first, r_last, r_next;
 
 	wire	[(LGFLEN-1):0]	w_first_plus_one, w_first_plus_two,
