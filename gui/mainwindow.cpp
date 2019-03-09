@@ -11,9 +11,10 @@
 #include <QTextStream>
 #include <QFileDialog>
 
-
 #include "Vhrmcpu.h"
 #include "verilated_save.h"
+#include "verilated_vcd_c.h"
+
 //#include "Vhrmcpu_hrmcpu.h"
 //#include "Vhrmcpu_PROG.h"
 
@@ -23,14 +24,25 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // Clock Initialization
+    clk = true;
+
     // Create our design model with Verilator
     top = new Vhrmcpu;
+    top->clk = clk;
     top->eval(); // initialize (so PROG gets loaded)
 
     // Verilated::internalsDump();  // See scopes to help debug
 
-    // Clock Initialization
-    clk = true;
+    // init trace dump
+    Verilated::traceEverOn(true);
+    tfp = new VerilatedVcdC;
+    top->trace (tfp, 99);
+    //tfp->spTrace()->set_time_resolution ("1 ps");
+    tfp->open ("hrmcpu.vcd");
+    tfp->dump(main_time);
+    tfp->flush(); // any impact on perf? not relevant here
+
     m_timer = new QTimer(this);
     QObject::connect(m_timer, SIGNAL(timeout()), this, SLOT(clkTick()));
     // m_timer->start( ui->clkPeriod->value() );
@@ -73,20 +85,29 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ttr_pbPUSH = 0;
 
+    // we force a clock cycle before we give control to the user
+    top->i_rst = true;
+    clkTick();
+    clkTick();
+    top->i_rst = false;
     updateUI();
 }
 
 MainWindow::~MainWindow()
 {
+    // we close vcd:
+    tfp->flush(); // any impact on perf? not relevant here
+    tfp->close();
+
     delete ui;
 }
 
 void MainWindow::clkTick()
 {
     clk = ! clk;
+    main_time++;
 
     top->clk = clk;
-    main_time++;
 
     updateUI();
 
@@ -125,6 +146,8 @@ void MainWindow::updateUI()
     top->cpu_in_data = ui->editINdata->text().toUInt(&toUintSuccess,16); //ui->editINdata->text().toInt();
 
     top->eval();
+    tfp->dump(main_time);
+    tfp->flush(); // any impact on perf? not relevant here
 
     // Control Block
     ui->clk->setState( clk );
@@ -306,4 +329,14 @@ QString MainWindow::formatData(CData data) {
     // for now we don't use mode
     return QString("%1").arg( data ,2,16,QChar('0'));
     // ASCII mode --> return QString("%1").arg( QChar(data) );
+}
+
+void MainWindow::on_actionLoad_Program_triggered()
+{
+    on_pbLoadPROG_pressed();
+}
+
+void MainWindow::on_actionExit_triggered()
+{
+    QApplication::quit();
 }

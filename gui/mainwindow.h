@@ -5,6 +5,7 @@
 #include <QTableWidget>
 #include "Vhrmcpu.h"
 #include "verilated_save.h"
+#include "verilated_vcd_c.h"
 
 extern vluint64_t main_time;
 
@@ -44,12 +45,19 @@ private slots:
 
     void on_pbLoadPROG_pressed();
 
+    void on_actionLoad_Program_triggered();
+
+    void on_actionExit_triggered();
+
 private:
     Ui::MainWindow *ui;
     QTimer *m_timer;
     bool clk;
     int counter;
+
     Vhrmcpu * top;
+    VerilatedVcdC* tfp;
+
     vluint64_t ttr_pbPUSH; // time to release pbPUSH
     vluint64_t ttr_pbPOP;  // time to release pbPOP
 
