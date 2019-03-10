@@ -146,7 +146,7 @@ module ControlUnit (
     end
 
     // sequential always block
-    always @(posedge clk or posedge i_rst) begin
+    always @(posedge clk) begin
       if (i_rst)
         state <= S_RESET;
       else
