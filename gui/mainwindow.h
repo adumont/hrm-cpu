@@ -67,6 +67,7 @@ private:
     void LoadProgramFromFile(QString fileName);
 
     QString formatData(CData data);
+    QString verilatorString(WData[]);
 };
 
 #endif // MAINWINDOW_H

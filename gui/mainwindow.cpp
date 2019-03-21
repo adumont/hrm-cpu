@@ -86,9 +86,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ttr_pbPUSH = 0;
 
     // we force a clock cycle before we give control to the user
-    top->i_rst = true;
-    clkTick();
-    clkTick();
+//    top->i_rst = true;
+//    clkTick();
+//    clkTick();
     top->i_rst = false;
     updateUI();
 }
@@ -152,7 +152,7 @@ void MainWindow::updateUI()
     // Control Block
     ui->clk->setState( clk );
     ui->led_i_rst->setState(top->i_rst);
-    ui->main_time->setText(formatData( main_time ));
+    ui->main_time->setText( QString("%1").arg( main_time ) );
     ui->led_halt->setState(top->hrmcpu__DOT__cu_halt);
 
     // PC
@@ -173,6 +173,7 @@ void MainWindow::updateUI()
     // IR Instruction Register
     ui->IR_INSTR->setText(formatData( top->hrmcpu__DOT__IR0_rIR ));
     ui->led_IR_wIR->setState( top->hrmcpu__DOT__cu_wIR );
+    ui->IR_INSTR_name->setText( verilatorString( top->hrmcpu__DOT__ControlUnit0__DOT__instrname ) );
 
     // Register R
     ui->R_R->setText(formatData( top->hrmcpu__DOT__R_value ));
@@ -205,13 +206,16 @@ void MainWindow::updateUI()
         ui->tblINBOX->setItem(0,i,new QTableWidgetItem( formatData( top->hrmcpu__DOT__INBOX__DOT__fifo[i] ) ));
     }
 
+    // udpate OUTBOX leds and Labels
+    ui->led_OUTBOX_empty->setState( ! top->hrmcpu__DOT__OUTB_empty_n );
+    ui->led_OUTBOX_full->setState( top->hrmcpu__DOT__OUTB_full);
+//    ui->led_INBOX_rd->setState( top->hrmcpu__DOT__INBOX_i_rd );
+//    ui->INBOX_data->setText( formatData( top->hrmcpu__DOT__INBOX_o_data ) );
+
     // OUTBOX table
     for(int i=0; i<32; i++){
         ui->tblOUTBOX->setItem(0,i,new QTableWidgetItem( formatData( top->hrmcpu__DOT__OUTB__DOT__fifo[i] )));
     }
-
-    //    ui->lbl_STATE->setText(QString( top->hrmcpu__DOT__ControlUnit0__DOT__statename ));
-    //    ui->lbl_INSTR->setText(QString( top->hrmcpu__DOT__ControlUnit0__DOT__instrname ));
 
     if( main_time==ttr_pbPUSH && ui->pbPUSH->isChecked() ) {
         ui->pbPUSH->setChecked(false); // release
@@ -219,6 +223,9 @@ void MainWindow::updateUI()
     if( main_time==ttr_pbPOP && ui->pbPOP->isChecked() ) {
         ui->pbPOP->setChecked(false); // release
     }
+
+    ui->cu_statename->setText( verilatorString( top->hrmcpu__DOT__ControlUnit0__DOT__statename ) );
+
 }
 
 
@@ -314,6 +321,22 @@ void MainWindow::LoadProgramFromFile(QString fileName)
 
 void MainWindow::on_pbLoad_pressed()
 {
+    qDebug() << verilatorString( top->hrmcpu__DOT__ControlUnit0__DOT__statename );
+
+}
+
+QString MainWindow::verilatorString( WData data[] )
+{
+    QString s;
+
+    char* p;
+    p=(char*)data;
+
+    for(int i=12; i>0; i--) {
+        if( p[i-1]>0 ) s.append( p[i-1] );
+    }
+
+    return s;
 }
 
 void MainWindow::on_pbLoadPROG_pressed()
