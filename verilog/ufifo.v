@@ -44,7 +44,7 @@
 //
 `default_nettype	none
 //
-module ufifo(i_clk, i_rst, i_wr, i_data, o_empty_n, i_rd, o_data, o_status, o_err, i_dmp_pos, o_dmp_data, o_dmp_valid);
+module ufifo(i_clk, i_rst, i_wr, i_data, o_empty_n, o_full, i_rd, o_data, o_status, o_err, i_dmp_pos, o_dmp_data, o_dmp_valid);
 	parameter	BW=8;	// Byte/data width
 	parameter [3:0]	LGFLEN=4;
 	parameter 	RXFIFO=1'b0;
@@ -52,14 +52,15 @@ module ufifo(i_clk, i_rst, i_wr, i_data, o_empty_n, i_rd, o_data, o_status, o_er
 	input	wire		i_wr;
 	input	wire [(BW-1):0]	i_data;
 	output	wire		o_empty_n;	// True if something is in FIFO
+	output	wire		o_full;	   // True if FIFO is full
 	input	wire		i_rd;
 	output	wire [(BW-1):0]	o_data;
 	output	wire	[15:0]	o_status;
 	output	wire		o_err;
 
-    input  wire [(LGFLEN-1):0] i_dmp_pos; // dump position in queue
-    output reg  [(BW-1):0] o_dmp_data;    // value at dump position
-    output reg             o_dmp_valid;   // out-of-bound
+   input  wire [(LGFLEN-1):0] i_dmp_pos; // dump position in queue
+   output reg  [(BW-1):0] o_dmp_data;    // value at dump position
+   output reg             o_dmp_valid;   // out-of-bound
 
 	localparam	FLEN=(1<<LGFLEN);
 
@@ -203,8 +204,7 @@ module ufifo(i_clk, i_rst, i_wr, i_data, o_empty_n, i_rd, o_data, o_status, o_er
 			default: begin end
 		endcase
 
-	wire	w_full_n;
-	assign	w_full_n = will_overflow;
+	assign	o_full = will_overflow;
 
 	//
 	// If this is a receive FIFO, the FIFO count that matters is the number
@@ -280,7 +280,7 @@ module ufifo(i_clk, i_rst, i_wr, i_data, o_empty_n, i_rd, o_data, o_status, o_er
 		(RXFIFO!=0)?w_half_full:w_half_full,
 		// A '1' here means the FIFO can be read from (if it is a
 		// receive FIFO), or be written to (if it isn't).
-		(RXFIFO!=0)?r_empty_n:w_full_n
+		(RXFIFO!=0)?r_empty_n:o_full
 	};
 
 	assign	o_empty_n = r_empty_n;

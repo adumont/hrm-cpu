@@ -285,7 +285,7 @@ module hrmcpu (
         .o_data(INBOX_o_data),
         // flags
         .o_empty_n( INBOX_empty_n ), // not empty
-        .o_err( INBOX_full ), // overflow aka full, CPU output pin
+        .o_full( INBOX_full ),
         // .o_status(),
         // dump ports
         .i_dmp_pos(INBOX_i_dmp_pos),     // dump position in queue
@@ -330,7 +330,7 @@ module hrmcpu (
         .o_data(OUTB_o_data),
         // flags
         .o_empty_n( OUTB_empty_n ), // not empty, CPU output pin
-        .o_err( OUTB_full ), // overflow aka full
+        .o_full( OUTB_full ),
         // .o_status(),
         // dump ports
         .i_dmp_pos(OUTB_i_dmp_pos),     // dump position in queue
