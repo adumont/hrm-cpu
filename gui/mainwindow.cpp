@@ -219,6 +219,8 @@ void MainWindow::updateUI()
 
     if( main_time==ttr_pbPUSH && ui->pbPUSH->isChecked() ) {
         ui->pbPUSH->setChecked(false); // release
+        // increment value after each PUSH to Inbox
+        // ui->editINdata->setText( QString("%1").arg(ui->editINdata->text().toUInt(&toUintSuccess,16)+1 ,2,16,QChar('0')));
     }
     if( main_time==ttr_pbPOP && ui->pbPOP->isChecked() ) {
         ui->pbPOP->setChecked(false); // release
@@ -254,21 +256,6 @@ void MainWindow::on_pbSave_pressed()
 //    os << main_time;  // user code must save the timestamp, etc
 //    os << *topp;
 
-    qDebug() << "We force PROG[i]=i:";
-    for (int i = 0; i < 16; ++i)
-    {
-        top->hrmcpu__DOT__program0__DOT__rom[i] = i;
-        qDebug() << i << ": " << top->hrmcpu__DOT__program0__DOT__rom[i];
-    }
-    qDebug() << "We eval()";
-    top->eval();
-    qDebug() << "We dump prog again";
-    for (int i = 0; i < 16; ++i)
-    {
-        qDebug() << i << ": " << top->hrmcpu__DOT__program0__DOT__rom[i];
-    }
-    qDebug() << "Done";
-
 }
 
 void MainWindow::on_pbPUSH_toggled(bool checked)
@@ -302,11 +289,11 @@ void MainWindow::LoadProgramFromFile(QString fileName)
 
     QString line = instream.readLine();
 
-    qDebug() << "first line: " << line;
+//    qDebug() << "first line: " << line;
 
     QStringList list = line.split(QRegExp("\\s+"), QString::SkipEmptyParts);
 
-    qDebug() << list;
+//    qDebug() << list;
 
     bool success;
 
@@ -321,7 +308,6 @@ void MainWindow::LoadProgramFromFile(QString fileName)
 
 void MainWindow::on_pbLoad_pressed()
 {
-    qDebug() << verilatorString( top->hrmcpu__DOT__ControlUnit0__DOT__statename );
 
 }
 
