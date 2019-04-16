@@ -5,31 +5,35 @@
 
 - [Human Resource Machine CPU (Verilog)](#human-resource-machine-cpu-verilog)
 - [Introduction](#introduction)
-    - [CPU Architecture components](#cpu-architecture-components)
-    - [Project status](#project-status)
-    - [Disclaimer](#disclaimer)
+  - [CPU Architecture components](#cpu-architecture-components)
+  - [Project status](#project-status)
+  - [Disclaimer](#disclaimer)
 - [Instruction Set Architecture](#instruction-set-architecture)
-    - [Assembler](#assembler)
+  - [Assembler](#assembler)
 - [Microarchitecture](#microarchitecture)
-    - [Top module](#top-module)
-    - [Control Unit](#control-unit)
-    - [Inbox](#inbox)
-    - [Outbox](#outbox)
-    - [Register](#register)
-    - [Memory](#memory)
-    - [PC (Program Counter)](#pc-program-counter)
-    - [PROG (Program ROM)](#prog-program-rom)
-    - [IR (Instruction Register)](#ir-instruction-register)
-    - [ALU](#alu)
+  - [Top module](#top-module)
+  - [Control Unit](#control-unit)
+  - [Inbox](#inbox)
+  - [Outbox](#outbox)
+  - [Register](#register)
+  - [Memory](#memory)
+  - [PC (Program Counter)](#pc-program-counter)
+  - [PROG (Program ROM)](#prog-program-rom)
+  - [IR (Instruction Register)](#ir-instruction-register)
+  - [ALU](#alu)
 - [Simulations in Logisim](#simulations-in-logisim)
-    - [Year 4](#year-4)
-    - [Year 32](#year-32)
+  - [Year 4](#year-4)
+  - [Year 32](#year-32)
 - [Automated test (simulations)](#automated-test-simulations)
-    - [Generate new tests](#generate-new-tests)
+  - [Generate new tests](#generate-new-tests)
 - [Synthesis to FPGA](#synthesis-to-fpga)
-    - [Top module design](#top-module-design)
-    - [How to build and flash in the FPGA](#how-to-build-and-flash-in-the-fpga)
+  - [Top module design](#top-module-design)
+  - [How to build and flash in the FPGA](#how-to-build-and-flash-in-the-fpga)
 - [Hardware tests](#hardware-tests)
+- [Graphical User Interface (GUI)](#graphical-user-interface-gui)
+  - [GUI Screenshots](#gui-screenshots)
+  - [GUI Features](#gui-features)
+  - [How to build the GUI (Linux)](#how-to-build-the-gui-linux)
 - [Continuous Integration (CI)](#continuous-integration-ci)
 - [Makefiles features](#makefiles-features)
 - [Tools used in this project:](#tools-used-in-this-project)
@@ -49,8 +53,9 @@ My *HRM CPU* design is an **8-bit multi-cycle RISC CPU** based on **Harvard arch
 **TL;DR**: For the impatients, you can jump to these demos (with videos) at the end:
 - [HRM Year 4 in Logisim](#year-4)
 - [HRM Year 32 in Logisim](#year-32)
-- [Demo 3 programs running on HRMCPU in the Icezum Alhambra FPGA](https://www.youtube.com/watch?v=BREuXfzeU0w)
+- [Demo of 3 programs running on HRMCPU in the Icezum Alhambra FPGA](https://www.youtube.com/watch?v=BREuXfzeU0w)
 - [*Twitter moment* with most of the related tweets](https://twitter.com/i/moments/1017515777610649601)
+- Want to see the [GUI](#graphical-user-interface-gui) and play with the HRMCPU (no FPGA?)
 
 ## CPU Architecture components
 
@@ -649,13 +654,75 @@ It will synthesize the bitstream for each test directory under `verilog/test`, a
 NOTE:
 - If all hardware tests (or many) randomly fail, check if there are some processes "cat /dev/ttyUSB1" hanging and kill them (or run "killall cat").
 
+# Graphical User Interface (GUI)
+
+This GUI sub-project is about showing the internal state of all the components of the HRMCPU.
+
+The GUI is made in QT, and designed using QT Creator. Internally, it relies on the [Verilator](https://www.veripool.org/wiki/verilator) model which is directly derived from the HRMCPU Verilog design.
+
+In other words:
+* the GUI is a *facade* on top of the *verilated* HRMCPU's Verilog design
+  * it handles the user interaction: shows the state of registers, memories and signals
+  * it handles and feed the clock signal to the  design
+  * it allows the user to interact with the CPU with the Inbox and Outbox FIFOs (using the buttons in the UI)
+* the *verilated* HRMCPU model handles the heavy work (digital logic) as designed in Verilog (that is the HRMCPU)
+
+Please note that while the HRMCPU project is about creating a synthesizable CPU, this GUI doesn't interact with the real hardware (synthesized in FPGA) but with the *verilated* Verilog design (which runs in software).
+
+I made it for (my own) recreational purpose, but it could serve educational purpose, or as a base to create other GUIs for other verilator models (CPUs or anything else).
+
+## GUI Screenshots
+
+![](assets/hrmcpu_gui_1.png)
+
+The UI layout is self explanatory: it shows the main elements of the HRMCPU and their internal states in real time.
+
+## GUI Features
+
+These are some of the features the GUI brings at the moment:
+
+* Select and Load a program from file (machine language) into PROG memory (make tests to create all the test programs from assembler)
+* Run manually (tick by tick) or in automatic mode, with adjustable clock period
+* Show values of registers and signals
+* Show content MEMORY ram, PROG memory, as well as INBOX and OUTBOX FIFOs (doesn't allow to directly edit values, as least not for now)
+* Shows current instruction name and current ControlUnit (FSM) name
+I/O:
+* Input field to manually push new values to INBOX
+* Manual pop out of OUTBOX
+* Generates a VCD file to allow for further inspection of internal states with Gtkwave for example (includes all arrays/ram content)
+* Button to reset the CPU (it won't reset clock)
+
+TODO:
+* Show FSM flags
+* Save/Restore internal state and time (verilated_save)
+* ALU isn't represented yet
+
+## How to build the GUI (Linux)
+
+At the moment, the GUI can only be built on Linux.
+
+```
+$ cd gui
+$ make
+```
+
+Make will make the Verilator model, and the QT gui and link both, to generate the `hrmcpu` binary in gui/.
+
+From gui/, run it with no argument:
+
+```
+$ ./hrmcpu
+```
+
+
+
 # Continuous Integration (CI)
 
 Tests: cd /verilog/, make test
 
 Latest Travis CI build status: [![Build Status](https://travis-ci.org/adumont/hrm-cpu.svg?branch=harvard)](https://travis-ci.org/adumont/hrm-cpu) (click to get all details)
 
-[TODO] Document this part
+[TODO] *Document this part*
 
 # Makefiles features
 
@@ -701,7 +768,9 @@ root's `Makefile` features:
     - Utilities and FPGA programmer: [IceStorm Project](http://www.clifford.at/icestorm/)
     - Verilog Simulator: [Icarus Verilog](http://iverilog.icarus.com/) 
     - Waveform Viewer: [Gtkwave](http://gtkwave.sourceforge.net/)
+- [Verilator](https://www.veripool.org/wiki/verilator): the fastest free Verilog HDL simulator
 - Diagram editor: [SchemeIt](https://www.digikey.com/schemeit)
+- [QtCreator](https://en.wikipedia.org/wiki/Qt_Creator) and [Qt](https://en.wikipedia.org/wiki/Qt_(software))
 - [Travis CI](https://travis-ci.org/adumont/hrm-cpu) for continuous integration
     - Thanks to [stevehoover](https://github.com/stevehoover/warp-v)
 
