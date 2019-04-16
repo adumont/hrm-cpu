@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="28.610559mm"
+   height="16.861301mm"
+   viewBox="0 0 101.376 59.744768"
+   id="svg4357"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="NOR.svg">
+  <defs
+     id="defs4359" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="2.8"
+     inkscape:cx="-10.026275"
+     inkscape:cy="29.872383"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1680"
+     inkscape:window-height="1003"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata4362">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(741.87329,-20.090724)">
+    <rect
+       style="fill:#000000;stroke:none"
+       id="rect50"
+       pointer-events="none"
+       height="2.816"
+       width="2.816"
+       y="48.527744"
+       x="-643.31329" />
+    <rect
+       style="fill:#000000;stroke:none"
+       id="rect52"
+       pointer-events="none"
+       height="2.816"
+       width="2.816"
+       y="62.607742"
+       x="-741.87329" />
+    <rect
+       style="fill:#000000;stroke:none"
+       id="rect54"
+       pointer-events="none"
+       height="2.816"
+       width="2.816"
+       y="34.447754"
+       x="-741.87329" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:2.81599998"
+       r="3.4937592"
+       id="ellipse56"
+       pointer-events="none"
+       cy="49.935764"
+       cx="-657.7453" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2.81599998;stroke-linecap:square;stroke-miterlimit:10"
+       inkscape:connector-curvature="0"
+       id="path58"
+       pointer-events="none"
+       stroke-miterlimit="10"
+       d="m -653.1693,49.935755 9.856,0" />
+    <path
+       style="fill:#ffffff;stroke:#000000;stroke-width:2.81599998;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+       inkscape:connector-curvature="0"
+       id="path60"
+       pointer-events="none"
+       stroke-miterlimit="10"
+       d="m -719.3629,21.502955 c 20.9792,-0.0616 41.8968,0.2464 58.6168,28.2304 -12.6632,25.168 -34.6192,29.216 -58.6168,28.644" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2.81599998;stroke-linecap:square;stroke-miterlimit:10"
+       inkscape:connector-curvature="0"
+       id="path62"
+       pointer-events="none"
+       stroke-miterlimit="10"
+       d="m -739.0573,64.015755 22.528,0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2.81599998;stroke-linecap:square;stroke-miterlimit:10"
+       inkscape:connector-curvature="0"
+       id="path64"
+       pointer-events="none"
+       stroke-miterlimit="10"
+       d="m -739.0573,35.855755 22.528,0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2.81599998;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+       inkscape:connector-curvature="0"
+       id="path66"
+       pointer-events="none"
+       stroke-miterlimit="10"
+       d="m -719.2133,21.652555 c 8.9144,18.6032 9.8296,37.4264 0,56.5664" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="-706.4035"
+       y="55.499989"
+       id="text5105"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5107"
+         x="-706.4035"
+         y="55.499989"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;font-family:sans-serif;-inkscape-font-specification:sans-serif">NOR</tspan></text>
+  </g>
+</svg>

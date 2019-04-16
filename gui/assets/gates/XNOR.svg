@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="28.610559mm"
+   height="16.774178mm"
+   viewBox="0 0 101.376 59.436062"
+   id="svg7368"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="XNOR.svg">
+  <defs
+     id="defs7370" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="-142.88343"
+     inkscape:cy="66.860889"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1680"
+     inkscape:window-height="1003"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7373">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-32.169144,-539.78703)">
+    <rect
+       style="fill:#000000;stroke:none"
+       id="rect84"
+       pointer-events="none"
+       height="2.816"
+       width="2.816"
+       y="568.09717"
+       x="130.72914" />
+    <rect
+       style="fill:#000000;stroke:none"
+       id="rect86"
+       pointer-events="none"
+       height="2.816"
+       width="2.816"
+       y="554.01715"
+       x="32.169144" />
+    <rect
+       style="fill:#000000;stroke:none"
+       id="rect88"
+       pointer-events="none"
+       height="2.816"
+       width="2.816"
+       y="582.17719"
+       x="32.169144" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:2.81599998"
+       r="3.4937592"
+       id="ellipse90"
+       pointer-events="none"
+       cy="569.50519"
+       cx="118.93712" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2.81599998;stroke-linecap:square;stroke-miterlimit:10"
+       inkscape:connector-curvature="0"
+       id="path92"
+       pointer-events="none"
+       stroke-miterlimit="10"
+       d="m 123.68913,569.50518 7.04,0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2.81599998;stroke-linecap:square;stroke-miterlimit:10"
+       inkscape:connector-curvature="0"
+       id="path94"
+       pointer-events="none"
+       stroke-miterlimit="10"
+       d="m 34.985125,555.42518 22.528,0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2.81599998;stroke-linecap:square;stroke-miterlimit:10"
+       inkscape:connector-curvature="0"
+       id="path96"
+       pointer-events="none"
+       stroke-miterlimit="10"
+       d="m 34.985125,583.58518 22.528,0" />
+    <path
+       style="fill:#ffffff;stroke:#000000;stroke-width:2.30559993;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+       inkscape:connector-curvature="0"
+       id="path98"
+       pointer-events="none"
+       stroke-miterlimit="10"
+       d="m 61.481925,541.08998 c 21.5776,-0.0616 37.4176,0.2464 54.612805,28.2216 -13.024,25.1504 -29.937605,29.1984 -54.612805,28.6176" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2.81599998;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+       inkscape:connector-curvature="0"
+       id="path100"
+       pointer-events="none"
+       stroke-miterlimit="10"
+       d="m 54.811525,541.21318 c 8.7824,18.6032 9.68,37.444 0,56.584" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2.81599998;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+       inkscape:connector-curvature="0"
+       id="path102"
+       pointer-events="none"
+       stroke-miterlimit="10"
+       d="m 61.737125,541.21318 c 8.7736,18.6032 9.6712,37.444 0,56.584" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:15px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="72.012894"
+       y="575.42993"
+       id="text5105"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5107"
+         x="72.012894"
+         y="575.42993"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;font-family:'DejaVu Sans Mono';-inkscape-font-specification:'DejaVu Sans Mono'">XNOR</tspan></text>
+  </g>
+</svg>
