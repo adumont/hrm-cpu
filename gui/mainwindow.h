@@ -54,6 +54,7 @@ private:
     QTimer *m_timer;
     bool clk;
     int counter;
+    QString bgColor;
 
     Vhrmcpu * top;
     VerilatedVcdC* tfp;
@@ -68,6 +69,9 @@ private:
 
     QString formatData(CData data);
     QString verilatorString(WData[]);
+
+    void highlightLabel(QWidget*, bool);
+
 };
 
 #endif // MAINWINDOW_H

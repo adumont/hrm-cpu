@@ -27,6 +27,8 @@ MainWindow::MainWindow(QWidget *parent) :
     // Clock Initialization
     clk = true;
 
+    bgColor = QString("background-color: rgb(255, 205, 205);");
+
     // Create our design model with Verilator
     top = new Vhrmcpu;
     top->clk = clk;
@@ -164,6 +166,7 @@ void MainWindow::updateUI()
     ui->led_PC_ijump->setState( top->hrmcpu__DOT__PC0_ijump );
     ui->led_PC_wPC->setState( top->hrmcpu__DOT__PC0_wPC );
     ui->tblPROG->setCurrentCell(top->hrmcpu__DOT__PC0_PC, 0);
+    highlightLabel(ui->PC_PC, top->hrmcpu__DOT__PC0_wPC);
 
     // PROG
     ui->PROG_ADDR->setText(formatData( top->hrmcpu__DOT__PC0_PC ));
@@ -177,10 +180,12 @@ void MainWindow::updateUI()
     ui->IR_INSTR->setText(formatData( top->hrmcpu__DOT__IR0_rIR ));
     ui->led_IR_wIR->setState( top->hrmcpu__DOT__cu_wIR );
     ui->IR_INSTR_name->setText( verilatorString( top->hrmcpu__DOT__ControlUnit0__DOT__instrname ) );
+    highlightLabel(ui->IR_INSTR, top->hrmcpu__DOT__cu_wIR);
 
     // Register R
     ui->R_R->setText(formatData( top->hrmcpu__DOT__R_value ));
     ui->led_R_wR->setState( top->hrmcpu__DOT__register0__DOT__wR );
+    highlightLabel(ui->R_R, top->hrmcpu__DOT__register0__DOT__wR);
 
     // RAM
     ui->MEM_AR->setText( formatData( top->hrmcpu__DOT__MEMORY0__DOT__AR_q ) );
@@ -233,6 +238,13 @@ void MainWindow::updateUI()
 
 }
 
+void MainWindow::highlightLabel(QWidget *qw, bool signal) {
+    if( clk==0 && signal ) {
+        qw->setStyleSheet(bgColor);
+    } else if (clk==0 && signal == 0) {
+        qw->setStyleSheet("");
+    }
+}
 
 void MainWindow::on_clkPeriod_valueChanged(int period)
 {
