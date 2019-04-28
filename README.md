@@ -677,6 +677,8 @@ I made it for (my own) recreational purpose, but it could serve educational purp
 
 The UI layout is self explanatory: it shows the main elements of the HRMCPU and their internal states in real time.
 
+See this [video](https://youtu.be/b5eFUFYJFLQ) for a demo.
+
 ## GUI Features
 
 These are some of the features the GUI brings at the moment:
@@ -708,10 +710,16 @@ $ make
 
 Make will make the Verilator model, and the QT gui and link both, to generate the `hrmcpu` binary in gui/.
 
-From gui/, run it with no argument:
+From gui/ folder, run it with no argument:
 
 ```
 $ ./hrmcpu
+```
+
+Or you can also rebuild and run in one make command:
+
+```
+$ make run
 ```
 
 

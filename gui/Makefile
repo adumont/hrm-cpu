@@ -32,4 +32,7 @@ qtclean:
 
 clean: vclean qtclean
 
+run: $(PROJECT)
+	./hrmcpu
+
 .PHONY: clean .FORCE qtclean vclean verilator
