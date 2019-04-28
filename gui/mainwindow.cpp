@@ -63,13 +63,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // INBOX table
     for(int i=0; i<32; i++){
-        ui->tblINBOX->setItem(0,i,new QTableWidgetItem( formatData( top->hrmcpu__DOT__INBOX__DOT__fifo[i] ) ));
+        ui->tblINBOX->setItem(i,0,new QTableWidgetItem( formatData( top->hrmcpu__DOT__INBOX__DOT__fifo[i] ) ));
+        ui->tblINBOX->item(i, 0)->setForeground(Qt::gray);
     }
     ui->tblINBOX->setVerticalHeaderLabels(LIST.mid(0,32));
 
     // OUTBOX table
     for(int i=0; i<32; i++){
-        ui->tblOUTBOX->setItem(0,i,new QTableWidgetItem( formatData( top->hrmcpu__DOT__OUTB__DOT__fifo[i] ) ));
+        ui->tblOUTBOX->setItem(i,0,new QTableWidgetItem( formatData( top->hrmcpu__DOT__OUTB__DOT__fifo[i] ) ));
+        ui->tblOUTBOX->item(i, 0)->setForeground(Qt::gray);
     }
     ui->tblOUTBOX->setVerticalHeaderLabels(LIST.mid(0,32));
 
@@ -217,6 +219,16 @@ void MainWindow::updateUI()
     }
     //ui->tblRAM->setCurrentCell( (int)( top->hrmcpu__DOT__MEMORY0__DOT__AR_q / 16 ), top->hrmcpu__DOT__MEMORY0__DOT__AR_q % 16 );
 
+    // Pushbuttons release logic (must happen BEFORE INBOX / OUTBOX)
+    if( main_time==ttr_pbPUSH && ui->pbPUSH->isChecked() ) {
+        ui->pbPUSH->setChecked(false); // release
+        // increment value after each PUSH to Inbox
+        // ui->editINdata->setText( QString("%1").arg(ui->editINdata->text().toUInt(&toUintSuccess,16)+1 ,2,16,QChar('0')));
+    }
+    if( main_time==ttr_pbPOP && ui->pbPOP->isChecked() ) {
+        ui->pbPOP->setChecked(false); // release
+    }
+
     // udpate INBOX leds and Labels
     ui->led_INBOX_empty->setState( ! top->hrmcpu__DOT__INBOX_empty_n );
     ui->led_INBOX_full->setState( top->hrmcpu__DOT__INBOX_full );
@@ -225,27 +237,56 @@ void MainWindow::updateUI()
 
     // udpate INBOX table
     for(int i=0; i<32; i++){
-        ui->tblINBOX->setItem(0,i,new QTableWidgetItem( formatData( top->hrmcpu__DOT__INBOX__DOT__fifo[i] ) ));
+        ui->tblINBOX->item(i,0)->setText(formatData( top->hrmcpu__DOT__INBOX__DOT__fifo[i] ));
+
+        // Highlight in black foreground the FIFO elements
+        if( top->hrmcpu__DOT__INBOX__DOT__r_last < top->hrmcpu__DOT__INBOX__DOT__r_first  )
+            if( i >= top->hrmcpu__DOT__INBOX__DOT__r_last && i< top->hrmcpu__DOT__INBOX__DOT__r_first )
+                ui->tblINBOX->item(i,0)->setForeground(Qt::black);
+            else
+                ui->tblINBOX->item(i,0)->setForeground(Qt::gray);
+        else if( top->hrmcpu__DOT__INBOX__DOT__r_last > top->hrmcpu__DOT__INBOX__DOT__r_first  )
+            if( i >= top->hrmcpu__DOT__INBOX__DOT__r_last || i< top->hrmcpu__DOT__INBOX__DOT__r_first )
+                ui->tblINBOX->item(i,0)->setForeground(Qt::black);
+            else
+                ui->tblINBOX->item(i,0)->setForeground(Qt::gray);
+        else
+            ui->tblINBOX->item(i,0)->setForeground(Qt::gray);
+
+        if( top->hrmcpu__DOT__INBOX_empty_n && i == top->hrmcpu__DOT__INBOX__DOT__r_last )
+            // Head of FIFO in yellow background
+            ui->tblINBOX->item(i,0)->setBackground(Qt::yellow);
+        else
+            ui->tblINBOX->item(i,0)->setBackground(Qt::white);
     }
 
     // udpate OUTBOX leds and Labels
     ui->led_OUTBOX_empty->setState( ! top->hrmcpu__DOT__OUTB_empty_n );
     ui->led_OUTBOX_full->setState( top->hrmcpu__DOT__OUTB_full);
-//    ui->led_INBOX_rd->setState( top->hrmcpu__DOT__INBOX_i_rd );
-//    ui->INBOX_data->setText( formatData( top->hrmcpu__DOT__INBOX_o_data ) );
 
     // OUTBOX table
     for(int i=0; i<32; i++){
-        ui->tblOUTBOX->setItem(0,i,new QTableWidgetItem( formatData( top->hrmcpu__DOT__OUTB__DOT__fifo[i] )));
-    }
+        ui->tblOUTBOX->item(i,0)->setText(formatData( top->hrmcpu__DOT__OUTB__DOT__fifo[i] ));
 
-    if( main_time==ttr_pbPUSH && ui->pbPUSH->isChecked() ) {
-        ui->pbPUSH->setChecked(false); // release
-        // increment value after each PUSH to Inbox
-        // ui->editINdata->setText( QString("%1").arg(ui->editINdata->text().toUInt(&toUintSuccess,16)+1 ,2,16,QChar('0')));
-    }
-    if( main_time==ttr_pbPOP && ui->pbPOP->isChecked() ) {
-        ui->pbPOP->setChecked(false); // release
+        // Highlight in black foreground the FIFO elements
+        if( top->hrmcpu__DOT__OUTB__DOT__r_last < top->hrmcpu__DOT__OUTB__DOT__r_first  )
+            if( i >= top->hrmcpu__DOT__OUTB__DOT__r_last && i< top->hrmcpu__DOT__OUTB__DOT__r_first )
+                ui->tblOUTBOX->item(i,0)->setForeground(Qt::black);
+            else
+                ui->tblOUTBOX->item(i,0)->setForeground(Qt::gray);
+        else if( top->hrmcpu__DOT__OUTB__DOT__r_last > top->hrmcpu__DOT__OUTB__DOT__r_first  )
+            if( i >= top->hrmcpu__DOT__OUTB__DOT__r_last || i< top->hrmcpu__DOT__OUTB__DOT__r_first )
+                ui->tblOUTBOX->item(i,0)->setForeground(Qt::black);
+            else
+                ui->tblOUTBOX->item(i,0)->setForeground(Qt::gray);
+        else
+            ui->tblOUTBOX->item(i,0)->setForeground(Qt::gray);
+
+        // Head of FIFO in yellow background
+        if( top->hrmcpu__DOT__OUTB_empty_n && i == top->hrmcpu__DOT__OUTB__DOT__r_last )
+            ui->tblOUTBOX->item(i,0)->setBackground(Qt::yellow);
+        else
+            ui->tblOUTBOX->item(i,0)->setBackground(Qt::white);
     }
 
     ui->cu_statename->setText( verilatorString( top->hrmcpu__DOT__ControlUnit0__DOT__statename ) );
@@ -290,7 +331,8 @@ void MainWindow::on_pbSave_pressed()
 void MainWindow::on_pbPUSH_toggled(bool checked)
 {
     top->cpu_in_wr = checked;
-    /* if(checked) */ ttr_pbPUSH = main_time+2; // release in 2 ticks
+    if(checked)
+        ttr_pbPUSH = main_time+2; // release in 2 ticks
 }
 
 void MainWindow::on_pbPOP_toggled(bool checked)
