@@ -922,7 +922,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>1 tick</string>
+      <string>Tick (F3)</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pbReset">

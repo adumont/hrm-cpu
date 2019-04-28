@@ -310,7 +310,10 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
 {
     if(e->key() == Qt::Key_F5) {
         ui->pbB->toggle();
+    } else if(e->key() == Qt::Key_F3) {
+        ui->pbA->click();
     }
+
 }
 
 void MainWindow::on_pbReset_toggled(bool checked)
