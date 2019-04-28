@@ -53,6 +53,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tblPROG->setVerticalHeaderLabels(LIST);
     ui->tblPROG->setHorizontalHeaderLabels(QStringList("Data"));
 
+
     // PROG table, fill with current program
     for(int i=0; i<256; i++){
         ui->tblPROG->setItem(0,i,new QTableWidgetItem( formatData( top->hrmcpu__DOT__program0__DOT__rom[i] ) ));
@@ -62,11 +63,13 @@ MainWindow::MainWindow(QWidget *parent) :
     for(int i=0; i<32; i++){
         ui->tblINBOX->setItem(0,i,new QTableWidgetItem( formatData( top->hrmcpu__DOT__INBOX__DOT__fifo[i] ) ));
     }
+    ui->tblINBOX->setVerticalHeaderLabels(LIST.mid(0,16));
 
     // OUTBOX table
     for(int i=0; i<32; i++){
         ui->tblOUTBOX->setItem(0,i,new QTableWidgetItem( formatData( top->hrmcpu__DOT__OUTB__DOT__fifo[i] ) ));
     }
+    ui->tblOUTBOX->setVerticalHeaderLabels(LIST.mid(0,16));
 
     // RAM table, set headers
     LIST.clear();
