@@ -85,6 +85,7 @@ MainWindow::MainWindow(QWidget *parent) :
     for(int i=0; i<16; i++){
         for(int j=0; j<16; j++){
             ui->tblRAM->setItem(j,i,new QTableWidgetItem( formatData( top->hrmcpu__DOT__MEMORY0__DOT__ram0__DOT__mem[16*j+i] ) ));
+            ui->tblRAM->item(j, i)->setForeground(Qt::gray);
         }
     }
 
@@ -189,19 +190,32 @@ void MainWindow::updateUI()
 
     // RAM
     ui->MEM_AR->setText( formatData( top->hrmcpu__DOT__MEMORY0__DOT__AR_q ) );
+    ui->led_MEM_wAR->setState( top->hrmcpu__DOT__MEMORY0__DOT__wAR );
+    highlightLabel(ui->MEM_AR, top->hrmcpu__DOT__MEMORY0__DOT__wAR);
+
     ui->MEM_ADDR->setText( formatData( top->hrmcpu__DOT__MEMORY0__DOT__ADDR ) );
     ui->MEM_DATA->setText( formatData( top->hrmcpu__DOT__MEMORY0__DOT__M ) );
     ui->led_MEM_srcA->setState( top->hrmcpu__DOT__MEMORY0__DOT__srcA );
-    ui->led_MEM_wAR->setState( top->hrmcpu__DOT__MEMORY0__DOT__wAR );
     ui->led_MEM_wM->setState( top->hrmcpu__DOT__MEMORY0__DOT__wM );
 
     // fill RAM table with current values
     for(int i=0; i<16; i++){
         for(int j=0; j<16; j++){
             ui->tblRAM->item(j,i)->setText(formatData( top->hrmcpu__DOT__MEMORY0__DOT__ram0__DOT__mem[16*j+i] ));
+
+            if( top->hrmcpu__DOT__MEMORY0__DOT__AR_q == (16*j+i) )
+            {
+                if( clk==0 && top->hrmcpu__DOT__MEMORY0__DOT__wM ) {
+                    ui->tblRAM->item(j, i)->setBackground(QColor(255, 205, 205, 255));
+                    ui->tblRAM->item(j, i)->setForeground(Qt::black);
+                }
+                else if( clk==0 && top->hrmcpu__DOT__MEMORY0__DOT__wM == 0 ) {
+                    ui->tblRAM->item(j, i)->setBackground(Qt::white);
+                }
+            }
         }
     }
-    ui->tblRAM->setCurrentCell( (int)( top->hrmcpu__DOT__MEMORY0__DOT__AR_q / 16 ), top->hrmcpu__DOT__MEMORY0__DOT__AR_q % 16 );
+    //ui->tblRAM->setCurrentCell( (int)( top->hrmcpu__DOT__MEMORY0__DOT__AR_q / 16 ), top->hrmcpu__DOT__MEMORY0__DOT__AR_q % 16 );
 
     // udpate INBOX leds and Labels
     ui->led_INBOX_empty->setState( ! top->hrmcpu__DOT__INBOX_empty_n );
