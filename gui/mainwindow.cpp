@@ -235,6 +235,8 @@ void MainWindow::updateUI()
     ui->led_INBOX_rd->setState( top->hrmcpu__DOT__INBOX_i_rd );
     ui->INBOX_data->setText( formatData( top->hrmcpu__DOT__INBOX_o_data ) );
 
+    ui->pbPUSH->setEnabled(!top->hrmcpu__DOT__INBOX_full);
+
     // udpate INBOX table
     for(int i=0; i<32; i++){
         ui->tblINBOX->item(i,0)->setText(formatData( top->hrmcpu__DOT__INBOX__DOT__fifo[i] ));
