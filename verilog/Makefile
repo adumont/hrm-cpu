@@ -57,7 +57,7 @@ $(BOARD_BUILDDIR)/$(MODULE).blif: $(MODULE).v $(DEPS) $(AUXFILES) $(BOARD_BUILDD
 	
 $(BOARD_BUILDDIR)/$(MODULE).pnr: $(PCF) $(BOARD_BUILDDIR)/$(MODULE).blif
 
-	arachne-pnr -d $(PNRDEV) -p $(PCF) $(BOARD_BUILDDIR)/$(MODULE).blif -o $(BOARD_BUILDDIR)/$(MODULE).pnr
+	arachne-pnr -r -d $(PNRDEV) -p $(PCF) $(BOARD_BUILDDIR)/$(MODULE).blif -o $(BOARD_BUILDDIR)/$(MODULE).pnr
 
 #ifdef LEVEL
 $(BUILDDIR)/$(MODULE).pnr: $(BOARD_BUILDDIR)/$(MODULE).pnr $(PROGRAM) $(ROMFILE)
