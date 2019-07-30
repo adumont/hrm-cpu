@@ -21,7 +21,7 @@ module XALU #(
     always @(posedge clk)
     begin
         if( rst ) a0 <= 8'b 0;
-        else if( write_en && addr == BASE_ADDR + 8'd0 ) a0 <= din;
+        else if( write_en && addr[3:0] == 4'h0 ) a0 <= din;
         else a0 <= a0;
     end
 
@@ -29,24 +29,24 @@ module XALU #(
     always @(posedge clk)
     begin
         if( rst ) a1 <= 8'b 0;
-        else if( write_en && addr == BASE_ADDR + 8'd1 ) a1 <= din;
+        else if( write_en && addr[3:0] == 4'h1 ) a1 <= din;
         else a1 <= a1;
     end
 
     // combination logic for outputs
     always @(*) 
     begin
-        case(addr)
-            BASE_ADDR + 8'd0: dout = a0;
-            BASE_ADDR + 8'd1: dout = a1;
-            BASE_ADDR + 8'd2: dout = a0 >> 1;      // A0 >> 1
-            BASE_ADDR + 8'd3: dout = a0 << 1;      // A0 << 1
-            BASE_ADDR + 8'd4: dout = a0 & a1;      // AND
-            BASE_ADDR + 8'd5: dout = ~( a0 & a1);  // NAND
-            BASE_ADDR + 8'd6: dout = a0 | a1;      // OR
-            BASE_ADDR + 8'd7: dout = ~( a0 | a1);  // NOR
-            BASE_ADDR + 8'd8: dout = a0 ^ a1;      // XOR
-            BASE_ADDR + 8'd9: dout = ~a0 ;         // NOT(A0)
+        case(addr[3:0])
+            4'd0: dout = a0;
+            4'd1: dout = a1;
+            4'd2: dout = a0 >> 1;      // A0 >> 1
+            4'd3: dout = a0 << 1;      // A0 << 1
+            4'd4: dout = a0 & a1;      // AND
+            4'd5: dout = ~( a0 & a1);  // NAND
+            4'd6: dout = a0 | a1;      // OR
+            4'd7: dout = ~( a0 | a1);  // NOR
+            4'd8: dout = a0 ^ a1;      // XOR
+            4'd9: dout = ~a0 ;         // NOT(A0)
             default: dout = 8'b 0;
         endcase
     end

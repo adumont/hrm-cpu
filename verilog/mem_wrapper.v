@@ -13,8 +13,8 @@ module mem_wrapper #(
     );
 
     wire cs_RAM0 = ~mmio;
-    wire cs_XALU =  mmio & ( addr <= 8'h09 );
-    wire cs_LEDS =  mmio & ( addr == 8'h0A );
+    wire cs_XALU =  mmio & ( addr[7:4] == 4'h0 );
+    wire cs_LEDS =  mmio & ( addr == 8'h10 );
 
     // ---------------------------------------- //
     // RAM
@@ -55,7 +55,7 @@ module mem_wrapper #(
     // modules topology)
     //
     wire [data_width-1:0] leds_dout;
-    LEDS #( .BASE_ADDR( 8'h0a ), .data_width( 8 ) ) leds0 (
+    LEDS #( .BASE_ADDR( 8'h10 ), .data_width( 8 ) ) leds0 (
         .clk( clk ),
         .addr( addr ),
         .dout( leds_dout ),
