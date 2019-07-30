@@ -206,7 +206,8 @@ void MainWindow::updateUI()
         for(int j=0; j<16; j++){
             ui->tblRAM->item(j,i)->setText(formatData( top->hrmcpu__DOT__MEMORY0__DOT__mem_wrapper0__DOT__ram0__DOT__mem[16*j+i] ));
 
-            if( top->hrmcpu__DOT__MEMORY0__DOT__AR_q == (16*j+i) )
+            // IIF we're reading/writing to RAM (mmio=0), then hightlight corresponding cell
+            if( !top->hrmcpu__DOT__MEMORY0__DOT__mmio && top->hrmcpu__DOT__MEMORY0__DOT__AR_q == (16*j+i) )
             {
                 if( clk==0 && top->hrmcpu__DOT__MEMORY0__DOT__wM ) {
                     ui->tblRAM->item(j, i)->setBackground(QColor(255, 205, 205, 255));
