@@ -414,7 +414,7 @@ void MainWindow::on_pbLoadPROG_pressed()
 
 QString MainWindow::formatData(CData data) {
     // for now we don't use mode
-    return QString("%1").arg( data ,2,16,QChar('0'));
+    return QString("%1").arg( data ,2,16,QChar('0')).toUpper();
     // ASCII mode --> return QString("%1").arg( QChar(data) );
 }
 
