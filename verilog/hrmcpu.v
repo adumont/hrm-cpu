@@ -211,6 +211,7 @@ module hrmcpu (
     wire              mem_srcA;
     wire              mem_wM;
     wire              mem_wAR;
+    wire              mem_mmio;
     wire signed [7:0] mem_M;
 
     // Instanciate UUT
@@ -221,6 +222,7 @@ module hrmcpu (
         .srcA(mem_srcA),
         .wM(mem_wM),
         .wAR(mem_wAR),
+        .mmio(mem_mmio),
         // output ports
         .M(mem_M),
         // clk
@@ -234,6 +236,7 @@ module hrmcpu (
     assign mem_srcA = cu_srcA;
     assign mem_wM = cu_wM;
     assign mem_wAR = cu_wAR;
+    assign mem_mmio = IR0_rIR[0:0];
     // ---------------------------------------- //
 
     // ---------------------------------------- //

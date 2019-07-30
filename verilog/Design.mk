@@ -5,6 +5,7 @@ AUXFILES=
 MODULE?=$(TOP)
 
 DEPS_MEMORY:=\
+  mem_wrapper.v\
   ram.v
 
 DEPS_HRMCPU:=\

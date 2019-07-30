@@ -14,7 +14,7 @@ all: bin svg dot sim
 bin: $(BUILDDIR)/$(MODULE).bin
 vcd: $(MODULE)_tb.vcd
 sim: vcd gtkwave
-json: $(BUILDDIR)/$(MODULE).json
+json: $(BUILDDIR)/$(MODULE)-netlist.json
 svg: assets/$(MODULE).svg
 dot: assets/$(MODULE)_dot.svg
 lint: $(BOARD_BUILDDIR)/$(MODULE).lint
@@ -50,14 +50,20 @@ gtkwave: $(MODULE).v $(DEPS) $(MODULE)_tb.v $(MODULE)_tb.vcd
 
 	gtkwave $(MODULE)_tb.vcd $(MODULE)_tb.gtkw &
 
+$(BOARD_BUILDDIR)/$(MODULE).json: $(MODULE).v $(DEPS) $(AUXFILES) $(BOARD_BUILDDIR)/build.config
+	
+	yosys -p "synth_ice40 -top $(MODULE) -json $(BOARD_BUILDDIR)/$(MODULE).json $(YOSYSOPT)" \
+              -l $(BUILDDIR)/$(MODULE).log -q $(DEPS) $(MODULE).v
+
 $(BOARD_BUILDDIR)/$(MODULE).blif: $(MODULE).v $(DEPS) $(AUXFILES) $(BOARD_BUILDDIR)/build.config
 	
 	yosys -p "synth_ice40 -top $(MODULE) -blif $(BOARD_BUILDDIR)/$(MODULE).blif $(YOSYSOPT)" \
               -l $(BUILDDIR)/$(MODULE).log -q $(DEPS) $(MODULE).v
 	
-$(BOARD_BUILDDIR)/$(MODULE).pnr: $(PCF) $(BOARD_BUILDDIR)/$(MODULE).blif
+$(BOARD_BUILDDIR)/$(MODULE).pnr: $(PCF) $(BOARD_BUILDDIR)/$(MODULE).json
 
-	arachne-pnr -d $(PNRDEV) -p $(PCF) $(BOARD_BUILDDIR)/$(MODULE).blif -o $(BOARD_BUILDDIR)/$(MODULE).pnr
+	#arachne-pnr -d $(PNRDEV) -p $(PCF) $(BOARD_BUILDDIR)/$(MODULE).blif -o $(BOARD_BUILDDIR)/$(MODULE).pnr
+	nextpnr-ice40 --hx$(PNRDEV) --json $(BOARD_BUILDDIR)/$(MODULE).json --pcf $(PCF) --asc $@
 
 #ifdef LEVEL
 $(BUILDDIR)/$(MODULE).pnr: $(BOARD_BUILDDIR)/$(MODULE).pnr $(PROGRAM) $(ROMFILE)
@@ -77,13 +83,13 @@ upload: $(BUILDDIR)/$(MODULE).bin
 	( echo "INFO: FPGA $(BOARD) bitstream hasn't changed: Skipping programming and reseting board:" ; iceprog -t ) || \
 	( iceprog $(BUILDDIR)/$(MODULE).bin && md5sum $(BUILDDIR)/$(MODULE).bin > $(BOARD_BUILDDIR)/flashed.md5 || rm $(BOARD_BUILDDIR)/flashed.md5 )
 
-$(BUILDDIR)/$(MODULE).json: $(MODULE).v $(DEPS)
+$(BUILDDIR)/$(MODULE)-netlist.json: $(MODULE).v $(DEPS)
 
-	yosys -p "prep -top $(MODULE); write_json $(MODULE).json" $(MODULE).v $(DEPS)
+	yosys -p "prep -top $(MODULE); write_json $(MODULE)-netlist.json" $(MODULE).v $(DEPS)
 
-assets/$(MODULE).svg: $(BUILDDIR)/$(MODULE).json
+assets/$(MODULE).svg: $(BUILDDIR)/$(MODULE)-netlist.json
 
-	netlistsvg $(MODULE).json -o assets/$(MODULE).svg && rm $(MODULE).json
+	netlistsvg $(BUILDDIR)/$(MODULE)-netlist.json -o assets/$(MODULE).svg && rm $(MODULE).json
 
 assets/$(MODULE)_dot.svg: $(MODULE).v $(DEPS)
 
