@@ -241,6 +241,17 @@ Notes:
 
 ![](logisim/diagram/MEMORY.png)
 
+NOTE: the Logisim model doesn't support Memory Mapped IO.
+
+### Circuit diagram
+
+![](verilog/assets/MEMORY.svg)
+
+In place of the "ram" module that was in the MEMORY module, we now have a memory wrapper that will handle the IO Memory Mapping:
+
+![](verilog/assets/mem_wrapper.svg)
+
+
 ## PC (Program Counter)
 
 - Reinitialized to 0x00 upon reset
