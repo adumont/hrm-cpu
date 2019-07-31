@@ -14,7 +14,7 @@ LABELFILE=$( mktemp )
 TMPFILE=$DIRNAME/$BASENAME.TXT
 BINFILE=$DIRNAME/$BASENAME.BIN
 
-cat $1 | tr -s "[]" "@@" | sed -r -e "s/([a-zA-Z+-]+)\s+@([0-9]+)@/i\1 \2/g" |
+cat $1 | tr -s "[]" "@@" | sed -r -e "s/([a-zA-Z+-]+)\s+@([0-9]+)@/i\1 \2/g" | sed -r -e "s/([a-zA-Z+-]+)\s+\/([0-9]+)/m\1 \2/g" |
     awk -v lfile=$LABELFILE -v binfile=$BINFILE >$TMPFILE '
 BEGIN {
     addr=0;
@@ -27,6 +27,13 @@ BEGIN {
     ass["SUB"]="50";      i["SUB"]=2;
     ass["BUMP+"]="60";    i["BUMP+"]=2;
     ass["BUMP-"]="70";    i["BUMP-"]=2;
+
+    ass["mCOPYFROM"]="21"; i["mCOPYFROM"]=2;
+    ass["mCOPYTO"]="31";   i["mCOPYTO"]=2;
+    ass["mADD"]="41";      i["mADD"]=2;
+    ass["mSUB"]="51";      i["mSUB"]=2;
+    ass["mBUMP+"]="61";    i["mBUMP+"]=2;
+    ass["mBUMP-"]="71";    i["mBUMP-"]=2;
 
     ass["iCOPYFROM"]="28";i["iCOPYFROM"]=2;
     ass["iCOPYTO"]="38";  i["iCOPYTO"]=2;
@@ -83,6 +90,7 @@ do
 done
 
 sed -i -r -e "s/; i([a-zA-Z+-]+)\s+([0-9]+)/; \1 \[\2\]/g" $TMPFILE
+sed -i -r -e "s/; m([a-zA-Z+-]+)\s+([0-9]+)/; \1 \/\2/g" $TMPFILE
 
 cat $TMPFILE
 echo ---
