@@ -4,12 +4,13 @@ module mem_wrapper #(
         parameter data_width = 8,
         parameter addr_width=8
     ) (
-        input wire clk,
-        input wire [addr_width-1:0] addr,
-        input wire [data_width-1:0] din,
-        input wire write_en,
-        input wire mmio,
-        output reg [data_width-1:0] dout
+        input  wire                  clk,
+        input  wire [addr_width-1:0] addr,
+        input  wire [data_width-1:0] din,
+        input  wire                  write_en,
+        input  wire                  mmio,
+        output reg  [data_width-1:0] dout,
+        output reg  [7:0]            o_leds
     );
 
     wire cs_RAM0 = ~mmio;
@@ -92,6 +93,8 @@ module mem_wrapper #(
 
             default: dout = {(data_width){1'b 0}};
         endcase
+
+        o_leds = leds_dout;
     end
     // ---------------------------------------- //
 

@@ -8,7 +8,8 @@ module MEMORY (
         input  wire       wM,
         input  wire       wAR,
         input  wire       mmio, // Memory Mapped IO
-        output wire [7:0] M
+        output wire [7:0] M,
+        output wire [7:0] o_leds
     );
 
     wire [7:0] AR_d;
@@ -35,7 +36,8 @@ module MEMORY (
         .dout( M ),
         .write_en( wM ),
         .mmio( mmio ),
-        .din( R )
+        .din( R ),
+        .o_leds( o_leds )
     );
     defparam mem_wrapper0.ROMFILE = ROMFILE;
 
