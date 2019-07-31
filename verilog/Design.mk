@@ -7,6 +7,7 @@ MODULE?=$(TOP)
 DEPS_MEM_WRAPPER:=\
   XALU.v\
   LEDS.v\
+  RAND.v\
   ram.v
 
 DEPS_MEMORY:=\

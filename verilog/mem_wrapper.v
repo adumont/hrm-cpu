@@ -15,6 +15,7 @@ module mem_wrapper #(
     wire cs_RAM0 = ~mmio;
     wire cs_XALU =  mmio & ( addr[7:4] == 4'h0 );
     wire cs_LEDS =  mmio & ( addr == 8'h10 );
+    wire cs_RAND =  mmio & ( addr == 8'h11 );
 
     // ---------------------------------------- //
     // RAM
@@ -66,6 +67,20 @@ module mem_wrapper #(
     // ---------------------------------------- //
 
     // ---------------------------------------- //
+    // RANDOM 
+    //
+    wire [data_width-1:0] rand_dout;
+    RAND rand0 (
+        .clk( clk ),
+        .addr( addr ),
+        .dout( rand_dout ),
+        .write_en( write_en & cs_RAND ),
+        .din( din ),
+        .rst( 0 )
+    );
+    // ---------------------------------------- //
+
+    // ---------------------------------------- //
     // MUX mem_wrapper output
     always @*
     begin
@@ -73,6 +88,7 @@ module mem_wrapper #(
             cs_RAM0: dout = ram0_dout;
             cs_XALU: dout = xalu_dout;
             cs_LEDS: dout = leds_dout;
+            cs_RAND: dout = rand_dout;
 
             default: dout = {(data_width){1'b 0}};
         endcase
