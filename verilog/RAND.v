@@ -21,11 +21,12 @@ module RAND (
     );
 
     localparam
-        SEED = 12'b 1101_1010_1001,
+        //SEED = 16'b 100_0010_1001,
+        SEED = {8'h01, 8'h77},
         RULE = 8'd 30,
-        WIDTH = 12;
+        WIDTH = 16;
 
-    reg ini;
+    reg ini = 0;
     always @(posedge(clk))
         ini <= 1;
 
@@ -40,11 +41,11 @@ module RAND (
         end 
     endgenerate
 
-    reg [WIDTH-1:0] q;
+    reg [WIDTH-1:0] q = 0;
 
     always @(posedge(clk))
         if( ini == 0 ) q <= SEED;
-        else if( write_en ) q <= {4'b0000,din};
+        else if( write_en ) q <= {8'h01,din};
         else q <= out;
 
     assign in = q;
