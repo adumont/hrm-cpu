@@ -14,8 +14,14 @@ LABELFILE=$( mktemp )
 TMPFILE=$DIRNAME/$BASENAME.TXT
 BINFILE=$DIRNAME/$BASENAME.BIN
 
-cat $1 | tr -s "[]" "@@" | sed -r -e "s/([a-zA-Z+-]+)\s+@([0-9]+)@/i\1 \2/g" | sed -r -e "s/([a-zA-Z+-]+)\s+\/([0-9]+)/m\1 \2/g" |
-    awk -v lfile=$LABELFILE -v binfile=$BINFILE >$TMPFILE '
+cat $1 | tr -s "[]" "@@" | sed -r -e "
+    s/\/A0/\/0/g;
+    s/\/A1/\/0/g;
+    s/\/LEDS/\/16/g;
+    s/\/RAND/\/17/g;
+    s/([a-zA-Z+-]+)\s+@([0-9]+)@/i\1 \2/g;
+    s/([a-zA-Z+-]+)\s+\/([0-9]+)/m\1 \2/g;
+    " | awk -v lfile=$LABELFILE -v binfile=$BINFILE >$TMPFILE '
 BEGIN {
     addr=0;
     ass["INBOX"]="00";    i["INBOX"]=1;
@@ -91,6 +97,11 @@ done
 
 sed -i -r -e "s/; i([a-zA-Z+-]+)\s+([0-9]+)/; \1 \[\2\]/g" $TMPFILE
 sed -i -r -e "s/; m([a-zA-Z+-]+)\s+([0-9]+)/; \1 \/\2/g" $TMPFILE
+# Macros
+sed -i -r -e "s/\/16/\/LEDS/g" $TMPFILE
+sed -i -r -e "s/\/17/\/RAND/g" $TMPFILE
+sed -i -r -e "s/\/0/\/A0/g" $TMPFILE
+sed -i -r -e "s/\/1/\/A1/g" $TMPFILE
 
 cat $TMPFILE
 echo ---
