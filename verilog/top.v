@@ -22,7 +22,7 @@ module top (
         input  wire       sw1,    // board button 1
         input  wire       sw2,    // board button 2
         `endif
-        output reg  [7:0] leds    // board leds
+        output wire [7:0] leds    // board leds
     );
 
     localparam baudsDivider=24'd104;
@@ -42,6 +42,7 @@ module top (
 
     // Assign top Module Output
     assign TX = tx_o_uart_tx;
+    assign leds = cpu_o_leds;
 
     // ---------------------------------------- //
     // HRM-CPU
@@ -60,6 +61,7 @@ module top (
     wire       cpu_out_empty;
     wire [7:0] cpu_out_data;
     wire [7:0] cpu_dmp_data;
+    wire [7:0] cpu_o_leds;
     wire       cpu_dmp_valid;
 
     hrmcpu CPU (
@@ -77,6 +79,7 @@ module top (
         .cpu_out_data(cpu_out_data),
         .cpu_dmp_data(cpu_dmp_data),
         .cpu_dmp_valid(cpu_dmp_valid),
+        .cpu_o_leds(cpu_o_leds),
         // clk, rst
         .clk(clk),
         .i_rst(cpu_i_rst)
@@ -133,18 +136,6 @@ module top (
     // Connect inputs
     assign tx_i_wr = txctl_o_pop_value;
     assign tx_i_data = cpu_out_data;
-    // ---------------------------------------- //
-
-    // ---------------------------------------- //
-    // Leds
-    initial leds = 0;
-
-    always @(posedge clk)
-    begin
-        leds <= leds;
-        if(tx_i_wr)
-            leds <= tx_i_data;
-    end
     // ---------------------------------------- //
 
     // ---------------------------------------- //

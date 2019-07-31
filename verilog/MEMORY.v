@@ -7,7 +7,9 @@ module MEMORY (
         input  wire       srcA,
         input  wire       wM,
         input  wire       wAR,
-        output wire [7:0] M
+        input  wire       mmio, // Memory Mapped IO
+        output wire [7:0] M,
+        output wire [7:0] o_leds
     );
 
     wire [7:0] AR_d;
@@ -28,18 +30,16 @@ module MEMORY (
             AR_q <= AR_q;
     end
 
-    ram #( .ram_size( 256 ), .data_width( 8 ) ) ram0 (
-    // read port
-        .rclk( clk ),
-        .raddr( AR_q ),
+    mem_wrapper #(  ) mem_wrapper0 (
+        .clk( clk ),
+        .addr( AR_q ),
         .dout( M ),
-    // write port
-        .wclk( clk ),
         .write_en( wM ),
-        .waddr( AR_q ),
-        .din( R )
+        .mmio( mmio ),
+        .din( R ),
+        .o_leds( o_leds )
     );
-    defparam ram0.ROMFILE = ROMFILE;
+    defparam mem_wrapper0.ROMFILE = ROMFILE;
 
 `ifndef SYNTHESIS
     always @(R)

@@ -4,8 +4,15 @@ AUXFILES=
 
 MODULE?=$(TOP)
 
-DEPS_MEMORY:=\
+DEPS_MEM_WRAPPER:=\
+  XALU.v\
+  LEDS.v\
+  RAND.v\
   ram.v
+
+DEPS_MEMORY:=\
+  $(DEPS_MEM_WRAPPER)\
+  mem_wrapper.v
 
 DEPS_HRMCPU:=\
   ufifo.v \
@@ -32,6 +39,10 @@ ifeq ($(MODULE), $(TOP))
 else ifeq ($(MODULE), MEMORY)
 
   DEPS:=$(DEPS_MEMORY)
+
+else ifeq ($(MODULE), mem_wrapper)
+
+  DEPS:=$(DEPS_MEM_WRAPPER)
 
 else ifeq ($(MODULE), hrmcpu)
 

@@ -86,7 +86,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // Initialize RAM table
     for(int i=0; i<16; i++){
         for(int j=0; j<16; j++){
-            ui->tblRAM->setItem(j,i,new QTableWidgetItem( formatData( top->hrmcpu__DOT__MEMORY0__DOT__ram0__DOT__mem[16*j+i] ) ));
+            ui->tblRAM->setItem(j,i,new QTableWidgetItem( formatData( top->hrmcpu__DOT__MEMORY0__DOT__mem_wrapper0__DOT__ram0__DOT__mem[16*j+i] ) ));
             ui->tblRAM->item(j, i)->setForeground(Qt::gray);
         }
     }
@@ -190,7 +190,7 @@ void MainWindow::updateUI()
     ui->led_R_wR->setState( top->hrmcpu__DOT__register0__DOT__wR );
     highlightLabel(ui->R_R, top->hrmcpu__DOT__register0__DOT__wR);
 
-    // RAM
+    // MEMORY / RAM
     ui->MEM_AR->setText( formatData( top->hrmcpu__DOT__MEMORY0__DOT__AR_q ) );
     ui->led_MEM_wAR->setState( top->hrmcpu__DOT__MEMORY0__DOT__wAR );
     highlightLabel(ui->MEM_AR, top->hrmcpu__DOT__MEMORY0__DOT__wAR);
@@ -199,13 +199,15 @@ void MainWindow::updateUI()
     ui->MEM_DATA->setText( formatData( top->hrmcpu__DOT__MEMORY0__DOT__M ) );
     ui->led_MEM_srcA->setState( top->hrmcpu__DOT__MEMORY0__DOT__srcA );
     ui->led_MEM_wM->setState( top->hrmcpu__DOT__MEMORY0__DOT__wM );
+    ui->led_MEM_mmio->setState( top->hrmcpu__DOT__MEMORY0__DOT__mmio );
 
     // fill RAM table with current values
     for(int i=0; i<16; i++){
         for(int j=0; j<16; j++){
-            ui->tblRAM->item(j,i)->setText(formatData( top->hrmcpu__DOT__MEMORY0__DOT__ram0__DOT__mem[16*j+i] ));
+            ui->tblRAM->item(j,i)->setText(formatData( top->hrmcpu__DOT__MEMORY0__DOT__mem_wrapper0__DOT__ram0__DOT__mem[16*j+i] ));
 
-            if( top->hrmcpu__DOT__MEMORY0__DOT__AR_q == (16*j+i) )
+            // IIF we're reading/writing to RAM (mmio=0), then hightlight corresponding cell
+            if( !top->hrmcpu__DOT__MEMORY0__DOT__mmio && top->hrmcpu__DOT__MEMORY0__DOT__AR_q == (16*j+i) )
             {
                 if( clk==0 && top->hrmcpu__DOT__MEMORY0__DOT__wM ) {
                     ui->tblRAM->item(j, i)->setBackground(QColor(255, 205, 205, 255));
@@ -412,7 +414,7 @@ void MainWindow::on_pbLoadPROG_pressed()
 
 QString MainWindow::formatData(CData data) {
     // for now we don't use mode
-    return QString("%1").arg( data ,2,16,QChar('0'));
+    return QString("%1").arg( data ,2,16,QChar('0')).toUpper();
     // ASCII mode --> return QString("%1").arg( QChar(data) );
 }
 

@@ -9,6 +9,7 @@
   - [Project status](#project-status)
   - [Disclaimer](#disclaimer)
 - [Instruction Set Architecture](#instruction-set-architecture)
+  - [Memory Mapped I/O](#memory-mapped-io)
   - [Assembler](#assembler)
 - [Microarchitecture](#microarchitecture)
   - [Top module](#top-module)
@@ -61,14 +62,14 @@ My *HRM CPU* design is an **8-bit multi-cycle RISC CPU** based on **Harvard arch
 
 We can see how the game actually represents a CPU and its internal components:
 
-| HRM  components | #     | CPU components       |
+| HRM  components |   #   | CPU components       |
 | --------------- | :---: | -------------------- |
-| Office Worker   | 1     | Register             |
+| Office Worker   |   1   | Register             |
 | In/Out belts    | 2, 3  | Input/Ouput (I/O)    |
-| Floor Tiles     | 4     | Memory (RAM)         |
-| Program         | 5     | Program Memory       |
-|                 | 6     | Program Counter      |
-|                 | 7     | Instruction Register |
+| Floor Tiles     |   4   | Memory (RAM)         |
+| Program         |   5   | Program Memory       |
+|                 |   6   | Program Counter      |
+|                 |   7   | Instruction Register |
 
 ![](assets/hrm_04-labels.png)
 
@@ -99,6 +100,55 @@ The current implementation status is represented by the color in the first colum
 I have added a couple of instructions that were not in the HRM game: SET, and HALT.
 
 Instruction are encoded with 1 word (8 bit). Some instructions have one  operand which is also encoded with 8 bits. So the length of instruction is variable: some are 1 word wide, others are two words wide.
+
+## Memory Mapped I/O
+
+I have added support for Memory Mapped modules. 
+
+Access to memory mapped devices is achieved by asserting the "mmio bit" (lsb) in the opcode of the instruction. In assembler language, we prefix the ADDR with "/": 
+
+| Action                                                | Instruction format | Example        |
+| :---------------------------------------------------- | :----------------- | :------------- |
+| Write from R to memory mapped device at address ADDR  | COPYTO /ADDR       | COPYTO /LEDS   |
+| Read from memory mapped device at address ADDR into R | COPYFROM /ADDR     | COPYFROM /RAND |
+
+Currently, there are 3 more modules available via Memory Mapped IO:
+
+- XALU: An extended ALU, which provides some additional operations (mainly logical operator).
+- LEDS: Allows to set the fisical LEDS of the board, by using `COPYTO /16`. There's also a macro so we can use `COPYTO /LEDS`.
+- RAND: A Pseudo Random Number Generator.
+
+The table below details the modules, the addresses and the corresponding function, when written or read:
+
+![](assets/mmio-modules.png)
+
+### Examples
+
+- Do some logic-operations with XALU
+
+| Instruction | Meaning                        |
+| :---------- | :----------------------------- |
+| COPYTO /A0  | Copy R to register A0 in XALU  |
+| COPYTO /A1  | Copy R to register A1 in XALU  |
+| COPYFROM /4 | Place A0 AND A1 (bitwise) in R |
+
+- Get a pseudo-random number
+
+| Instruction    | Meaning                                      |
+| :------------- | :------------------------------------------- |
+| COPYFROM /RAND | Get a pseudo-random number and place it in R |
+
+- Change the pseudo random generator's Seed:
+
+| Instruction  | Meaning                    |
+| :----------- | :------------------------- |
+| COPYTO /RAND | Use R as new seed for RAND |
+
+- Power on/off the board's leds
+
+| Instruction  | Meaning                                            |
+| :----------- | :------------------------------------------------- |
+| COPYTO /LEDS | Power on/off the leds according to the 8 bits of R |
 
 ## Assembler
 
@@ -241,6 +291,17 @@ Notes:
 
 ![](logisim/diagram/MEMORY.png)
 
+NOTE: the Logisim model doesn't support Memory Mapped IO.
+
+### Circuit diagram
+
+![](verilog/assets/MEMORY.svg)
+
+In place of the "ram" module that was in the MEMORY module, we now have a memory wrapper that will handle the IO Memory Mapping:
+
+![](verilog/assets/mem_wrapper.svg)
+
+
 ## PC (Program Counter)
 
 - Reinitialized to 0x00 upon reset
@@ -300,17 +361,17 @@ The ALU can perform 6 different operations selectable via aluCtl[2:0]:
 
 | aluCtl[1:0] | Operation | Output |
 | :---------: | :-------: | :----: |
-| 00          | R + M     | aluOut |
-| 01          | R - M     | aluOut |
-| 10          | M + 1     | aluOut |
-| 11          | M - 1     | aluOut |
+|     00      |   R + M   | aluOut |
+|     01      |   R - M   | aluOut |
+|     10      |   M + 1   | aluOut |
+|     11      |   M - 1   | aluOut |
 
 - 2 comparison operations, which will be used in JUMPZ/JUMPN, selectable via aluCtl[2]:
 
 | aluCtl[2] | Operation | Output |
 | :-------: | :-------: | :----: |
-| 0         | R = 0 ?   | flag   |
-| 1         | R < 0 ?   | flag   |
+|     0     |  R = 0 ?  |  flag  |
+|     1     |  R < 0 ?  |  flag  |
 
 ### Logisim circuit
 
@@ -481,11 +542,11 @@ Let's pause and count mentally how many of each item we have in the Tiles:
 
 | Item  | Count |
 | :---: | :---: |
-| 0x01  | 4     |
-| 0x02  | 5     |
-| 0x03  | 2     |
-| 0x04  | 3     |
-| 0x05  | 0     |
+| 0x01  |   4   |
+| 0x02  |   5   |
+| 0x03  |   2   |
+| 0x04  |   3   |
+| 0x05  |   0   |
 
 (That is what we expect to get in the OUTBOX)
 
@@ -621,11 +682,11 @@ If no module is specified with `MODULE=<module>`, it will default to `MODULE=top
 
 | Target | What it does                                                                                                         | Comments                                                           |
 | :----: | :------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------- |
-| bin    | Generates bitstream                                                                                                  | Makes sense for top module                                         |
+|  bin   | Generates bitstream                                                                                                  | Makes sense for top module                                         |
 | upload | Upload bitstream to FPGA                                                                                             | Makes sense for top module                                         |
-| svg    | Generates a netlistsvg output in asset/ folder                                                                       |                                                                    |
-| dot    | Generates a GraphViz DOT output in asset/ folder                                                                     |                                                                    |
-| sim    | Runs a testbench simulation of a specific module, generates Variables dumps and open Gtkwave to inspect the waveform | Use with `MODULE=<module>`. Testbench must be called <module>_tb.v |
+|  svg   | Generates a netlistsvg output in asset/ folder                                                                       |                                                                    |
+|  dot   | Generates a GraphViz DOT output in asset/ folder                                                                     |                                                                    |
+|  sim   | Runs a testbench simulation of a specific module, generates Variables dumps and open Gtkwave to inspect the waveform | Use with `MODULE=<module>`. Testbench must be called <module>_tb.v |
 
 Additionally:
 - a board can be specified: `BOARD=<board>`, it will default to `MODULE=alhambra` (board must be defined first in Board.mk)

@@ -16,6 +16,7 @@ module hrmcpu (
     output reg  [7:0] cpu_out_data,
     output reg  [7:0] cpu_dmp_data,  // data in selected component/pos
     output reg        cpu_dmp_valid, // whether cpu_dmp_data is valid
+    output reg  [7:0] cpu_o_leds,
 
     // generic signals
     input wire clk,
@@ -211,9 +212,10 @@ module hrmcpu (
     wire              mem_srcA;
     wire              mem_wM;
     wire              mem_wAR;
+    wire              mem_mmio;
     wire signed [7:0] mem_M;
+    wire        [7:0] mem_o_leds;
 
-    // Instanciate UUT
     MEMORY MEMORY0 (
         // input ports
         .ADDR(mem_ADDR),
@@ -221,8 +223,10 @@ module hrmcpu (
         .srcA(mem_srcA),
         .wM(mem_wM),
         .wAR(mem_wAR),
+        .mmio(mem_mmio),
         // output ports
         .M(mem_M),
+        .o_leds(mem_o_leds),
         // clk
         .clk(clk)
     );
@@ -234,6 +238,7 @@ module hrmcpu (
     assign mem_srcA = cu_srcA;
     assign mem_wM = cu_wM;
     assign mem_wAR = cu_wAR;
+    assign mem_mmio = IR0_rIR[0:0];
     // ---------------------------------------- //
 
     // ---------------------------------------- //
@@ -357,7 +362,7 @@ module hrmcpu (
         cpu_out_data = OUTB_o_data;
         cpu_out_empty = ~ OUTB_empty_n;
         cpu_in_full = INBOX_full;
-
+        cpu_o_leds = mem_o_leds;
     end
     // ---------------------------------------- //
 
