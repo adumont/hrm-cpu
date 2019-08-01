@@ -12,19 +12,19 @@
 
 
 module RAND (
-        input wire clk,
-        input wire [7:0] addr,
-        input wire write_en,
-        input wire rst,
-        input wire [7:0] din,
+        input  wire       clk,
+        input  wire [7:0] addr,
+        input  wire       write_en,
+        input  wire       rst,
+        input  wire [7:0] din,
         output wire [7:0] dout
     );
 
     localparam
         //SEED = 16'b 100_0010_1001,
-        SEED = {8'h01, 8'h77},
-        RULE = 8'd 30,
-        WIDTH = 16;
+        SEED  = {7'h01, 8'h77},
+        RULE  = 8'd 30,
+        WIDTH = 15;
 
     reg ini = 0;
     always @(posedge(clk))
@@ -45,19 +45,27 @@ module RAND (
 
     always @(posedge(clk))
         if( ini == 0 ) q <= SEED;
-        else if( write_en ) q <= {8'h01,din};
+        else if( write_en ) q <= {7'h01,din};
         else q <= out;
 
     assign in = q;
-    assign dout = out[9:2];
+
+    // shift register, we shift out[7] on the right
+    // out[7] is the center column of the Automaton
+    reg [7:0] z = 0;
+
+    always @(posedge(clk))
+        if( ini == 0 ) z <= 8'h77;
+        else z <= { z[6:0], out[7]};
+
+    assign dout = z;
 
 endmodule
 
-module CA_cell(in, rule, out);
-    input wire[2:0] in;
+module CA_cell(i, rule, o);
+    input wire[2:0] i;
     input wire[7:0] rule;
+    output wire o;
 
-    output wire out;
-
-    assign out = rule[in];
+    assign o = rule[i];
 endmodule
