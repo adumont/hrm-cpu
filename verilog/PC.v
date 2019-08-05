@@ -13,7 +13,7 @@ module PC (
         output reg [7:0] PC
     );
 
-    // initial PC=0;
+    initial PC = 8'h00;
 
     always @(posedge clk) begin
         if(rst)
@@ -24,6 +24,8 @@ module PC (
             else 
                 PC <= PC + 1;
         end
+        else
+            PC <= PC;
     end
 
 endmodule
