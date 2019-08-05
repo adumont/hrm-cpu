@@ -1,6 +1,11 @@
+[tasks]
+bmc
+prove
+
 [options]
-mode bmc
-#depth 100
+bmc: mode bmc
+prove: mode prove
+#depth 20
 
 [engines]
 smtbmc
