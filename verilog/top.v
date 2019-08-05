@@ -94,8 +94,24 @@ module top (
     // assign cpu_dmp_fifo_pos = ; // TODO: connect
 
     `ifdef BOARD_HAVE_BUTTONS
-    assign cpu_i_rst = sw1_d;
+    assign cpu_i_rst = sw1_d || !reset_n;
+    `else
+    assign cpu_i_rst = !reset_n;
     `endif
+    // ---------------------------------------- //
+
+    // ---------------------------------------- //
+    // Power-Up Reset
+    // reset_n low for (2^reset_counter_size) first clocks
+    wire reset_n;
+
+    localparam reset_counter_size = 6;
+    reg [(reset_counter_size-1):0] reset_reg = 0;
+
+    always @(posedge clk)
+        reset_reg <= reset_reg + { {(reset_counter_size-1) {1'b0}} , !reset_n};
+
+    assign reset_n = &reset_reg;
     // ---------------------------------------- //
 
     // ---------------------------------------- //
