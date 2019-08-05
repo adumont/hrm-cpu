@@ -179,6 +179,7 @@ module hrmcpu (
     wire signed [7:0] R_iData;
     wire        [1:0] R_muxR;
     wire              R_wR;
+    wire              R_rst;
 
     wire signed [7:0] R_value;
 
@@ -190,6 +191,7 @@ module hrmcpu (
         .iData(R_iData),
         .muxR(R_muxR),
         .wR(R_wR),
+        .rst(R_rst),
         // output ports
         .R(R_value),
         // clk
@@ -202,6 +204,7 @@ module hrmcpu (
     assign R_iData = program0_Data;
     assign R_muxR = cu_muxR;
     assign R_wR = cu_wR;
+    assign R_rst = cu_rst;
     // ---------------------------------------- //
 
     // ---------------------------------------- //

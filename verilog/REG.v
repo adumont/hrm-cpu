@@ -9,12 +9,18 @@ module REG (
         // control signals
         input wire [1:0] muxR,   // source mux select
         input wR,                // enable signal
+        input rst,
         // output: register value
         output reg signed [7:0] R
     );
 
+    initial R = 0;
+
     always @(posedge clk) begin
-        if(wR) begin
+        if(rst)
+            R <= 8'b0;
+        else if(wR)
+        begin
             case (muxR)
               2'b00: R <= iInbox;
               2'b01: R <= iMem;
@@ -23,6 +29,8 @@ module REG (
               default: R <= 8'bx;
             endcase
         end
+        else
+            R <= R;
     end
 
 `ifndef SYNTHESIS
