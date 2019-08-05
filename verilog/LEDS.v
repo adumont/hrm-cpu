@@ -12,7 +12,7 @@ module LEDS #(
         output wire [7:0] dout
     );
 
-    reg [data_width-1:0] leds;
+    reg [data_width-1:0] leds = 8'b 0;
 
     assign dout = leds;
 

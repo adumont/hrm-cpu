@@ -77,7 +77,8 @@ module ControlUnit (
     o_SET      = 4'b 1110,
     o_HALT     = 4'b 1111;
 
-    reg [4:0] state, nextstate;
+    reg [4:0] state = 0;
+    reg [4:0] nextstate;
 
     initial begin
       state = S_RESET; // 5'b 00000; // only value we can initialize correctly
@@ -302,7 +303,7 @@ module ControlUnit (
         default    : instrname = "XXXXXXXXXX";
       endcase
 
-      $display("%t - opcode: %10s (%1b) - State: %12s", $time, instrname, indirect, statename);
+      //$display("%t - opcode: %10s (%1b) - State: %12s", $time, instrname, indirect, statename);
     end
     `endif
 
@@ -313,7 +314,7 @@ module ControlUnit (
       always @(posedge clk)
         f_past_valid <= 1'b1;
 
-      always @(*) assume( instrname != "XXXXXXXXXX" ); // we assume the opcode are always valid
+      //always @(*) assume( instrname != "XXXXXXXXXX" ); // we assume the opcode are always valid
 
       always @(*) assert( statename != "XXXXXXXXXX" ); // asserts MUST stay true
       always @(*) assert( statename != "INVALID"    );
