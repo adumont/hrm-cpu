@@ -319,8 +319,6 @@ module ControlUnit (
       always @(*) assert( statename != "XXXXXXXXXX" ); // asserts MUST stay true
       always @(*) assert( statename != "INVALID"    );
 
-      always @(*) assert( muxR != 2'b10 ); // invalid value for muxR
-
       always @(posedge clk)
       if (f_past_valid)
       begin
