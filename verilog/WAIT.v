@@ -24,9 +24,9 @@ module WAIT (
     reg [1:0] state;
     reg [1:0] nextstate;
 
-    initial begin
-      state = S_IDLE; // 5'b 00000; // only value we can initialize correctly
-    end
+    // initial begin
+    //   state = S_IDLE; // 5'b 00000; // only value we can initialize correctly
+    // end
     
     // internal registers
     reg [7:0] t;
