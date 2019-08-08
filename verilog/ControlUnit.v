@@ -118,7 +118,6 @@ module ControlUnit (
                           o_HALT   : nextstate = S_HALT;
                           o_NOP1   : nextstate = S_Inc_PC;
                           o_NOP2   : nextstate = S_Inc_PC;
-                          o_WAIT   : nextstate = S_INIT_TIMER;
                           default  : nextstate = S_INCPC2;
                         endcase
         S_COPYTO      : nextstate = S_Inc_PC;
@@ -129,6 +128,7 @@ module ControlUnit (
                           o_JUMPZ : nextstate = S_JUMPZ;
                           o_JUMPN : nextstate = S_JUMPN;
                           o_SET   : nextstate = S_SET;
+                          o_WAIT  : nextstate = S_INIT_TIMER;
                           default : nextstate = S_LOAD_AR;
                         endcase
         S_ADD         : nextstate = S_Inc_PC;
@@ -314,7 +314,7 @@ module ControlUnit (
         default    : instrname = "XXXXXXXXXX";
       endcase
 
-      //$display("%t - opcode: %10s (%1b) - State: %12s", $time, instrname, indirect, statename);
+      $display("%t - opcode: %10s (%1b) - State: %12s", $time, instrname, indirect, statename);
     end
     `endif
 
