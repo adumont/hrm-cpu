@@ -37,7 +37,7 @@ module tester;
     wire [7:0] cpu_out_data;
     // generic signals
     reg        clk     = 0;
-    reg        i_rst   = 0;
+    wire       i_rst;
 
     // Simulate clock
     always #1 clk = ~clk;
@@ -69,7 +69,8 @@ module tester;
 
     readInputFile readInputFile0(
         .data_ready(cpu_in_wr),
-        .data(cpu_in_data)
+        .data(cpu_in_data),
+        .rst(i_rst)
     );
 
     forceEnd forceEnd0(); 
@@ -99,7 +100,8 @@ endmodule
 
 module readInputFile (
     output reg [7:0] data,
-    output reg data_ready 
+    output reg data_ready,
+    output reg rst
 );
     integer file, count=0;
     reg row = 0;
@@ -109,10 +111,11 @@ module readInputFile (
     initial begin
         data=0;
         data_ready=0;
+        rst = 1;
 
         file = $fopenr(`INBFILE);
 
-        #2;
+        #2 rst=0;
         // endless loop (row is 1 bit)
         for(row=0; row<2; row=row+1 )
         begin
