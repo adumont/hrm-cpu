@@ -44,6 +44,7 @@ module hrmcpu (
     wire       cu_outFull;
     wire       cu_debug;
     wire       cu_nxtInstr;
+    wire       cu_timer_busy;
     // output signals
     wire       cu_wIR;
     wire [1:0] cu_muxR;
@@ -59,6 +60,7 @@ module hrmcpu (
     wire       cu_branch;
     wire       cu_rst;
     wire       cu_halt;
+    wire       cu_enT;
 
     ControlUnit ControlUnit0 (
         // input ports
@@ -67,6 +69,7 @@ module hrmcpu (
         .outFull(cu_outFull),
         .debug(cu_debug),
         .nxtInstr(cu_nxtInstr),
+        .busy(cu_timer_busy),
         // output ports
         .wIR(cu_wIR),
         .muxR(cu_muxR),
@@ -82,6 +85,7 @@ module hrmcpu (
         .branch(cu_branch),
         .rst(cu_rst),
         .halt(cu_halt),
+        .enT(cu_enT),
         // clk, rst
         .clk(clk),
         .i_rst(i_rst)
@@ -93,6 +97,7 @@ module hrmcpu (
     assign cu_outFull = OUTB_full;
     assign cu_debug = cpu_debug;
     assign cu_nxtInstr = cpu_nxtInstr;
+    assign cu_timer_busy = timer_busy;
     // ---------------------------------------- //
 
     // ---------------------------------------- //
@@ -266,6 +271,27 @@ module hrmcpu (
     assign alu_Ctl = cu_aluCtl;
     assign alu_inR = R_value;
     assign alu_inM = mem_M;
+    // ---------------------------------------- //
+
+    // ---------------------------------------- //
+    // WAIT (Timer)
+    //
+    wire [7:0] timer_din;
+    wire timer_start;
+    wire timer_busy;
+    wire timer_rst;
+
+    WAIT WAIT0 (
+        .din(timer_din),
+        .start(timer_start),
+        .busy(timer_busy),
+        .clk(clk),
+        .rst(timer_rst)
+    );
+    // Connect inputs
+    assign timer_din = program0_Data;
+    assign timer_start = cu_enT;
+    assign timer_rst = cu_rst;
     // ---------------------------------------- //
 
     // ---------------------------------------- //
