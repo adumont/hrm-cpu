@@ -29,7 +29,7 @@ module WAIT_tb;
 
         #4  rst = 0;
 
-        #4  din = 8'h 05;
+        #4  din = 8'h 03;
 
         #4  start = 1;
         #2  start = 0;

@@ -1,23 +1,22 @@
 [*]
 [*] GTKWave Analyzer v3.3.66 (w)1999-2015 BSI
-[*] Wed Aug  7 20:41:09 2019
+[*] Thu Aug  8 15:20:28 2019
 [*]
 [dumpfile] "/home/adumont/projects/hrmcpu/verilog/WAIT_tb.vcd"
-[dumpfile_mtime] "Wed Aug  7 20:40:11 2019"
-[dumpfile_size] 7038
+[dumpfile_mtime] "Thu Aug  8 15:17:10 2019"
+[dumpfile_size] 9608
 [savefile] "/home/adumont/projects/hrmcpu/verilog/WAIT_tb.gtkw"
 [timestart] 0
 [size] 1678 998
 [pos] -1 -1
-*-4.000000 3 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-4.000000 84 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] WAIT_tb.
 [sst_width] 197
 [signals_width] 164
 [sst_expanded] 1
 [sst_vpaned_height] 299
-@29
-WAIT_tb.busy
 @28
+WAIT_tb.busy
 WAIT_tb.clk
 @22
 WAIT_tb.din[7:0]
@@ -26,11 +25,8 @@ WAIT_tb.rst
 WAIT_tb.start
 @200
 -WAIT0
-@820
-WAIT_tb.WAIT0.statename[87:0]
-@24
-WAIT_tb.WAIT0.c[2:0]
-@22
-WAIT_tb.WAIT0.t[7:0]
+@25
+WAIT_tb.WAIT0.high[7:0]
+WAIT_tb.WAIT0.low[2:0]
 [pattern_trace] 1
 [pattern_trace] 0
