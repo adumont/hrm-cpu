@@ -53,7 +53,7 @@ BEGIN {
     ass["JUMPN"]="A0";    i["JUMPN"]=2;
     ass["NOP1"]="B0";     i["NOP1"]=1;
     ass["NOP2"]="C0";     i["NOP2"]=1;
-    ass["NOP3"]="D0";     i["NOP3"]=1;
+    ass["WAIT"]="D0";     i["WAIT"]=2;
     ass["SET"]="E0";      i["SET"]=2;
     ass["HALT"]="F0";     i["HALT"]=1;
 
