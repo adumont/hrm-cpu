@@ -150,6 +150,14 @@ The table below details the modules, the addresses and the corresponding functio
 | :----------- | :------------------------------------------------- |
 | COPYTO /LEDS | Power on/off the leds according to the 8 bits of R |
 
+## Timer (WAIT)
+
+I have added a new instruction, WAIT: It takes one operand N, and will pause the execution for N x 50ms.
+
+| Instruction  | Meaning                          |
+| :----------- | :------------------------------- |
+| WAIT n       | Pause the execution for n x 50ms |
+
 ## Assembler
 
 I have prepared a rudimentary [assembler](https://github.com/adumont/hrm-cpu/blob/harvard/logisim/prog/assembler) that translates an HRM program to the corresponding machine language that can then be loaded into the [PROG (Program ROM)](#prog-program-rom).
