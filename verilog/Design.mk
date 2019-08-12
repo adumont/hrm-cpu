@@ -22,6 +22,7 @@ DEPS_HRMCPU:=\
   REG.v \
   IR.v \
   PROG.v \
+  WAIT.v \
   PC.v \
   ControlUnit.v
 

@@ -7,6 +7,7 @@ module ControlUnit (
     input  wire       outFull,
     input  wire       debug,
     input  wire       nxtInstr,
+    input  wire       busy,
     // output signals
     output reg        wIR,
     output reg  [1:0] muxR,
@@ -22,6 +23,7 @@ module ControlUnit (
     output reg        branch,
     output reg        rst,
     output reg        halt,
+    output reg        enT,
     // generic signals
     input wire clk,
     input wire i_rst
@@ -54,7 +56,9 @@ module ControlUnit (
     S_SUB         = 5'b 10000,
     S_WAIT_KEY    = 5'b 11010,
     S_SET         = 5'b 11011,
-    S_INVALID     = 5'b 10001; // should never be reached!
+    S_INIT_TIMER  = 5'b 11100,
+    S_WAIT_TIMER  = 5'b 11101,
+    S_INVALID     = 5'b 11111; // should never be reached!
 
     wire [3:0] opcode = INSTR[7:4];
     wire indirect = INSTR[3];
@@ -73,7 +77,7 @@ module ControlUnit (
     o_JUMPN    = 4'b 1010,
     o_NOP1     = 4'b 1011,
     o_NOP2     = 4'b 1100,
-    o_NOP3     = 4'b 1101,
+    o_WAIT     = 4'b 1101,
     o_SET      = 4'b 1110,
     o_HALT     = 4'b 1111;
 
@@ -114,7 +118,6 @@ module ControlUnit (
                           o_HALT   : nextstate = S_HALT;
                           o_NOP1   : nextstate = S_Inc_PC;
                           o_NOP2   : nextstate = S_Inc_PC;
-                          o_NOP3   : nextstate = S_Inc_PC;
                           default  : nextstate = S_INCPC2;
                         endcase
         S_COPYTO      : nextstate = S_Inc_PC;
@@ -125,6 +128,7 @@ module ControlUnit (
                           o_JUMPZ : nextstate = S_JUMPZ;
                           o_JUMPN : nextstate = S_JUMPN;
                           o_SET   : nextstate = S_SET;
+                          o_WAIT  : nextstate = S_INIT_TIMER;
                           default : nextstate = S_LOAD_AR;
                         endcase
         S_ADD         : nextstate = S_Inc_PC;
@@ -134,6 +138,9 @@ module ControlUnit (
         S_SET         : nextstate = S_Inc_PC;
         S_BUMPP       : nextstate = S_COPYTO;
         S_BUMPN       : nextstate = S_COPYTO;
+        S_INIT_TIMER  : nextstate = S_WAIT_TIMER;
+        S_WAIT_TIMER  : if ( busy ) nextstate = S_WAIT_TIMER;
+                        else        nextstate = S_Inc_PC;
         S_HALT        : nextstate = S_HALT;
         S_LOAD_AR     : if      ( ~indirect && opcode == o_COPYTO ) nextstate = S_COPYTO;
                         else if (  indirect )                       nextstate = S_READMEM2;
@@ -172,6 +179,7 @@ module ControlUnit (
       branch = 1'b0;
       rst    = 1'b0;
       halt   = 1'b0;
+      enT    = 1'b0;
 
       case (state)
         S_ADD        : begin
@@ -228,6 +236,7 @@ module ControlUnit (
           srcA   = 1'b 1;
           wAR    = 1'b 1;
         end
+        S_INIT_TIMER : enT  = 1'b 1;
         S_LOAD_IR    : wIR  = 1'b 1;
         S_OUTBOX     : wO   = 1'b 1;
         S_RESET      : rst  = 1'b1;
@@ -278,6 +287,8 @@ module ControlUnit (
         S_SUB         : statename = "SUB";
         S_WAIT_KEY    : statename = "WAIT_KEY";
         S_SET         : statename = "SET";
+        S_INIT_TIMER  : statename = "INIT_TIMER";
+        S_WAIT_TIMER  : statename = "WAIT_TIMER";
         S_INVALID     : statename = "INVALID";
         default       : statename = "XXXXXXXXXX";
       endcase
@@ -298,12 +309,12 @@ module ControlUnit (
         o_HALT     : instrname = "HALT";
         o_NOP1     : instrname = "NOP1";
         o_NOP2     : instrname = "NOP2";
-        o_NOP3     : instrname = "NOP3";
+        o_WAIT     : instrname = "WAIT";
         o_SET      : instrname = "SET";
         default    : instrname = "XXXXXXXXXX";
       endcase
 
-      //$display("%t - opcode: %10s (%1b) - State: %12s", $time, instrname, indirect, statename);
+      $display("%t - opcode: %10s (%1b) - State: %12s", $time, instrname, indirect, statename);
     end
     `endif
 
