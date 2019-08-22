@@ -97,9 +97,11 @@ The following picture shows the instruction set format, and corresponding machin
 
 The current implementation status is represented by the color in the first column (Green: implemented in Logisim, white: pending).
 
-I have added a couple of instructions that were not in the HRM game: SET, and HALT.
+I have added a couple of instructions that were not in the HRM game: WAIT, SET, and HALT. 
 
-Instruction are encoded with 1 word (8 bit). Some instructions have one  operand which is also encoded with 8 bits. So the length of instruction is variable: some are 1 word wide, others are two words wide.
+I have also added support for some memory mapped IO, allowing to access additional modules via the memory commands, by setting the mmio bit in the opcode lower nibble.
+
+The opcodes are encoded with 1 word (8 bit) or two nibbles. Some instructions have one operand which is also encoded with 8 bits. So the length of instructions is variable: some are 1 word wide, others are two words wide.
 
 ## Memory Mapped I/O
 
