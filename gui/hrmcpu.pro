@@ -12,8 +12,8 @@ TARGET = hrmcpu
 TEMPLATE = app
 
 INCLUDEPATH += ../verilog/obj_dir
-INCLUDEPATH += /home/adumont/toolchain/share/verilator/include
-#INCLUDEPATH += /home/adumont/toolchain/share/verilator/include/vltstd
+INCLUDEPATH += $(HOME)/toolchain/share/verilator/include
+#INCLUDEPATH += $(HOME)/toolchain/share/verilator/include/vltstd
 
 LIBS += ../verilog/obj_dir/*.o
 
