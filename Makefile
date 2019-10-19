@@ -5,6 +5,7 @@ SOURCEDIR:=$(HOME)/src
 
 test: 
 	grep . $(TARGETDIR)/*.ver
+	$(MAKE) -s -C gui clean
 	$(MAKE) -s -C verilog test
 	$(MAKE) -C verilog/test BOARD=alhambra  hwbin
 	$(MAKE) -C verilog/test BOARD=ice40hx8k hwbin
