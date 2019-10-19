@@ -23,12 +23,14 @@ GIT_YOSYS:=https://github.com/cliffordwolf/yosys.git
 GIT_ARACH:=https://github.com/cseed/arachne-pnr.git
 GIT_SYMBI:=https://github.com/cliffordwolf/SymbiYosys.git
 GIT_YICES:=https://github.com/SRI-CSL/yices2.git
+GIT_VLTOR:=http://git.veripool.org/git/verilator
 
 VER_ICEST:=$(TARGETDIR)/icestorm.ver
 VER_YOSYS:=$(TARGETDIR)/yosys.ver
 VER_ARACH:=$(TARGETDIR)/arachne-pnr.ver
 VER_SYMBI:=$(TARGETDIR)/symbiyosys.ver
 VER_YICES:=$(TARGETDIR)/yices2.ver
+VER_VLTOR:=$(TARGETDIR)/verilator.ver
 
 check_latest:
 	[ -e $(VER_ICEST) ] && ( git ls-remote --heads $(GIT_ICEST) refs/heads/master | cut -f1 | cmp $(VER_ICEST) - || rm -f $(VER_ICEST) ) || true
@@ -36,8 +38,9 @@ check_latest:
 	[ -e $(VER_ARACH) ] && ( git ls-remote --heads $(GIT_ARACH) refs/heads/master | cut -f1 | cmp $(VER_ARACH) - || rm -f $(VER_ARACH) ) || true
 	[ -e $(VER_SYMBI) ] && ( git ls-remote --heads $(GIT_SYMBI) refs/heads/master | cut -f1 | cmp $(VER_SYMBI) - || rm -f $(VER_SYMBI) ) || true
 	[ -e $(VER_YICES) ] && ( git ls-remote --heads $(GIT_YICES) refs/heads/master | cut -f1 | cmp $(VER_YICES) - || rm -f $(VER_YICES) ) || true	
+	[ -e $(VER_VLTOR) ] && ( git ls-remote --heads $(GIT_VLTOR) refs/heads/master | cut -f1 | cmp $(VER_VLTOR) - || rm -f $(VER_VLTOR) ) || true
 
-ci-deps: $(VER_ICEST) $(VER_YOSYS) $(VER_ARACH) $(VER_SYMBI) $(VER_YICES)
+ci-deps: $(VER_ICEST) $(VER_YOSYS) $(VER_ARACH) $(VER_SYMBI) $(VER_YICES) $(VER_VLTOR)
 
 ifndef TRAVIS
   NPROC:= -j$(shell nproc)
@@ -90,5 +93,17 @@ $(VER_YICES):
 	nice make $(NPROC) && \
 	make $(NPROC) install && \
 	git rev-parse HEAD > $(VER_YICES)
+
+$(VER_VLTOR):
+	mkdir -p $(SOURCEDIR); cd $(SOURCEDIR) && \
+        ( [ -e verilator ] || git clone $(GIT_VLTOR) ) && \
+        cd verilator && \
+        git pull && \
+        git log -1 && \
+	unset VERILATOR_ROOT && \
+	autoconf && \
+	./configure --prefix=$(TARGETDIR) >/dev/null && \
+        nice make $(NPROC) install && \
+        git rev-parse HEAD > $(VER_VLTOR)
 
 .PHONY: test clean ci-deps check_latest
