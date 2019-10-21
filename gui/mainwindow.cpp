@@ -128,6 +128,10 @@ void MainWindow::on_pbA_pressed()
 
 void MainWindow::on_pbB_toggled(bool checked)
 {
+    // Put QLineEdit in ReadOnly mode when running the clock
+    // so user desn't edit registers values
+    ui->PC_PC->setReadOnly(checked);
+
     if(checked) {
         ui->pbA->setDisabled(true);
 //        ui->pbReset->setDisabled(true);
@@ -426,4 +430,19 @@ void MainWindow::on_actionLoad_Program_triggered()
 void MainWindow::on_actionExit_triggered()
 {
     QApplication::quit();
+}
+
+void MainWindow::on_pbTest_pressed()
+{
+//    top->hrmcpu__DOT__PC0_PC = 2;
+//    ui->PC_PC->setText(formatData( top->hrmcpu__DOT__PC0_PC ));
+    updateUI();
+}
+
+void MainWindow::on_PC_PC_editingFinished()
+{
+    bool success;
+
+    top->hrmcpu__DOT__PC0_PC = ui->PC_PC->text().toUInt(&success,16);
+    updateUI();
 }

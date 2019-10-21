@@ -49,6 +49,10 @@ private slots:
 
     void on_actionExit_triggered();
 
+    void on_pbTest_pressed();
+
+    void on_PC_PC_editingFinished();
+
 private:
     Ui::MainWindow *ui;
     QTimer *m_timer;
