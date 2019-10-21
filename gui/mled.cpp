@@ -6,19 +6,10 @@ MLed::MLed(QWidget* parent, Qt::WindowFlags f)
     : QLabel(parent) {
     this->setColor(1);
     this->setOff();
+
+    // connect(this, SIGNAL(clicked()), this, SLOT(toggleState()));
+
 }
-
-//MLed::~MLed()
-//{
-
-//}
-
-/*
-    void setColor(int);
-    void setOn();
-    void setOff();
-    void setState(bool);
-*/
 
 void MLed::setColor( int color )
 {   // 0: green, 1: red, 2: blue, 3: yellow
@@ -62,4 +53,19 @@ void MLed::setOn()
 void MLed::setOff()
 {
     setState(false);
+}
+
+void MLed::mouseDoubleClickEvent(QMouseEvent* event) {
+    emit clicked();
+    // remember to connect the signal to 1 or more slot...
+}
+
+void MLed::toggleState()
+{
+    setState(!m_state);
+}
+
+bool MLed::getState()
+{
+    return m_state;
 }
