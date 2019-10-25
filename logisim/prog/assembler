@@ -16,7 +16,7 @@ BINFILE=$DIRNAME/$BASENAME.BIN
 
 cat $1 | tr -s "[]" "@@" | sed -r -e "
     s/\/A0/\/0/g;
-    s/\/A1/\/0/g;
+    s/\/A1/\/1/g;
     s/\/LEDS/\/16/g;
     s/\/RAND/\/17/g;
     s/([a-zA-Z+-]+)\s+@([0-9]+)@/i\1 \2/g;
