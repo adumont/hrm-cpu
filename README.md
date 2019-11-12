@@ -1,5 +1,5 @@
 [![Join the HRMCPU chat at https://gitter.im/hrm-cpu/Lobby](https://badges.gitter.im/hrm-cpu/Lobby.svg)](https://gitter.im/hrm-cpu/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Build Status](https://travis-ci.org/adumont/hrm-cpu.svg?branch=master)](https://travis-ci.org/adumont/hrm-cpu)
+[![Build Status](https://travis-ci.com/adumont/hrm-cpu.svg?branch=master)](https://travis-ci.com/adumont/hrm-cpu)
 
 # Human Resource Machine CPU (Verilog)
 
