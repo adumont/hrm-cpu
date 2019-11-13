@@ -9,6 +9,7 @@ module mem_wrapper #(
         input  wire [data_width-1:0] din,
         input  wire                  write_en,
         input  wire                  mmio,
+        input  wire                  rst,
         output reg  [data_width-1:0] dout,
         output reg  [7:0]            o_leds
     );
@@ -48,7 +49,7 @@ module mem_wrapper #(
         .dout( xalu_dout ),
         .write_en( write_en & cs_XALU ),
         .din( din ),
-        .rst( 0 )
+        .rst( rst )
     );
     // ---------------------------------------- //
 
@@ -63,7 +64,7 @@ module mem_wrapper #(
         .dout( leds_dout ),
         .write_en( write_en & cs_LEDS ),
         .din( din ),
-        .rst( 0 )
+        .rst( rst )
     );
     // ---------------------------------------- //
 
@@ -77,7 +78,7 @@ module mem_wrapper #(
         .dout( rand_dout ),
         .write_en( write_en & cs_RAND ),
         .din( din ),
-        .rst( 0 )
+        .rst( rst )
     );
     // ---------------------------------------- //
 
