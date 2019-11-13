@@ -236,6 +236,7 @@ module hrmcpu (
         .M(mem_M),
         .o_leds(mem_o_leds),
         // clk
+        .rst(cu_rst),
         .clk(clk)
     );
     defparam MEMORY0.ROMFILE = ROMFILE;
