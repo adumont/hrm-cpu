@@ -53,6 +53,8 @@ private slots:
 
     void on_PC_PC_editingFinished();
 
+    void on_tblPROG_cellChanged(int row, int column);
+
 private:
     Ui::MainWindow *ui;
     QTimer *m_timer;

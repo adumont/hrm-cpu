@@ -56,10 +56,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tblPROG->setHorizontalHeaderLabels(QStringList("Data"));
 
 
+    ui->tblPROG->blockSignals(true);
     // PROG table, fill with current program
     for(int i=0; i<256; i++){
         ui->tblPROG->setItem(0,i,new QTableWidgetItem( formatData( top->hrmcpu__DOT__program0__DOT__rom[i] ) ));
     }
+    ui->tblPROG->blockSignals(false);
 
     // INBOX table
     for(int i=0; i<32; i++){
@@ -179,9 +181,11 @@ void MainWindow::updateUI()
     ui->PROG_ADDR->setText(formatData( top->hrmcpu__DOT__PC0_PC ));
     ui->PROG_DATA->setText(formatData( top->hrmcpu__DOT__program0__DOT__r_data ));
     // PROG table
+    ui->tblPROG->blockSignals(true);
     for(int i=0; i<256; i++){
         ui->tblPROG->setItem(0,i,new QTableWidgetItem( formatData( top->hrmcpu__DOT__program0__DOT__rom[i] ) ));
     }
+    ui->tblPROG->blockSignals(false);
 
     // IR Instruction Register
     ui->IR_INSTR->setText(formatData( top->hrmcpu__DOT__IR0_rIR ));
@@ -445,4 +449,15 @@ void MainWindow::on_PC_PC_editingFinished()
 
     top->hrmcpu__DOT__PC0_PC = ui->PC_PC->text().toUInt(&success,16);
     updateUI();
+}
+
+void MainWindow::on_tblPROG_cellChanged(int row, int column)
+{
+    bool success;
+    QString value = ui->tblPROG->item(column, row)->text();
+
+    qDebug() << "PROG changed at Addr 0x: " << row << "=" << value;
+
+    top->hrmcpu__DOT__program0__DOT__rom[row] = value.toUInt(&success,16);
+
 }
