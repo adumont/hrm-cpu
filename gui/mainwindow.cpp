@@ -454,10 +454,9 @@ void MainWindow::on_PC_PC_editingFinished()
 void MainWindow::on_tblPROG_cellChanged(int row, int column)
 {
     bool success;
-    QString value = ui->tblPROG->item(column, row)->text();
+    QString value = ui->tblPROG->item(row, column)->text();
 
-    qDebug() << "PROG changed at Addr 0x: " << row << "=" << value;
+    qDebug() << "PROG changed at Addr 0x:" << row << "=" << value;
 
     top->hrmcpu__DOT__program0__DOT__rom[row] = value.toUInt(&success,16);
-
 }
