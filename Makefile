@@ -24,7 +24,7 @@ GIT_YOSYS:=https://github.com/cliffordwolf/yosys.git
 GIT_ARACH:=https://github.com/cseed/arachne-pnr.git
 GIT_SYMBI:=https://github.com/cliffordwolf/SymbiYosys.git
 GIT_YICES:=https://github.com/SRI-CSL/yices2.git
-GIT_VLTOR:=http://git.veripool.org/git/verilator
+GIT_VLTOR:=https://github.com/verilator/verilator.git
 GIT_IVRLG:=https://github.com/steveicarus/iverilog
 
 VER_ICEST:=$(TARGETDIR)/icestorm.ver
@@ -41,7 +41,7 @@ check_latest:
 	[ -e $(VER_ARACH) ] && ( git ls-remote --heads $(GIT_ARACH) refs/heads/master | cut -f1 | cmp $(VER_ARACH) - || rm -f $(VER_ARACH) ) || true
 	[ -e $(VER_SYMBI) ] && ( git ls-remote --heads $(GIT_SYMBI) refs/heads/master | cut -f1 | cmp $(VER_SYMBI) - || rm -f $(VER_SYMBI) ) || true
 	[ -e $(VER_YICES) ] && ( git ls-remote --heads $(GIT_YICES) refs/heads/master | cut -f1 | cmp $(VER_YICES) - || rm -f $(VER_YICES) ) || true	
-	[ -e $(VER_VLTOR) ] && ( git ls-remote --heads $(GIT_VLTOR) refs/heads/master | cut -f1 | cmp $(VER_VLTOR) - || rm -f $(VER_VLTOR) ) || true
+	[ -e $(VER_VLTOR) ] && ( git ls-remote --heads $(GIT_VLTOR) refs/heads/stable | cut -f1 | cmp $(VER_VLTOR) - || rm -f $(VER_VLTOR) ) || true
 	[ -e $(VER_IVRLG) ] && ( git ls-remote --heads $(GIT_IVRLG) refs/heads/master | cut -f1 | cmp $(VER_IVRLG) - || rm -f $(VER_IVRLG) ) || true
 
 ci-deps: $(VER_ICEST) $(VER_YOSYS) $(VER_ARACH) $(VER_SYMBI) $(VER_YICES) $(VER_VLTOR) $(VER_IVRLG)
@@ -103,6 +103,7 @@ $(VER_VLTOR):
         ( [ -e verilator ] || git clone $(GIT_VLTOR) ) && \
         cd verilator && \
         git pull && \
+        git checkout stable && \
         git log -1 && \
 	unset VERILATOR_ROOT && \
 	autoconf && \
