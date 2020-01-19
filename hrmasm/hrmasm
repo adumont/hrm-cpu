@@ -1,0 +1,300 @@
+#!/usr/bin/env python3
+
+import argparse
+import contextlib
+import os.path
+from enum import Enum
+import re
+import sys
+import logging
+
+labels = {}
+prog = []
+
+# Argument parsing
+parser = argparse.ArgumentParser()
+parser.add_argument('-s','--source', help='source file')
+parser.add_argument('-o','--output', help='output rom file (for FPGA)')
+parser.add_argument('-p','--pretty', help='output pretty printed file')
+parser.add_argument('-b','--bin', '--binary', help='output in binary format file')
+parser.add_argument('-l','--logisim', action='store_true', help='binary rom/ram file in logisim format')
+parser.add_argument('-d','--debug', action='store_true', help='print debug messages')
+parser.add_argument('-r','--ram', help='output initial ram file (for FPGA)')
+args = parser.parse_args()
+
+if args.debug:
+  level=logging.DEBUG
+else:
+  level=logging.INFO
+
+logging.basicConfig(format='[%(name)s.%(funcName)s:%(lineno)d] %(levelname)s %(message)s', level=level)
+
+def log(className):
+  return logging.getLogger(className)
+
+def str2int(str):
+  b=16 if str.startswith("0X") else 10
+  return int(str, b)
+
+def decode_operand_macro(str):
+  macros={ "/A0"  : "/0",
+           "/A1"  : "/1",
+           "/LEDS": "/16",
+           "/RAND": "/17",
+  }
+
+  if( macros.get(str) ):
+    return macros.get(str)
+  else:
+    return str
+
+def decode_instr_mode(str):
+  # Indirect Mode: [operand]
+  if str.startswith("[") and str.endswith("]"): 
+    return re.split("\[|\]", str)[1].strip(), 8
+  
+  # MMIO mode /operand
+  elif str.startswith("/"):
+    return re.split("\/", str)[1].strip(), 1
+
+  # Direct mode
+  else:
+      return str, 0
+
+# Mnemonix / opcode / # of operands
+dict = {
+    "INBOX"   : { "opc": 0x00, "opr": 0},
+    "OUTBOX"  : { "opc": 0x10, "opr": 0},
+
+    "COPYFROM": { "opc": 0x20, "opr": 1},
+    "COPYTO"  : { "opc": 0x30, "opr": 1},
+    "ADD"     : { "opc": 0x40, "opr": 1},
+    "SUB"     : { "opc": 0x50, "opr": 1},
+    "BUMP+"   : { "opc": 0x60, "opr": 1},
+    "BUMP-"   : { "opc": 0x70, "opr": 1},
+    "JUMP"    : { "opc": 0x80, "opr": 1},
+    "JUMPZ"   : { "opc": 0x90, "opr": 1},
+    "JUMPN"   : { "opc": 0xA0, "opr": 1},
+
+    "SET"     : { "opc": 0xE0, "opr": 1},
+    "WAIT"    : { "opc": 0xD0, "opr": 1},
+
+    "NOP1"    : { "opc": 0xB0, "opr": 0},
+    "NOP2"    : { "opc": 0xC0, "opr": 0},
+    "HALT"    : { "opc": 0xF0, "opr": 0},
+}
+
+# supports Indirect or MMIO modes
+supports_modes = [ "COPYFROM", "COPYTO", "ADD", "SUB", "BUMP+", "BUMP-" ]
+
+# Jump instructions
+jump_instr = [ "JUMP", "JUMPZ", "JUMPN" ]
+
+TYPE_EMPTY, TYPE_LABEL, TYPE_INSTR, TYPE_JUMP = 0, 1, 2, 3
+
+class Instr(object):
+    """__init__() functions as the class constructor"""
+    def __init__(self, address=0, line=""):
+      self.address=address
+      self.line=line
+      self.size=None
+      self.itype=None
+      self.label_name=None    # str
+      self.label_address=None # int
+      self.mnemonic=None  # str
+      self.opcode=None    # int
+      self.operand=None   # int
+      self.comment=None   # int
+      self.mode=None      # int
+      
+      # remove eventual comments addr + machine code comments
+      line=(re.sub("^.*\|", "", line)).strip()
+
+      # split eventual comments
+      line_split=re.split(";", line.strip(), 1)
+      instr=line_split[0].strip()
+
+      if len(line_split) > 1:
+        self.comment = line_split[1].strip()
+
+      if not instr:
+        # Empty line
+        log(self.__class__.__name__).debug("Empty line")
+        self.itype=TYPE_EMPTY
+        self.size=0
+        return
+      elif instr.endswith(":"):
+        # This is a LABEL
+        label = re.split(":", instr.strip())[0].strip().lower()
+        if not label:
+          raise Exception('Empty label at address ' + str(address))
+        # Add current address to labels dict
+        if labels.get(label):
+          raise Exception("At " + str(address) + ", label " + label + " is already defined (at address " + str(labels.get(label)) + ")")
+        labels[label]=address
+        self.label_name=label
+        self.size=0
+        self.itype=TYPE_LABEL
+        return
+      else :
+        log(self.__class__.__name__).debug("instr: %s", str(instr))
+        # Looks like an instruction
+        instr = re.split(" |\t", instr.strip())
+
+        log(self.__class__.__name__).debug("Instr splitted: %s", str(instr))
+
+        ## CONTINUE - review this code
+        self.mnemonic = instr[0].upper()
+
+        mode=0
+
+        if not dict.get(self.mnemonic):
+          raise Exception('Unknown mnenonic ' + self.mnemonic + " at " + str(address) )
+
+        self.itype=TYPE_INSTR
+        self.opcode = dict.get(self.mnemonic).get("opc")
+
+        log(self.__class__.__name__).debug("opcode: %d", self.opcode)
+        
+        # should this instr have 1 operand?
+        if dict.get(self.mnemonic).get("opr") == 1:
+          if len(instr)==1:
+            raise Exception("At " + str(address) + ", missing operand for " + self.mnemonic)
+
+          if self.mnemonic in supports_modes:
+            operand_str = decode_operand_macro(instr[1].upper())
+            log(self.__class__.__name__).debug("operand_str1: %s", operand_str )
+            log(self.__class__.__name__).debug("supports mode")
+            operand_str, mode = decode_instr_mode(operand_str)
+            log(self.__class__.__name__).debug("operand_str2: %s", operand_str )
+            log(self.__class__.__name__).debug("mode: %d", mode)
+            self.opcode += mode
+            self.operand = str2int(operand_str)
+          elif self.mnemonic in {"SET", "WAIT"}:
+            operand_str, mode = decode_instr_mode(instr[1])
+            log(self.__class__.__name__).debug("operand_str: %s", operand_str )
+            log(self.__class__.__name__).debug("mode: %d", mode)
+            self.opcode += mode
+            self.operand = str2int(operand_str)
+          elif self.mnemonic in jump_instr:
+            self.label_name = instr[1].lower()
+            log(self.__class__.__name__).debug("It's a JUMP to label [%s]", self.label_name)
+            self.itype=TYPE_JUMP
+          else:
+            raise Exception("At " + str(address) + ", " + self.mnemonic + " unknown mnemonic with 1 operand")
+
+        self.size= 1 + dict.get(self.mnemonic).get("opr")
+        self.mode=mode
+        
+    def machine_code(self):
+      if self.itype == TYPE_JUMP:
+        return [self.opcode, self.label_address]
+      elif self.itype == TYPE_INSTR:
+        if self.size == 1:
+          return [self.opcode]
+        else:
+          return [self.opcode, self.operand]
+      else:
+        return []
+
+@contextlib.contextmanager
+def smart_open(filename=None, mode="w"):
+  if filename and filename != '-':
+    fh = open(filename, mode)
+  else:
+    if mode == "r":
+      fh = os.fdopen(sys.stdin.fileno(), mode, closefd=False)
+    else:
+      fh = os.fdopen(sys.stdout.fileno(), mode, closefd=False)
+  try:
+    yield fh
+  finally:
+    if filename and filename != '-':
+      fh.close()
+
+def debug(str):
+  if args.debug:
+    print(str)
+
+def main():
+
+  if args.source:
+    logging.info("Reading source program from %s", args.source)
+
+    txtfile=[]
+    with smart_open(args.source, 'r') as handle:
+      for line in handle:
+        txtfile.append(line.strip())
+
+    # print(txtfile)
+    address = 0x00  # will get incremented after each instruction
+
+    for line in txtfile:
+      logging.debug("Address: [%d]", address)
+      logging.debug("Decoding: [%s]", line)
+      # split instruction from comment:
+      instr=Instr(address, line)
+      prog.append(instr)
+      address += instr.size
+
+    # assign address to each label in all jump instructions
+    for i in prog:
+      if i.itype==TYPE_JUMP:
+        if i.label_name in labels:
+          i.label_address=labels.get(i.label_name)
+        else:
+          raise Exception("At " + str(i.address) + ", undefined label " + i.label_name )
+
+    mc=[]
+    for i in prog:
+      if i.size>0 or True:
+        mc += i.machine_code()
+        logging.debug("%s", str(vars(i)) )
+
+    logging.debug("Program's machine code is: %s", str(mc))
+
+    if args.output:
+      logging.info("Writing output program to %s", args.output)
+      with smart_open(args.output, "w") as fh:
+        if args.logisim:
+          print("v2.0 raw", file=fh)
+        print(''.join('{:02X} '.format(a) for a in mc) + ''.join('00 ' for i in range(256 - len(mc))).strip(), file=fh)
+
+    if args.bin:
+      logging.info("Writing output program in binary format to %s", args.bin)
+      with smart_open(args.bin, "wb") as fh:
+        fh.write(bytearray(mc))
+        fh.write(bytearray(0 for i in range(256 - len(mc))  ))
+
+    if args.pretty:
+      logging.info("Writing program in pretty print format to %s", args.pretty)
+      with smart_open(args.pretty) as fh:
+        for i in prog:
+          if i.itype == TYPE_LABEL:
+            print("          | %s:" % i.label_name, file=fh)
+          elif i.itype == TYPE_EMPTY and i.comment:
+            print("          | ; %s" % i.comment, file=fh)
+          elif i.itype == TYPE_INSTR or i.itype == TYPE_JUMP:
+            print("%02X: %-6s|   %s" % ( i.address, ''.join('%02X ' % a for a in i.machine_code() ), i.mnemonic ), end = '', file=fh)
+            if i.itype == TYPE_JUMP:
+              print( "", i.label_name, end = '', file=fh)
+            elif i.size == 2:
+              if i.mode == 1:
+                print( " /%d" % i.operand, end = '', file=fh)
+              elif i.mode == 8:
+                print( " [%d]" % i.operand, end = '', file=fh)
+              else:
+                print( "", i.operand, end = '', file=fh)
+            if i.comment:
+              print( " ;", i.comment, end = '', file=fh)
+            print("", file=fh)
+
+  if args.ram:
+    logging.info("Writing output program to %s", args.ram)
+    with smart_open(args.ram, "w") as fh:
+      if args.logisim:
+        print("v2.0 raw", file=fh)
+      print(''.join('00 ' for i in range(256)).strip(), file=fh)
+  
+if __name__== "__main__":
+  main()
