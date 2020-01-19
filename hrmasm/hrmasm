@@ -90,16 +90,7 @@ supports_modes = [ "COPYFROM", "COPYTO", "ADD", "SUB", "BUMP+", "BUMP-" ]
 # Jump instructions
 jump_instr = [ "JUMP", "JUMPZ", "JUMPN" ]
 
-# class InstrType(Enum):
-#   Empty=0
-#   Label=1
-#   Instr=2 
-#   Jump=3  # special case of Instruction
-class InstrType(str, Enum):
-  Empty: str="Empty"
-  Label: str="Label"
-  Instr: str="Instr"
-  Jump:  str="Jump" # special case of Instruction
+TYPE_EMPTY, TYPE_LABEL, TYPE_INSTR, TYPE_JUMP = 0, 1, 2, 3
 
 class Instr(object):
     """__init__() functions as the class constructor"""
@@ -129,7 +120,7 @@ class Instr(object):
       if not instr:
         # Empty line
         log(self.__class__.__name__).debug("Empty line")
-        self.itype=InstrType.Empty
+        self.itype=TYPE_EMPTY
         self.size=0
         return
       elif instr.endswith(":"):
@@ -143,7 +134,7 @@ class Instr(object):
         labels[label]=address
         self.label_name=label
         self.size=0
-        self.itype=InstrType.Label
+        self.itype=TYPE_LABEL
         return
       else :
         log(self.__class__.__name__).debug("instr: %s", str(instr))
@@ -160,7 +151,7 @@ class Instr(object):
         if not dict.get(self.mnemonic):
           raise Exception('Unknown mnenonic ' + self.mnemonic + " at " + str(address) )
 
-        self.itype=InstrType.Instr
+        self.itype=TYPE_INSTR
         self.opcode = dict.get(self.mnemonic).get("opc")
 
         log(self.__class__.__name__).debug("opcode: %d", self.opcode)
@@ -188,7 +179,7 @@ class Instr(object):
           elif self.mnemonic in jump_instr:
             self.label_name = instr[1].lower()
             log(self.__class__.__name__).debug("It's a JUMP to label [%s]", self.label_name)
-            self.itype=InstrType.Jump
+            self.itype=TYPE_JUMP
           else:
             raise Exception("At " + str(address) + ", " + self.mnemonic + " unknown mnemonic with 1 operand")
 
@@ -196,9 +187,9 @@ class Instr(object):
         self.mode=mode
         
     def machine_code(self):
-      if self.itype == InstrType.Jump:
+      if self.itype == TYPE_JUMP:
         return [self.opcode, self.label_address]
-      elif self.itype == InstrType.Instr:
+      elif self.itype == TYPE_INSTR:
         if self.size == 1:
           return [self.opcode]
         else:
@@ -248,7 +239,7 @@ def main():
 
     # assign address to each label in all jump instructions
     for i in prog:
-      if i.itype==InstrType.Jump:
+      if i.itype==TYPE_JUMP:
         if i.label_name in labels:
           i.label_address=labels.get(i.label_name)
         else:
@@ -279,13 +270,13 @@ def main():
       logging.info("Writing program in pretty print format to %s", args.pretty)
       with smart_open(args.pretty) as fh:
         for i in prog:
-          if i.itype == InstrType.Label:
+          if i.itype == TYPE_LABEL:
             print("          | %s:" % i.label_name, file=fh)
-          elif i.itype == InstrType.Empty and i.comment:
+          elif i.itype == TYPE_EMPTY and i.comment:
             print("          | ; %s" % i.comment, file=fh)
-          elif i.itype == InstrType.Instr or i.itype == InstrType.Jump:
+          elif i.itype == TYPE_INSTR or i.itype == TYPE_JUMP:
             print("%02X: %-6s|   %s" % ( i.address, ''.join('%02X ' % a for a in i.machine_code() ), i.mnemonic ), end = '', file=fh)
-            if i.itype == InstrType.Jump:
+            if i.itype == TYPE_JUMP:
               print( "", i.label_name, end = '', file=fh)
             elif i.size == 2:
               if i.mode == 1:
