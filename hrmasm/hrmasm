@@ -204,7 +204,7 @@ def main():
   args = parser.parse_args()
 
   txtfile=[]
-  with open(args.source, 'r') as handle:
+  with smart_open(args.source, 'r') as handle:
     for line in handle:
       txtfile.append(line.strip())
 
