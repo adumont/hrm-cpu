@@ -1,5 +1,6 @@
 {
     // Range of levels for table of contents. Use `x..y` for level x to y
-    "markdown.extension.toc.levels": "1..2"
+    "markdown.extension.toc.levels": "1..2",
+    "python.pythonPath": "/home/adumont/miniconda2/envs/python36env/bin/python"
 
 }
