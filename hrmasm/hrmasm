@@ -1,0 +1,268 @@
+#!/usr/bin/env python
+
+import os.path
+import re
+import sys
+import argparse
+import contextlib
+from enum import Enum
+
+labels = {}
+prog = []
+
+def str2int(str):
+  b=16 if str.startswith("0x") else 10
+  return int(str, b)
+
+def decode_operand_macro(str):
+    macros={ "/A0"  : "/0",
+             "/A1"  : "/1",
+             "/LEDS": "/16",
+             "/RAND": "/17",
+    }
+
+    if( macros.get(str) ):
+        return macros.get(str)
+    else:
+        return str
+
+def decode_instr_mode(str):
+  # Indirect Mode: [operand]
+  if str.startswith("[") and str.endswith("]"): 
+    return re.split("\[|\]", str)[1].strip(), 8
+  
+  # MMIO mode /operand
+  elif str.startswith("/"):
+    return re.split("\/", str)[1].strip(), 1
+
+  # Direct mode
+  else:
+      return str, 0
+
+# Mnemonix / opcode / # of operands
+dict = {
+    "INBOX"   : { "opc": 0x00, "opr": 0},
+    "OUTBOX"  : { "opc": 0x10, "opr": 0},
+
+    "COPYFROM": { "opc": 0x20, "opr": 1},
+    "COPYTO"  : { "opc": 0x30, "opr": 1},
+    "ADD"     : { "opc": 0x40, "opr": 1},
+    "SUB"     : { "opc": 0x50, "opr": 1},
+    "BUMP+"   : { "opc": 0x60, "opr": 1},
+    "BUMP-"   : { "opc": 0x70, "opr": 1},
+    "JUMP"    : { "opc": 0x80, "opr": 1},
+    "JUMPZ"   : { "opc": 0x90, "opr": 1},
+    "JUMPN"   : { "opc": 0xA0, "opr": 1},
+
+    "SET"     : { "opc": 0xE0, "opr": 1},
+    "WAIT"    : { "opc": 0xD0, "opr": 1},
+
+    "NOP1"    : { "opc": 0xB0, "opr": 0},
+    "NOP2"    : { "opc": 0xC0, "opr": 0},
+    "HALT"    : { "opc": 0xF0, "opr": 0},
+}
+
+# supports Indirect or MMIO modes
+supports_modes = [ "COPYFROM", "COPYTO", "ADD", "SUB", "BUMP+", "BUMP-" ]
+
+# Jump instructions
+jump_instr = [ "JUMP", "JUMPZ", "JUMPN" ]
+
+# class InstrType(Enum):
+#   Empty=0
+#   Label=1
+#   Instr=2 
+#   Jump=3  # special case of Instruction
+class InstrType(str, Enum):
+  Empty: str="Empty"
+  Label: str="Label"
+  Instr: str="Instr"
+  Jump:  str="Jump" # special case of Instruction
+
+class Instr(object):
+    """__init__() functions as the class constructor"""
+    def __init__(self, address=0, line=""):
+      self.address=address
+      self.line=line
+      self.size=None
+      self.itype=None
+      self.label_name=None    # str
+      self.label_address=None # int
+      self.mnemonic=None  # str
+      self.opcode=None    # int
+      self.operand=None   # int
+      self.comment=None   # int
+      
+      # remove eventual comments addr + machine code comments
+      line=(re.sub("^.*\|", "", line)).strip()
+
+      # split eventual comments
+      line_split=re.split(";", line.strip(), 1)
+      instr=line_split[0].strip()
+
+      if len(line_split) > 1:
+        self.comment = line_split[1].strip()
+
+      if not instr:
+        # Empty line
+        # print("empty line -- remove this")
+        self.itype=InstrType.Empty
+        self.size=0
+        return
+      elif instr.endswith(":"):
+        # This is a LABEL
+        label = re.split(":", instr.strip())[0].strip().lower()
+        if not label:
+          raise Exception('Empty label at address ' + str(address))
+        # Add current address to labels dict
+        if labels.get(label):
+          raise Exception("At " + str(address) + ", label " + label + " is already defined (at address " + str(labels.get(label)) + ")")
+        labels[label]=address
+        self.label_name=label
+        self.size=0
+        self.itype=InstrType.Label
+        return
+      else :
+        # print("instr:", instr)
+        # Looks like an instruction
+        instr = re.split(" |\t", instr.strip())
+
+        # print("Instr splitted:", instr)
+
+        ## CONTINUE - review this code
+        self.mnemonic = instr[0].upper()
+
+        mode=0
+
+        if not dict.get(self.mnemonic):
+          raise Exception('Unknown mnenonic ' + self.mnemonic)
+
+        self.itype=InstrType.Instr
+        self.opcode = dict.get(self.mnemonic).get("opc")
+
+        # print("opcode: ", self.opcode)
+        
+        # should this instr have 1 operand?
+        if dict.get(self.mnemonic).get("opr") == 1:
+          if len(instr)==1:
+            raise Exception("At " + str(address) + ", missing operand for " + self.mnemonic)
+
+          if self.mnemonic in supports_modes:
+            operand_str = decode_operand_macro(instr[1].upper())
+            # print("operand_str1:", operand_str )
+            # print("supports mode")
+            operand_str, mode = decode_instr_mode(operand_str)
+            # print("operand_str2:", operand_str )
+            # print("mode:", mode)
+            self.opcode += mode
+            self.operand = str2int(operand_str)
+          elif self.mnemonic in {"SET", "WAIT"}:
+            operand_str, mode = decode_instr_mode(instr[1])
+            # print("operand_str:", operand_str )
+            # print("mode:", mode)
+            self.opcode += mode
+            self.operand = str2int(operand_str)
+          elif self.mnemonic in jump_instr:
+            self.label_name = instr[1].lower()
+            # print("It's a JUMP to label [", self.label_name, "]")
+            self.itype=InstrType.Jump
+          else:
+            raise Exception("At " + str(address) + ", " + self.mnemonic + " unknown mnemonic with 1 operand")
+
+        self.size= 1 + dict.get(self.mnemonic).get("opr")
+        
+    def machine_code(self):
+      if self.itype == InstrType.Jump:
+        return [self.opcode, self.label_address]
+      elif self.itype == InstrType.Instr:
+        if self.size == 1:
+          return [self.opcode]
+        else:
+          return [self.opcode, self.operand]
+      else:
+        return []
+
+@contextlib.contextmanager
+def smart_open(filename=None, mode="w"):
+    if filename and filename != '-':
+        fh = open(filename, mode)
+    else:
+        fh = sys.stdout
+    try:
+        yield fh
+    finally:
+        if fh is not sys.stdout:
+            fh.close()
+
+def main():
+  parser = argparse.ArgumentParser()
+  parser.add_argument('-s','--source', help='source file', required=True)
+  parser.add_argument('-o','--output', help='output binary file')
+  parser.add_argument('-p','--pretty', help='output pretty printed file')
+  parser.add_argument('-b','--bin', '--binary', help='output in binary format file')
+  args = parser.parse_args()
+
+  txtfile=[]
+  with open(args.source, 'r') as handle:
+    for line in handle:
+      txtfile.append(line.strip())
+
+  # print(txtfile)
+  address = 0x00  # will get incremented after each instruction
+
+  for line in txtfile:
+    # print("Address", address)
+    # print("Decoding:", line)
+    # split instruction from comment:
+    instr=Instr(address, line)
+    prog.append(instr)
+    address += instr.size
+    # print("")
+
+  # assign address to each label in all jump instructions
+  for i in prog:
+    if i.itype==InstrType.Jump:
+      if i.label_name in labels:
+        i.label_address=labels.get(i.label_name)
+      else:
+        raise Exception("At " + str(i.address) + ", undefined label " + i.label_name )
+
+  mc=[]
+  for i in prog:
+    if i.size>0 or True:
+      mc += i.machine_code()
+      # print(i.address, i.machine_code(), i.size, vars(i))
+
+  #print("Program:", mc)
+
+
+
+  if args.output:
+    with smart_open(args.output) as fh:
+      print(''.join('{:02X} '.format(a) for a in mc) + ''.join('00 ' for i in range(256 - len(mc))).strip(), file=fh)
+
+  if args.bin:
+    with smart_open(args.bin, "wb") as fh:
+      fh.write(bytearray(mc))
+      fh.write(bytearray(0 for i in range(256 - len(mc))  ))
+
+  if args.pretty:
+    with smart_open(args.pretty) as fh:
+      for i in prog:
+        if i.itype == InstrType.Label:
+          print("          | %s:" % i.label_name, file=fh)
+        elif i.itype == InstrType.Empty and i.comment:
+          print("          | ; %s" % i.comment, file=fh)
+        elif i.itype == InstrType.Instr or i.itype == InstrType.Jump:
+          print("%02X: %-6s|   %s" % ( i.address, ''.join('%02X ' % a for a in i.machine_code() ), i.mnemonic ), end = '', file=fh)
+          if i.itype == InstrType.Jump:
+            print( "", i.label_name, end = '', file=fh)
+          elif i.size == 2:
+            print( "", i.operand, end = '', file=fh)
+          if i.comment:
+            print( " ;", i.comment, end = '', file=fh)
+          print("", file=fh)
+  
+
+if __name__== "__main__":
+  main()
