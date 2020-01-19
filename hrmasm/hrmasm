@@ -6,9 +6,30 @@ import os.path
 from enum import Enum
 import re
 import sys
+import logging
 
 labels = {}
 prog = []
+
+# Argument parsing
+parser = argparse.ArgumentParser()
+parser.add_argument('-s','--source', help='source file', required=True)
+parser.add_argument('-o','--output', help='output rom file (for FPGA)')
+parser.add_argument('-p','--pretty', help='output pretty printed file')
+parser.add_argument('-b','--bin', '--binary', help='output in binary format file')
+parser.add_argument('-l','--logisim', action='store_true', help='binary file in logisim format')
+parser.add_argument('-d','--debug', action='store_true', help='print debug messages')
+args = parser.parse_args()
+
+if args.debug:
+  level=logging.DEBUG
+else:
+  level=logging.INFO
+
+logging.basicConfig(format='[%(name)s.%(funcName)s:%(lineno)d] %(levelname)s %(message)s', level=level)
+
+def log(className):
+  return logging.getLogger(className)
 
 def str2int(str):
   b=16 if str.startswith("0x") else 10
@@ -105,7 +126,7 @@ class Instr(object):
 
       if not instr:
         # Empty line
-        # print("empty line -- remove this")
+        log(self.__class__.__name__).debug("Empty line")
         self.itype=InstrType.Empty
         self.size=0
         return
@@ -123,11 +144,11 @@ class Instr(object):
         self.itype=InstrType.Label
         return
       else :
-        # print("instr:", instr)
+        log(self.__class__.__name__).debug("instr: %s", str(instr))
         # Looks like an instruction
         instr = re.split(" |\t", instr.strip())
 
-        # print("Instr splitted:", instr)
+        log(self.__class__.__name__).debug("Instr splitted: %s", str(instr))
 
         ## CONTINUE - review this code
         self.mnemonic = instr[0].upper()
@@ -135,12 +156,12 @@ class Instr(object):
         mode=0
 
         if not dict.get(self.mnemonic):
-          raise Exception('Unknown mnenonic ' + self.mnemonic)
+          raise Exception('Unknown mnenonic ' + self.mnemonic + " at " + str(address) )
 
         self.itype=InstrType.Instr
         self.opcode = dict.get(self.mnemonic).get("opc")
 
-        # print("opcode: ", self.opcode)
+        log(self.__class__.__name__).debug("opcode: %d", self.opcode)
         
         # should this instr have 1 operand?
         if dict.get(self.mnemonic).get("opr") == 1:
@@ -149,22 +170,22 @@ class Instr(object):
 
           if self.mnemonic in supports_modes:
             operand_str = decode_operand_macro(instr[1].upper())
-            # print("operand_str1:", operand_str )
-            # print("supports mode")
+            log(self.__class__.__name__).debug("operand_str1: %s", operand_str )
+            log(self.__class__.__name__).debug("supports mode")
             operand_str, mode = decode_instr_mode(operand_str)
-            # print("operand_str2:", operand_str )
-            # print("mode:", mode)
+            log(self.__class__.__name__).debug("operand_str2: %s", operand_str )
+            log(self.__class__.__name__).debug("mode: %d", mode)
             self.opcode += mode
             self.operand = str2int(operand_str)
           elif self.mnemonic in {"SET", "WAIT"}:
             operand_str, mode = decode_instr_mode(instr[1])
-            # print("operand_str:", operand_str )
-            # print("mode:", mode)
+            log(self.__class__.__name__).debug("operand_str: %s", operand_str )
+            log(self.__class__.__name__).debug("mode: %d", mode)
             self.opcode += mode
             self.operand = str2int(operand_str)
           elif self.mnemonic in jump_instr:
             self.label_name = instr[1].lower()
-            # print("It's a JUMP to label [", self.label_name, "]")
+            log(self.__class__.__name__).debug("It's a JUMP to label [%s]", self.label_name)
             self.itype=InstrType.Jump
           else:
             raise Exception("At " + str(address) + ", " + self.mnemonic + " unknown mnemonic with 1 operand")
@@ -197,14 +218,13 @@ def smart_open(filename=None, mode="w"):
     if filename and filename != '-':
       fh.close()
 
+def debug(str):
+  if args.debug:
+    print(str)
+
 def main():
-  parser = argparse.ArgumentParser()
-  parser.add_argument('-s','--source', help='source file', required=True)
-  parser.add_argument('-o','--output', help='output rom file (for FPGA)')
-  parser.add_argument('-l','--logisim', action='store_true', help='binary file in logisim format')
-  parser.add_argument('-p','--pretty', help='output pretty printed file')
-  parser.add_argument('-b','--bin', '--binary', help='output in binary format file')
-  args = parser.parse_args()
+
+  logging.info("Reading source program from %s", args.source)
 
   txtfile=[]
   with smart_open(args.source, 'r') as handle:
@@ -215,13 +235,12 @@ def main():
   address = 0x00  # will get incremented after each instruction
 
   for line in txtfile:
-    # print("Address", address)
-    # print("Decoding:", line)
+    logging.debug("Address: [%d]", address)
+    logging.debug("Decoding: [%s]", line)
     # split instruction from comment:
     instr=Instr(address, line)
     prog.append(instr)
     address += instr.size
-    # print("")
 
   # assign address to each label in all jump instructions
   for i in prog:
@@ -235,22 +254,25 @@ def main():
   for i in prog:
     if i.size>0 or True:
       mc += i.machine_code()
-      # print(i.address, i.machine_code(), i.size, vars(i))
+      logging.debug("%s", str(vars(i)) )
 
-  #print("Program:", mc)
+  logging.debug("Program's machine code is: %s", str(mc))
 
   if args.output:
-    with smart_open(args.output) as fh:
+    logging.info("Writing output program to %s", args.output)
+    with smart_open(args.output, "w") as fh:
       if args.logisim:
         print("v2.0 raw", file=fh)
       print(''.join('{:02X} '.format(a) for a in mc) + ''.join('00 ' for i in range(256 - len(mc))).strip(), file=fh)
 
   if args.bin:
+    logging.info("Writing output program in binary format to %s", args.bin)
     with smart_open(args.bin, "wb") as fh:
       fh.write(bytearray(mc))
       fh.write(bytearray(0 for i in range(256 - len(mc))  ))
 
   if args.pretty:
+    logging.info("Writing program in pretty print format to %s", args.pretty)
     with smart_open(args.pretty) as fh:
       for i in prog:
         if i.itype == InstrType.Label:
