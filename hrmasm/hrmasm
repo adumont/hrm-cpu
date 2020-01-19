@@ -13,12 +13,13 @@ prog = []
 
 # Argument parsing
 parser = argparse.ArgumentParser()
-parser.add_argument('-s','--source', help='source file', required=True)
+parser.add_argument('-s','--source', help='source file')
 parser.add_argument('-o','--output', help='output rom file (for FPGA)')
 parser.add_argument('-p','--pretty', help='output pretty printed file')
 parser.add_argument('-b','--bin', '--binary', help='output in binary format file')
-parser.add_argument('-l','--logisim', action='store_true', help='binary file in logisim format')
+parser.add_argument('-l','--logisim', action='store_true', help='binary rom/ram file in logisim format')
 parser.add_argument('-d','--debug', action='store_true', help='print debug messages')
+parser.add_argument('-r','--ram', help='output initial ram file (for FPGA)')
 args = parser.parse_args()
 
 if args.debug:
@@ -32,20 +33,20 @@ def log(className):
   return logging.getLogger(className)
 
 def str2int(str):
-  b=16 if str.startswith("0x") else 10
+  b=16 if str.startswith("0X") else 10
   return int(str, b)
 
 def decode_operand_macro(str):
-    macros={ "/A0"  : "/0",
-             "/A1"  : "/1",
-             "/LEDS": "/16",
-             "/RAND": "/17",
-    }
+  macros={ "/A0"  : "/0",
+           "/A1"  : "/1",
+           "/LEDS": "/16",
+           "/RAND": "/17",
+  }
 
-    if( macros.get(str) ):
-        return macros.get(str)
-    else:
-        return str
+  if( macros.get(str) ):
+    return macros.get(str)
+  else:
+    return str
 
 def decode_instr_mode(str):
   # Indirect Mode: [operand]
@@ -113,6 +114,7 @@ class Instr(object):
       self.opcode=None    # int
       self.operand=None   # int
       self.comment=None   # int
+      self.mode=None      # int
       
       # remove eventual comments addr + machine code comments
       line=(re.sub("^.*\|", "", line)).strip()
@@ -191,6 +193,7 @@ class Instr(object):
             raise Exception("At " + str(address) + ", " + self.mnemonic + " unknown mnemonic with 1 operand")
 
         self.size= 1 + dict.get(self.mnemonic).get("opr")
+        self.mode=mode
         
     def machine_code(self):
       if self.itype == InstrType.Jump:
@@ -224,70 +227,83 @@ def debug(str):
 
 def main():
 
-  logging.info("Reading source program from %s", args.source)
+  if args.source:
+    logging.info("Reading source program from %s", args.source)
 
-  txtfile=[]
-  with smart_open(args.source, 'r') as handle:
-    for line in handle:
-      txtfile.append(line.strip())
+    txtfile=[]
+    with smart_open(args.source, 'r') as handle:
+      for line in handle:
+        txtfile.append(line.strip())
 
-  # print(txtfile)
-  address = 0x00  # will get incremented after each instruction
+    # print(txtfile)
+    address = 0x00  # will get incremented after each instruction
 
-  for line in txtfile:
-    logging.debug("Address: [%d]", address)
-    logging.debug("Decoding: [%s]", line)
-    # split instruction from comment:
-    instr=Instr(address, line)
-    prog.append(instr)
-    address += instr.size
+    for line in txtfile:
+      logging.debug("Address: [%d]", address)
+      logging.debug("Decoding: [%s]", line)
+      # split instruction from comment:
+      instr=Instr(address, line)
+      prog.append(instr)
+      address += instr.size
 
-  # assign address to each label in all jump instructions
-  for i in prog:
-    if i.itype==InstrType.Jump:
-      if i.label_name in labels:
-        i.label_address=labels.get(i.label_name)
-      else:
-        raise Exception("At " + str(i.address) + ", undefined label " + i.label_name )
+    # assign address to each label in all jump instructions
+    for i in prog:
+      if i.itype==InstrType.Jump:
+        if i.label_name in labels:
+          i.label_address=labels.get(i.label_name)
+        else:
+          raise Exception("At " + str(i.address) + ", undefined label " + i.label_name )
 
-  mc=[]
-  for i in prog:
-    if i.size>0 or True:
-      mc += i.machine_code()
-      logging.debug("%s", str(vars(i)) )
+    mc=[]
+    for i in prog:
+      if i.size>0 or True:
+        mc += i.machine_code()
+        logging.debug("%s", str(vars(i)) )
 
-  logging.debug("Program's machine code is: %s", str(mc))
+    logging.debug("Program's machine code is: %s", str(mc))
 
-  if args.output:
-    logging.info("Writing output program to %s", args.output)
-    with smart_open(args.output, "w") as fh:
+    if args.output:
+      logging.info("Writing output program to %s", args.output)
+      with smart_open(args.output, "w") as fh:
+        if args.logisim:
+          print("v2.0 raw", file=fh)
+        print(''.join('{:02X} '.format(a) for a in mc) + ''.join('00 ' for i in range(256 - len(mc))).strip(), file=fh)
+
+    if args.bin:
+      logging.info("Writing output program in binary format to %s", args.bin)
+      with smart_open(args.bin, "wb") as fh:
+        fh.write(bytearray(mc))
+        fh.write(bytearray(0 for i in range(256 - len(mc))  ))
+
+    if args.pretty:
+      logging.info("Writing program in pretty print format to %s", args.pretty)
+      with smart_open(args.pretty) as fh:
+        for i in prog:
+          if i.itype == InstrType.Label:
+            print("          | %s:" % i.label_name, file=fh)
+          elif i.itype == InstrType.Empty and i.comment:
+            print("          | ; %s" % i.comment, file=fh)
+          elif i.itype == InstrType.Instr or i.itype == InstrType.Jump:
+            print("%02X: %-6s|   %s" % ( i.address, ''.join('%02X ' % a for a in i.machine_code() ), i.mnemonic ), end = '', file=fh)
+            if i.itype == InstrType.Jump:
+              print( "", i.label_name, end = '', file=fh)
+            elif i.size == 2:
+              if i.mode == 1:
+                print( " /%d" % i.operand, end = '', file=fh)
+              elif i.mode == 8:
+                print( " [%d]" % i.operand, end = '', file=fh)
+              else:
+                print( "", i.operand, end = '', file=fh)
+            if i.comment:
+              print( " ;", i.comment, end = '', file=fh)
+            print("", file=fh)
+
+  if args.ram:
+    logging.info("Writing output program to %s", args.ram)
+    with smart_open(args.ram, "w") as fh:
       if args.logisim:
         print("v2.0 raw", file=fh)
-      print(''.join('{:02X} '.format(a) for a in mc) + ''.join('00 ' for i in range(256 - len(mc))).strip(), file=fh)
-
-  if args.bin:
-    logging.info("Writing output program in binary format to %s", args.bin)
-    with smart_open(args.bin, "wb") as fh:
-      fh.write(bytearray(mc))
-      fh.write(bytearray(0 for i in range(256 - len(mc))  ))
-
-  if args.pretty:
-    logging.info("Writing program in pretty print format to %s", args.pretty)
-    with smart_open(args.pretty) as fh:
-      for i in prog:
-        if i.itype == InstrType.Label:
-          print("          | %s:" % i.label_name, file=fh)
-        elif i.itype == InstrType.Empty and i.comment:
-          print("          | ; %s" % i.comment, file=fh)
-        elif i.itype == InstrType.Instr or i.itype == InstrType.Jump:
-          print("%02X: %-6s|   %s" % ( i.address, ''.join('%02X ' % a for a in i.machine_code() ), i.mnemonic ), end = '', file=fh)
-          if i.itype == InstrType.Jump:
-            print( "", i.label_name, end = '', file=fh)
-          elif i.size == 2:
-            print( "", i.operand, end = '', file=fh)
-          if i.comment:
-            print( " ;", i.comment, end = '', file=fh)
-          print("", file=fh)
+      print(''.join('00 ' for i in range(256)).strip(), file=fh)
   
 if __name__== "__main__":
   main()
