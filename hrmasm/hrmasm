@@ -2,10 +2,10 @@
 
 import argparse
 import contextlib
-import argparse
-import contextlib
 import os.path
 from enum import Enum
+import re
+import sys
 
 labels = {}
 prog = []
@@ -197,7 +197,8 @@ def smart_open(filename=None, mode="w"):
 def main():
   parser = argparse.ArgumentParser()
   parser.add_argument('-s','--source', help='source file', required=True)
-  parser.add_argument('-o','--output', help='output binary file')
+  parser.add_argument('-o','--output', help='output rom file (for FPGA)')
+  parser.add_argument('-l','--logisim', action='store_true', help='binary file in logisim format')
   parser.add_argument('-p','--pretty', help='output pretty printed file')
   parser.add_argument('-b','--bin', '--binary', help='output in binary format file')
   args = parser.parse_args()
@@ -237,6 +238,8 @@ def main():
 
   if args.output:
     with smart_open(args.output) as fh:
+      if args.logisim:
+        print("v2.0 raw", file=fh)
       print(''.join('{:02X} '.format(a) for a in mc) + ''.join('00 ' for i in range(256 - len(mc))).strip(), file=fh)
 
   if args.bin:
