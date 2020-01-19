@@ -187,7 +187,10 @@ def smart_open(filename=None, mode="w"):
   if filename and filename != '-':
     fh = open(filename, mode)
   else:
-    fh = os.fdopen(sys.stdout.fileno(), mode, closefd=False)
+    if mode == "r":
+      fh = os.fdopen(sys.stdin.fileno(), mode, closefd=False)
+    else:
+      fh = os.fdopen(sys.stdout.fileno(), mode, closefd=False)
   try:
     yield fh
   finally:
