@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
-import os.path
-import re
-import sys
 import argparse
 import contextlib
+import argparse
+import contextlib
+import os.path
 from enum import Enum
 
 labels = {}
@@ -184,15 +184,15 @@ class Instr(object):
 
 @contextlib.contextmanager
 def smart_open(filename=None, mode="w"):
+  if filename and filename != '-':
+    fh = open(filename, mode)
+  else:
+    fh = os.fdopen(sys.stdout.fileno(), mode, closefd=False)
+  try:
+    yield fh
+  finally:
     if filename and filename != '-':
-        fh = open(filename, mode)
-    else:
-        fh = sys.stdout
-    try:
-        yield fh
-    finally:
-        if fh is not sys.stdout:
-            fh.close()
+      fh.close()
 
 def main():
   parser = argparse.ArgumentParser()
@@ -235,8 +235,6 @@ def main():
 
   #print("Program:", mc)
 
-
-
   if args.output:
     with smart_open(args.output) as fh:
       print(''.join('{:02X} '.format(a) for a in mc) + ''.join('00 ' for i in range(256 - len(mc))).strip(), file=fh)
@@ -263,6 +261,5 @@ def main():
             print( " ;", i.comment, end = '', file=fh)
           print("", file=fh)
   
-
 if __name__== "__main__":
   main()
