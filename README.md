@@ -8,10 +8,13 @@
   - [CPU Architecture components](#cpu-architecture-components)
   - [Project status](#project-status)
   - [Disclaimer](#disclaimer)
-- [Instruction Set Architecture](#instruction-set-architecture)
-  - [Memory Mapped I/O](#memory-mapped-io)
+- [Functional Description](#functional-description)
+  - [HRM CPU Instruction Set](#hrm-cpu-instruction-set)
+  - [Addressing Modes](#addressing-modes)
+  - [Memory Mapped I/O mapping](#memory-mapped-io-mapping)
+  - [Timer (WAIT)](#timer-wait)
   - [Assembler](#assembler)
-- [Microarchitecture](#microarchitecture)
+- [Architecture](#architecture)
   - [Top module](#top-module)
   - [Control Unit](#control-unit)
   - [Inbox](#inbox)
@@ -26,7 +29,7 @@
   - [Year 4](#year-4)
   - [Year 32](#year-32)
 - [Automated test (simulations)](#automated-test-simulations)
-  - [Generate new tests](#generate-new-tests)
+  - [Generating new tests](#generating-new-tests)
 - [Synthesis to FPGA](#synthesis-to-fpga)
   - [Top module design](#top-module-design)
   - [How to build and flash in the FPGA](#how-to-build-and-flash-in-the-fpga)
@@ -42,14 +45,14 @@
 
 # Introduction
 
-This personal project aims at designing a soft core CPU in Verilog, **synthetizable in an FPGA** that will behave like the gameplay of [Human Resource Machine](https://tomorrowcorporation.com/humanresourcemachine) by Tomorrow Corp.
+HRM CPU is a personal project aimed at designing a soft core microprocessor in Verilog, **synthetizable in an FPGA** that behaves like the gameplay of [Human Resource Machine](https://tomorrowcorporation.com/humanresourcemachine) by Tomorrow Corp.
 
 Here's an extract of an article on HRM, posted on [IEEE's Spectrum site](https://spectrum.ieee.org/geek-life/reviews/three-computer-games-that-make-assembly-language-fun):
 >In this game the player takes on the role of an office worker who must handle numbers and letters arriving on an “in” conveyor belt and put the desired results on an “out” conveyor belt.
 >
 >[...]Those in the know will recognize the office worker as a register, the temporary workspace on the office floor as random access memory, and many of the challenges as classic introductory computer science problems.[...]
 
-My *HRM CPU* design is an **8-bit multi-cycle RISC CPU** based on **Harvard architecture** with **variable length instructions**.
+The *HRM CPU* is an **8-bit multi-cycle RISC miroprocessor** based on the **Harvard architecture** with **variable length instructions** and one register (accumulator).
 
 **TL;DR**: For the impatients, you can jump to these demos (with videos) at the end:
 - [HRM Year 4 in Logisim](#year-4)
@@ -62,14 +65,14 @@ My *HRM CPU* design is an **8-bit multi-cycle RISC CPU** based on **Harvard arch
 
 We can see how the game actually represents a CPU and its internal components:
 
-| HRM  components |   #   | CPU components       |
-| --------------- | :---: | -------------------- |
-| Office Worker   |   1   | Register             |
-| In/Out belts    | 2, 3  | Input/Ouput (I/O)    |
-| Floor Tiles     |   4   | Memory (RAM)         |
-| Program         |   5   | Program Memory       |
-|                 |   6   | Program Counter      |
-|                 |   7   | Instruction Register |
+| HRM  components |   #   | CPU components         |
+| --------------- | :---: | ---------------------- |
+| Office Worker   |   1   | Register (Accumulator) |
+| In/Out belts    | 2, 3  | Input/Ouput (I/O)      |
+| Floor Tiles     |   4   | Memory (RAM)           |
+| Program         |   5   | Program Memory         |
+|                 |   6   | Program Counter        |
+|                 |   7   | Instruction Register   |
 
 ![](assets/hrm_04-labels.png)
 
@@ -79,17 +82,22 @@ We can see how the game actually represents a CPU and its internal components:
 
 ## Disclaimer
 
-- I'm a passionate hobbist with a recent interest in digital electronics: I'm not a Computer Science Engineer, nor a hardware engineer. I enjoy learning from books, youtube videos and tutorials online. This project is about practicing and learning.
+- I'm a passionate hobbist with a recent interest in digital electronics, meaning I'm not a Computer Science Engineer, nor a hardware engineer. I enjoy learning from books, youtube videos and tutorials online. This project is about practicing and learning.
 - This is a strictly personal project, with entertaining and educational objectives exlusively, not commercial nor industrial.
-- It's not optimized in any way. I'll be happy if it even gets to work. [EDIT] **It actually does work, in Logisim, Verilog simulation, and synthesized in the Icezum Alhambra FPGA.**
+- This design is original and based only on my understanding of the game and it's behaviour as a black box. I haven't done any reverse engineering of the game in any form.
+- The design is not optimized in any way. I'm happy it works: **It work, in Logisim, Verilog simulation, and synthesized in the Icezum Alhambra FPGA.**
 - It's a work in progress, so it's incomplete (and may never be complete).
 - Although I try to be thorough, this documentation is also incomplete (and may never be complete).
 
-# Instruction Set Architecture
+# Functional Description
 
-The instruction set is the same as in the HRM game. It's made of a limited set of 11 instructions, 6 of which can function in direct and indirect adressing modes.
+## HRM CPU Instruction Set
 
-For now, the latest version of the instruction set is described in this [Google Spreadsheet](https://docs.google.com/spreadsheets/d/1WEB_RK878GqC6Xb1BZOdD-QtXDiJCOBEF22lt2ebCDg/edit?usp=sharing).
+The instruction set is (almost) the same as in the HRM game, I have respected the limited original 11 instructions set, to which I have added three convinient instructions: SET, WAIT and HALT.
+
+
+
+The latest version of the instruction set is described in this [Google Spreadsheet](https://docs.google.com/spreadsheets/d/1WEB_RK878GqC6Xb1BZOdD-QtXDiJCOBEF22lt2ebCDg/edit?usp=sharing).
 
 The following picture shows the instruction set format, and corresponding machine language:
 
@@ -103,20 +111,30 @@ I have also added support for some memory mapped IO, allowing to access addition
 
 The opcodes are encoded with 1 word (8 bit) or two nibbles. Some instructions have one operand which is also encoded with 8 bits. So the length of instructions is variable: some are 1 word wide, others are two words wide.
 
-## Memory Mapped I/O
+## Addressing Modes
 
-I have added support for Memory Mapped modules. 
+The HRM CPU is capable of addressing 256 bytes of block-ram, or 256 bytes of memory-mapped IO.
 
-Access to memory mapped devices is achieved by asserting the "mmio bit" (lsb) in the opcode of the instruction. In assembler language, we prefix the ADDR with "/": 
+| Addressing Mode  | Example Instruction | Description                                                                                                                               |
+| :--------------- | :------------------ | :---------------------------------------------------------------------------------------------------------------------------------------- |
+| Direct Mode      | COPYTO A            | The operand A represents the address in Ram the instruction will operate on                                                               |
+| Indirect Mode    | COPYTO [A]          | The value stored in Ram at the address A will be used as the address in Ram the instruction will operate on                               |
+| Memory Mapped IO | COPYTO /A           | Address A represents a memory mapped module and possibly a function (depending of the module). See [Memory Mapped I/O](#memory-mapped-io) |
+
+## Memory Mapped I/O mapping
+
+HRM CPU support a limited set of Memory Mapped modules detailled below.
+
+Access to memory mapped modules is achieved by asserting the "mmio bit" (lsb) in the opcode of the instruction. In assembler language, we prefix the ADDR with "/":
 
 | Action                                                | Instruction format | Example        |
 | :---------------------------------------------------- | :----------------- | :------------- |
 | Write from R to memory mapped device at address ADDR  | COPYTO /ADDR       | COPYTO /LEDS   |
 | Read from memory mapped device at address ADDR into R | COPYFROM /ADDR     | COPYFROM /RAND |
 
-Currently, there are 3 more modules available via Memory Mapped IO:
+Currently, there are 3 modules available via Memory Mapped IO:
 
-- XALU: An extended ALU, which provides some additional operations (mainly logical operator).
+- XALU: An extended ALU, which provides some additional operations (logical operator).
 - LEDS: Allows to set the fisical LEDS of the board, by using `COPYTO /16`. There's also a macro so we can use `COPYTO /LEDS`.
 - RAND: A Pseudo Random Number Generator.
 
@@ -156,62 +174,60 @@ The table below details the modules, the addresses and the corresponding functio
 
 I have added a new instruction, WAIT: It takes one operand N, and will pause the execution for N x 50ms.
 
-| Instruction  | Meaning                          |
-| :----------- | :------------------------------- |
-| WAIT n       | Pause the execution for n x 50ms |
+| Instruction | Meaning                          |
+| :---------- | :------------------------------- |
+| WAIT n      | Pause the execution for n x 50ms |
 
 ## Assembler
 
-I have prepared a rudimentary [assembler](https://github.com/adumont/hrm-cpu/blob/harvard/logisim/prog/assembler) that translates an HRM program to the corresponding machine language that can then be loaded into the [PROG (Program ROM)](#prog-program-rom).
+The purpose of the `hrmasm` assembler is to translates an HRM program (the *assembly* language) to the corresponding *machine code* so it can then be loaded into the [Program ROM (PROG)](#prog-program-rom) and drive the CPU accordingly.
 
-This assembler is a shell script that uses awk(1).
+The assembler resides in `/hrmasm` folder.
 
-Usage:
+```
+usage: hrmasm [-h] [-s SOURCE] [-o OUTPUT] [-p PRETTY] [-b BIN] [-l] [-d]
+              [-r RAM]
 
-    $ assembler prog
+optional arguments:
+  -h, --help            show this help message and exit
+  -s SOURCE, --source SOURCE
+                        source file
+  -o OUTPUT, --output OUTPUT
+                        output rom file (for FPGA)
+  -p PRETTY, --pretty PRETTY
+                        output pretty printed file
+  -b BIN, --bin BIN, --binary BIN
+                        output in binary format file
+  -l, --logisim         binary rom/ram file in logisim format
+  -d, --debug           print debug messages
+  -r RAM, --ram RAM     output initial ram file (for FPGA)
+```
 
+If you provide a source file using the `-s` flag, you can generate the corresponding machine code in any of these formats:
 
-Output:
+- A Rom file suitable to be loaded into a Verilog model (`-o` flag). It's an ascii file, with each byte written in hexadecimal, separated by spaces. Padded to 256 bytes. If the `-l` flag is specified, a header is added so the output file is compatible with Logisim Rom/Ram format.
+- A Binary file (`-b` flag): raw bytes written in binary format, padded to 256 bytes.
+- A text file with a pretty printed representation of the program, addresses and machine code. Suitable to be feed back into hrmasm as input file if modified (in that case, the addresses and machine code part are ignored)
 
-- prog.BIN: the memory dump that can be loaded into Logisim ROM
-- prog.TXT: pretty print of the program with addresses, machine language, labels, and assembly instructions
+Notes:
+- "-" specified as a filename will mean stdin/stdout
+- If several output formats are specified, they will all be generated sequentially.
+- The padding used is 0x00.
+- Used alone, the `-r` flag can be used to generate a 256 ram file (filled with 0x00). If the `-l` flag is also specified, a header is added so the output file is compatible with Logisim Rom/Ram format.
 
-Example:
+### Using the hrmasm assembler
 
-Given a simple program that we save in FILE:
+Todo
 
-    start:
-      INBOX
-      OUTBOX
-      JUMP start
+# Architecture
 
-Let's run the assembler:
+The HRM CPU architecture is loosely inspired from MIPS architecture. This CPU is a multi-cycle CPU with a Harvard architecture (program is held in a different memory as general memory).
 
-    ./assembler FILE
-
-We'll get:
-
-    start:
-    00: 00    ; INBOX 
-    01: 10    ; OUTBOX 
-    02: 80 00 ; JUMP start
-
-And the corresponding machine language memory dump ready to load into PROG (in Logisim):
-
-    v2.0 raw
-    00 10 80 00 
-
-Note: The same *machine language format* is also used later to load into the Verilog design (removing the first line `v2.0 raw`).
-
-# Microarchitecture
-
-The microarchitecture is loosely inspired from MIPS architecture. This CPU is a multi-cycle CPU with a Harvard architecture (program is held in a different memory as general memory).
-
-The following block diagram shows all the components, the data path and control path (in red dashed line):
+The following internal Architecture simplified block diagram shows all the [CPU components](#cpu-architecture-components), the Data Path and Control Path (in red dashed line):
 
 ![](assets/HRM-CPU-Harvard.png)
 
-This is the corresponding circuit diagram generated by Yosys from the Verilog HDL code I have written:
+This is the corresponding RTL Block Diagram generated by Yosys from the Verilog HDL code I have written:
 
 ![](verilog/assets/hrmcpu.svg)
 
@@ -230,9 +246,7 @@ TODO:
 
 The **Control Unit** is a Finite State Machine. It takes as input the instruction, and some external signals, and generate control signals that will orchestrate the data flow along the data path.
 
-The following chart shows all the steps and control signals involved in each instruction:
-
-Control Signals:
+The following chart shows all the steps (clock-cycles) and control signals involved in each instruction:
 
 ![](assets/control-signals-1.png)
 ![](assets/control-signals-2.png)
@@ -285,7 +299,7 @@ Notes:
 
 ![](logisim/diagram/R.png)
 
-### Circuit diagram
+### RTL Block Diagram
 
 ![](verilog/assets/register.svg)
 
@@ -303,7 +317,7 @@ Notes:
 
 NOTE: the Logisim model doesn't support Memory Mapped IO.
 
-### Circuit diagram
+### RTL Block Diagram
 
 ![](verilog/assets/MEMORY.svg)
 
@@ -324,7 +338,7 @@ In place of the "ram" module that was in the MEMORY module, we now have a memory
 
 ![](logisim/diagram/PC.png)
 
-### Circuit diagram
+### RTL Block Diagram
 
 ![](verilog/assets/PC.svg)
 
@@ -339,7 +353,7 @@ In place of the "ram" module that was in the MEMORY module, we now have a memory
 
 ![](logisim/diagram/PROG.png)
 
-### Circuit diagram
+### RTL Block Diagram
 
 ![](verilog/assets/program.svg)
 
@@ -354,7 +368,7 @@ In place of the "ram" module that was in the MEMORY module, we now have a memory
 
 ![](logisim/diagram/IR.png)
 
-### Circuit diagram
+### RTL Block Diagram
 
 ![](verilog/assets/IR.svg)
 
@@ -387,7 +401,7 @@ The ALU can perform 6 different operations selectable via aluCtl[2:0]:
 
 ![](logisim/diagram/ALU.png)
 
-### Circuit diagram
+### RTL Block Diagram
 
 ![](verilog/assets/ALU.svg)
 
@@ -653,9 +667,9 @@ Clean all test files
 $ make -s clean
 ```
 
-## Generate new tests
+## Generating new tests
 
-Some levels have a test generator, so it's easy to generate new random tests (random input and the corresponding expected output). Insite the `gen_test.sh` you can see information about size of input, number of tests to run...
+Some levels have a test generator, so it's easy to generate new random tests (random input and the corresponding expected output). Inside the `gen_test.sh` script you can see information about size of input, number of tests to run.
 
 Generally, each test will feature:
 - a random input length
