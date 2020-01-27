@@ -4,6 +4,7 @@ include Boards.mk
 include Design.mk
 
 BUILDDIR?=builddir/$(BOARD)
+ARACHNE_SEED?=36747270
 
 ifeq ($(MODULE), $(TOP))
   DEPS += $(BOARD_BUILDDIR)/top_wrapper.v
@@ -57,7 +58,7 @@ $(BOARD_BUILDDIR)/$(MODULE).blif: $(MODULE).v $(DEPS) $(AUXFILES) $(BOARD_BUILDD
 	
 $(BOARD_BUILDDIR)/$(MODULE).pnr: $(PCF) $(BOARD_BUILDDIR)/$(MODULE).blif
 
-	arachne-pnr -s 367472708 -d $(PNRDEV) -p $(PCF) $(BOARD_BUILDDIR)/$(MODULE).blif -o $(BOARD_BUILDDIR)/$(MODULE).pnr
+	arachne-pnr -s $(ARACHNE_SEED) -d $(PNRDEV) -p $(PCF) $(BOARD_BUILDDIR)/$(MODULE).blif -o $(BOARD_BUILDDIR)/$(MODULE).pnr
 
 #ifdef LEVEL
 $(BUILDDIR)/$(MODULE).pnr: $(BOARD_BUILDDIR)/$(MODULE).pnr $(PROGRAM) $(ROMFILE)
