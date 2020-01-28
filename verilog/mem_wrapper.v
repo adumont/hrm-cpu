@@ -1,4 +1,5 @@
 `default_nettype none
+`define MMIO_SUPPORT
 
 module mem_wrapper #(
         parameter data_width = 8,
@@ -14,10 +15,14 @@ module mem_wrapper #(
         output reg  [7:0]            o_leds
     );
 
+`ifdef MMIO_SUPPORT
     wire cs_RAM0 = ~mmio;
     wire cs_XALU =  mmio & ( addr[7:4] == 4'h0 );
     wire cs_LEDS =  mmio & ( addr == 8'h10 );
     wire cs_RAND =  mmio & ( addr == 8'h11 );
+`else
+    wire cs_RAM0 = 1'b 1;
+`endif
 
     // ---------------------------------------- //
     // RAM
@@ -39,6 +44,7 @@ module mem_wrapper #(
     defparam ram0.ROMFILE = ROMFILE;
     // ---------------------------------------- //
 
+`ifdef MMIO_SUPPORT
     // ---------------------------------------- //
     // XALU - Extended ALU
     //
@@ -81,6 +87,7 @@ module mem_wrapper #(
         .rst( rst )
     );
     // ---------------------------------------- //
+`endif
 
     // ---------------------------------------- //
     // MUX mem_wrapper output
@@ -88,14 +95,20 @@ module mem_wrapper #(
     begin
         case (1'b1)
             cs_RAM0: dout = ram0_dout;
+`ifdef MMIO_SUPPORT
             cs_XALU: dout = xalu_dout;
             cs_LEDS: dout = leds_dout;
             cs_RAND: dout = rand_dout;
+`endif
 
             default: dout = {(data_width){1'b 0}};
         endcase
 
+`ifdef MMIO_SUPPORT
         o_leds = leds_dout;
+`else
+        o_leds = 8'b 0;
+`endif
     end
     // ---------------------------------------- //
 
