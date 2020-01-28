@@ -1,0 +1,29 @@
+00: E0 00 |   SET 0
+02: 30 09 |   COPYTO 9
+04: 20 09 |   COPYFROM 9
+06: 60 09 |   BUMP+ 9
+          | nextinbox:
+08: 00    |   INBOX
+09: 30 04 |   COPYTO 4
+0B: 20 09 |   COPYFROM 9
+0D: 30 00 |   COPYTO 0
+0F: 30 01 |   COPYTO 1
+11: 10    |   OUTBOX
+12: 20 01 |   COPYFROM 1
+14: 10    |   OUTBOX
+          | b:
+15: 20 01 |   COPYFROM 1
+17: 30 05 |   COPYTO 5
+19: 20 00 |   COPYFROM 0
+1B: 40 01 |   ADD 1
+1D: 30 01 |   COPYTO 1
+1F: 50 04 |   SUB 4
+21: A0 27 |   JUMPN c
+23: 90 27 |   JUMPZ c
+25: 80 08 |   JUMP nextinbox
+          | c:
+27: 20 01 |   COPYFROM 1
+29: 10    |   OUTBOX
+2A: 20 05 |   COPYFROM 5
+2C: 30 00 |   COPYTO 0
+2E: 80 15 |   JUMP b
