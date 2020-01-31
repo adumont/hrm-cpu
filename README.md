@@ -246,6 +246,8 @@ TODO:
 
 The **Control Unit** is a Finite State Machine. It takes as input the instruction, and some external signals, and generate control signals that will orchestrate the data flow along the data path.
 
+![](verilog/assets/blocks/ControlUnit-ControlUnit.svg)
+
 The following chart shows all the steps (clock-cycles) and control signals involved in each instruction:
 
 ![](assets/control-signals-1.png)
@@ -289,11 +291,15 @@ Notes:
 
 ## Outbox
 
+![](verilog/assets/blocks/ufifo-ufifo.svg)
+
 ### Logisim circuit
 
 ![](logisim/diagram/OUTBOX.png)
 
 ## Register
+
+![](verilog/assets/blocks/REG-REG.svg)
 
 ### Logisim circuit
 
@@ -309,7 +315,7 @@ Notes:
 
 ## Memory
 
--  0x00-0x1f: 32 x 1 byte, general purpose ram (*Tiles* in HRM)
+![](verilog/assets/blocks/MEMORY-MEMORY.svg)
 
 ### Logisim circuit
 
@@ -334,6 +340,8 @@ In place of the "ram" module that was in the MEMORY module, we now have a memory
     - Inconditional jump (JUMP) when *( branch && ijump )*
     - Conditional jumps (JUMPZ/N) only when *( branch && aluFlag )*
 
+![](verilog/assets/blocks/PC-PC.svg)
+
 ### Logisim circuit
 
 ![](logisim/diagram/PC.png)
@@ -349,6 +357,8 @@ In place of the "ram" module that was in the MEMORY module, we now have a memory
 
 ## PROG (Program ROM)
 
+![](verilog/assets/blocks/PROG-PROG.svg)
+
 ### Logisim circuit
 
 ![](logisim/diagram/PROG.png)
@@ -363,6 +373,8 @@ In place of the "ram" module that was in the MEMORY module, we now have a memory
 
 
 ## IR (Instruction Register)
+
+![](verilog/assets/blocks/IR-IR.svg)
 
 ### Logisim circuit
 
@@ -396,6 +408,8 @@ The ALU can perform 6 different operations selectable via aluCtl[2:0]:
 | :-------: | :-------: | :----: |
 |     0     |  R = 0 ?  |  flag  |
 |     1     |  R < 0 ?  |  flag  |
+
+![](verilog/assets/blocks/ALU-ALU.svg)
 
 ### Logisim circuit
 
@@ -863,6 +877,7 @@ root's `Makefile` features:
     - Waveform Viewer: [Gtkwave](http://gtkwave.sourceforge.net/)
 - [Verilator](https://www.veripool.org/wiki/verilator): the fastest free Verilog HDL simulator
 - Diagram editor: [SchemeIt](https://www.digikey.com/schemeit)
+- [Symbolator](https://kevinpt.github.io/symbolator/)
 - [QtCreator](https://en.wikipedia.org/wiki/Qt_Creator) and [Qt](https://en.wikipedia.org/wiki/Qt_(software))
 - [Travis CI](https://travis-ci.org/adumont/hrm-cpu) for continuous integration
     - Thanks to [stevehoover](https://github.com/stevehoover/warp-v)

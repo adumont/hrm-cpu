@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created by Symbolator http://kevinpt.github.io/symbolator -->
+<svg xmlns="http://www.w3.org/2000/svg"
+xmlns:xlink="http://www.w3.org/1999/xlink"
+xml:space="preserve"
+width="244" height="90" viewBox="-99 -50 244.0 90.5" version="1.1">
+<style type="text/css">
+<![CDATA[
+.fnt1 {fill:#000000;
+    font-family:Helvetica; font-size:12pt; font-weight:normal; font-style:normal;}
+.fnt2 {fill:#000000;
+    font-family:Helvetica; font-size:14pt; font-weight:bold; font-style:normal;}
+.label {fill:#000;
+  text-anchor:middle;
+  font-size:16pt; font-weight:bold; font-family:Sans;}
+.link {fill: #0D47A1;}
+.link:hover {fill: #0D47A1; text-decoration:underline;}
+.link:visited {fill: #4A148C;}
+]]>
+</style>
+<defs>
+
+</defs>
+<rect x="-99" y="-50" width="100%" height="100%" fill="white"/><g transform="translate(0,0)">
+<rect x="0" y="-15.0" width="80" height="50.0" stroke="#000000" fill="#C5DBFC" stroke-width="1"/>
+<g transform="translate(0,0)">
+<line x1="-20" y1="0" x2="0" y2="0" stroke="#000000" fill="none" stroke-width="3"/>
+<text class="fnt1" x="10" y="0" text-anchor="normal" dy="5.5">i</text>
+<text class="fnt1" x="-30" y="0" text-anchor="end" dy="5.5" style="fill:#969696">wire <tspan fill="#039BE5">[2:0]</tspan></text>
+</g>
+<g transform="translate(0,20)">
+<line x1="-20" y1="0" x2="0" y2="0" stroke="#000000" fill="none" stroke-width="3"/>
+<text class="fnt1" x="10" y="0" text-anchor="normal" dy="5.5">rule</text>
+<text class="fnt1" x="-30" y="0" text-anchor="end" dy="5.5" style="fill:#969696">wire <tspan fill="#039BE5">[7:0]</tspan></text>
+</g>
+<g transform="translate(80,0)">
+<line x1="20" y1="0" x2="0" y2="0" stroke="#000000" fill="none" stroke-width="1"/>
+<text class="fnt1" x="-10" y="0" text-anchor="end" dy="5.5">o</text>
+<text class="fnt1" x="30" y="0" text-anchor="normal" dy="5.5" style="fill:#969696">wire</text>
+</g>
+</g>
+<rect x="1.0" y="-14.0" width="78.0" height="48.0" stroke="#000000" fill="none" stroke-width="3"/>
+<text class="fnt2" x="40.0" y="-24.0" text-anchor="middle" dy="-2.0">CA_cell</text>
+</svg>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created by Symbolator http://kevinpt.github.io/symbolator -->
+<svg xmlns="http://www.w3.org/2000/svg"
+xmlns:xlink="http://www.w3.org/1999/xlink"
+xml:space="preserve"
+width="376" height="228" viewBox="-117 -50 376.0 228.5" version="1.1">
+<style type="text/css">
+<![CDATA[
+.fnt1 {fill:#000000;
+    font-family:Helvetica; font-size:12pt; font-weight:normal; font-style:normal;}
+.fnt2 {fill:#000000;
+    font-family:Helvetica; font-size:14pt; font-weight:bold; font-style:normal;}
+.label {fill:#000;
+  text-anchor:middle;
+  font-size:16pt; font-weight:bold; font-family:Sans;}
+.link {fill: #0D47A1;}
+.link:hover {fill: #0D47A1; text-decoration:underline;}
+.link:visited {fill: #4A148C;}
+]]>
+</style>
+<defs>
+<marker id="arrow_back" markerWidth="8.0" markerHeight="8.0" viewBox="0 0 8.0 8.0" refX="4.8" refY="4.0" orient="auto" markerUnits="userSpaceOnUse">
+<g transform="translate(8.0,4.0)"><path d="M 0 -4 C -2 -1, -2 1, 0 4 L -8 0 z" stroke="none" fill="#000000"/>
+</g>
+</marker>
+<marker id="arrow_fwd" markerWidth="8.0" markerHeight="8.0" viewBox="0 0 8.0 8.0" refX="3.2" refY="4.0" orient="auto" markerUnits="userSpaceOnUse">
+<g transform="translate(-0.0,4.0)"><path d="M 0 -4 C 2 -1, 2 1, 0 4 L 8 0 z" stroke="none" fill="#000000"/>
+</g>
+</marker>
+</defs>
+<rect x="-117" y="-50" width="100%" height="100%" fill="white"/><g transform="translate(0,0)">
+<rect x="0" y="-15.0" width="160" height="90.0" stroke="#646464" fill="#C8C8C8" stroke-width="1"/>
+<g transform="translate(0,0)">
+<line x1="-20" y1="0" x2="0" y2="0" stroke="#000000" fill="none" stroke-width="1"/>
+<text class="fnt1" x="10" y="0" text-anchor="normal" dy="5.5">foo</text>
+<text class="fnt1" x="-30" y="0" text-anchor="end" dy="5.5" style="fill:#969696">real</text>
+</g>
+<g transform="translate(0,20)">
+<line x1="-20" y1="0" x2="0" y2="0" stroke="#000000" fill="none" stroke-width="1"/>
+<text class="fnt1" x="10" y="0" text-anchor="normal" dy="5.5">bar</text>
+<text class="fnt1" x="-30" y="0" text-anchor="end" dy="5.5" style="fill:#969696">real</text>
+</g>
+<g transform="translate(0,40)">
+<line x1="-20" y1="0" x2="0" y2="0" stroke="#000000" fill="none" stroke-width="1"/>
+<text class="fnt1" x="10" y="0" text-anchor="normal" dy="5.5">baz</text>
+<text class="fnt1" x="-30" y="0" text-anchor="end" dy="5.5" style="fill:#969696">real</text>
+</g>
+<g transform="translate(0,60)">
+<line x1="-20" y1="0" x2="0" y2="0" stroke="#000000" fill="none" stroke-width="3"/>
+<text class="fnt1" x="10" y="0" text-anchor="normal" dy="5.5">zip</text>
+<text class="fnt1" x="-30" y="0" text-anchor="end" dy="5.5" style="fill:#969696">signed <tspan fill="#039BE5">[7:0]</tspan></text>
+</g>
+</g>
+<rect x="1.0" y="-14.0" width="158.0" height="88.0" stroke="#646464" fill="none" stroke-width="3"/>
+<text class="fnt2" x="80.0" y="-24.0" text-anchor="middle" dy="-2.0">newstyle</text>
+<g transform="translate(0,98.0)">
+<rect x="0" y="-15.0" width="160" height="90.0" stroke="#000000" fill="#C5DBFC" stroke-width="1"/>
+<g transform="translate(0,0)">
+<line x1="-20" y1="0" x2="0" y2="0" stroke="#000000" fill="none" stroke-width="1"/>
+<text class="fnt1" x="10" y="0" text-anchor="normal" dy="5.5">x</text>
+</g>
+<g transform="translate(0,20)">
+<line x1="-20" y1="0" x2="0" y2="0" stroke="#000000" fill="none" stroke-width="1"/>
+<text class="fnt1" x="10" y="0" text-anchor="normal" dy="5.5">x2</text>
+</g>
+<g transform="translate(160,0)">
+<line x1="16.16" y1="4.702643708725836e-16" x2="3.84" y2="-4.702643708725836e-16" stroke="#000000" fill="none" stroke-width="1" marker-start="url(#arrow_back)" marker-end="url(#arrow_fwd)"/>
+<text class="fnt1" x="-10" y="0" text-anchor="end" dy="5.5">y</text>
+</g>
+<g transform="translate(160,20)">
+<line x1="16.16" y1="4.702643708725836e-16" x2="3.84" y2="-4.702643708725836e-16" stroke="#000000" fill="none" stroke-width="1" marker-start="url(#arrow_back)" marker-end="url(#arrow_fwd)"/>
+<text class="fnt1" x="-10" y="0" text-anchor="end" dy="5.5">y2_long_output</text>
+</g>
+<g transform="translate(160,40)">
+<line x1="20" y1="0" x2="0" y2="0" stroke="#000000" fill="none" stroke-width="3"/>
+<text class="fnt1" x="-10" y="0" text-anchor="end" dy="5.5">z</text>
+<text class="fnt1" x="30" y="0" text-anchor="normal" dy="5.5" style="fill:#969696">wire <tspan fill="#039BE5">[4:1]</tspan></text>
+</g>
+<g transform="translate(160,60)">
+<line x1="20" y1="0" x2="0" y2="0" stroke="#000000" fill="none" stroke-width="3"/>
+<text class="fnt1" x="-10" y="0" text-anchor="end" dy="5.5">z2</text>
+<text class="fnt1" x="30" y="0" text-anchor="normal" dy="5.5" style="fill:#969696">wire <tspan fill="#039BE5">[4:1]</tspan></text>
+</g>
+</g>
+<rect x="1.0" y="84.0" width="158.0" height="88.0" stroke="#000000" fill="none" stroke-width="3"/>
+</svg>
