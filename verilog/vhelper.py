@@ -20,8 +20,11 @@ vlog_mods = vlog_ex.extract_objects(args.file)
 input = lambda p: p.mode == "input"
 output = lambda p: p.mode == "output"
 
-def pad(str,n):
+def lpad(str,n):
   return ( str + " "*n )[0:n]
+
+def rpad(str,n):
+  return ( " "*n + str )[-n:]
 
 def instanciate():
   for m in vlog_mods:
@@ -34,9 +37,9 @@ def instanciate():
     print("// %s (%s)" %(args.name, m.name))
     print("//")
     print()
-    # Declare wires for input ports
-    for p in filter(input, m.ports):
-      print("wire %s i_%s_%s;" %( pad( re.sub("wire|reg","",p.data_type).strip(),w2), args.name, p.name ) )
+    # Declare wires for all ports
+    for p in m.ports:
+      print("wire %s %s_%s_%s;" %( rpad( re.sub("wire|reg","", p.data_type).strip(),w2), "i" if p.mode == "input" else "o", args.name, p.name ) )
 
     print()
     # Module instanciation
@@ -47,13 +50,13 @@ def instanciate():
     if filter(input, m.ports):
       print("   //---- input ports ----")
       for p in filter(input, m.ports):
-        print("   .%s(i_%s_%s)%s" % ( pad(p.name,w), args.name, pad(p.name,w), "," if i<n else "" ))
+        print("   .%s(i_%s_%s)%s" % ( lpad(p.name,w), args.name, lpad(p.name,w), "," if i<n else "" ))
         i+=1
     # output ports
     if filter(output, m.ports):
       print("   //---- output ports ----")
       for p in filter(output, m.ports):
-        print("   .%s(o_%s_%s)%s" % ( pad(p.name,w), args.name, pad(p.name,w), "," if i<n else "" ))
+        print("   .%s(o_%s_%s)%s" % ( lpad(p.name,w), args.name, lpad(p.name,w), "," if i<n else "" ))
         i+=1
 
     print(");")
@@ -65,7 +68,7 @@ def instanciate():
     # Input ports connections
     print("// Connect Inputs:")
     for p in filter(input, m.ports):
-      print("assign i_%s_%s =  ;" % (args.name, pad(p.name,w)))
+      print("assign i_%s_%s =  ;" % (args.name, lpad(p.name,w)))
     print("// ---------------------------------------- //")
     print()
 
