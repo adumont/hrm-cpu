@@ -140,7 +140,7 @@ module hrmcpu (
     //
 	wire [7:0] program0_Addr;
 	wire [7:0] program0_Data;
-
+    /* verilator lint_off PINMISSING */
 	PROG program0 (
         // input ports
         .Addr(program0_Addr),

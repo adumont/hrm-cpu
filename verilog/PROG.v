@@ -3,6 +3,9 @@
 module PROG (
         // Input:
         input wire [7:0] Addr,
+        input wire [7:0] wAddr,
+        input wire [7:0] din,        
+        input wire       write_en,
         input clk,
         // Output:
         output wire [7:0] Data  // Data, 8 bit: Instruction or Operand
@@ -20,7 +23,15 @@ module PROG (
     reg [7:0] r_data;
 
     always @(posedge clk) begin
-        r_data <= rom[Addr];
+        if(write_en)
+            r_data <= din;
+        else
+            r_data <= rom[Addr];
+    end
+
+    always @(posedge clk) begin
+        if(write_en)
+            rom[wAddr] <= din;
     end
 
     assign Data = r_data;
