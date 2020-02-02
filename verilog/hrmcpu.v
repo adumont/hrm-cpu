@@ -136,22 +136,30 @@ module hrmcpu (
     // ---------------------------------------- //
 
     // ---------------------------------------- //
-    // PROG
+    // program0 (PROG)
     //
-	wire [7:0] program0_Addr;
-	wire [7:0] program0_Data;
+    wire [7:0] program0_Addr;
+    wire [7:0] i_program0_din;
+    wire       i_program0_write_en;
+    wire [7:0] program0_Data;
 
-	PROG program0 (
-        // input ports
-        .Addr(program0_Addr),
-        // output ports
-        .Data(program0_Data),
-        // clk, rst
-        .clk(clk)
+    PROG program0 (
+        //---- input ports ----
+        .Addr    (program0_Addr    ),
+        .din     (i_program0_din     ),
+        .write_en(i_program0_write_en),
+        .clk     (clk     ),
+        //---- output ports ----
+        .Data    (program0_Data    )
     );
-	defparam program0.PROGRAM = PROGRAM;
-    // Connect inputs
-    assign program0_Addr = PC0_PC;
+    // Define Parameters:
+    defparam program0.addr_width = 8;
+    defparam program0.data_width = 8;
+    defparam program0.PROGRAM = PROGRAM;
+    // Connect Inputs:
+    assign program0_Addr     = PC0_PC ;
+    assign i_program0_din      = 8'b 0 ;
+    assign i_program0_write_en = 1'b 0 ;
     // ---------------------------------------- //
 
     // ---------------------------------------- //
