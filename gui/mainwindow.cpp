@@ -173,7 +173,7 @@ void MainWindow::updateUI()
 
     // PROG
     ui->PROG_ADDR->setText(formatData( top->hrmcpu__DOT__PC0_PC ));
-    ui->PROG_DATA->setText(formatData( top->hrmcpu__DOT__program0__DOT__r_data ));
+    ui->PROG_DATA->setText(formatData( top->hrmcpu__DOT__program0__DOT__Data ));
     // PROG table
     for(int i=0; i<256; i++){
         ui->tblPROG->setItem(0,i,new QTableWidgetItem( formatData( top->hrmcpu__DOT__program0__DOT__rom[i] ) ));
