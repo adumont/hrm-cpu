@@ -19,7 +19,7 @@ module PROG (din, Addr, write_en, clk, Data);
   reg [data_width-1:0] rom [(1<<addr_width)-1:0];
 
   initial begin
-      $readmemh(PROGRAM, rom);
+      if( PROGRAM !=0 ) $readmemh(PROGRAM, rom);
   end
 
   always @(posedge clk)
