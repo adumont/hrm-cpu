@@ -921,6 +921,9 @@
        <height>22</height>
       </rect>
      </property>
+     <property name="toolTip">
+      <string>Advance a clock tick</string>
+     </property>
      <property name="text">
       <string>Tick (F3)</string>
      </property>
@@ -928,7 +931,7 @@
     <widget class="QPushButton" name="pbReset">
      <property name="geometry">
       <rect>
-       <x>150</x>
+       <x>223</x>
        <y>45</y>
        <width>60</width>
        <height>22</height>
@@ -944,7 +947,7 @@
     <widget class="MLed" name="led_i_rst">
      <property name="geometry">
       <rect>
-       <x>152</x>
+       <x>225</x>
        <y>30</y>
        <width>10</width>
        <height>10</height>
@@ -963,7 +966,7 @@
     <widget class="QLabel" name="label_4">
      <property name="geometry">
       <rect>
-       <x>163</x>
+       <x>236</x>
        <y>29</y>
        <width>30</width>
        <height>10</height>
@@ -1020,36 +1023,10 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QPushButton" name="pbSave">
-     <property name="geometry">
-      <rect>
-       <x>220</x>
-       <y>20</y>
-       <width>60</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Save</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pbLoad">
-     <property name="geometry">
-      <rect>
-       <x>220</x>
-       <y>46</y>
-       <width>60</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Load</string>
-     </property>
-    </widget>
     <widget class="QLabel" name="label_5">
      <property name="geometry">
       <rect>
-       <x>164</x>
+       <x>237</x>
        <y>74</y>
        <width>30</width>
        <height>10</height>
@@ -1065,7 +1042,7 @@
     <widget class="MLed" name="led_halt">
      <property name="geometry">
       <rect>
-       <x>153</x>
+       <x>226</x>
        <y>75</y>
        <width>10</width>
        <height>10</height>
@@ -1079,6 +1056,22 @@
      </property>
      <property name="scaledContents">
       <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pbINSTR">
+     <property name="geometry">
+      <rect>
+       <x>149</x>
+       <y>45</y>
+       <width>60</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string>Advance to next Instruction</string>
+     </property>
+     <property name="text">
+      <string>Instr (F4)</string>
      </property>
     </widget>
    </widget>
@@ -2004,6 +1997,32 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
+   <widget class="QPushButton" name="pbSave">
+    <property name="geometry">
+     <rect>
+      <x>730</x>
+      <y>20</y>
+      <width>60</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Save</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbLoad">
+    <property name="geometry">
+     <rect>
+      <x>730</x>
+      <y>50</y>
+      <width>60</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Load</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -2016,7 +2035,7 @@
    </property>
    <widget class="QMenu" name="menuMenu">
     <property name="title">
-     <string>Menu</string>
+     <string>&amp;Menu</string>
     </property>
     <addaction name="actionLoad_Program"/>
     <addaction name="separator"/>
@@ -2036,12 +2055,12 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionLoad_Program">
    <property name="text">
-    <string>Load Program</string>
+    <string>&amp;Load Program</string>
    </property>
   </action>
   <action name="actionExit">
    <property name="text">
-    <string>Exit</string>
+    <string>&amp;Exit</string>
    </property>
   </action>
  </widget>

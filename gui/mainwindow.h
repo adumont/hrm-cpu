@@ -49,6 +49,8 @@ private slots:
 
     void on_actionExit_triggered();
 
+    void on_pbINSTR_pressed();
+
 private:
     Ui::MainWindow *ui;
     QTimer *m_timer;
