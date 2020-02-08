@@ -72,7 +72,7 @@ $(BOARD_BUILDDIR)/$(MODULE).blif: $(MODULE).v $(DEPS) $(AUXFILES) $(BOARD_BUILDD
 	
 $(BOARD_BUILDDIR)/$(MODULE).pnr: $(PCF) $(BOARD_BUILDDIR)/$(MODULE).json
 
-	$(NEXTPNR) --hx$(PNRDEV) --package tq144 --json $(BOARD_BUILDDIR)/$(MODULE).json --pcf $(PCF) --asc $@
+	$(NEXTPNR) --hx$(PNRDEV) --package $(PNRPACK) --json $(BOARD_BUILDDIR)/$(MODULE).json --pcf $(PCF) --asc $@
 
 #ifdef LEVEL
 $(BUILDDIR)/$(MODULE).pnr: $(BOARD_BUILDDIR)/$(MODULE).pnr $(PROGRAM) $(ROMFILE)
