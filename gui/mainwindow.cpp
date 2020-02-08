@@ -130,12 +130,16 @@ void MainWindow::on_pbB_toggled(bool checked)
 {
     if(checked) {
         ui->pbA->setDisabled(true);
+        ui->pbINSTR->setDisabled(true);
 //        ui->pbReset->setDisabled(true);
         m_timer->start( ui->clkPeriod->value() );
     } else {
         m_timer->stop();
         ui->pbA->setEnabled(true);
+        if(!ui->pbReset->isChecked())
+           ui->pbINSTR->setEnabled(true);
 //        ui->pbReset->setEnabled(true);
+
     }
 }
 
@@ -173,7 +177,7 @@ void MainWindow::updateUI()
 
     // PROG
     ui->PROG_ADDR->setText(formatData( top->hrmcpu__DOT__PC0_PC ));
-    ui->PROG_DATA->setText(formatData( top->hrmcpu__DOT__program0__DOT__r_data ));
+    ui->PROG_DATA->setText(formatData( top->hrmcpu__DOT__program0__DOT__Data ));
     // PROG table
     for(int i=0; i<256; i++){
         ui->tblPROG->setItem(0,i,new QTableWidgetItem( formatData( top->hrmcpu__DOT__program0__DOT__rom[i] ) ));
@@ -316,12 +320,16 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
         ui->pbB->toggle();
     } else if(e->key() == Qt::Key_F3) {
         ui->pbA->click();
+    } else if(e->key() == Qt::Key_F4) {
+        ui->pbINSTR->click();
     }
 
 }
 
 void MainWindow::on_pbReset_toggled(bool checked)
 {
+    ui->pbINSTR->setDisabled(checked);
+
     top->i_rst=checked;
     updateUI();
 }
@@ -426,4 +434,14 @@ void MainWindow::on_actionLoad_Program_triggered()
 void MainWindow::on_actionExit_triggered()
 {
     QApplication::quit();
+}
+
+void MainWindow::on_pbINSTR_pressed()
+{
+    while( top->hrmcpu__DOT__ControlUnit0__DOT__state == 9 /* DECODE */ && top->hrmcpu__DOT__IR0_rIR != 240 /* HALT */ ) {
+        clkTick();
+    }
+    while( top->hrmcpu__DOT__ControlUnit0__DOT__state != 9 /* DECODE */ && top->hrmcpu__DOT__IR0_rIR != 240 /* HALT */ ) {
+        clkTick();
+    }
 }

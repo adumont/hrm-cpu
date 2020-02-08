@@ -30,15 +30,13 @@ module mem_wrapper #(
     parameter ROMFILE = "";
 
     wire [data_width-1:0] ram0_dout;
-    ram #( .ram_size( 256 ), .data_width( 8 ) ) ram0 (
+    ram #( .addr_width( 8 ), .data_width( 8 ) ) ram0 (
     // read port
-        .rclk( clk ),
-        .raddr( addr ),
+        .clk( clk ),
+        .addr( addr ),
         .dout( ram0_dout ),
     // write port
-        .wclk( clk ),
         .write_en( write_en & cs_RAM0 ),
-        .waddr( addr ),
         .din( din )
     );
     defparam ram0.ROMFILE = ROMFILE;

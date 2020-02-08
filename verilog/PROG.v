@@ -1,28 +1,31 @@
 `default_nettype none
 
-module PROG (
-        // Input:
-        input wire [7:0] Addr,
-        input clk,
-        // Output:
-        output wire [7:0] Data  // Data, 8 bit: Instruction or Operand
-    );
+// ** Single-Port RAM **
+// LATTICE, Memory Usage Guide for iCE40 Devices
+// Technical Note TN1250, June 2016
+// Appendix A. Standard HDL Code References, p20
+module PROG (din, Addr, write_en, clk, Data);
+  parameter addr_width = 8;
+  parameter data_width = 8;
+  parameter PROGRAM = "dummy_prg.hex";
 
-    parameter PROGRAM = "dummy_prg.hex";
-    parameter SIZE = 256;
+  input [addr_width-1:0] Addr;
+  input [data_width-1:0] din;
+  input write_en, clk;
 
-    reg [7:0] rom [0: SIZE-1 ];
+  output [data_width-1:0] Data;
 
-    initial begin
-        $readmemh(PROGRAM, rom);
-    end
+  reg [data_width-1:0] Data; // Register for output.
+  reg [data_width-1:0] rom [(1<<addr_width)-1:0];
 
-    reg [7:0] r_data;
+  initial begin
+      if( PROGRAM !=0 ) $readmemh(PROGRAM, rom);
+  end
 
-    always @(posedge clk) begin
-        r_data <= rom[Addr];
-    end
-
-    assign Data = r_data;
-
+  always @(posedge clk)
+  begin
+    if (write_en)
+      rom[(Addr)] <= din;
+    Data = rom[Addr]; // Output register controlled by clock.
+  end
 endmodule

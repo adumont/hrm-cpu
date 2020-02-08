@@ -8,7 +8,7 @@ module hrmcpu (
     input  wire       cpu_in_wr,  // write to CPU's INBOX
     input  wire       cpu_out_rd, // read from CPU's OUTBOX
     input  wire [2:0] cpu_dmp_chip_select, // component to dump
-    input  wire [4:0] cpu_dmp_fifo_pos,    // dump fifo at this position 
+    input  wire [4:0] cpu_dmp_fifo_pos,    // dump fifo at this position
 
     // output signals
     output reg        cpu_in_full,
@@ -32,7 +32,7 @@ module hrmcpu (
     m_REG       = 3'd 4,
     m_INSTR     = 3'd 5;
     // TODO: FORMAL Assume cpu_dmp_chip_select is  between 0 .. 6
-    
+
     parameter PROGRAM = "dummy_prg.hex";
     parameter ROMFILE = "dummy_ram.hex";
 
@@ -136,22 +136,30 @@ module hrmcpu (
     // ---------------------------------------- //
 
     // ---------------------------------------- //
-    // PROG
+    // program0 (PROG)
     //
-	wire [7:0] program0_Addr;
-	wire [7:0] program0_Data;
+    wire [7:0] program0_Addr;
+    wire [7:0] i_program0_din;
+    wire       i_program0_write_en;
+    wire [7:0] program0_Data;
 
-	PROG program0 (
-        // input ports
-        .Addr(program0_Addr),
-        // output ports
-        .Data(program0_Data),
-        // clk, rst
-        .clk(clk)
+    PROG program0 (
+        //---- input ports ----
+        .Addr    (program0_Addr    ),
+        .din     (i_program0_din     ),
+        .write_en(i_program0_write_en),
+        .clk     (clk     ),
+        //---- output ports ----
+        .Data    (program0_Data    )
     );
-	defparam program0.PROGRAM = PROGRAM;
-    // Connect inputs
-    assign program0_Addr = PC0_PC;
+    // Define Parameters:
+    defparam program0.addr_width = 8;
+    defparam program0.data_width = 8;
+    defparam program0.PROGRAM = PROGRAM;
+    // Connect Inputs:
+    assign program0_Addr     = PC0_PC ;
+    assign i_program0_din      = 8'b 0 ;
+    assign i_program0_write_en = 1'b 0 ;
     // ---------------------------------------- //
 
     // ---------------------------------------- //
@@ -160,11 +168,13 @@ module hrmcpu (
     wire [7:0] IR0_nIR; // next Instruction
     wire       IR0_wIR; // store next Instruction to current Instruction
     wire [7:0] IR0_rIR; // current Instruction
+    wire       IR0_rst;
 
     IR IR0 (
         // input ports
         .wIR(IR0_wIR),
         .nIR(IR0_nIR), // input, next Instruction
+        .rst(IR0_rst),
         // output ports
         .rIR(IR0_rIR), // output, current Instruction
         // clk, rst
@@ -173,6 +183,7 @@ module hrmcpu (
     // Connect inputs
     assign IR0_nIR = program0_Data;
     assign IR0_wIR = cu_wIR;
+    assign IR0_rst = cu_rst;
     // ---------------------------------------- //
 
     // ---------------------------------------- //
@@ -201,7 +212,7 @@ module hrmcpu (
         .R(R_value),
         // clk
         .clk(clk)
-    );    
+    );
     // Connect inputs
     assign R_iInbox = INBOX_o_data;
     assign R_iAlu = alu_Out;
@@ -267,7 +278,7 @@ module hrmcpu (
         // output ports
         .aluOut( alu_Out ),
         .flag( alu_flag )
-    );    
+    );
     // Connect inputs
     assign alu_Ctl = cu_aluCtl;
     assign alu_inR = R_value;
@@ -307,8 +318,8 @@ module hrmcpu (
     wire              INBOX_i_rst;
     // dump ports
     wire        [4:0] INBOX_i_dmp_pos;
-    wire        [7:0] INBOX_o_dmp_data; 
-    wire              INBOX_o_dmp_valid; 
+    wire        [7:0] INBOX_o_dmp_data;
+    wire              INBOX_o_dmp_valid;
 
     /* verilator lint_off PINMISSING */
     ufifo #(.LGFLEN(4'd5)) INBOX (
@@ -325,7 +336,7 @@ module hrmcpu (
         // dump ports
         .i_dmp_pos(INBOX_i_dmp_pos),     // dump position in queue
         .o_dmp_data(INBOX_o_dmp_data),   // value at dump position
-        .o_dmp_valid(INBOX_o_dmp_valid), // i_dmp_pos is valid 
+        .o_dmp_valid(INBOX_o_dmp_valid), // i_dmp_pos is valid
         // clk, rst
         .i_rst(INBOX_i_rst),
         .i_clk(clk)
@@ -352,8 +363,8 @@ module hrmcpu (
     wire              OUTB_i_rst;
     // dump ports
     wire        [4:0] OUTB_i_dmp_pos;
-    wire        [7:0] OUTB_o_dmp_data; 
-    wire              OUTB_o_dmp_valid; 
+    wire        [7:0] OUTB_o_dmp_data;
+    wire              OUTB_o_dmp_valid;
 
     /* verilator lint_off PINMISSING */
     ufifo #(.LGFLEN(4'd5)) OUTB (

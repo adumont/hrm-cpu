@@ -783,7 +783,10 @@ See this [video](https://youtu.be/b5eFUFYJFLQ) for a demo.
 These are some of the features the GUI brings at the moment:
 
 * Select and Load a program from file (machine language) into PROG memory (make tests to create all the test programs from assembler)
-* Run manually (tick by tick) or in automatic mode, with adjustable clock period
+* Three running modes:
+  * F3: Run manually (tick by tick) or in automatic mode, with adjustable clock period
+  * F4: Step to next instruction (stops on next DECODE state or HALT instruction)
+  * F5: Run continuously
 * Show values of registers and signals
 * Show content MEMORY ram, PROG memory, as well as INBOX and OUTBOX FIFOs (doesn't allow to directly edit values, as least not for now)
 * Shows current instruction name and current ControlUnit (FSM) name
