@@ -45,8 +45,7 @@ check_latest:
 	[ -e $(VER_VLTOR) ] && ( git ls-remote --heads $(GIT_VLTOR) refs/heads/stable | cut -f1 | cmp $(VER_VLTOR) - || rm -f $(VER_VLTOR) ) || true
 	[ -e $(VER_IVRLG) ] && ( git ls-remote --heads $(GIT_IVRLG) refs/heads/master | cut -f1 | cmp $(VER_IVRLG) - || rm -f $(VER_IVRLG) ) || true
 
-#ci-deps: $(VER_ICEST) $(VER_YOSYS) $(VER_ARACH) $(VER_SYMBI) $(VER_YICES) $(VER_VLTOR) $(VER_IVRLG)
-ci-deps: $(VER_ICEST) $(VER_SYMBI) $(VER_YICES) $(VER_VLTOR) $(VER_IVRLG)
+ci-deps: $(VER_ICEST) $(VER_YOSYS) $(VER_ARACH) $(VER_SYMBI) $(VER_YICES) $(VER_VLTOR) $(VER_IVRLG)
 
 ifndef TRAVIS
   NPROC:= -j$(shell nproc)

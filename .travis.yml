@@ -2,9 +2,6 @@ dist: trusty
 sudo: false
 language: generic
 
-services:
-  - docker
-
 # # safelist
 # branches:
 #   only:
@@ -13,7 +10,9 @@ services:
 addons:
   apt:
     packages:
+    - iverilog
     - libftdi-dev
+    - verilator
     - gperf
 
 cache:
