@@ -69,7 +69,9 @@ ifdef LEVEL
   BUILDDIR:=$(BOARD_BUILDDIR)/$(LEVEL)
   ifneq ($(MODULE), none)
     PROGRAM:=test/$(LEVEL)/program
-    ROMFILE:=test/$(LEVEL)/ram
+    ifneq ("$(wildcard test/$(LEVEL)/ram)","")
+      ROMFILE:=test/$(LEVEL)/ram
+    endif
   endif
 endif
 
