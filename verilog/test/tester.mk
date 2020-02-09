@@ -37,8 +37,14 @@ test : $(all-tests)
 %.ivl : $(SRCFILEPATH) $(AUXFILE)
 	iverilog $(SRCFILEPATH) -DPROGRAM=\"program\" -DROMFILE=\"ram.tmp\" -DINBFILE=\"$*.in\" $(IVERILOG_OPT) -DDUMPFILE=\"$*.lxt\" -o $*.ivl
 
+ifneq ("$(wildcard ram)","")
 ram.tmp: ram
-	[ -e ram ] && cp ram ram.tmp || ../../../hrmasm/hrmasm -r ram.tmp
+	cp ram ram.tmp
+else
+ram.tmp:
+	../../../hrmasm/hrmasm -r ram.tmp
+endif
+
 
 program: PROG
 	../../../hrmasm/hrmasm -s PROG -o program -p -
