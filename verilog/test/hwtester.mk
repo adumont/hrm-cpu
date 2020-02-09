@@ -40,7 +40,7 @@ test : $(all-tests)
 	@printf "\n%b\n" "$(BLUE)Programming FPGA with $(LEVEL_DIR)$(NO_COLOR)\n"
 	$(MAKE) -C ../../ LEVEL=$(LEVEL_DIR) upload
 	@printf "\n%b\n" "$(BLUE)Running test $(LEVEL_DIR)/$*$(NO_COLOR)\n"
-	../run1hwtest.sh /dev/ttyUSB1 $* && \
+	../run1hwtest.py -p $(SERIAL) -i $*.in -o $*.out && \
 	( touch $*.hwcheck; printf "\n%b\n" "$(GREEN)$(LEVEL_DIR): HW Test [$*] OK$(NO_COLOR)\n" ) || \
 	( printf "\n%b\n" "$(RED)$(LEVEL_DIR): HW Test [$*] FAILED$(NO_COLOR)\n" ; false )
 
