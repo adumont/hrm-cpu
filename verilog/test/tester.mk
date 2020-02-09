@@ -3,7 +3,7 @@ include ../../Design.mk
 #SOURCES:=hrmcpu.v ufifo.v ALU.v MEMORY.v register.v IR.v program.v PC.v ControlUnit.v ram.v test/tester.v
 SOURCES:= $(DEPS_HRMCPU) hrmcpu.v test/tester.v
 
-AUXFILE:=program ram
+AUXFILE:=program ram.tmp
 
 .DEFAULT_GOAL := all
 
@@ -35,7 +35,10 @@ test : $(all-tests)
 #.PRECIOUS: %.ivl %.test_out 
 
 %.ivl : $(SRCFILEPATH) $(AUXFILE)
-	iverilog $(SRCFILEPATH) -DPROGRAM=\"program\" -DROMFILE=\"ram\" -DINBFILE=\"$*.in\" $(IVERILOG_OPT) -DDUMPFILE=\"$*.lxt\" -o $*.ivl
+	iverilog $(SRCFILEPATH) -DPROGRAM=\"program\" -DROMFILE=\"ram.tmp\" -DINBFILE=\"$*.in\" $(IVERILOG_OPT) -DDUMPFILE=\"$*.lxt\" -o $*.ivl
+
+ram.tmp: ram
+	[ -e ram ] && cp ram ram.tmp || ../../../hrmasm/hrmasm -r ram.tmp
 
 program: PROG
 	../../../hrmasm/hrmasm -s PROG -o program -p -
@@ -52,4 +55,4 @@ all : test
 	@printf "%b" "$(GREEN)$(LEVEL_DIR): Success, all tests passed$(NO_COLOR)\n"
 
 clean :
-	-rm -f *.ivl *.check *.vcd *.lxt *.test_out program
+	-rm -f *.ivl *.check *.vcd *.lxt *.test_out program ram.tmp
