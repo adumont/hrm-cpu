@@ -38,14 +38,24 @@ VER_IVRLG:=$(TARGETDIR)/iverilog.ver
 
 check_latest:
 	[ -e $(VER_ICEST) ] && ( git ls-remote --heads $(GIT_ICEST) refs/heads/master | cut -f1 | cmp $(VER_ICEST) - || rm -f $(VER_ICEST) ) || true
-	[ -e $(VER_YOSYS) ] && ( git ls-remote --heads $(GIT_YOSYS) refs/heads/master | cut -f1 | cmp $(VER_YOSYS) - || rm -f $(VER_YOSYS) ) || true
-	[ -e $(VER_ARACH) ] && ( git ls-remote --heads $(GIT_ARACH) refs/heads/master | cut -f1 | cmp $(VER_ARACH) - || rm -f $(VER_ARACH) ) || true
 	[ -e $(VER_SYMBI) ] && ( git ls-remote --heads $(GIT_SYMBI) refs/heads/master | cut -f1 | cmp $(VER_SYMBI) - || rm -f $(VER_SYMBI) ) || true
 	[ -e $(VER_YICES) ] && ( git ls-remote --heads $(GIT_YICES) refs/heads/master | cut -f1 | cmp $(VER_YICES) - || rm -f $(VER_YICES) ) || true	
 	[ -e $(VER_VLTOR) ] && ( git ls-remote --heads $(GIT_VLTOR) refs/heads/stable | cut -f1 | cmp $(VER_VLTOR) - || rm -f $(VER_VLTOR) ) || true
 	[ -e $(VER_IVRLG) ] && ( git ls-remote --heads $(GIT_IVRLG) refs/heads/master | cut -f1 | cmp $(VER_IVRLG) - || rm -f $(VER_IVRLG) ) || true
+ifneq ($(ARACHNEPNR),)
+	[ -e $(VER_ARACH) ] && ( git ls-remote --heads $(GIT_ARACH) refs/heads/master | cut -f1 | cmp $(VER_ARACH) - || rm -f $(VER_ARACH) ) || true
+endif
+ifeq ($(DOCKER_YOSYS),)
+	[ -e $(VER_YOSYS) ] && ( git ls-remote --heads $(GIT_YOSYS) refs/heads/master | cut -f1 | cmp $(VER_YOSYS) - || rm -f $(VER_YOSYS) ) || true
+endif
 
-ci-deps: $(VER_ICEST) $(VER_YOSYS) $(VER_ARACH) $(VER_SYMBI) $(VER_YICES) $(VER_VLTOR) $(VER_IVRLG)
+ci-deps: $(VER_ICEST) $(VER_SYMBI) $(VER_YICES) $(VER_VLTOR) $(VER_IVRLG)
+ifneq ($(ARACHNEPNR),)
+ci-deps: $(VER_ARACH)
+endif
+ifeq ($(DOCKER_YOSYS),)
+ci-deps: $(VER_YOSYS)
+endif
 
 ifndef TRAVIS
   NPROC:= -j$(shell nproc)
