@@ -6,6 +6,16 @@ language: generic
 # branches:
 #   only:
 #   - harvard
+services:
+  - docker
+
+env:
+- BOARD=alhambra
+- BOARD=alhambra ARACHNEPNR=1
+- BOARD=alhambra DOCKER_YOSYS="adumont/yosys:yosys-0.9"
+- BOARD=alhambra DOCKER_YOSYS="adumont/yosys:yosys-0.9" ARACHNEPNR=1
+- BOARD=alhambra DOCKER_YOSYS="ghdl/synth:beta yosys"
+- BOARD=alhambra DOCKER_YOSYS="ghdl/synth:beta yosys" ARACHNEPNR=1
 
 addons:
   apt:
@@ -39,7 +49,6 @@ after_failure:
 after_script:
   # Report a message if we didn't use the latest commit of yosys.
   # - if cmp -s yosys_latest_commit_id.txt env/yosys_commit_id.txt; then echo '******** Using the following cached yosys (https://github.com/cliffordwolf/yosys.git) commit ID which is not the latest. Consider clearing Travis cache. **********' && cat env/yosys_commit_id.txt && echo '**********'; fi
-
 
 notifications:
   webhooks:
