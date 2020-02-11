@@ -10,12 +10,11 @@ services:
   - docker
 
 env:
-- BOARD=alhambra
-- BOARD=alhambra ARACHNEPNR=1
-- BOARD=alhambra DOCKER_YOSYS="adumont/yosys:yosys-0.9"
-- BOARD=alhambra DOCKER_YOSYS="adumont/yosys:yosys-0.9" ARACHNEPNR=1
-- BOARD=alhambra DOCKER_YOSYS="ghdl/synth:beta yosys"
-- BOARD=alhambra DOCKER_YOSYS="ghdl/synth:beta yosys" ARACHNEPNR=1
+- DOCKER_YOSYS="ghdl/synth:beta yosys"
+- DOCKER_YOSYS="adumont/yosys:yosys-0.9"
+- DOCKER_YOSYS="ghdl/synth:beta yosys" ARACHNEPNR=1
+#- ARACHNEPNR=1
+#- DOCKER_YOSYS="adumont/yosys:yosys-0.9" ARACHNEPNR=1
 
 addons:
   apt:
