@@ -299,6 +299,17 @@ void MainWindow::updateUI()
 
     ui->cu_statename->setText( verilatorString( top->hrmcpu__DOT__ControlUnit0__DOT__statename ) );
 
+    // LEDS
+    ui->R_LEDs->setText(formatData( top->cpu_o_leds ));
+    ui->led0->setState( top->cpu_o_leds >> 0 & 1 );
+    ui->led1->setState( top->cpu_o_leds >> 1 & 1 );
+    ui->led2->setState( top->cpu_o_leds >> 2 & 1 );
+    ui->led3->setState( top->cpu_o_leds >> 3 & 1 );
+    ui->led4->setState( top->cpu_o_leds >> 4 & 1 );
+    ui->led5->setState( top->cpu_o_leds >> 5 & 1 );
+    ui->led6->setState( top->cpu_o_leds >> 6 & 1 );
+    ui->led7->setState( top->cpu_o_leds >> 7 & 1 );
+
 }
 
 void MainWindow::highlightLabel(QWidget *qw, bool signal) {
@@ -438,7 +449,14 @@ void MainWindow::on_actionExit_triggered()
 
 void MainWindow::on_pbINSTR_pressed()
 {
-    while( top->hrmcpu__DOT__ControlUnit0__DOT__state == 9 /* DECODE */ && top->hrmcpu__DOT__IR0_rIR != 240 /* HALT */ ) {
+    if( top->hrmcpu__DOT__IR0_rIR == 0 && !top->hrmcpu__DOT__INBOX_empty_n ) {
+        clkTick();
+        clkTick();
+        if( !top->cpu_in_wr || ui->editINdata->text().isEmpty() ) {
+            return;
+        }
+    }
+    while( top->hrmcpu__DOT__ControlUnit0__DOT__state == 9 /* = DECODE */ && top->hrmcpu__DOT__IR0_rIR != 240 /* != HALT */ ) {
         clkTick();
     }
     while( top->hrmcpu__DOT__ControlUnit0__DOT__state != 9 /* DECODE */ && top->hrmcpu__DOT__IR0_rIR != 240 /* HALT */ ) {
