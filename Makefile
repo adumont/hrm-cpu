@@ -8,6 +8,7 @@ test:
 	$(MAKE) -s -C verilog test
 	$(MAKE) -C verilog/test BOARD=alhambra hwbin
 	$(MAKE) -C verilog/test BOARD=ice40hx8k hwbin
+	$(MAKE) -s -C gui
 
 clean:
 	$(MAKE) -C verilog/test clean
