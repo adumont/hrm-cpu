@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // Clock Initialization
     clk = true;
 
-    bgColor = QString("background-color: rgb(255, 205, 205);");
+    bgColor = QString("background-color: rgb(128, 213, 255);");
 
     // Create our design model with Verilator
     top = new Vhrmcpu;
@@ -214,7 +214,7 @@ void MainWindow::updateUI()
             if( !top->hrmcpu__DOT__MEMORY0__DOT__mmio && top->hrmcpu__DOT__MEMORY0__DOT__AR_q == (16*j+i) )
             {
                 if( clk==0 && top->hrmcpu__DOT__MEMORY0__DOT__wM ) {
-                    ui->tblRAM->item(j, i)->setBackground(QColor(255, 205, 205, 255));
+                    ui->tblRAM->item(j, i)->setBackground(QColor(128, 213, 255, 255));
                     ui->tblRAM->item(j, i)->setForeground(Qt::black);
                 }
                 else if( clk==0 && top->hrmcpu__DOT__MEMORY0__DOT__wM == 0 ) {
