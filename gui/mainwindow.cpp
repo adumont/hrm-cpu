@@ -310,6 +310,11 @@ void MainWindow::updateUI()
     ui->led6->setState( top->cpu_o_leds >> 6 & 1 );
     ui->led7->setState( top->cpu_o_leds >> 7 & 1 );
 
+    // MMIO Chip Select signals
+    ui->led_cs_RAM0->setState( top->hrmcpu__DOT__MEMORY0__DOT__mem_wrapper0__DOT__cs_RAM0 );
+    ui->led_cs_XALU->setState( top->hrmcpu__DOT__MEMORY0__DOT__mem_wrapper0__DOT__cs_XALU );
+    ui->led_cs_LEDS->setState( top->hrmcpu__DOT__MEMORY0__DOT__mem_wrapper0__DOT__cs_LEDS );
+    ui->led_cs_RAND->setState( top->hrmcpu__DOT__MEMORY0__DOT__mem_wrapper0__DOT__cs_RAND );
 }
 
 void MainWindow::highlightLabel(QWidget *qw, bool signal) {
