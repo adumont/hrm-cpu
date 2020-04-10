@@ -10,6 +10,7 @@ services:
   - docker
 
 env:
+- NO_DOCKER_YOSYS="1"
 - DOCKER_YOSYS="ghdl/synth:beta yosys"
 - DOCKER_YOSYS="adumont/yosys:yosys-0.9"
 - DOCKER_YOSYS="ghdl/synth:beta yosys" ARACHNEPNR=1
