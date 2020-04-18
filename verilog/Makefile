@@ -60,7 +60,7 @@ $(MODULE)_tb.vcd: $(MODULE).v $(DEPS) $(MODULE)_tb.v $(PROGRAM) $(ROMFILE)
 	iverilog $(MODULE).v $(DEPS) $(MODULE)_tb.v $(IVERILOG_MACRO) -o $(MODULE)_tb.out
 	./$(MODULE)_tb.out
 
-$(BOARD_BUILDDIR)/$(MODULE).lint: $(MODULE).v $(DEPS)
+$(BOARD_BUILDDIR)/$(MODULE).lint: $(MODULE).v $(DEPS) $(BUILDDIR)
 
 	verilator --lint-only $(MODULE).v && > $@ || ( rm -f $@; false )
 
@@ -114,7 +114,7 @@ upload: $(BUILDDIR)/$(MODULE).bin
 
 $(BUILDDIR)/$(MODULE)-netlist.json: $(MODULE).v $(DEPS)
 
-	yosys -p "prep -top $(MODULE); write_json $(MODULE)-netlist.json" $(MODULE).v $(DEPS)
+	yosys -p "prep -top $(MODULE); write_json $(BUILDDIR)-$(MODULE)-netlist.json" $(MODULE).v $(DEPS)
 
 assets/$(MODULE).svg: $(BUILDDIR)/$(MODULE)-netlist.json
 
