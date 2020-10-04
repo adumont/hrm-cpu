@@ -118,7 +118,8 @@ $(VER_VLTOR):
 	unset VERILATOR_ROOT && \
 	autoconf && \
 	./configure --prefix=$(TARGETDIR) >/dev/null && \
-        nice make $(NPROC) install && \
+        nice make $(NPROC) && \
+        make install && \
         git rev-parse HEAD > $(VER_VLTOR)
 
 $(VER_IVRLG):
