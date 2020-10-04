@@ -49,6 +49,7 @@ module top (
     //
     // input signals
     reg        cpu_debug = 0;
+    reg        cpu_hold = 0;
     reg        cpu_nxtInstr = 0;
     wire [7:0] cpu_in_data;
     wire       cpu_in_wr; // write to CPU's INBOX
@@ -67,6 +68,7 @@ module top (
     hrmcpu CPU (
         // input ports
         .cpu_debug(cpu_debug),
+        .cpu_hold(cpu_hold),
         .cpu_nxtInstr(cpu_nxtInstr),
         .cpu_in_data(cpu_in_data),
         .cpu_in_wr(cpu_in_wr),
