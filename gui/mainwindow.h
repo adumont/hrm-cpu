@@ -51,6 +51,12 @@ private slots:
 
     void on_pbINSTR_pressed();
 
+    void on_dmp_module_valueChanged(int arg1);
+
+    void on_dmp_position_valueChanged(int arg1);
+
+    void on_pbHold_toggled(bool checked);
+
 private:
     Ui::MainWindow *ui;
     QTimer *m_timer;

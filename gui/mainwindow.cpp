@@ -149,6 +149,8 @@ void MainWindow::updateUI()
 
     // update INPUTS before we EVAL()
     top->cpu_in_wr = ui->pbPUSH->isChecked();
+    top->cpu_dmp_chip_select = ui->dmp_module->value();
+    top->cpu_dmp_fifo_pos = ui->dmp_position->value();
 
 //    int x;
 //    std::stringstream ss;
@@ -315,6 +317,10 @@ void MainWindow::updateUI()
     ui->led_cs_XALU->setState( top->hrmcpu__DOT__MEMORY0__DOT__mem_wrapper0__DOT__cs_XALU );
     ui->led_cs_LEDS->setState( top->hrmcpu__DOT__MEMORY0__DOT__mem_wrapper0__DOT__cs_LEDS );
     ui->led_cs_RAND->setState( top->hrmcpu__DOT__MEMORY0__DOT__mem_wrapper0__DOT__cs_RAND );
+
+    // Update debug (dump) values
+    ui->led_dmp_valid->setState( top->cpu_dmp_valid );
+    ui->dmp_value->setText(formatData( top->cpu_dmp_data ));
 }
 
 void MainWindow::highlightLabel(QWidget *qw, bool signal) {
@@ -467,4 +473,22 @@ void MainWindow::on_pbINSTR_pressed()
     while( top->hrmcpu__DOT__ControlUnit0__DOT__state != 9 /* DECODE */ && top->hrmcpu__DOT__IR0_rIR != 240 /* HALT */ ) {
         clkTick();
     }
+}
+
+void MainWindow::on_dmp_module_valueChanged(int arg1)
+{
+    updateUI();
+}
+
+void MainWindow::on_dmp_position_valueChanged(int arg1)
+{
+    updateUI();
+}
+
+void MainWindow::on_pbHold_toggled(bool checked)
+{
+    ui->pbINSTR->setDisabled(checked);
+
+    top->cpu_hold=checked;
+    updateUI();
 }
