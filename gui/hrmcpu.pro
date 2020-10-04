@@ -15,6 +15,8 @@ INCLUDEPATH += ../verilog/obj_dir
 INCLUDEPATH += $(HOME)/toolchain/share/verilator/include
 #INCLUDEPATH += $(HOME)/toolchain/share/verilator/include/vltstd
 
+CONFIG += c++11
+
 LIBS += ../verilog/obj_dir/*.o
 
 SOURCES += main.cpp\
