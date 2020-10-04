@@ -24,6 +24,7 @@ module ControlUnit (
     output reg        rst,
     output reg        halt,
     output reg        enT,
+    output wire [4:0] dmp_state,
     // generic signals
     input wire clk,
     input wire i_rst
@@ -83,6 +84,8 @@ module ControlUnit (
 
     reg [4:0] state;
     reg [4:0] nextstate;
+
+    assign dmp_state = state;
 
     // comb always block
     // NEXT STATE LOGIC (depends on currState and INPUTS)
@@ -251,6 +254,10 @@ module ControlUnit (
       endcase
     end
 
+    `ifdef FORMAL
+      `undef SYNTHESIS
+    `endif
+
     // This code allows you to see state names in simulation
     `ifndef SYNTHESIS
     reg [87:0] statename;
@@ -318,10 +325,15 @@ module ControlUnit (
 
       reg	f_past_valid;
       initial	f_past_valid = 1'b0;
-      always @(posedge clk)
-        f_past_valid <= 1'b1;
 
-      //always @(*) assume( instrname != "XXXXXXXXXX" ); // we assume the opcode are always valid
+      always @(posedge clk)
+      begin
+        f_past_valid <= 1'b1;
+        if(f_past_valid == 0)
+          assume(i_rst);
+      end
+
+      always @(*) assume( instrname != "XXXXXXXXXX" ); // we assume the opcode are always valid
 
       always @(*) assert( statename != "XXXXXXXXXX" ); // asserts MUST stay true
       always @(*) assert( statename != "INVALID"    );
@@ -329,6 +341,7 @@ module ControlUnit (
       always @(posedge clk)
       if (f_past_valid)
       begin
+
         if( $past( i_rst ) ) assert( state == S_RESET );
 
         // check valid transitions in FSM when no async reset happening
@@ -337,6 +350,12 @@ module ControlUnit (
           if($past( state == S_RESET  ) ) assert( state == S_FETCH_I );
           if($past( state == S_Inc_PC ) ) assert( state == S_FETCH_I );
         end
+
+        assume(!debug);
+        assume(!nxtInstr);
+        cover( state == S_ADD );
+        cover( state == S_BUMPN );
+        cover( halt );
 
       end
 

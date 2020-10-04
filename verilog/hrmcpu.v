@@ -3,6 +3,7 @@
 module hrmcpu (
     // input signals
     input  wire       cpu_debug,
+    input  wire       cpu_hold,     // pause/hold when asserted. ControlUnit won't run
     input  wire       cpu_nxtInstr,
     input  wire [7:0] cpu_in_data,
     input  wire       cpu_in_wr,  // write to CPU's INBOX
@@ -30,7 +31,8 @@ module hrmcpu (
     m_PC        = 3'd 2,
     m_RAM       = 3'd 3,
     m_REG       = 3'd 4,
-    m_INSTR     = 3'd 5;
+    m_INSTR     = 3'd 5,
+    m_STATE     = 3'd 6;
     // TODO: FORMAL Assume cpu_dmp_chip_select is  between 0 .. 6
 
     parameter PROGRAM = "dummy_prg.hex";
@@ -61,6 +63,7 @@ module hrmcpu (
     wire       cu_rst;
     wire       cu_halt;
     wire       cu_enT;
+    wire [4:0] cu_dmp_state;
 
     ControlUnit ControlUnit0 (
         // input ports
@@ -86,8 +89,9 @@ module hrmcpu (
         .rst(cu_rst),
         .halt(cu_halt),
         .enT(cu_enT),
+        .dmp_state(cu_dmp_state),
         // clk, rst
-        .clk(clk),
+        .clk(clk & ~cpu_hold),
         .i_rst(i_rst)
     );
 
@@ -423,9 +427,14 @@ module hrmcpu (
                 cpu_dmp_data  = OUTB_o_dmp_data;
                 cpu_dmp_valid = OUTB_o_dmp_valid;
             end
+            m_RAM  : begin
+                cpu_dmp_data  = 8'b 00;
+                cpu_dmp_valid = 1'b 0;
+            end
             m_PC     : cpu_dmp_data  = PC0_PC;
             m_INSTR  : cpu_dmp_data  = IR0_rIR;
             m_REG    : cpu_dmp_data  = R_value;
+            m_STATE  : cpu_dmp_data  = {3'b0, cu_dmp_state };
             default  : cpu_dmp_data  = PC0_PC;
         endcase
     end

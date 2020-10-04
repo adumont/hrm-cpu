@@ -263,7 +263,11 @@ Note:
 
 ### Debug Mode
 
-I have added a *debug mode*  (which can be enabled by asserting the *debug* signal to 1). When in *debug mode*, the FSM will pause right before loading the next instruction into the Instruction Register (IR). It will then resume execution when the user press the "nxtInstr" button. This allows the user to run the program in an *Instruction by Instruction* fashion, and inspect the state of all the components after an instruction has run, and before we run the next.
+I have added a *debug mode*  (which can be enabled by asserting the *cpu_debug* signal). When in *debug mode*, the FSM will pause right before loading the next instruction into the Instruction Register (IR). It will then resume execution when the user press the "nxtInstr" button. This allows the user to run the program in an *Instruction by Instruction* fashion, and inspect the state of all the components after an instruction has run, and before we run the next.
+
+### Hold Mode
+
+The CPU have a *Hold mode* which can be triggered by asserting the *cpu_hold* signal. This will gate the clock input of the FSM, so the FSM (Control Unit) will be paused ("on hold"). All the other components of the CPU (fifos, memory, registers) will still receive the clock signal, allowing to dump their values for example to a VGA screen.
 
 ## Inbox
 
