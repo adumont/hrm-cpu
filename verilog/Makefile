@@ -114,7 +114,7 @@ upload: $(BUILDDIR)/$(MODULE).bin
 
 $(BUILDDIR)/$(MODULE)-netlist.json: $(MODULE).v $(DEPS)
 
-	yosys -p "prep -top $(MODULE); write_json $(BUILDDIR)-$(MODULE)-netlist.json" $(MODULE).v $(DEPS)
+	yosys -p "prep -top $(MODULE); write_json $(BUILDDIR)/$(MODULE)-netlist.json" $(MODULE).v $(DEPS)
 
 assets/$(MODULE).svg: $(BUILDDIR)/$(MODULE)-netlist.json
 

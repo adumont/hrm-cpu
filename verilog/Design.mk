@@ -94,4 +94,5 @@ ifdef ROMFILE
   IVERILOG_MACRO:=$(IVERILOG_MACRO) -DROMFILE=\"$(ROMFILE)\"
 endif
 
-# YOSYSOPT:=-retime -abc2
+#YOSYSOPT:=-abc2
+#YOSYSOPT:=-retime -abc2
