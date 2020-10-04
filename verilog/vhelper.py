@@ -33,6 +33,8 @@ def instanciate():
     
     # Print a header
     print()
+    print("`include \"%s\"" % args.file)
+    print()
     print("// ---------------------------------------- //")
     print("// %s (%s)" %(args.name, m.name))
     print("//")
