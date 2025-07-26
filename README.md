@@ -53,7 +53,7 @@ Here's an extract of an article on HRM, posted on [IEEE's Spectrum site](https:/
 >
 >[...]Those in the know will recognize the office worker as a register, the temporary workspace on the office floor as random access memory, and many of the challenges as classic introductory computer science problems.[...]
 
-The *HRM CPU* is an **8-bit multi-cycle RISC miroprocessor** based on the **Harvard architecture** with **variable length instructions** and one register (accumulator).
+The *HRM CPU* is an **8-bit multi-cycle RISC microprocessor** based on the **Harvard architecture** with **variable length instructions** and one register (accumulator).
 
 **TL;DR**: For the impatients, you can jump to these demos (with videos) at the end:
 - [HRM Year 4 in Logisim](#year-4)
